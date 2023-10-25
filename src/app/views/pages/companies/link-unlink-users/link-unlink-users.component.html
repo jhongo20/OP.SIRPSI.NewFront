@@ -1,0 +1,28 @@
+<label class="title">{{title}}</label>
+
+<mat-tab-group>
+    <mat-tab>
+        <ng-template mat-tab-label (click)="selectedTab(0)">
+            <span style="padding: 16px 29px;" (click)="selectedTab(0)">Vincular</span>
+        </ng-template>
+        <app-link-users *ngIf="tab == 0"></app-link-users>
+    </mat-tab>
+    <mat-tab label="Desvincular" (click)="selectedTab(1)">
+        <ng-template mat-tab-label>
+            <span style="padding: 16px 29px;" (click)="selectedTab(1)">Desvincular</span>
+        </ng-template>
+        <app-unlink-users *ngIf="tab == 1"></app-unlink-users>
+    </mat-tab>
+    <mat-tab label="Retirar" (click)="selectedTab(2)">
+        <ng-template mat-tab-label>
+            <span style="padding: 16px 29px;" (click)="selectedTab(2)">Retirar</span>
+        </ng-template>
+        <app-remove-user *ngIf="tab == 2"></app-remove-user>
+    </mat-tab>
+    <mat-tab label="Reintegrar" (click)="selectedTab(3)">
+        <ng-template mat-tab-label>
+            <span style="padding: 16px 29px;" (click)="selectedTab(3)">Reintegrar</span>
+        </ng-template>
+        <app-reinstate-user *ngIf="tab == 3"></app-reinstate-user>
+    </mat-tab>
+</mat-tab-group>

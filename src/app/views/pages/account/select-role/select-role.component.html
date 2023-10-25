@@ -1,0 +1,21 @@
+<app-loading *ngIf="this.loading"></app-loading>
+<div style="float: left; width: 100%;" *ngIf="this.roleList.length > 0">
+    <div class="wrapper">
+        <form #f="ngForm" [formGroup]="this.form">
+            <h2><b>Bienvenid@</b></h2>
+            <div class="mb-3">
+                <label class="form-label">Seleccionar rol:</label>
+                <ng-select id="TipoDocumento" #Role formControlName="Role" [items]="roleList" bindLabel="nombre"
+                    bindValue="id" [(ngModel)]="this.form.value.Role" required>
+                </ng-select>
+                <!-- <p class="mt-2 text-muted">Id: <span class="fw-bolder">{{this.form.value.Role}}</span></p> -->
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0" (click)="GetInto()" style="width: 100%;"
+                    [disabled]="this.form.invalid">Seleccionar</button>
+            </div>
+            <mat-divider style="margin: 20px 0px; float:left; width: 100%;"></mat-divider>
+            <h3><a (click)="Cancel();" class="item-blue">Cancelar</a></h3>
+        </form>
+    </div>
+</div>

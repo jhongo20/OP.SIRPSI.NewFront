@@ -1,0 +1,108 @@
+<label class="title">{{this.title}}</label>
+<label style="color:white;">This dialog showcases the title, close, content and actions
+    elemen</label>
+<form class="row" #f="ngForm" [formGroup]="this.form" *ngIf="type == 0">
+    <div class="col-md-6">
+        <label class="form-label">Tipo de documento</label>
+        <ng-select id="IdTypeDocument" #IdTypeDocument formControlName="IdTypeDocument" [items]="listDocs"
+            bindLabel="nombre" bindValue="id" [(ngModel)]="this.form.value.IdTypeDocument" required>
+        </ng-select>
+        <!-- <p class="mt-2 text-muted">Id: <span class="fw-bolder">{{this.form.value.TipoDocumento}}</span></p> -->
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">Número de documento</label>
+        <input class="form-control" type="text" #Document placeholder="Documento" formControlName="Document" required />
+        <p class="text-danger mt-1" *ngIf="form.controls.Document.errors?.required">Este
+            campo es obligatorio
+        </p>
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">Nombre completo</label>
+        <input class="form-control" type="text" #Names placeholder="Nombre" formControlName="Names" required />
+        <p class="text-danger mt-1" *ngIf="form.controls.Names.errors?.required">Este
+            campo es obligatorio
+        </p>
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">Apellidos</label>
+        <input class="form-control" type="text" #Surnames placeholder="Apellidos" formControlName="Surnames" required />
+        <p class="text-danger mt-1" *ngIf="form.controls.Surnames.errors?.required">Este
+            campo es obligatorio
+        </p>
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">Contraseña</label>
+        <div>
+            <input class="form-control" [type]="hide ? 'password' : 'text'" #Password placeholder="Confirmar contraseña"
+                formControlName="Password" required
+                style="width: calc(100% - 40px); float: left; border-radius: 0.25rem 0 0 0.25rem;" />
+            <button mat-icon-button matSuffix (click)="hide= !hide" [attr.aria-label]="'Hide password'"
+                style="float: left; width: 40px; background: #e9ecef; border-radius: none; border-radius: 0px 5px 5px 0px; line-height: 38px; height: auto;"
+                [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+        </div>
+        <p class="text-danger mt-1" *ngIf="form.controls.Password.errors?.required" style="float:left;">Este
+            campo es obligatorio
+        </p>
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">Email</label>
+        <input class="form-control" type="text" #Email placeholder="Email" formControlName="Email" />
+        <p class="text-danger mt-1" *ngIf="form.controls.Email.errors?.email">Email no valido</p>
+        <p class="text-danger mt-1" *ngIf="form.controls.Email.errors?.required">Este
+            campo es obligatorio
+        </p>
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">Telefono</label>
+        <input class="form-control mb-4 mb-md-0"  mask="(000) 000 00 00" [showMaskTyped]="true"
+            #PhoneNumber placeholder="Telefono" formControlName="PhoneNumber" />
+    </div>
+    <div class="col-md-6" [ngStyle]="{'display': (this.data.role == undefined ? 'block' : 'none')}">
+        <label class="form-label">Rol:</label>
+        <ng-select id="IdRol" #IdRol formControlName="IdRol" [items]="listRoles" bindLabel="name" bindValue="id"
+            [(ngModel)]="this.form.value.IdRol" required>
+        </ng-select>
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">País</label>
+        <ng-select id="IdCountry" #IdCountry formControlName="IdCountry" [items]="listPaises" bindLabel="nombre"
+            bindValue="id" [(ngModel)]="this.form.value.IdCountry" required>
+        </ng-select>
+    </div>
+    <div class="col-md-6" [ngStyle]="{'display': (this.data.retornarModal == undefined ? 'block' : 'none')}">
+        <label class="form-label">Empresa</label>
+        <ng-select id="IdCompany" #IdCompany formControlName="IdCompany" [items]="listEmpresas" bindLabel="nombre"
+            bindValue="id" [(ngModel)]="this.form.value.IdCompany">
+        </ng-select>
+    </div>
+    <div class="col-md-6" [ngStyle]="{'display': (this.viewStatus ? 'block' : 'none')}">
+        <label class="form-label">Estado</label>
+        <ng-select id="IdEstado" #IdEstado formControlName="IdEstado" [items]="estadosList" bindLabel="nombre"
+            bindValue="id" [(ngModel)]="this.form.value.IdEstado" required>
+        </ng-select>
+    </div>
+</form>
+<form class="row" #f="ngForm" [formGroup]="this.formEmpresa" *ngIf="type == 1">
+    <div class="col-md-12">
+        <label class="form-label">Usuario</label>
+        <ng-select id="Usuario" #Usuario formControlName="Usuario" [items]="listUsuario" bindLabel="nombreUsuario"
+            bindValue="id" [(ngModel)]="this.formEmpresa.value.IdUsuario" [searchWhileComposing]="true" required>
+            <ng-template ng-option-tmp let-item="item" let-search="searchTerm" let-index="index">
+                <span>{{ item.cedula }} - {{ item.nombreUsuario + ' ' + item.apellidosUsuario }}</span>
+            </ng-template>
+        </ng-select>
+    </div>
+</form>
+<div style="padding: 20px 0 25px 0;">
+    <button class="btn btn-secondary" mat-dialog-close style="margin-right: 8px;">Cancelar</button>
+    <button (click)="onSave()" type="submit" class="btn btn-primary me-2" [disabled]="this.form.invalid"
+        *ngIf="type == 0" style="margin-right: 8px;">Registrar</button>
+    <button (click)="onUpdateEmpresa()" type="submit" class="btn btn-primary me-2" [disabled]="this.formEmpresa.invalid"
+        *ngIf="type == 1 && table == 0" style="margin-right: 8px;">Asignar</button>
+    <button (click)="onUpdateEmpresa()" type="submit" class="btn btn-primary me-2" [disabled]="this.formEmpresa.invalid"
+        *ngIf="type == 1 && table == 1" style="margin-right: 8px;">Asignar psicologo</button>
+    <button (click)="onUpdateEmpresa()" type="submit" class="btn btn-primary me-2" [disabled]="this.formEmpresa.invalid"
+        *ngIf="type == 1 && table == 2" style="margin-right: 8px;">Asignar trabajador</button>
+</div>

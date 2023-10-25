@@ -1,0 +1,40 @@
+<form #f="ngForm" [formGroup]="this.formEmail">
+    <h2><b>Cambiar correo</b></h2>
+    <div class="row">
+        <div class="col-md-12 mb-3">
+            <label class="form-label">Correo actual <i class="mdi mdi-information" #tooltip="matTooltip"
+                    matTooltip="Este es su correo actualmente"></i></label>
+            <input class="form-control" type="email" #OldEmail formControlName="OldEmail" readonly="true" />
+        </div>
+        <div class="col-md-12 mb-3">
+            <label class="form-label">Nueva correo <i class="mdi mdi-information" #tooltip="matTooltip"
+                    matTooltip="Ingrese el correo que desea actualizar"></i></label>
+            <input class="form-control" type="text" #NewEmail placeholder="Nuevo correo" formControlName="NewEmail" />
+            <p class="text-danger mt-1" *ngIf="formEmail.controls.NewEmail.errors?.email">Email no valido</p>
+            <p class="text-danger mt-1" *ngIf="formEmail.controls.NewEmail.errors?.required">Este
+                campo es obligatorio
+            </p>
+        </div>
+        <div class="col-md-12 mb-3">
+            <label class="form-label">Confirmar correo <i class="mdi mdi-information" #tooltip="matTooltip"
+                    matTooltip="Confirme el correo que desea actualizar"></i></label>
+            <input class="form-control" type="text" #ConfirmEmail placeholder="Confirmar correo"
+                formControlName="ConfirmEmail" />
+            <p class="text-danger mt-1" *ngIf="formEmail.controls.ConfirmEmail.errors?.email">Email no valido</p>
+            <p class="text-danger mt-1" *ngIf="formEmail.controls.ConfirmEmail.errors?.required">Este
+                campo es obligatorio
+            </p>
+            <p class="text-danger mt-1"
+                *ngIf="formEmail.controls.ConfirmEmail.value != formEmail.controls.NewEmail.value">El correo debe
+                coincidir con el ingresado
+            </p>
+        </div>
+    </div>
+    <hr class="hr" />
+    <div>
+        <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0" (click)="GetInto()"
+            [disabled]="this.formEmail.invalid">Cambiar correo</button>
+        <button class="btn btn-secondary" type="submit" style="margin-right: 8px;"
+            (click)="cancelarForm();">Cancelar</button>
+    </div>
+</form>

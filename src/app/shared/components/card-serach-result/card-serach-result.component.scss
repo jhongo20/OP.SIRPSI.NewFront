@@ -1,0 +1,63 @@
+.cover {
+    height: 96%;
+    min-height: 227px;
+    margin: 5px;
+    border-radius: 4px;
+    background-size: cover;
+}
+h5.card-title {
+    font: 500 20px/32px Roboto, sans-serif;
+    letter-spacing: 0.0125em;
+    color: #eb1b33;
+}
+.price {
+    background: #7389c5;
+    width: 100%;
+    height: auto;
+    color: white;
+    padding: 10px;
+    font-size: 70%;
+    text-align: center;
+    border-radius: 5px 5px 0px 0px;
+    min-height: 40px;
+}
+.card {
+    margin: 0px 0px 8px;
+}
+.red {
+    border: none;
+    /* bottom: 0; */
+    color: white;
+    background: #eb1b33;
+    width: 100%;
+    /* min-height: 50px; */
+    height: 8vh;
+    border-radius: 0px 0px 5px 5px;
+    margin: 5px 0px;
+}
+.card-text,
+.card-title {
+    margin: 0 0 3px !important;
+}
+.wrapperStars {
+    align-items: center;
+    justify-items: center;
+    width: 100%;
+}
+.stars {
+    height: 28px;
+    width: 28px;
+    background-image: url("./../../../../assets/images/star.png");
+    margin: 5px;
+    float: left;
+    border-radius: 4px;
+    background-size: cover;
+}
+.card-text-alert {
+    float: left;
+    padding: 5px;
+    background: #979797;
+    text-align: justify;
+    color: white !important;
+    border-radius: 6px !important;
+}

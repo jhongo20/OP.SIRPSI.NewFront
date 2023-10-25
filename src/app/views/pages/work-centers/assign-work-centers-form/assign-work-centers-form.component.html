@@ -1,0 +1,68 @@
+<form class="row" #f="ngForm" [formGroup]="this.form">
+    <label class="title">Centro de trabajo</label>
+    <div class="col-md-4 mb-2">
+        <label class="form-label">Nombre <i class="mdi mdi-information" #tooltip="matTooltip"
+                matTooltip="Ingrese el nombre del centro de trabajo"></i></label>
+        <input class="form-control" type="text" #Nombre placeholder="Nombre empresa" formControlName="Nombre"
+            required />
+        <p class="text-danger" *ngIf="form.controls.Nombre.errors?.required">Este
+            campo es obligatorio
+        </p>
+    </div>
+    <div class="col-md-8 mb-2">
+        <label class="form-label">Descripción <i class="mdi mdi-information" #tooltip="matTooltip"
+                matTooltip="Ingrese una descripción"></i></label>
+        <textarea class="form-control" type="text" #Descripcion placeholder="Descripción" formControlName="Descripcion"
+            rows="1"></textarea>
+    </div>
+    <div class="col-md-4 mb-2">
+        <label class="form-label">Email <i class="mdi mdi-information" #tooltip="matTooltip"
+                matTooltip="Ingrese su correo electronico"></i></label>
+        <input class="form-control" type="text" #Email placeholder="Email" formControlName="Email" />
+        <p class="text-danger mt-1" *ngIf="form.controls.Email.errors?.email">Email no valido</p>
+        <p class="text-danger mt-1" *ngIf="form.controls.Email.errors?.required">Este
+            campo es obligatorio
+        </p>
+    </div>
+    <div class="col-md-4 mb-2">
+        <label class="form-label">Celular <i class="mdi mdi-information" #tooltip="matTooltip"
+                matTooltip="Ingrese su celular de contacto"></i></label>
+        <input class="form-control mb-4 mb-md-0"  mask="(000) 000 00 00" [showMaskTyped]="true" #Celular
+            placeholder="Celular" formControlName="Celular" />
+    </div>
+    <div class="col-md-4 mb-2">
+        <label class="form-label">Teléfono fijo <i class="mdi mdi-information" #tooltip="matTooltip"
+                matTooltip="Ingrese su telefono de contacto"></i></label>
+        <input class="form-control mb-4 mb-md-0"  mask="(000) 000 00 00" [showMaskTyped]="true" #Telefono
+            placeholder="Telefono" formControlName="Telefono" />
+    </div>
+    <div class="col-md-4 mb-2">
+        <label class="form-label">Departamento <i class="mdi mdi-information" #tooltip="matTooltip"
+                matTooltip="Ingrese Departamento"></i></label>
+        <ng-select id="IdDepartamento" #IdDepartamento formControlName="IdDepartamento" [items]="listDepartament"
+            bindLabel="name" bindValue="id" [(ngModel)]="form.value.IdDepartamento" (change)="onGetCity(form.value)">
+        </ng-select>
+        <p class="text-danger" *ngIf="form.controls.IdDepartamento.errors?.required">Este
+            campo es obligatorio
+        </p>
+    </div>
+    <div class="col-md-4 mb-2">
+        <label class="form-label">Ciudad <i class="mdi mdi-information" #tooltip="matTooltip"
+                matTooltip="Ingrese Ciudad"></i></label>
+        <ng-select id="IdMunicipio" #IdMunicipio formControlName="IdMunicipio" [items]="listCity" bindLabel="name"
+            bindValue="id" [(ngModel)]="form.value.IdMunicipio">
+        </ng-select>
+        <p class="text-danger" *ngIf="form.controls.IdMunicipio.errors?.required">Este
+            campo es obligatorio
+        </p>
+    </div>
+    <div class="col-md-4 mb-2">
+        <label class="form-label">Direccion <i class="mdi mdi-information" #tooltip="matTooltip"
+                matTooltip="Ingrese Direccion"></i></label>
+        <input class="form-control" type="text" #Nombre placeholder="Nombre Direccion" formControlName="Direccion" />
+    </div>
+</form>
+
+<button type="submit" class="btn btn-primary me-2" (click)="onSaveCentroTrabajo()"
+    [disabled]="this.form.invalid">Registrar</button>
+<button class=" btn btn-secondary" mat-button mat-dialog-close>Cancelar</button>

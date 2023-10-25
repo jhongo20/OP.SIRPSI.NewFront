@@ -1,0 +1,16 @@
+<div style="max-height: 540px;">
+    <form class="row" #f="ngForm" [formGroup]="this.form">
+        <label class="title">Centro de trabajo</label>
+        <div class="col-md-12 mb-3">
+            <label class="form-label">Centro de trabajo:</label>
+            <ng-select id="Workplace" #Workplace formControlName="Workplace" [items]="listCentrosCosto"
+                bindLabel="nombre" bindValue="id" [(ngModel)]="this.form.value.Workplace" required>
+            </ng-select>
+        </div>
+    </form>
+    <div style="padding: 20px 0 25px 0;">
+        <button type="submit" class="btn btn-primary me-2" (click)="onSaveCentroTrabajo()"
+            [disabled]="this.form.invalid">Registrar</button>
+        <button class="btn btn-secondary" mat-dialog-close>Cancelar</button>
+    </div>
+</div>

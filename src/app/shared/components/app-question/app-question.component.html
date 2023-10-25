@@ -1,0 +1,14 @@
+<div class="pregunta">
+    <h2>{{ question }}</h2>
+    <!-- <div *ngFor="let option of options; let i = index">
+        <input type="radio" name="opcion.value" [value]="i" [(ngModel)]="responseSelected">
+        {{ option.option }}
+    </div> -->
+    <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+        [(ngModel)]="responseSelected">
+        <mat-radio-button class="example-radio-button" *ngFor="let option of options; let i = index" [value]="option">
+            {{option.option}}
+        </mat-radio-button>
+    </mat-radio-group>
+    <button (click)="checkAnswer(responseSelected)">Verificar respuesta</button>
+</div>

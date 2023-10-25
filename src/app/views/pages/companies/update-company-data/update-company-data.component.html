@@ -1,0 +1,29 @@
+<label class="title">Información de la Empresa</label>
+<div class="row">
+    <form #f="ngForm" [formGroup]="this.form">
+        <div class="col-md-6 mb-4">
+            <label class="form-label">Empresa:</label>
+            <ng-select [items]="listCompaniesUser" bindLabel="nombre" bindValue="id" required id="Company" #Company
+                formControlName="Company" (change)="selectedCompanie($event)">
+            </ng-select>
+        </div>
+    </form>
+</div>
+<mat-tab-group *ngIf="this.company != null">
+    <mat-tab>
+        <ng-template mat-tab-label>ACTUALIZAR</ng-template>
+        <br />
+        <div class="container-fluid">
+            <app-company-information-first (cancelar)="cancelar($event)"
+                [company]="this.company"></app-company-information-first>
+        </div>
+    </mat-tab>
+    <mat-tab>
+        <ng-template mat-tab-label>ADICIONAR</ng-template>
+        <br />
+        <div class="container-fluid">
+            <app-company-information-second [company]="this.company"></app-company-information-second>
+        </div>
+    </mat-tab>
+</mat-tab-group>
+<label *ngIf="this.company == null && this.company == undefined">Debe seleccionar una empresa</label>

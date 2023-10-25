@@ -1,0 +1,21 @@
+<div class="container" style="max-width: 1520px;">
+    <div class="row">
+        <div class="col-md-7 space">
+            <label class="title">Usuarios de la empresa sin centro de trabajo:
+                {{this.accountService.userData.empresa.nombre}}</label>
+        </div>
+        <div class="col-md-5 space">
+            <a type="button" style="width: 100%; margin-bottom: 10px;background: #1A73E8; border: 1px solid #1663c9 ;"
+                class="btn btn-dark" routerLink="/users/bulk-user-assignmen">
+                Asignar usuarios a centro de trabajo
+                <i class="fa-solid fa-tower-control"></i>
+            </a>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-12 space"></div>
+            <app-generic-table [columns]="columns" [table]="table" [options]="options" [delete]="'user/DeleteUser'"
+                [changeStatus]="'user/ChangeStatusUser'" [nameColumnStatus]="'idEstado'"
+                [filter]="filter"></app-generic-table>
+        </div>
+    </div>
+</div>

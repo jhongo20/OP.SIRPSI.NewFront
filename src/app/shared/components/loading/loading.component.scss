@@ -1,0 +1,30 @@
+.loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at center, rgb(245, 247, 250) 0%, rgb(230, 233, 237) 100%);
+    z-index: 9999999;
+    font-size: 32px;
+}
+.wrapper {
+    position: fixed;
+    z-index: 2000;
+    width: 100%;
+    height: 100%;
+}
+
+h1 {
+    margin: 1em 0;
+    border-bottom: 1px dashed;
+    padding-bottom: 1em;
+    font-weight: lighter;
+}
+p {
+    font-style: italic;
+}
+svg path,
+svg rect {
+    fill: #1768b3;
+}

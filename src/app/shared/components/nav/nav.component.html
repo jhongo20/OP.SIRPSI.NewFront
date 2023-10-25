@@ -1,0 +1,105 @@
+<nav [class]="'content' + (this.accountService.userData && this.roleService.roleSelectData ? '' : ' hidden')">
+  <div>
+    <button class="navbar-burger">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="32px" id="Layer_1"
+        style="enable-background:new 0 0 32 32;" version="1.1" viewBox="0 0 32 32" width="32px" xml:space="preserve">
+        <path
+          d="M4,10h24c1.104,0,2-0.896,2-2s-0.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,0.896-2,2  s0.896,2,2,2h24c1.104,0,2-0.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,0.896-2,2s0.896,2,2,2h24c1.104,0,2-0.896,2-2  S29.104,22,28,22z" />
+      </svg>
+    </button>
+  </div>
+  <a class="wrapper-logo" href="#">
+    <div class="logo-menu">
+      <img src="./../../../../assets/images/InnClodDocuments.png" style="margin:0px auto">
+    </div>
+  </a>
+</nav>
+<div class="navbar-menu hidden">
+  <div class="navbar-backdrop"></div>
+  <nav class="nav-menu" *ngIf="this.accountService.userData && this.roleService.roleSelectData">
+    <div style="display:flex; margin-bottom: 2rem;">
+      <button class="navbar-close">
+        <svg class="close-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+    <div>
+      <ul>
+        <li *ngIf="true">
+          <a class="item-menu" href="dashboard">Inicio</a>
+        </li>
+        <li class="item-menu" *ngIf="this.menuSettings.Users">
+          <a class="item-menu">Usuarios
+            <i class="fa-sharp fa-solid fa-caret-down" style="float: right;"></i>
+          </a>
+          <ul class="children">
+            <li *ngIf="this.menuSettings.UsersList"><a href="users/list-users" class="item-sub-menu">Usuarios <span
+                  class="icon-dot"></span></a></li>
+            <li *ngIf="this.menuSettings.UsersCompany"><a href="users/users-company" class="item-sub-menu">Usuarios por
+                compañia
+                <span class="icon-dot"></span></a></li>
+          </ul>
+        </li>
+        <li class="item-menu" *ngIf="this.menuSettings.Companies">
+          <a class="item-menu">Empresas
+            <i class="fa-sharp fa-solid fa-caret-down" style="float: right;"></i>
+          </a>
+          <ul class="children">
+            <li *ngIf="this.menuSettings.CompaniesList"><a href="companies/list-companies" class="item-sub-menu">Listado
+                de
+                empresas <span class="icon-dot"></span></a></li>
+            <li *ngIf="this.menuSettings.CompaniesUser"><a href="companies/companies-user"
+                class="item-sub-menu">Empresa<span class="icon-dot"></span></a></li>
+            <li *ngIf="this.menuSettings.WorkCenters"><a href="work-centers" class="item-sub-menu">Centros de trabajos
+                <span class="icon-dot"></span></a></li>
+          </ul>
+        </li>
+        <li class="item-menu" *ngIf="this.menuSettings.Ministerio">
+          <a class="item-menu">Ministerios
+            <i class="fa-sharp fa-solid fa-caret-down" style="float: right;"></i>
+          </a>
+          <ul class="children">
+            <li><a href="#" class="item-sub-menu" *ngIf="this.menuSettings.MinisterioUno">SubElemento #1 <span
+                  class="icon-dot"></span></a></li>
+          </ul>
+        </li>
+        <li class="item-menu">
+          <a class="item-menu">Perfil
+            <i class="fa-sharp fa-solid fa-caret-down" style="float: right;"></i>
+          </a>
+          <ul class="children">
+            <li><a href="#" class="item-sub-menu">Cambiar contraseña <span class="icon-dot"></span></a></li>
+          </ul>
+        </li>
+        <li class="item-menu" *ngIf="this.menuSettings.Configuration">
+          <a class="item-menu">Configuración
+            <i class="fa-sharp fa-solid fa-caret-down" style="float: right;"></i>
+          </a>
+          <ul class="children">
+            <li *ngIf="this.menuSettings.Roles"><a href="configuration/roles" class="item-sub-menu">Roles <span
+                  class="icon-dot"></span></a></li>
+            <li *ngIf="this.menuSettings.Routes"><a href="configuration/routes" class="item-sub-menu">Rutas <span
+                  class="icon-dot"></span></a></li>
+            <li *ngIf="this.menuSettings.Variables"><a href="configuration/variables" class="item-sub-menu">Variables
+                <span class="icon-dot"></span></a></li>
+            <li *ngIf="this.menuSettings.RoutesRole"><a href="configuration/routes-role" class="item-sub-menu">Asignar
+                rutas a role <span class="icon-dot"></span></a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div style="margin-top: auto;">
+      <div style="padding-top:1.5rem">
+        <a *ngIf="!this.accountService.userData" class="item-one" href="account/login">Ingresar</a>
+        <a *ngIf="!this.accountService.userData" class="item-two" href="account/register">Registrate ahora</a>
+        <a *ngIf="this.accountService.userData" class="item-two" (click)="CloseSesion();">Cerrar
+          sesión</a>
+      </div>
+      <p class="copyrignt">
+        <span>Copyright © 2023</span>
+      </p>
+    </div>
+  </nav>
+</div>

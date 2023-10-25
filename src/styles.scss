@@ -1,0 +1,103 @@
+/* You can add global styles to this file, and also import other style files */
+
+// Global icon font
+@import "./assets/fonts/feather/style.css";
+
+// // 3rd party plugins
+@import "@mdi/font/css/materialdesignicons.min.css";
+@import "perfect-scrollbar/css/perfect-scrollbar.css";
+@import "highlight.js/styles/googlecode.css";
+@import "ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.carousel.min.css";
+@import "ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.theme.default.min.css";
+@import "animate.css/animate.min.css";
+@import "@ng-select/ng-select/themes/default.theme.css";
+@import "metismenujs/scss/metismenujs";
+@import "dropzone/dist/min/dropzone.min.css";
+@import "quill/dist/quill.snow.css";
+@import "angular-archwizard/styles/archwizard.css";
+@import "simple-datatables/dist/style.css";
+@import "@swimlane/ngx-datatable/index.css";
+@import "@swimlane/ngx-datatable/themes/bootstrap.css";
+@import "@swimlane/ngx-datatable/assets/icons.css";
+
+// NobleUI styles for LTR
+@import "./assets/scss/style";
+
+// NobleUI styles For RTL
+// @import "./assets/scss/style.rtl.css";
+
+html,
+body {
+    height: 100%;
+}
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    background: url("./assets/images/768x1024/JPG/1024x768.jpg") no-repeat;
+    background-size: 100% 100%;
+}
+// @media (max-width: 434px) and (max-height: 916px) {
+//     body {
+//         background: url("./assets/images/414x896/JPG/414x896.jpg") no-repeat;
+//     }
+// }
+// @media (max-width: 916px) and (max-height: 434px) {
+//     body {
+//         background: url("./assets/images/414x896/JPG/896x414.jpg") no-repeat;
+//     }
+// }
+@media (max-width: 1044px) {
+    body {
+        background: url("./assets/images/768x1024/JPG/1024x768.jpg") no-repeat;
+        margin: 0;
+        font-family: Roboto, "Helvetica Neue", sans-serif;
+        background-size: 100% 100%;
+    }
+}
+@media (max-width: 980px) {
+    body {
+        background: url("./assets/images/960x620/JPG/960x620.jpg") no-repeat;
+        margin: 0;
+        font-family: Roboto, "Helvetica Neue", sans-serif;
+        background-size: 100% 100%;
+    }
+}
+@media (max-width: 916px) {
+    body {
+        background: url("./assets/images/414x896/JPG/896x414.jpg") no-repeat;
+        margin: 0;
+        font-family: Roboto, "Helvetica Neue", sans-serif;
+        background-size: 100% 100%;
+    }
+}
+@media (max-width: 788px) {
+    body {
+        background: url("./assets/images/768x1024/JPG/768x1024.jpg") no-repeat;
+        margin: 0;
+        font-family: Roboto, "Helvetica Neue", sans-serif;
+        background-size: 100% 100%;
+    }
+}
+@media (max-width: 640px) {
+    body {
+        background: url("./assets/images/960x620/JPG/620x960.jpg") no-repeat;
+        margin: 0;
+        font-family: Roboto, "Helvetica Neue", sans-serif;
+        background-size: 100% 100%;
+    }
+}
+@media (max-width: 434px) {
+    body {
+        background: url("./assets/images/414x896/JPG/414x896.jpg") no-repeat;
+        margin: 0;
+        font-family: Roboto, "Helvetica Neue", sans-serif;
+        background-size: 100% 100%;
+    }
+}
+.cdk-overlay-pane {
+    padding: 34px 5px !important;
+}
+.mat-dialog-container {
+    // margin: 50px 5px !important;
+    height: auto !important;
+}

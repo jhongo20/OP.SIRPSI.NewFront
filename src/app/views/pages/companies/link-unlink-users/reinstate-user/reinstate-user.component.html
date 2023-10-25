@@ -1,0 +1,28 @@
+<div class="container-fluid">
+    <br />
+    <!-- <form #f="ngForm" [formGroup]="this.formInitial">
+        <div class="row">
+            <div class="col-md-3 mb-4">
+                <label class="form-label">Centro de trabajo <i class="mdi mdi-information" #tooltip="matTooltip"
+                        matTooltip="Seleccione un centro de trabajo"></i></label>
+                <ng-select [items]="listWorkCenterUser" bindLabel="nombre" bindValue="id" required id="WorkCenter"
+                    #WorkCenter formControlName="WorkCenter" (change)="selectedWorkCenter($event)">
+                </ng-select>
+            </div>
+        </div>
+        <br> -->
+    <div class="col-md-12">
+        <div class="col-md-12 space"></div>
+        <app-generic-table [columns]="columns" [table]="table" [options]="options" [delete]="'user/DeleteUser'"
+            [changeStatus]="'user/ChangeStatusUser'" [nameColumnStatus]="'idEstado'" (check)="selectedRow($event)"
+            [filter]="filter"></app-generic-table>
+    </div>
+    <br>
+    <!-- </form> -->
+    <div style="padding: 20px 0 25px 0;">
+        <button (click)="unlinkWorker()" type="submit" class="btn btn-primary me-2"
+            [disabled]=" this.countListUsers == 0" style="margin-right: 8px;">Reintegrar</button>
+        <!-- <button class="btn btn-secondary" type="submit" style="margin-right: 8px;"
+            (click)="cancelarForm();">Cancelar</button> -->
+    </div>
+</div>

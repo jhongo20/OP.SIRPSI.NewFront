@@ -1,0 +1,17 @@
+<label class="title">Consulta Gestión de Trabajadores</label>
+<div class="row">
+    <form #f="ngForm" [formGroup]="this.form">
+        <div class="col-md-6 mb-4">
+            <label class="form-label">Tipo de reporte <i class="mdi mdi-information" #tooltip="matTooltip"
+                    matTooltip="Seleccione un tipo de reporte"></i></label>
+            <ng-select [items]="listReportsRole" bindLabel="reporteName" bindValue="reporteId" required id="Reporte"
+                #Reporte formControlName="Reporte" (change)="selectedCompanie($event)">
+            </ng-select>
+        </div>
+    </form>
+    <br>
+    <!-- Historial de retiros y reintegros trabajadores -->
+    <app-history-remove-reinstate *ngIf="this.viewReport == 1" [type]="2"></app-history-remove-reinstate>
+    <app-history-remove-reinstate *ngIf="this.viewReport == 2" [type]="1"></app-history-remove-reinstate>
+</div>
+<label *ngIf="this.report == null && this.report == undefined">Debe seleccionar un reporte</label>

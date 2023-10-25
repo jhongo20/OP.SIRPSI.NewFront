@@ -1,0 +1,190 @@
+<label class="title">{{title}}</label>
+<div class="container-fluid">
+    <form #f="ngForm" [formGroup]="this.formInitial">
+        <div class="row">
+            <div class="col-md-3 mb-4">
+                <label class="form-label">Centro de trabajo <i class="mdi mdi-information" #tooltip="matTooltip"
+                        matTooltip="Seleccione un centro de trabajo"></i></label>
+                <ng-select [items]="listWorkCenterUser" bindLabel="nombre" bindValue="id" required id="WorkCenter"
+                    #WorkCenter formControlName="WorkCenter" (change)="selectedWorkCenter($event)">
+                </ng-select>
+            </div>
+            <div class="col-md-4 mb-4">
+                <label class="form-label">Usuario <i class="mdi mdi-information" #tooltip="matTooltip"
+                        matTooltip="Seleccione un usuario para editar"></i></label>
+                <ng-select id="User" #User formControlName="User" [items]="listUsersWorkCenter"
+                    bindLabel="nombreUsuario" bindValue="id" [searchWhileComposing]="true"
+                    [readonly]="listUsersWorkCenter.length == 0" (change)="selectedUser($event)">
+                    <ng-template ng-label-tmp let-item="item">
+                        <span>{{ item.cedula }} - {{ item.nombreUsuario }} {{ item.apellidosUsuario }}</span>
+                    </ng-template>
+                    <ng-template ng-option-tmp let-item="item" let-search="searchTerm" let-index="index">
+                        <span>{{ item.cedula }} - {{ item.nombreUsuario }} {{ item.apellidosUsuario }}</span>
+                    </ng-template>
+                </ng-select>
+            </div>
+        </div>
+    </form>
+    <hr class="hr" />
+    <div *ngIf="this.formInitial.valid">
+        <form class="row" #f="ngForm" [formGroup]="this.form">
+            <div class="col-md-3 mb-2">
+                <label class="form-label">Tipo de documento <i class="mdi mdi-information" #tooltip="matTooltip"
+                        matTooltip="Seleccione un tipo de documento de identidad"></i></label>
+                <ng-select id="IdTypeDocument" #IdTypeDocument formControlName="IdTypeDocument" [items]="listDocs"
+                    bindLabel="nombre" bindValue="id" [(ngModel)]="this.form.value.IdTypeDocument" required>
+                </ng-select>
+                <p class="text-danger mt-1" *ngIf="form.controls.IdTypeDocument.errors?.required">Este
+                    campo es obligatorio
+                </p>
+                <!-- <p class="mt-2 text-muted">Id: <span class="fw-bolder">{{this.form.value.TipoDocumento}}</span></p> -->
+            </div>
+            <div class="col-md-3 mb-2">
+                <label class="form-label">Número de documento <i class="mdi mdi-information" #tooltip="matTooltip"
+                        matTooltip="Ingrese el número de documento"></i></label>
+                <input class="form-control" type="text" #Document placeholder="Número de documento" formControlName="Document"
+                    required />
+                <p class="text-danger mt-1" *ngIf="form.controls.Document.errors?.required">Este
+                    campo es obligatorio
+                </p>
+            </div>
+            <div class="col-md-3 mb-2">
+                <label class="form-label">Nombre completo <i class="mdi mdi-information" #tooltip="matTooltip"
+                        matTooltip="Ingrese su nombre o nombres"></i></label>
+                <input class="form-control" type="text" #Names placeholder="Nombre" formControlName="Names" required />
+                <p class="text-danger mt-1" *ngIf="form.controls.Names.errors?.required">Este
+                    campo es obligatorio
+                </p>
+            </div>
+            <div class="col-md-3 mb-2">
+                <label class="form-label">Apellidos <i class="mdi mdi-information" #tooltip="matTooltip"
+                        matTooltip="Ingrese sus apellidos"></i></label>
+                <input class="form-control" type="text" #Surnames placeholder="Apellidos" formControlName="Surnames"
+                    required />
+                <p class="text-danger mt-1" *ngIf="form.controls.Surnames.errors?.required">Este
+                    campo es obligatorio
+                </p>
+            </div>
+            <div class="col-md-3 mb-2">
+                <label class="form-label">Teléfono <i class="mdi mdi-information" #tooltip="matTooltip"
+                        matTooltip="Ingrese un teléfono celular"></i></label>
+                <input class="form-control mb-4 mb-md-0"  mask="(000) 000 00 00" [showMaskTyped]="true"
+                    #PhoneNumber placeholder="Telefono" formControlName="PhoneNumber" />
+                <p class="text-danger mt-1" *ngIf="form.controls.PhoneNumber.errors?.required">Este
+                    campo es obligatorio
+                </p>
+            </div>
+            <div class="col-md-3 mb-2">
+                <label class="form-label">Teléfono alternativo <i class="mdi mdi-information" #tooltip="matTooltip"
+                        matTooltip="Ingrese un teléfono celular alternativo"></i></label>
+                <input class="form-control mb-4 mb-md-0"  mask="(000) 000 00 00" [showMaskTyped]="true"
+                    #PhoneNumberAux placeholder="Telefono" formControlName="PhoneNumberAux" />
+            </div>
+            <div class="col-md-3 mb-2">
+                <label class="form-label">País <i class="mdi mdi-information" #tooltip="matTooltip"
+                        matTooltip="Seleccione un país"></i></label>
+                <ng-select id="IdCountry" #IdCountry formControlName="IdCountry" [items]="listPaises" bindLabel="nombre"
+                    bindValue="id" [(ngModel)]="this.form.value.IdCountry" required>
+                </ng-select>
+                <p class="text-danger mt-1" *ngIf="form.controls.IdCountry.errors?.required">Este
+                    campo es obligatorio
+                </p>
+            </div>
+            <div class="col-md-3 mb-2">
+                <label class="form-label">Centro de trabajo <i class="mdi mdi-information" #tooltip="matTooltip"
+                        matTooltip="Seleccione un centro de trabajo para el trabajador"></i></label>
+                <ng-select id="IdWorkCenter" #IdWorkCenter formControlName="IdWorkCenter" [items]="listCentrosCosto"
+                    bindLabel="nombre" bindValue="id" [(ngModel)]="this.form.value.IdWorkCenter" required>
+                </ng-select>
+                <p class="text-danger mt-1" *ngIf="form.controls.IdWorkCenter.errors?.required">Este
+                    campo es obligatorio
+                </p>
+            </div>
+            <div class="col-md-4 mb-2">
+                <label class="form-label">Email <i class="mdi mdi-information" #tooltip="matTooltip"
+                        matTooltip="Ingrese su correo"></i></label>
+                <input class="form-control" type="text" #Email placeholder="Email" formControlName="Email" />
+                <p class="text-danger mt-1" *ngIf="form.controls.Email.errors?.email">Email no valido
+                </p>
+                <p class="text-danger mt-1" *ngIf="form.controls.Email.errors?.required">Este
+                    campo es obligatorio
+                </p>
+            </div>
+            <div class="col-md-4 mb-2">
+                <label class="form-label">Email alternativo <i class="mdi mdi-information" #tooltip="matTooltip"
+                        matTooltip="Ingrese su correo"></i></label>
+                <input class="form-control" type="text" #EmailAux placeholder="Email" formControlName="EmailAux" />
+                <p class="text-danger mt-1" *ngIf="form.controls.EmailAux.errors?.email">Email no valido
+                </p>
+                <p class="text-danger mt-1" *ngIf="form.controls.EmailAux.errors?.required">Este
+                    campo es obligatorio
+                </p>
+            </div>
+            <div class="col-md-4 mb-2" style="display:none">
+                <label class="form-label">Contraseña <i class="mdi mdi-information" #tooltip="matTooltip"
+                        matTooltip="Ingrese su contraseña actual"></i></label>
+                <input class="form-control" type="password" matInput #Password placeholder="Contraseña"
+                    formControlName="Password" [readonly]="this.option == 'view'" >
+            </div>
+            <div class="col-md-4 mb-2">
+                <label class="form-label" style="width: 100%;">Tiene alguna discapacidad <i class="mdi mdi-information"
+                        #tooltip="matTooltip" matTooltip="Seleccione una opción"></i></label>
+                <mat-radio-group #HaveDisability formControlName="HaveDisability">
+                    <mat-radio-button value="1" style="margin-left: 16px;">Si</mat-radio-button>
+                    <mat-radio-button value="0" style="margin-left: 16px;">No</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div class="col-md-4 mb-2">
+                <label class="form-label" style="width: 100%;">
+                    Tiene dificultades en las habilidades lecto - escritoras <i class="mdi mdi-information"
+                        #tooltip="matTooltip" matTooltip="Seleccione una opción"></i></label>
+                <mat-radio-group #ReadingWritingSkills formControlName="ReadingWritingSkills">
+                    <mat-radio-button value="1" style="margin-left: 16px;">Si</mat-radio-button>
+                    <mat-radio-button value="0" style="margin-left: 16px;">No</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div class="col-md-4 mb-2">
+                <label class="form-label">Ocupación o profesión <i class="mdi mdi-information" #tooltip="matTooltip"
+                        matTooltip="Seleccione una ocupación o prefesión"></i></label>
+                <ng-select id="IdOccupationProfession" #IdOccupationProfession formControlName="IdOccupationProfession"
+                    [items]="listOcupacionProfesion" bindLabel="nombre" bindValue="id"
+                    [(ngModel)]="this.form.value.IdOccupationProfession" required>
+                </ng-select>
+                <p class="text-danger mt-1" *ngIf="form.controls.IdCountry.errors?.required">Este
+                    campo es obligatorio
+                </p>
+            </div>
+            <div class="col-md-3" style="display:none">
+                <label class="form-label">Rol <i class="mdi mdi-information" #tooltip="matTooltip"
+                        matTooltip="Ingrese su contraseña actual"></i></label>
+                <ng-select id="IdRol" #IdRol formControlName="IdRol" [items]="listRoles" bindLabel="name" bindValue="id"
+                    [(ngModel)]="this.form.value.IdRol" required>
+                </ng-select>
+            </div>
+            <div class="col-md-3" style="display:none">
+                <label class="form-label">Empresa <i class="mdi mdi-information" #tooltip="matTooltip"
+                        matTooltip="Ingrese su contraseña actual"></i></label>
+                <ng-select id="IdCompany" #IdCompany formControlName="IdCompany" [items]="listEmpresas"
+                    bindLabel="nombre" bindValue="id" [(ngModel)]="this.form.value.IdCompany">
+                </ng-select>
+            </div>
+            <div class="col-md-3" style="display:none">
+                <label class="form-label">Estado:</label>
+                <ng-select id="IdEstado" #IdEstado formControlName="IdEstado" [items]="estadosList" bindLabel="nombre"
+                    bindValue="id" [(ngModel)]="this.form.value.IdEstado" required>
+                </ng-select>
+            </div>
+        </form>
+        <div style="padding: 20px 0 25px 0;">
+            <button (click)="onSave()" type="submit" class="btn btn-primary me-2" [disabled]="this.form.invalid"
+                style="margin-right: 8px;">Actualizar</button>
+            <button class="btn btn-secondary" type="submit" style="margin-right: 8px;"
+                (click)="cancelarForm();">Cancelar</button>
+        </div>
+    </div>
+    <div *ngIf="this.formInitial.invalid">
+        <label>
+            Por favor seleccione un centro de costo y un usuario para actualizar los datos.
+        </label>
+    </div>
+</div>

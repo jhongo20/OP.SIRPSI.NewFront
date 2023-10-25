@@ -1,0 +1,12 @@
+<div class="container" style="max-width: 1520px;">
+    <div class="row">
+        <div class="col-md-12 space">
+            <label class="title">Lista de usuarios Inactivos</label>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-12 space"></div>
+            <app-generic-table [columns]="columns" [table]="table" [options]="options"
+                [delete]="'user/DeleteUser'"></app-generic-table>
+        </div>
+    </div>
+</div>

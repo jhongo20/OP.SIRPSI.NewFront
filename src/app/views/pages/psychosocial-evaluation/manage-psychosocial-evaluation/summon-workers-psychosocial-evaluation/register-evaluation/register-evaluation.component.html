@@ -1,0 +1,38 @@
+<label class="title">Información de la Empresa</label>
+<form class="row" #f="ngForm" [formGroup]="this.form">
+    <div class="col-md-4 mb-2">
+        <label class="form-label">Nombre <i class="mdi mdi-information" #tooltip="matTooltip"
+                matTooltip="Ingrese un nombre para la evaluación"></i></label>
+        <input class="form-control" type="text" #Nombre placeholder="Nombre" formControlName="Nombre" required />
+        <p class="text-danger" *ngIf="form.controls.Nombre.errors?.required">Este
+            campo es obligatorio
+        </p>
+    </div>
+    <div class="col-md-3 mb-2">
+        <label class="form-label">Fecha de inicio <i class="mdi mdi-information" #tooltip="matTooltip"
+                matTooltip="Ingrese una fecha de inicio de la evaluación"></i></label>
+        <input class="form-control" placeholder="yyyy-mm-dd" #FechaInicio type="date" formControlName="FechaInicio">
+        <p class="text-danger mt-1" *ngIf="form.controls.FechaInicio.errors?.required">Este
+            campo es obligatorio
+        </p>
+    </div>
+    <div class="col-md-3 mb-2">
+        <label class="form-label">Fecha de finalización <i class="mdi mdi-information" #tooltip="matTooltip"
+                matTooltip="Ingrese una fecha de finalización"></i></label>
+        <input class="form-control" placeholder="yyyy-mm-dd" #FechaFin type="date" formControlName="FechaFin">
+        <p class="text-danger mt-1" *ngIf="form.controls.FechaFin.errors?.required">Este
+            campo es obligatorio
+        </p>
+    </div>
+    <div class="col-md-10 mb-2">
+        <label class="form-label">Descripción <i class="mdi mdi-information" #tooltip="matTooltip"
+                matTooltip="Ingrese una descripción"></i></label>
+        <textarea class="form-control" type="text" #Descripcion placeholder="Descripcion"
+            formControlName="Descripcion"></textarea>
+    </div>
+</form>
+<div style="padding: 20px 0 25px 0;">
+    <button type="submit" class="btn btn-primary me-2" (click)="onSave()"
+        [disabled]="this.form.invalid">Registrar</button>
+    <!-- <button class="btn btn-secondary" mat-dialog-close>Cancelar</button> -->
+</div>

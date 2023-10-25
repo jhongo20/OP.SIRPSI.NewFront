@@ -1,0 +1,194 @@
+/* Estilo del formulario de LOGIN */
+.login-box {
+    width: 80%;
+    height: auto;
+    background: #ffffff;
+    color: rgb(34, 88, 163);
+    top: 43%;
+    left: 50%;
+    max-width: 400px;
+    min-width: 320px;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    box-sizing: border-box;
+    padding: 30px 30px 20px 30px;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.logotipo {
+    max-width: 350px;
+    width: 100%;
+    margin: 0 auto 30px auto;
+    display: block;
+}
+
+.login-box button {
+    display: block;
+    float: left;
+    width: 88%;
+    margin: 10px auto;
+    padding: 10px 0;
+    border: none;
+    border-radius: 10px;
+    background-color: rgb(206, 216, 231);
+    color: #000000;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.4s ease-in-out;
+}
+
+.login-box button:hover {
+    background-color: rgb(102, 172, 230);
+}
+
+#info-iniciar-sesion {
+    float: right;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin: 15px 0 0 0;
+    padding: 0;
+}
+
+#info-registrar-empresa {
+    float: right;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin: 15px 0 0 0;
+    padding: 0;
+}
+
+#info-tutoriales {
+    float: right;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin: 15px 0 0 0;
+    padding: 0;
+}
+
+#info-ayuda-soporte {
+    float: right;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin: 15px 0 0 0;
+    padding: 0;
+}
+/*-----------------------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------*/
+/* Estilos para posicionar y dar formato a los cuadros emergentes */
+#mensaje-iniciar-sesion {
+    position: absolute;
+    top: calc(50% + 3cm);
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(255, 255, 255);
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    /* Cambiar el ancho de la ventana emergente */
+}
+
+#mensaje-registrar-empresa {
+    position: absolute;
+    top: calc(50% + 3cm);
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(255, 255, 255);
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    /* Cambiar el ancho de la ventana emergente */
+}
+
+#mensaje-tutoriales-capacitacion {
+    position: absolute;
+    top: calc(50% + 3cm);
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(255, 255, 255);
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    /* Cambiar el ancho de la ventana emergente */
+}
+
+#mensaje-ayuda-soporte {
+    position: absolute;
+    top: calc(50% + 3cm);
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(255, 255, 255);
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px; /* Cambiar el ancho de la ventana emergente */
+}
+
+/* Ubicar ventanas emergentes por delante de los botones "?" */
+#mensaje-iniciar-sesion,
+#mensaje-registrar-empresa,
+#mensaje-tutoriales-capacitacion,
+#mensaje-ayuda-soporte {
+    z-index: 1;
+}
+
+/* Color título ventana emergente y texto mensaje */
+
+.titulo-mensaje {
+    color: rgb(99, 4, 4);
+    /* Cambiar el color del título */
+}
+.texto-mensaje {
+    color: black;
+    /* Cambiar el color del texto */
+}
+
+/* Justificar texto ventanas emergentes */
+.texto-mensaje {
+    text-align: justify;
+} /*-----------------------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------*/
+
+/* Estilos y tamaño para el botón "Aceptar"*/
+#aceptar {
+    display: block;
+    margin-top: 5px;
+    width: 3cm;
+    height: 0, 91cm;
+}
+
+#aceptar-2 {
+    display: block;
+    margin-top: 5px;
+    width: 3cm;
+    height: 0, 91cm;
+}
+
+#aceptar-3 {
+    display: block;
+    margin-top: 5px;
+    width: 3cm;
+    height: 0, 91cm;
+}
+
+#aceptar-4 {
+    display: block;
+    margin-top: 5px;
+    width: 3cm;
+    height: 0, 91cm;
+}
+/* Cambiar fuente de todos los botones */
+button {
+    font-family: Tahoma, Geneva, sans-serif;
+}
+
+/* Centrar el texto de los botones */
+#iniciar-sesion,
+#registrar-empresa,
+#tutoriales,
+#ayuda {
+    text-align: center;
+}

@@ -1,0 +1,91 @@
+<app-loading *ngIf="this.loading"></app-loading>
+<div class="row w-100 mx-0 auth-page">
+    <div class="col-md-5 col-xl-5 mx-auto" style="max-width: 510px;">
+        <div class="card">
+            <div class="row">
+                <!-- <div class="col-md-4 pe-md-0">
+                    <div class="auth-side-wrapper"
+                        [ngStyle]="{ 'background-image': 'url(https://via.placeholder.com/219x452)' }">
+
+                    </div>
+                </div> -->
+                <div class="col-md-12 ps-md-0">
+                    <div class="auth-form-wrapper px-4 py-5">
+                        <a routerLink="." class="nobleui-logo d-block mb-2">
+                            <img class="logotipo" src="./../../../../assets/img/logo_sirpsi.png" alt="Logo de Sirpsi">
+                        </a>
+                        <h5 class="text-muted fw-normal mb-4">¡Bienvenido de nuevo! Ingrese a su cuenta.</h5>
+                        <form #f="ngForm" [formGroup]="this.form">
+                            <div class="mb-3">
+                                <label class="form-label">Nit o documento empresa</label>
+                                <input class="form-control" type="text" #IdCompany placeholder="Nit o documento empresa"
+                                    formControlName="IdCompany" required />
+                                <p class="text-danger mt-1" *ngIf="form.controls.IdCompany.errors?.required">Este
+                                    campo es obligatorio
+                                </p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Número documento del trabajador</label>
+                                <input class="form-control" type="text" #Document
+                                    placeholder="Número documento del trabajador" formControlName="Document" required />
+                                <p class="text-danger mt-1" *ngIf="form.controls.Document.errors?.required">Este
+                                    campo es obligatorio
+                                </p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Contraseña</label>
+                                <div>
+                                    <input class="form-control" [type]="hide ? 'password' : 'text'" #Password
+                                        placeholder="Contraseña" formControlName="Password" required
+                                        style="width: calc(100% - 40px); float: left; border-radius: 0.25rem 0 0 0.25rem;" />
+                                    <button mat-icon-button matSuffix (click)="hide = !hide"
+                                        [attr.aria-label]="'Hide password'"
+                                        style="float: left; width: 40px; background: #e9ecef; border-radius: none; border-radius: 0px 5px 5px 0px; line-height: 38px; height: auto;"
+                                        [attr.aria-pressed]="hide">
+                                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                    </button>
+                                </div>
+                                <p class="text-danger mt-1" *ngIf="form.controls.Password.errors?.required"
+                                    style="float:left;">Este
+                                    campo es obligatorio
+                                </p>
+                            </div>
+                            <!-- <div style="display:flex" class="mb-3">
+                                <ngx-recaptcha2 #ReCaptcha [siteKey]="siteKey" [useGlobalDomain]="false"
+                                    formControlName="ReCaptcha" style="margin: 0px auto;position: sticky;">
+                                </ngx-recaptcha2>
+                            </div> -->
+                            <div class="form-check mb-3" style="width: 100%; float: left;">
+                                <input type="checkbox" class="form-check-input" #Tc formControlName="Tc">
+                                <a (click)="OpenTermsConditions()">
+                                    <label class="form-check-label" for="authCheck">
+                                        Acepto la política de privacidad y condiciones de uso y la política de
+                                        tratamiento
+                                        de datos personales.
+                                    </label>
+                                </a>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0" (click)="GetInto()"
+                                        style="width: 100%" [disabled]="this.form.invalid">Ingresar</button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-outline-primary btn-icon-text mb-2 mb-md-0"
+                                        style="width: 100%" onclick="window.location = '/account/activate-user'">
+                                        Activar
+                                    </button>
+                                </div>
+                            </div>
+                            <a routerLink="/account/restore-password" class="d-block mt-3 text-muted">¿Has olvidado
+                                tu
+                                contraseña?</a>
+                            <!-- <mat-divider style="margin: 20px 0px; float:left; width: 100%;"></mat-divider> -->
+                            <a routerLink="/welcome" class="d-block mt-3 text-muted">Regresar</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

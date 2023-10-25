@@ -1,0 +1,13 @@
+<div class="card" style="margin: 0px 0px 10px;">
+    <img class="card-img-top img-fluid" [src]="(picture != null ? picture : 'http://placehold.it/800x600/f44242/fff')"
+        alt="Card image cap">
+    <div class="card-body" style="padding: 4px;text-align: center;">
+        <label class="card-title">{{title}}</label>
+        <p class="card-text">{{location}}.</p>
+        <!-- <p class="card-text">{{info}}.</p> -->
+        <div class="wrapperStars">
+            <div *ngFor="let item of this.estrellas" class="cover"></div>
+        </div>
+        <p *ngIf="price != null" class="card-text"><small class="text-muted">Precio: {{price}}</small></p>
+    </div>
+</div>

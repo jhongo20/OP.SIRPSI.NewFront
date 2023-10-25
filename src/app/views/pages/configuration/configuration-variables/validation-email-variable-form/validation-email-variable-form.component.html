@@ -1,0 +1,34 @@
+<h1 mat-dialog-title>Roles para validación</h1>
+<form class="row" #f="ngForm" [formGroup]="this.form" *ngIf="type == 0">
+    <label style="color:white;">This dialog showcases the title, close, content and actions
+        elemasdasdadaen</label>
+    <div class="col-md-6">
+        <mat-form-field class="example-full-width" appearance="outline" style="width: 100%">
+            <mat-label>Nombre:</mat-label>
+            <input type="text" matInput #Nombre placeholder="Nombre" formControlName="Nombre"
+                [readonly]="this.option == 'view'">
+        </mat-form-field>
+    </div>
+    <div class="col-md-6">
+        <mat-form-field class="example-full-width" appearance="outline" style="width: 100%">
+            <mat-label>Descripción:</mat-label>
+            <input type="text" matInput #Descripcion placeholder="Descripción" formControlName="Descripcion"
+                [readonly]="this.option == 'view'">
+        </mat-form-field>
+    </div>
+    <div class="col-md-6">
+        <mat-form-field appearance="outline">
+            <mat-label>Role: </mat-label>
+            <mat-select id="Variable2" #Variable2 formControlName="Variable2">
+                <mat-option [value]="rol.id" *ngFor="let rol of listRoles; let i = index">
+                    {{rol.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+</form>
+<div style="padding: 20px 0 25px 0;">
+    <button type="submit" class="btn btn-primary me-2" (click)="onSave()" [disabled]="this.form.invalid"
+        *ngIf="type == 0">Registrar</button>
+    <button type="submit" class="btn btn-secondary" (click)="cancelForm()">Cancelar</button>
+</div>

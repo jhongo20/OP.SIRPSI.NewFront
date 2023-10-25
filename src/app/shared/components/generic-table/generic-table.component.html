@@ -1,0 +1,273 @@
+<div class="row">
+  <div class="col-md-12 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">
+          {{ title }}
+        </h6>
+        <div class="table-responsive">
+          <table id="dataTableExample" class="table">
+            <thead style="background: #1a73e8">
+              <tr>
+                <th style="color: white" *ngFor="let column of columns">
+                  {{ column.name }}
+                </th>
+                <th
+                  style="color: white"
+                  *ngIf="this.columns.length > 0 && this.options.length > 0"
+                >
+                  Opciones
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let da of dataTable != undefined ? dataTable : data;
+                  let i = index
+                "
+              >
+                <td hidden="true">{{ da.id }}</td>
+                <td *ngFor="let column of columns">
+                  <div *ngIf="column.porcentaje != true">
+                    {{
+                      column.burnedData != null
+                        ? column.property == null
+                          ? da[column.data] != 0
+                            ? column.burnedData.not
+                            : column.burnedData.yeah
+                          : (da[column.data] != null
+                              ? da[column.data][column.property]
+                              : "") != 0
+                          ? column.burnedData.not
+                          : column.burnedData.yeah
+                        : column.property == null
+                        ? column.pipeDate != null
+                          ? (da[column.data] | date : column.pipeDate)
+                          : da[column.data]
+                        : column.pipeDate != null
+                        ? da[column.data] != null
+                          ? da[column.data][column.property]
+                          : ("" | date : column.pipeDate)
+                        : da[column.data] != null
+                        ? da[column.data][column.property]
+                        : ""
+                    }}
+                  </div>
+                  <div class="progress" *ngIf="column.porcentaje == true">
+                    <div
+                      class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+                      role="progressbar"
+                      [ngStyle]="{ width: da[column.data] + 10 + '%' }"
+                      aria-valuenow="75"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
+                  </div>
+                </td>
+                <td
+                  *ngIf="this.columns.length > 0 && this.options.length > 0"
+                  style="display: flex"
+                  select="6"
+                >
+                  <button
+                    *ngIf="this.options[0].delete"
+                    (click)="this.DeletePeople(da.id)"
+                    type="button"
+                    class="btn-delete btn btn-danger"
+                    #tooltip="matTooltip"
+                    matTooltip="Eliminar"
+                  >
+                    <i class="btn-delete fa-solid fa-trash"></i>
+                  </button>
+                  <button
+                    *ngIf="this.options[0].deletePer"
+                    (click)="this.DetailOrEditItem(da, 5)"
+                    type="button"
+                    class="btn-delete btn btn-danger"
+                    #tooltip="matTooltip"
+                    matTooltip="Eliminar"
+                  >
+                    <i class="btn-delete fa-solid fa-trash"></i>
+                  </button>
+                  <button
+                    *ngIf="this.options[0].edit"
+                    (click)="this.DetailOrEditItem(da.id, 2)"
+                    type="button"
+                    class="btn-edit btn btn-primary"
+                    style="margin: 0px 6px 0px 6px"
+                    #tooltip="matTooltip"
+                    matTooltip="Modificar"
+                  >
+                    <i class="btn-edit fa-solid fa-pencil"></i>
+                  </button>
+                  <button
+                    *ngIf="this.options[0].details"
+                    (click)="this.DetailOrEditItem(da.id, 1)"
+                    type="button"
+                    class="btn-details btn btn-warning"
+                    style="margin: 0px 6px 0px 0px"
+                    #tooltip="matTooltip"
+                    matTooltip="Detalle"
+                  >
+                    <i class="btn-details fa-regular fa-eye"></i>
+                  </button>
+                  <button
+                    *ngIf="this.options[0].state"
+                    (click)="this.ChangeStaTus(da)"
+                    type="button"
+                    class="{{
+                      da[nameColumnStatus] == this.state
+                        ? 'btn-state btn btn-secondary'
+                        : 'btn-state btn btn-success'
+                    }}"
+                    style="margin: 0px 6px 0px 0px"
+                    #tooltip="matTooltip"
+                    [matTooltip]="
+                      da[nameColumnStatus] == this.state
+                        ? 'Deshabilitar'
+                        : 'Habilitar'
+                    "
+                  >
+                    <i
+                      [ngClass]="
+                        da[nameColumnStatus] == this.state
+                          ? 'btn-state fa-solid fa-circle-xmark'
+                          : 'btn-state fa-solid fa-circle-check'
+                      "
+                    ></i>
+                  </button>
+                  <button
+                    *ngIf="this.options[0].pdf"
+                    (click)="this.DetailOrEditItem(da.id, 3)"
+                    type="button"
+                    class="btn-pdf btn btn-info"
+                    style="
+                      margin: 0px 6px 0px 0px;
+                      background: #41b234;
+                      border-color: #3eaa32;
+                    "
+                  >
+                    <i class="btn-pdf fa-solid fa-download"></i>
+                  </button>
+                  <button
+                    *ngIf="this.options[0].assign"
+                    (click)="this.DetailOrEditItem(da, 4)"
+                    type="button"
+                    class="btn-assign btn btn-info"
+                    style="
+                      margin: 0px 6px 0px 0px;
+                      background: #5c5c5c;
+                      border-color: #3d3d3d;
+                    "
+                  >
+                    <i
+                      class="btn-assign fa fa-user"
+                      #tooltip="matTooltip"
+                      matTooltip="Asignar"
+                    ></i>
+                  </button>
+                  <button
+                    *ngIf="this.options[0].select"
+                    (click)="
+                      this.SeletedItem(
+                        da,
+                        da.estado,
+                        this.options[0].validationSelect
+                      )
+                    "
+                    type="button"
+                    class="btn-select btn btn-info"
+                    style="margin: 0px 6px 0px 0px"
+                  >
+                    <i
+                      class="btn-select fa-solid fa-arrow-right"
+                      #tooltip="matTooltip"
+                      matTooltip="Consultar"
+                    ></i>
+                  </button>
+                  <input
+                    *ngIf="this.options[0].check"
+                    mdbCheckbox
+                    class="check-item form-check-input"
+                    type="checkbox"
+                    value=""
+                    id="flexCheckDefault"
+                    (click)="this.DetailOrEditItem(da, 6)"
+                  />
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br />
+<div class="row" *ngIf="this.export">
+  <div class="col-md-12 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <button
+          type="button"
+          class="btn btn-info"
+          (click)="exportTableExcel()"
+          style="
+            margin: 4px;
+            background: #1e973e;
+            border-color: #1a8336;
+            color: white;
+          "
+        >
+          Exportar a Excel
+          <i class="fa-solid fa-file-excel" style="font-size: 22px"></i>
+        </button>
+        <button
+          type="button"
+          class="btn btn-info"
+          style="
+            margin: 4px;
+            background: #1a73e8;
+            border-color: #1868d0;
+            color: white;
+          "
+          (click)="exportTableType()"
+        >
+          Exportar a Json
+          <i class="fa-solid fa-file-code" style="font-size: 22px"></i>
+        </button>
+        <!-- <button type="button" class="btn btn-info"
+                    style="margin: 4px;background: #797979;border-color:#6b6b6b; color: white;"
+                    (click)="exportTableType()">
+                    Exportar a Txt
+                    <i class="fa-solid fa-file-lines" style="font-size: 22px;"></i>
+                </button> -->
+        <button
+          type="button"
+          class="btn btn-info"
+          (click)="exportToPDF()"
+          style="
+            margin: 4px;
+            background: #971e1e;
+            border-color: #831a1a;
+            color: white;
+          "
+        >
+          Exportar a Pdf
+          <i class="fa-solid fa-file-pdf" style="font-size: 22px"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

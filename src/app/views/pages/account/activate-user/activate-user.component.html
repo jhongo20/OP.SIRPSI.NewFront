@@ -1,0 +1,35 @@
+<app-loading *ngIf="this.loading"></app-loading>
+<div style="float: left; width: 100%;">
+    <div class="wrapper">
+        <form #f="ngForm" [formGroup]="this.form">
+            <h2><b>Activar usuario</b></h2>
+            <mat-divider style="margin: 10px 0px; float:left; width: 100%;"></mat-divider>
+            <div class="mb-3">
+                <label class="form-label">Empresa:</label>
+                <input class="form-control" type="text" #Company placeholder="Empresa" formControlName="Company"
+                    required />
+                <p class="text-danger mt-1" *ngIf="form.controls.Company.errors?.errors">Error en el digito
+                </p>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Cedula:</label>
+                <input class="form-control" type="text" #Document placeholder="Cedula" formControlName="Document"
+                    required />
+                <p class="text-danger mt-1" *ngIf="form.controls.Document.errors?.errors">Error en el digito
+                </p>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Codigo:</label>
+                <input class="form-control" type="text" #Code placeholder="Codigo" formControlName="Code" required />
+                <p class="text-danger mt-1" *ngIf="form.controls.Code.errors?.errors">Error en el digito
+                </p>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0" (click)="GetInto()" style="width: 100%;"
+                    [disabled]="this.form.invalid">Activar</button>
+            </div>
+            <mat-divider style="margin: 20px 0px; float:left; width: 100%;"></mat-divider>
+            <h3><a href="/welcome" class="item-blue">Regresar</a></h3>
+        </form>
+    </div>
+</div>

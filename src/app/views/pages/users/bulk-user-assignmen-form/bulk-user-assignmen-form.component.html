@@ -1,0 +1,35 @@
+<form class="row" #f="ngForm" [formGroup]="this.form">
+    <div class="col-md-6 mb-4">
+        <label class="form-label">Centro de trabajo:</label>
+        <ng-select id="WorkCenter" #WorkCenter formControlName="WorkCenter" [items]="listWorkCenters" bindLabel="nombre"
+            bindValue="id" [(ngModel)]="this.form.value.WorkCenter" required (change)="selectedWorkCenter($event)">
+        </ng-select>
+        <!-- <p class="mt-2 text-muted">Id: <span class="fw-bolder">{{this.form.value.TipoDocumento}}</span></p> -->
+    </div>
+    <div class="row" style="text-align: center;">
+        <div class="col-md-6" *ngFor="let user of listUsersCompany; let x=index">
+            <div class="wrapper table table-responsive">
+                <table class="table table-responsive">
+                    <thead class="table-dark align-middle table table-responsive">
+                        <tr>
+                            <th>Asignar</th>
+                            <th>Cédula</th>
+                            <th>Nombre</th>
+                            <th>Apellidos</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table table-responsive">
+                        <tr>
+                            <td><mat-checkbox [disabled]="this.workCenter == null"
+                                    (change)="AssignUser(user)"></mat-checkbox>
+                            </td>
+                            <td>{{user.cedula}}</td>
+                            <td>{{user.nombreUsuario}}</td>
+                            <td>{{user.apellidosUsuario}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</form>

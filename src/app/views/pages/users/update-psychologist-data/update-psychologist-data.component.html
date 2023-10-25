@@ -1,0 +1,175 @@
+<label class="title">Actualizar datos Psicólogo Especialista SST</label>
+<form class="row" #f="ngForm" [formGroup]="this.formInitial">
+    <hr class="hr" />
+    <div class="col-md-3 mb-2">
+        <label class="form-label">Usuario <i class="mdi mdi-information" #tooltip="matTooltip"
+                matTooltip="Seleccione una psicologo para actualizar sus datos"></i></label>
+        <ng-select id="User" #User formControlName="User" [items]="listUsuario" bindLabel="nombreUsuario" bindValue="id"
+            [(ngModel)]="this.formInitial.value.User" [searchWhileComposing]="true" required
+            (change)="selectedUser($event)">
+            <ng-template ng-label-tmp let-item="item">
+                <span>{{ item.cedula }} - {{ item.nombreUsuario + ' ' + item.apellidosUsuario }}</span>
+            </ng-template>
+            <ng-template ng-option-tmp let-item="item" let-search="searchTerm" let-index="index">
+                <span>{{ item.cedula }} - {{ item.nombreUsuario + ' ' + item.apellidosUsuario }}</span>
+            </ng-template>
+        </ng-select>
+        <p class="text-danger" *ngIf="formInitial.controls.User.errors?.required">Este
+            campo es obligatorio
+        </p>
+    </div>
+</form>
+<form class="row" #f="ngForm" [formGroup]="this.form" *ngIf="this.formInitial.valid">
+    <hr class="hr" />
+    <div class="col-md-3">
+        <label class="form-label">Tipo de documento <i class="mdi mdi-information" #tooltip="matTooltip"
+                matTooltip="Seleccione un tipo de documento de identidad"></i></label>
+        <ng-select id="IdTypeDocument" #IdTypeDocument formControlName="IdTypeDocument" [items]="listDocs"
+            bindLabel="nombre" bindValue="id" [(ngModel)]="this.form.value.IdTypeDocument" [readonly]="true">
+        </ng-select>
+        <p class="text-danger mt-1" *ngIf="form.controls.IdTypeDocument.errors?.required">Este
+            campo es obligatorio
+        </p>
+        <!-- <p class="mt-2 text-muted">Id: <span class="fw-bolder">{{this.form.value.TipoDocumento}}</span></p> -->
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Número de documento <i class="mdi mdi-information" #tooltip="matTooltip"
+                matTooltip="Ingrese el número de documento"></i></label>
+        <input class="form-control" type="text" #Document placeholder="Número de documento" formControlName="Document" />
+        <p class="text-danger mt-1" *ngIf="form.controls.Document.errors?.required">Este
+            campo es obligatorio
+        </p>
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Nombre completo <i class="mdi mdi-information" #tooltip="matTooltip"
+                matTooltip="Ingrese su nombre o nombres"></i></label>
+        <input class="form-control" type="text" #Names placeholder="Nombre" formControlName="Names" />
+        <p class="text-danger mt-1" *ngIf="form.controls.Names.errors?.required">Este
+            campo es obligatorio
+        </p>
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Apellidos <i class="mdi mdi-information" #tooltip="matTooltip"
+                matTooltip="Ingrese sus apellidos"></i></label>
+        <input class="form-control" type="text" #Surnames placeholder="Apellidos" formControlName="Surnames" />
+        <p class="text-danger mt-1" *ngIf="form.controls.Surnames.errors?.required">Este
+            campo es obligatorio
+        </p>
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Telefono <i class="mdi mdi-information" #tooltip="matTooltip"
+                matTooltip="Ingrese un telefono celular"></i></label>
+        <input class="form-control mb-4 mb-md-0"  mask="(000) 000 00 00" [showMaskTyped]="true"
+            #PhoneNumber placeholder="Telefono" formControlName="PhoneNumber" />
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">País <i class="mdi mdi-information" #tooltip="matTooltip"
+                matTooltip="Seleccione un país"></i></label>
+        <ng-select id="IdCountry" #IdCountry formControlName="IdCountry" [items]="listPaises" bindLabel="nombre"
+            bindValue="id" [(ngModel)]="this.form.value.IdCountry" required>
+        </ng-select>
+        <p class="text-danger mt-1" *ngIf="form.controls.IdCountry.errors?.required">Este
+            campo es obligatorio
+        </p>
+    </div>
+    <div class="col-md-3" style="display:none">
+        <label class="form-label">Rol <i class="mdi mdi-information" #tooltip="matTooltip"
+                matTooltip="Ingrese su contraseña actual"></i></label>
+        <ng-select id="IdRol" #IdRol formControlName="IdRol" [items]="listRoles" bindLabel="name" bindValue="id"
+            [(ngModel)]="this.form.value.IdRol" required>
+        </ng-select>
+    </div>
+    <div class="col-md-3" style="display:none">
+        <label class="form-label">Empresa <i class="mdi mdi-information" #tooltip="matTooltip"
+                matTooltip="Ingrese su contraseña actual"></i></label>
+        <ng-select id="IdCompany" #IdCompany formControlName="IdCompany" [items]="listEmpresas" bindLabel="nombre"
+            bindValue="id" [(ngModel)]="this.form.value.IdCompany">
+        </ng-select>
+    </div>
+    <div class="col-md-3" style="display:none">
+        <label class="form-label">Estado:</label>
+        <ng-select id="IdEstado" #IdEstado formControlName="IdEstado" [items]="estadosList" bindLabel="nombre"
+            bindValue="id" [(ngModel)]="this.form.value.IdEstado" required>
+        </ng-select>
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Sexo <i class="mdi mdi-information" #tooltip="matTooltip"
+                matTooltip="Seleccione un sexo"></i></label>
+        <ng-select id="IdSex" #IdSex formControlName="IdSex" [items]="listSexos" bindLabel="nombre"
+            bindValue="id" [(ngModel)]="this.form.value.IdSex" required>
+        </ng-select>
+        <p class="text-danger mt-1" *ngIf="form.controls.IdSex.errors?.required">Este
+            campo es obligatorio
+        </p>
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Fecha de nacimiento <i class="mdi mdi-information" #tooltip="matTooltip"
+                matTooltip="Ingrese la fecha de nacimiento"></i></label>
+        <input class="form-control" placeholder="yyyy-mm-dd" #Birthdate type="date" id="prueba"
+        formControlName="Birthdate">
+        <p class="text-danger mt-1" *ngIf="form.controls.Birthdate.errors?.required">Este
+            campo es obligatorio
+        </p>
+    </div>
+    <hr class="hr" />
+    <h2><b>Lugar de nacimiento</b></h2>
+    <div class="row">
+        <div class="col-md-4 mb-2">
+            <label class="form-label">Departamento <i class="mdi mdi-information" #tooltip="matTooltip"
+                    matTooltip="Ingrese Departamento"></i></label>
+            <ng-select id="PlaceBirthDepartment" #PlaceBirthDepartment formControlName="PlaceBirthDepartment" [items]="listDepartament"
+                bindLabel="name" bindValue="id" [(ngModel)]="form.value.PlaceBirthDepartment" (change)="onGetCity(form.value)">
+            </ng-select>
+            <p class="text-danger" *ngIf="form.controls.PlaceBirthDepartment.errors?.required">Este
+                campo es obligatorio
+            </p>
+        </div>
+        <div class="col-md-4 mb-2">
+            <label class="form-label">Ciudad <i class="mdi mdi-information" #tooltip="matTooltip"
+                    matTooltip="Ingrese Ciudad"></i></label>
+            <ng-select id="PlaceBirthCity" #PlaceBirthCity formControlName="PlaceBirthCity" [items]="listCity" bindLabel="name"
+                bindValue="id" [(ngModel)]="form.value.PlaceBirthCity">
+            </ng-select>
+            <p class="text-danger" *ngIf="form.controls.PlaceBirthCity.errors?.required">Este
+                campo es obligatorio
+            </p>
+        </div>
+    </div>
+</form>
+<form #f="ngForm" [formGroup]="this.formEmail" *ngIf="this.formInitial.valid">
+    <hr class="hr" />
+    <h2><b>Cambiar correo</b></h2>
+    <div class="row">
+        <div class="col-md-5 mb-3">
+            <label class="form-label">Correo actual <i class="mdi mdi-information" #tooltip="matTooltip"
+                    matTooltip="Ingrese su correo actual"></i></label>
+            <input class="form-control" type="email" #OldEmail formControlName="OldEmail" />
+            <p class="text-danger mt-1" *ngIf="formEmail.controls.OldEmail.errors?.required">Este
+                campo es obligatorio
+            </p>
+        </div>
+        <div class="col-md-3 mb-3">
+            <label class="form-label">Nit de la empresa <i class="mdi mdi-information" #tooltip="matTooltip"
+                    matTooltip="Ingrese el nit de la empresa"></i></label>
+            <input class="form-control" type="text" #Nit placeholder="Ingrese nit de la empresa"
+                formControlName="Nit" />
+            <p class="text-danger mt-1" *ngIf="formEmail.controls.Nit.errors?.required">Este
+                campo es obligatorio
+            </p>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label class="form-label" style="width: 100%;">&nbsp;</label>
+            <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0" (click)="openChangeEmailForm()"
+                [disabled]="this.formEmail.invalid">Actualizar correo</button>
+        </div>
+    </div>
+</form>
+<hr class="hr" *ngIf="this.formInitial.valid" />
+<div *ngIf="this.formInitial.valid">
+    <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0" (click)="GetInto()"
+        [disabled]="this.form.invalid">Actualizar datos</button>
+    <button class="btn btn-secondary" type="submit" style="margin-right: 8px;"
+        (click)="cancelarForm();">Cancelar</button>
+    <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0" (click)="openOccupationalLicense()">Actualizar
+        licencia ocupacional</button>
+</div>

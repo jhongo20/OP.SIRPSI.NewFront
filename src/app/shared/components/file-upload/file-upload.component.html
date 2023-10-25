@@ -1,0 +1,10 @@
+<mat-form-field class="example-full-width" appearance="outline">
+    <div>
+        <mat-toolbar>
+            <input matInput [(ngModel)]="fileAttr" readonly name="name" />
+            <button mat-flat-button style="background: #cf0018; color:white;">Cargar archivo.</button>
+        </mat-toolbar>
+        <input type="file" #fileInput id="uploadFile" (change)="uploadFileEvt($event)" name="uploadFile"
+            multiple="multiple" accept="image/*" [disabled]="disabledArea" />
+    </div>
+</mat-form-field>
