@@ -39,14 +39,13 @@ export class AssignWorkCentersFormComponent implements OnInit {
       IdEstado: [''],
       IdUsuario: '',
       IdEmpresa: [this.data.id, Validators.required],
-      IdDepartamento: [0, Validators.required],
-      IdMunicipio: [0, Validators.required],
+      IdDepartamento: 0,
+      IdMunicipio: 0,
       Email: ['', Validators.required],
       Celular: '',
       Telefono: '',
       Direccion: '',
     });
-    this.onGetDepartment(environment.urlApiColombia + 'Department');
   }
   onSaveCentroTrabajo() {
     console.log(this.form.value);
@@ -81,10 +80,11 @@ export class AssignWorkCentersFormComponent implements OnInit {
   }
   onGetDepartment(url: string) {
     this.servicio.obtenerDatos(url).subscribe((data) => {
-      this.listDepartament = data.sort((x: any, y: any) => x.name.localeCompare(y.name));
+      this.listDepartament = data;
     });
   }
   onGetCity(url: any) {
+    console.log('city', url.IdDepartamento);
     this.listCity = [];
     this.form.value.IdMunicipio = '';
     if (url.IdDepartamento == null) return;
@@ -93,7 +93,7 @@ export class AssignWorkCentersFormComponent implements OnInit {
         environment.urlApiColombia + `Department/${url.IdDepartamento}/cities`
       )
       .subscribe((data) => {
-        this.listCity = data.sort((x: any, y: any) => x.name.localeCompare(y.name));
+        this.listCity = data;
       });
   }
 }

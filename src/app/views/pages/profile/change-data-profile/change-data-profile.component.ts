@@ -134,6 +134,7 @@ export class ChangeDataProfileComponent implements OnInit {
     this.genericService
       .GetAll('usuario/ConsultarUsuario?id=' + this.accountService.userData.id)
       .subscribe((data: any) => {
+        console.log(data.telefono.split('57'));
         this.form.controls['Id'].setValue(data.id);
         this.form.controls['IdTypeDocument'].setValue(data.idTipoDocumento);
         this.form.controls['Document'].setValue(data.cedula);
@@ -142,7 +143,11 @@ export class ChangeDataProfileComponent implements OnInit {
         this.form.controls['Names'].setValue(data.nombreUsuario);
         this.form.controls['Surnames'].setValue(data.apellidosUsuario);
         this.form.controls['IdRol'].setValue(data.idRol);
-        this.form.controls['PhoneNumber'].setValue(data.telefono);
+        this.form.controls['PhoneNumber'].setValue(
+          data.telefono != undefined && data.telefono != null
+            ? data.telefono.split('57')[2]
+            : ''
+        );
         this.form.controls['Email'].setValue(data.correo);
         this.form.controls['IdEstado'].setValue(data.idEstado);
         setTimeout(() => this.loadingService.ChangeStatusLoading(false), 600);

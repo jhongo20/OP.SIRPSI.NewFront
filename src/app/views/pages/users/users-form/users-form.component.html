@@ -3,35 +3,35 @@
     elemen</label>
 <form class="row" #f="ngForm" [formGroup]="this.form" *ngIf="type == 0">
     <div class="col-md-6">
-        <label class="form-label">Tipo de documento</label>
+        <label class="form-label">Tipo de documento:</label>
         <ng-select id="IdTypeDocument" #IdTypeDocument formControlName="IdTypeDocument" [items]="listDocs"
             bindLabel="nombre" bindValue="id" [(ngModel)]="this.form.value.IdTypeDocument" required>
         </ng-select>
         <!-- <p class="mt-2 text-muted">Id: <span class="fw-bolder">{{this.form.value.TipoDocumento}}</span></p> -->
     </div>
     <div class="col-md-6">
-        <label class="form-label">Número de documento</label>
+        <label class="form-label">Documento:</label>
         <input class="form-control" type="text" #Document placeholder="Documento" formControlName="Document" required />
         <p class="text-danger mt-1" *ngIf="form.controls.Document.errors?.required">Este
             campo es obligatorio
         </p>
     </div>
     <div class="col-md-6">
-        <label class="form-label">Nombre completo</label>
+        <label class="form-label">Nombre:</label>
         <input class="form-control" type="text" #Names placeholder="Nombre" formControlName="Names" required />
         <p class="text-danger mt-1" *ngIf="form.controls.Names.errors?.required">Este
             campo es obligatorio
         </p>
     </div>
     <div class="col-md-6">
-        <label class="form-label">Apellidos</label>
+        <label class="form-label">Apellidos:</label>
         <input class="form-control" type="text" #Surnames placeholder="Apellidos" formControlName="Surnames" required />
         <p class="text-danger mt-1" *ngIf="form.controls.Surnames.errors?.required">Este
             campo es obligatorio
         </p>
     </div>
     <div class="col-md-6">
-        <label class="form-label">Contraseña</label>
+        <label class="form-label">Contraseña:</label>
         <div>
             <input class="form-control" [type]="hide ? 'password' : 'text'" #Password placeholder="Confirmar contraseña"
                 formControlName="Password" required
@@ -47,7 +47,7 @@
         </p>
     </div>
     <div class="col-md-6">
-        <label class="form-label">Email</label>
+        <label class="form-label">Email:</label>
         <input class="form-control" type="text" #Email placeholder="Email" formControlName="Email" />
         <p class="text-danger mt-1" *ngIf="form.controls.Email.errors?.email">Email no valido</p>
         <p class="text-danger mt-1" *ngIf="form.controls.Email.errors?.required">Este
@@ -55,8 +55,8 @@
         </p>
     </div>
     <div class="col-md-6">
-        <label class="form-label">Telefono</label>
-        <input class="form-control mb-4 mb-md-0"  mask="(000) 000 00 00" [showMaskTyped]="true"
+        <label class="form-label">Telefono:</label>
+        <input class="form-control mb-4 mb-md-0" prefix="+57 " mask="(000) 000 00 00" [showMaskTyped]="true"
             #PhoneNumber placeholder="Telefono" formControlName="PhoneNumber" />
     </div>
     <div class="col-md-6" [ngStyle]="{'display': (this.data.role == undefined ? 'block' : 'none')}">
@@ -66,19 +66,19 @@
         </ng-select>
     </div>
     <div class="col-md-6">
-        <label class="form-label">País</label>
+        <label class="form-label">País:</label>
         <ng-select id="IdCountry" #IdCountry formControlName="IdCountry" [items]="listPaises" bindLabel="nombre"
             bindValue="id" [(ngModel)]="this.form.value.IdCountry" required>
         </ng-select>
     </div>
     <div class="col-md-6" [ngStyle]="{'display': (this.data.retornarModal == undefined ? 'block' : 'none')}">
-        <label class="form-label">Empresa</label>
+        <label class="form-label">Empresa:</label>
         <ng-select id="IdCompany" #IdCompany formControlName="IdCompany" [items]="listEmpresas" bindLabel="nombre"
             bindValue="id" [(ngModel)]="this.form.value.IdCompany">
         </ng-select>
     </div>
     <div class="col-md-6" [ngStyle]="{'display': (this.viewStatus ? 'block' : 'none')}">
-        <label class="form-label">Estado</label>
+        <label class="form-label">Estado:</label>
         <ng-select id="IdEstado" #IdEstado formControlName="IdEstado" [items]="estadosList" bindLabel="nombre"
             bindValue="id" [(ngModel)]="this.form.value.IdEstado" required>
         </ng-select>
@@ -86,7 +86,7 @@
 </form>
 <form class="row" #f="ngForm" [formGroup]="this.formEmpresa" *ngIf="type == 1">
     <div class="col-md-12">
-        <label class="form-label">Usuario</label>
+        <label class="form-label">Usuario:</label>
         <ng-select id="Usuario" #Usuario formControlName="Usuario" [items]="listUsuario" bindLabel="nombreUsuario"
             bindValue="id" [(ngModel)]="this.formEmpresa.value.IdUsuario" [searchWhileComposing]="true" required>
             <ng-template ng-option-tmp let-item="item" let-search="searchTerm" let-index="index">

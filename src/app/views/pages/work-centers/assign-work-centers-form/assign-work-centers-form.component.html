@@ -1,5 +1,5 @@
 <form class="row" #f="ngForm" [formGroup]="this.form">
-    <label class="title">Centro de trabajo</label>
+    <label class="title">Centro de trabajo principal</label>
     <div class="col-md-4 mb-2">
         <label class="form-label">Nombre <i class="mdi mdi-information" #tooltip="matTooltip"
                 matTooltip="Ingrese el nombre del centro de trabajo"></i></label>
@@ -27,13 +27,13 @@
     <div class="col-md-4 mb-2">
         <label class="form-label">Celular <i class="mdi mdi-information" #tooltip="matTooltip"
                 matTooltip="Ingrese su celular de contacto"></i></label>
-        <input class="form-control mb-4 mb-md-0"  mask="(000) 000 00 00" [showMaskTyped]="true" #Celular
+        <input class="form-control mb-4 mb-md-0" prefix="+57 " mask="(000) 000 00 00" [showMaskTyped]="true" #Celular
             placeholder="Celular" formControlName="Celular" />
     </div>
     <div class="col-md-4 mb-2">
         <label class="form-label">Teléfono fijo <i class="mdi mdi-information" #tooltip="matTooltip"
                 matTooltip="Ingrese su telefono de contacto"></i></label>
-        <input class="form-control mb-4 mb-md-0"  mask="(000) 000 00 00" [showMaskTyped]="true" #Telefono
+        <input class="form-control mb-4 mb-md-0" prefix="+57 " mask="(000) 000 00 00" [showMaskTyped]="true" #Telefono
             placeholder="Telefono" formControlName="Telefono" />
     </div>
     <div class="col-md-4 mb-2">
@@ -42,9 +42,6 @@
         <ng-select id="IdDepartamento" #IdDepartamento formControlName="IdDepartamento" [items]="listDepartament"
             bindLabel="name" bindValue="id" [(ngModel)]="form.value.IdDepartamento" (change)="onGetCity(form.value)">
         </ng-select>
-        <p class="text-danger" *ngIf="form.controls.IdDepartamento.errors?.required">Este
-            campo es obligatorio
-        </p>
     </div>
     <div class="col-md-4 mb-2">
         <label class="form-label">Ciudad <i class="mdi mdi-information" #tooltip="matTooltip"
@@ -52,9 +49,6 @@
         <ng-select id="IdMunicipio" #IdMunicipio formControlName="IdMunicipio" [items]="listCity" bindLabel="name"
             bindValue="id" [(ngModel)]="form.value.IdMunicipio">
         </ng-select>
-        <p class="text-danger" *ngIf="form.controls.IdMunicipio.errors?.required">Este
-            campo es obligatorio
-        </p>
     </div>
     <div class="col-md-4 mb-2">
         <label class="form-label">Direccion <i class="mdi mdi-information" #tooltip="matTooltip"

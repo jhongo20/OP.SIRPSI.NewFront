@@ -9,7 +9,6 @@ import { LoadingService } from 'src/app/shared/services/loading.service';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import { OccupationalLicenseComponent } from './occupational-license/occupational-license.component';
-import { getService } from 'src/app/shared/services/get,services';
 
 @Component({
   selector: 'app-update-psychologist-data',
@@ -26,9 +25,6 @@ export class UpdatePsychologistDataComponent implements OnInit {
   listEmpresas: any;
   listDocs: any;
   listPaises: any;
-  listSexos: any;
-  listDepartament: any;
-  listCity: any;
   id: number | undefined;
   listRoles: any;
   constructor(
@@ -39,8 +35,7 @@ export class UpdatePsychologistDataComponent implements OnInit {
     public router: Router,
     private activatedRoute: ActivatedRoute,
     private genericService: GenericService,
-    public dialog: MatDialog,
-    private servicio: getService
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -57,10 +52,6 @@ export class UpdatePsychologistDataComponent implements OnInit {
       PhoneNumber: '',
       Email: '',
       IdEstado: environment.activoEstado,
-      IdSex: ['', Validators.required],
-      Birthdate: ['', Validators.required],
-      PlaceBirthDepartment: [0, Validators.required],
-      PlaceBirthCity: [0, Validators.required],
     });
     this.formEmail = this.formBuilder.group({
       OldEmail: ['', Validators.required],
@@ -69,30 +60,27 @@ export class UpdatePsychologistDataComponent implements OnInit {
     this.formInitial = this.formBuilder.group({
       User: ['', Validators.required],
     });
-    this.formInitial.reset();
-    this.onGetDepartment(environment.urlApiColombia + 'Department');
     this.getListas();
   }
   GetInto() {
     this.loadingService.ChangeStatusLoading(true);
-    this.genericService
-      .Put('usuario/ActualizarUsuario', this.form.value)
-      .subscribe(
-        (result: any) => {
-          this.openSnackBar(result.message);
-          Swal.fire({
-            icon: 'success',
-            title: result.message,
-            showConfirmButton: false,
-          }).then(() => window.location.reload());
-          setTimeout(() => this.loadingService.ChangeStatusLoading(false), 800);
-        },
-        (error) => {
-          console.error(error);
-          this.openSnackBar(error.error.message);
-          setTimeout(() => this.loadingService.ChangeStatusLoading(false), 800);
-        }
-      );
+    this.accountService.ChangePassword(this.form.value).subscribe(
+      (result: any) => {
+        this.openSnackBar(result.message);
+        Swal.fire({
+          icon: 'success',
+          title: result.message,
+          showConfirmButton: false,
+          timer: 2000,
+        }).then(() => window.location.reload());
+        setTimeout(() => this.loadingService.ChangeStatusLoading(false), 800);
+      },
+      (error) => {
+        console.error(error);
+        this.openSnackBar(error.error.message);
+        setTimeout(() => this.loadingService.ChangeStatusLoading(false), 800);
+      }
+    );
   }
   openSnackBar(message: string) {
     this.snackBar.open(message, 'x', {
@@ -102,52 +90,48 @@ export class UpdatePsychologistDataComponent implements OnInit {
   }
   getListas() {
     this.loadingService.ChangeStatusLoading(true);
-    this.genericService.GetAll('sexo/ConsultarSexo').subscribe((data: any) => {
-      this.listSexos = data;
-      this.genericService
-        .GetAll('empresas/ConsultarEmpresas')
-        .subscribe((data: any) => {
-          this.listEmpresas = data;
-          this.genericService
-            .GetAll('tipodocumento/ConsultarTipoDocumento')
-            .subscribe((data: any) => {
-              this.listDocs = data;
-              this.genericService
-                .GetAll('pais/ConsultarPaises')
-                .subscribe((data: any) => {
-                  this.listPaises = data;
-                  this.genericService
-                    .GetAll('roles/ConsultarRoles')
-                    .subscribe((data: any) => {
-                      this.listRoles = data;
-                      this.genericService
-                        .GetAll('estados/ConsultarEstados')
-                        .subscribe((data: any) => {
-                          this.estadosList = data;
-                          this.genericService
-                            .GetAll(
-                              'usuario/consultarUsuariosEmpresa?role=' +
-                                environment.psicologoRole
-                            )
-                            .subscribe((data: any) => {
-                              this.listUsuario = data;
-                              setTimeout(
-                                () =>
-                                  this.loadingService.ChangeStatusLoading(
-                                    false
-                                  ),
-                                600
-                              );
-                            });
-                        });
-                    });
-                });
-            });
-        });
-    });
+    this.genericService
+      .GetAll('empresas/ConsultarEmpresas')
+      .subscribe((data: any) => {
+        this.listEmpresas = data;
+        this.genericService
+          .GetAll('tipodocumento/ConsultarTipoDocumento')
+          .subscribe((data: any) => {
+            this.listDocs = data;
+            this.genericService
+              .GetAll('pais/ConsultarPaises')
+              .subscribe((data: any) => {
+                this.listPaises = data;
+                this.genericService
+                  .GetAll('roles/ConsultarRoles')
+                  .subscribe((data: any) => {
+                    this.listRoles = data;
+                    this.genericService
+                      .GetAll('estados/ConsultarEstados')
+                      .subscribe((data: any) => {
+                        this.estadosList = data;
+                        this.genericService
+                          .GetAll(
+                            'usuario/consultarUsuariosEmpresa?role=' +
+                              environment.psicologoRole
+                          )
+                          .subscribe((data: any) => {
+                            this.listUsuario = data;
+                            setTimeout(
+                              () =>
+                                this.loadingService.ChangeStatusLoading(false),
+                              600
+                            );
+                          });
+                      });
+                  });
+              });
+          });
+      });
   }
   loadData(data: any) {
     this.loadingService.ChangeStatusLoading(true);
+    console.log(data.telefono.split('57'));
     this.form.controls['Id'].setValue(data.id);
     this.form.controls['IdTypeDocument'].setValue(data.idTipoDocumento);
     this.form.controls['Document'].setValue(data.cedula);
@@ -156,19 +140,13 @@ export class UpdatePsychologistDataComponent implements OnInit {
     this.form.controls['Names'].setValue(data.nombreUsuario);
     this.form.controls['Surnames'].setValue(data.apellidosUsuario);
     this.form.controls['IdRol'].setValue(data.idRol);
-    this.form.controls['PhoneNumber'].setValue(data.telefono);
+    this.form.controls['PhoneNumber'].setValue(
+      data.telefono != undefined && data.telefono != null
+        ? data.telefono.split('57')[2]
+        : ''
+    );
     this.form.controls['Email'].setValue(data.correo);
     this.form.controls['IdEstado'].setValue(data.idEstado);
-
-    this.form.controls['IdSex'].setValue(data.idSex);
-    this.form.controls['Birthdate'].setValue(
-      data.birthdate != null ? data.birthdate.split('T')[0] : ''
-    );
-    this.form.controls['PlaceBirthDepartment'].setValue(
-      data.placeBirthDepartment
-    );
-    this.onGetCity({ PlaceBirthDepartment: data.placeBirthDepartment });
-    this.form.controls['PlaceBirthCity'].setValue(data.placeBirthCity);
     setTimeout(() => this.loadingService.ChangeStatusLoading(false), 600);
   }
   openChangeEmailForm() {
@@ -218,27 +196,5 @@ export class UpdatePsychologistDataComponent implements OnInit {
       return;
     }
     this.loadData(event);
-  }
-  onGetDepartment(url: string) {
-    this.servicio.obtenerDatos(url).subscribe((data) => {
-      this.listDepartament = data.sort((x: any, y: any) =>
-        x.name.localeCompare(y.name)
-      );
-    });
-  }
-  onGetCity(url: any) {
-    this.listCity = [];
-    this.form.value.PlaceBirthCity = '';
-    if (url.PlaceBirthDepartment == null) return;
-    this.servicio
-      .obtenerDatos(
-        environment.urlApiColombia +
-          `Department/${url.PlaceBirthDepartment}/cities`
-      )
-      .subscribe((data) => {
-        this.listCity = data.sort((x: any, y: any) =>
-          x.name.localeCompare(y.name)
-        );
-      });
   }
 }

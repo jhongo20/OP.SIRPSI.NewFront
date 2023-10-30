@@ -1,0 +1,61 @@
+<div *ngIf="view && !final">
+    <label class="title" style="margin-top: 1.5em;">Cuestionario de evaluaciones psicosociales</label>
+
+    <div class="d-flex justify-content-end">
+        <div>
+            <div class="data-psychologist">Datos del Psicólogo Especialista SST</div>
+            <div class="text-psychologist">Nombre Completo: <span>Carlos Zarate</span> </div>
+            <div class="text-psychologist" style="margin-bottom: 1em;">Datos de contacto: <span>320129301</span></div>
+        </div>
+        <div class="ms-auto d-flex" id="cronometro" *ngIf="cronometroActivo">
+            <div class="data-psychologist" style="margin-right: .5em;">Tiempo Restante:</div>
+            {{ horas + ':' + minutos + ':' + segundos }}
+        </div>
+        <div class="ms-auto d-flex" id="cronometro" *ngIf="!cronometroActivo">
+        </div>
+    </div>
+
+    <div class="example">
+        <ul ngbNav #defaultNav="ngbNav" [(activeId)]="defaultNavActiveId" class="nav-tabs">
+            <li [ngbNavItem]="1">
+                <a ngbNavLink [class]="tab1 ? 'disabled' : ''">Cuestionario Factores Intralaborales</a>
+                <ng-template ngbNavContent>
+                    <app-intra-work-factors-questionnaire [idQuiz]="idQuiz" (propagar)="completeQuiz1()"
+                        (propagarStart)="startQuiz()"></app-intra-work-factors-questionnaire>
+                </ng-template>
+            </li>
+            <li [ngbNavItem]="2">
+                <a ngbNavLink [class]="tab2 ? 'disabled' : ''">Cuestionario Factores Extralaborales</a>
+                <ng-template ngbNavContent>
+                    <app-non-work-factors-questionnaire [idQuiz]="idQuiz"
+                        (propagar)="completeQuiz2()"></app-non-work-factors-questionnaire>
+                </ng-template>
+            </li>
+            <li [ngbNavItem]="3">
+                <a ngbNavLink [class]="tab3 ? 'disabled' : ''">Cuestionario Estrés</a>
+                <ng-template ngbNavContent>
+                    <app-stress-questionnaire [idQuiz]="idQuiz" (propagar)="completeQuiz3()"></app-stress-questionnaire>
+                </ng-template>
+            </li>
+            <li [ngbNavItem]="4">
+                <a ngbNavLink [class]="tab4 ? 'disabled' : ''">Ficha de Datos Generales</a>
+                <ng-template ngbNavContent>
+                    <app-general-data-sheet (propagar)="completeQuiz4()"></app-general-data-sheet>
+                </ng-template>
+            </li>
+        </ul>
+        <div [ngbNavOutlet]="defaultNav" class="border border-top-0 p-3"></div>
+    </div>
+</div>
+
+<div *ngIf="final">
+    <label class="title" style="margin-top: 1.5em; margin-bottom: 1.5em;">Cuestionario de evaluaciones
+        psicosociales</label>
+    <div style="padding: 3em;">
+        <h2 class="text-center">RESULTADOS</h2>
+        <p>Se ha terminado correctamente la evaluación psicosocial para la presente vigencia y le asignará y mostrará el
+            radicado
+            correspondiente:</p>
+    </div>
+
+</div>

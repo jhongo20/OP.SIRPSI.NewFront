@@ -7,7 +7,6 @@ import { Observable } from 'rxjs';
 import { RolesEnum } from 'src/app/core/enums/Roles';
 import { AccountService } from 'src/app/shared/services/account.service';
 import { GenericService } from 'src/app/shared/services/generic.service';
-import { getService } from 'src/app/shared/services/get,services';
 import { LoadingService } from 'src/app/shared/services/loading.service';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
@@ -21,8 +20,8 @@ export class RegisterNewUsersComponent implements OnInit {
   public form: FormGroup;
   public formEmpresa: FormGroup;
   public formValidate: FormGroup;
-  public formLicencia: FormGroup;
   public option: string;
+  public listCentrosCosto: any;
   public viewStatus: boolean = true;
   type: any = RolesEnum.AdminEmp;
   public title: string = '';
@@ -33,9 +32,6 @@ export class RegisterNewUsersComponent implements OnInit {
   listPaises: any;
   id: number | undefined;
   listRoles: any;
-  listSexos: any;
-  listDepartament: any;
-  listCity: any;
   hide = true;
   constructor(
     public formBuilder: FormBuilder,
@@ -45,8 +41,7 @@ export class RegisterNewUsersComponent implements OnInit {
     private accountService: AccountService,
     private activatedRoute: ActivatedRoute,
     private snackBar: MatSnackBar,
-    private router: Router,
-    private servicio: getService
+    private router: Router
   ) {}
   ngOnInit(): void {
     this.type =
@@ -85,11 +80,6 @@ export class RegisterNewUsersComponent implements OnInit {
       PhoneNumber: '',
       Email: ['', Validators.required],
       IdEstado: environment.activoEstado,
-      IdSex: ['', Validators.required],
-      Birthdate: ['', Validators.required],
-      PlaceBirthDepartment: [null, Validators.required],
-      PlaceBirthCity: [null, Validators.required],
-      OccupationalLicense: null,
       // PhoneNumberAux: '',
       // EmailAux: '',
       // IdWorkCenter: '',
@@ -100,19 +90,15 @@ export class RegisterNewUsersComponent implements OnInit {
     this.formEmpresa = this.formBuilder.group({
       Usuario: ['', Validators.required],
     });
-    this.formLicencia = this.formBuilder.group({
-      Id: '1',
-      Number: this.type == RolesEnum.Psicologo ? ['', Validators.required] : '',
-      ExpeditionDate:
-        this.type == RolesEnum.Psicologo ? ['', Validators.required] : '',
-    });
-    this.onGetDepartment(environment.urlApiColombia + 'Department');
+    this.genericService
+      .GetAll('centrotrabajo/ConsultarCentroDeTrabajo')
+      .subscribe((data) => (this.listCentrosCosto = data));
   }
   onSave() {
+    this.form.value.PhoneNumber = '+57' + this.form.value.PhoneNumber;
     this.form.value.IdTypeDocument = this.formValidate.value.IdTypeDocument;
     this.form.value.Document = this.formValidate.value.Document;
-    this.form.value.OccupationalLicense =
-      this.type == RolesEnum.Psicologo ? this.formLicencia.value : null;
+    console.log(this.form.value);
     this.loadingService.ChangeStatusLoading(true);
     this.genericService.Post('user/RegisterUser', this.form.value).subscribe({
       next: (data) => {
@@ -144,46 +130,41 @@ export class RegisterNewUsersComponent implements OnInit {
   }
   getListas() {
     this.loadingService.ChangeStatusLoading(true);
-    this.genericService.GetAll('sexo/ConsultarSexo').subscribe((data: any) => {
-      this.listSexos = data;
-      this.genericService
-        .GetAll('empresas/ConsultarEmpresas')
-        .subscribe((data: any) => {
-          this.listEmpresas = data;
-          this.genericService
-            .GetAll('tipodocumento/ConsultarTipoDocumento')
-            .subscribe((data: any) => {
-              this.listDocs = data;
-              this.genericService
-                .GetAll('pais/ConsultarPaises')
-                .subscribe((data: any) => {
-                  this.listPaises = data;
-                  this.genericService
-                    .GetAll('roles/ConsultarRoles')
-                    .subscribe((data: any) => {
-                      this.listRoles = data;
-                      this.genericService
-                        .GetAll('estados/ConsultarEstados')
-                        .subscribe((data: any) => {
-                          this.estadosList = data;
-                          this.genericService
-                            .GetAll('usuario/ConsultarUsuarios')
-                            .subscribe((data: any) => {
-                              this.listUsuario = data;
-                              setTimeout(
-                                () =>
-                                  this.loadingService.ChangeStatusLoading(
-                                    false
-                                  ),
-                                600
-                              );
-                            });
-                        });
-                    });
-                });
-            });
-        });
-    });
+    this.genericService
+      .GetAll('empresas/ConsultarEmpresas')
+      .subscribe((data: any) => {
+        this.listEmpresas = data;
+        this.genericService
+          .GetAll('tipodocumento/ConsultarTipoDocumento')
+          .subscribe((data: any) => {
+            this.listDocs = data;
+            this.genericService
+              .GetAll('pais/ConsultarPaises')
+              .subscribe((data: any) => {
+                this.listPaises = data;
+                this.genericService
+                  .GetAll('roles/ConsultarRoles')
+                  .subscribe((data: any) => {
+                    this.listRoles = data;
+                    this.genericService
+                      .GetAll('estados/ConsultarEstados')
+                      .subscribe((data: any) => {
+                        this.estadosList = data;
+                        this.genericService
+                          .GetAll('usuario/ConsultarUsuarios')
+                          .subscribe((data: any) => {
+                            this.listUsuario = data;
+                            setTimeout(
+                              () =>
+                                this.loadingService.ChangeStatusLoading(false),
+                              600
+                            );
+                          });
+                      });
+                  });
+              });
+          });
+      });
   }
   sendNotifications(code: string, numberPhone: string) {
     var body = {
@@ -264,27 +245,5 @@ export class RegisterNewUsersComponent implements OnInit {
       );
     if (type == 1)
       this.form.controls['Document'].setValue(this.formValidate.value.Document);
-  }
-  onGetDepartment(url: string) {
-    this.servicio.obtenerDatos(url).subscribe((data) => {
-      this.listDepartament = data.sort((x: any, y: any) =>
-        x.name.localeCompare(y.name)
-      );
-    });
-  }
-  onGetCity(url: any) {
-    this.listCity = [];
-    this.form.value.PlaceBirthCity = '';
-    if (url.PlaceBirthDepartment == null) return;
-    this.servicio
-      .obtenerDatos(
-        environment.urlApiColombia +
-          `Department/${url.PlaceBirthDepartment}/cities`
-      )
-      .subscribe((data) => {
-        this.listCity = data.sort((x: any, y: any) =>
-          x.name.localeCompare(y.name)
-        );
-      });
   }
 }

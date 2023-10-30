@@ -44,7 +44,7 @@
         <div class="col-md-3 mb-2">
             <label class="form-label">Teléfono <i class="mdi mdi-information" #tooltip="matTooltip"
                     matTooltip="Ingrese un teléfono celular"></i></label>
-            <input class="form-control mb-4 mb-md-0"  mask="(000) 000 00 00" [showMaskTyped]="true"
+            <input class="form-control mb-4 mb-md-0" prefix="+57 " mask="(000) 000 00 00" [showMaskTyped]="true"
                 [readonly]="this.data.details" #PhoneNumber placeholder="Telefono" formControlName="PhoneNumber" />
             <p class="text-danger mt-1" *ngIf="form.controls.PhoneNumber.errors?.required">Este
                 campo es obligatorio
@@ -53,7 +53,7 @@
         <div class="col-md-3 mb-2">
             <label class="form-label">Teléfono alternativo <i class="mdi mdi-information" #tooltip="matTooltip"
                     matTooltip="Ingrese un teléfono celular alternativo"></i></label>
-            <input class="form-control mb-4 mb-md-0"  mask="(000) 000 00 00" [showMaskTyped]="true"
+            <input class="form-control mb-4 mb-md-0" prefix="+57 " mask="(000) 000 00 00" [showMaskTyped]="true"
                 [readonly]="this.data.details" #PhoneNumberAux placeholder="Telefono"
                 formControlName="PhoneNumberAux" />
         </div>

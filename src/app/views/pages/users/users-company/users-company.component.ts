@@ -31,8 +31,8 @@ export class UsersCompanyComponent implements OnInit {
   public options = [
     {
       delete: true,
-      edit: false,
-      details: false,
+      edit: true,
+      details: true,
       select: false,
       state: true,
       pdf: false,

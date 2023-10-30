@@ -302,8 +302,8 @@ export class SidebarComponent implements OnInit, AfterViewInit {
         view: true,
         subItems: [
           {
-            label: 'Convocar trabajadores',
-            link: '#',
+            label: 'Cuestionario de evaluaciones psicosociales',
+            link: 'psychosocial-evaluation/worker/questionnair',
             view: true,
           },
           {

@@ -77,10 +77,10 @@ export class RegisterNewWorkerComponent implements OnInit {
       this.form.value.HaveDisability == '0' ? false : true;
     this.form.value.ReadingWritingSkills =
       this.form.value.ReadingWritingSkills == '0' ? false : true;
-    this.form.value.PhoneNumber = this.form.value.PhoneNumber;
+    this.form.value.PhoneNumber = '+57' + this.form.value.PhoneNumber;
     this.form.value.PhoneNumberAux =
       this.form.value.PhoneNumberAux.length > 0
-        ? this.form.value.PhoneNumberAux
+        ? '+57' + this.form.value.PhoneNumberAux
         : null;
     console.log(this.form.value);
     this.loadingService.ChangeStatusLoading(true);
