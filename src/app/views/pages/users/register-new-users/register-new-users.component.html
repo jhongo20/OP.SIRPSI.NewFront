@@ -169,18 +169,18 @@
             <label class="form-label">Número de Licencia Ocupacional <i class="mdi mdi-information"
                 #tooltip="matTooltip"
                 matTooltip="Ingrese el número de licencia ocupacional del psicologo"></i></label>
-            <input class="form-control" type="text" #Number placeholder="Numero de licencia" formControlName="Number"
+            <input class="form-control" type="text" #Numero placeholder="Numero de licencia" formControlName="Numero"
                 required />
-            <p class="text-danger mt-1" *ngIf="formLicencia.controls.Number.errors?.required">Este
+            <p class="text-danger mt-1" *ngIf="formLicencia.controls.Numero.errors?.required">Este
                 campo es obligatorio
             </p>
         </div>
         <div class="col-md-4 mb-2">
             <label class="form-label">Fecha expedición <i class="mdi mdi-information" #tooltip="matTooltip"
                 matTooltip="Ingrese la fecha de expedición"></i></label>
-            <input class="form-control" type="date" #ExpeditionDate placeholder="Fecha de expedición"
-                formControlName="ExpeditionDate" required />
-            <p class="text-danger mt-1" *ngIf="formLicencia.controls.ExpeditionDate.errors?.required">Este
+            <input class="form-control" type="date" #FechaExpedicion placeholder="Fecha de expedición"
+                formControlName="FechaExpedicion" required />
+            <p class="text-danger mt-1" *ngIf="formLicencia.controls.FechaExpedicion.errors?.required">Este
                 campo es obligatorio
             </p>
         </div>

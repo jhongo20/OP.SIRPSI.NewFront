@@ -101,9 +101,9 @@ export class RegisterNewUsersComponent implements OnInit {
       Usuario: ['', Validators.required],
     });
     this.formLicencia = this.formBuilder.group({
-      Id: '1',
-      Number: this.type == RolesEnum.Psicologo ? ['', Validators.required] : '',
-      ExpeditionDate:
+      UsuarioId: '1',
+      Numero: this.type == RolesEnum.Psicologo ? ['', Validators.required] : '',
+      FechaExpedicion:
         this.type == RolesEnum.Psicologo ? ['', Validators.required] : '',
     });
     this.onGetDepartment(environment.urlApiColombia + 'Department');
@@ -114,6 +114,7 @@ export class RegisterNewUsersComponent implements OnInit {
     this.form.value.OccupationalLicense =
       this.type == RolesEnum.Psicologo ? this.formLicencia.value : null;
     this.loadingService.ChangeStatusLoading(true);
+    console.log(this.form.value);
     this.genericService.Post('user/RegisterUser', this.form.value).subscribe({
       next: (data) => {
         this.sendNotifications(data.user.codeActivation, data.user.phoneNumber);
