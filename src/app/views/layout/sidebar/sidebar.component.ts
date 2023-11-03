@@ -419,6 +419,53 @@ export class SidebarComponent implements OnInit, AfterViewInit {
           },
         ],
       },
+      {
+        label: 'Tutoriales y Capacitación',
+        icon: 'settings',
+        view:
+          this.accountService.userData.rutasAsignadas.filter(
+            (ruta: any) => ruta.ruta == 'configuration'
+          ).length > 0,
+        subItems: [
+          {
+            label: 'Roles',
+            link: '/configuration/roles',
+            view:
+              this.accountService.userData.rutasAsignadas.filter(
+                (ruta: any) => ruta.ruta == 'roles'
+              ).length > 0,
+          },
+          {
+            label: 'Rutas',
+            link: '/configuration/routes',
+            view:
+              this.accountService.userData.rutasAsignadas.filter(
+                (ruta: any) => ruta.ruta == 'routes'
+              ).length > 0,
+          },
+          {
+            label: 'Variables',
+            link: '/configuration/variables',
+            view:
+              this.accountService.userData.rutasAsignadas.filter(
+                (ruta: any) => ruta.ruta == 'variables'
+              ).length > 0,
+          },
+          {
+            label: 'Asignar rutas a roles',
+            link: '/configuration/routes-role',
+            view:
+              this.accountService.userData.rutasAsignadas.filter(
+                (ruta: any) => ruta.ruta == 'routes-role'
+              ).length > 0,
+          },
+          {
+            label: 'Horario trabajo',
+            link: '/apps/calendar',
+            view: true,
+          },
+        ],
+      },
     ];
     /**
      * Sidebar-folded on desktop (min-width:992px and max-width: 1199px)

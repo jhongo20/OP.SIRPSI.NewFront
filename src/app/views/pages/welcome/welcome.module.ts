@@ -19,9 +19,10 @@ import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FeatherIconModule } from 'src/app/core/feather-icon/feather-icon.module';
 import { NgxMaskModule } from 'ngx-mask';
+import { TutorialsTrainingComponent } from './tutorials-training/tutorials-training.component';
 
 @NgModule({
-  declarations: [WelcomeComponent],
+  declarations: [WelcomeComponent, TutorialsTrainingComponent],
   imports: [
     CommonModule,
     HttpClientModule,
