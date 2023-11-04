@@ -19,9 +19,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { FeatherIconModule } from 'src/app/core/feather-icon/feather-icon.module';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NgxMaskModule } from 'ngx-mask';
+import { CategoriesFormComponent } from './categories-form/categories-form.component';
 
 @NgModule({
-  declarations: [CategoriesComponent],
+  declarations: [CategoriesComponent, CategoriesFormComponent],
   imports: [
     CommonModule,
     TutorialsTrainingRoutingModule,

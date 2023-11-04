@@ -18,6 +18,7 @@ export class CategoriesComponent implements OnInit {
   public columns = [
     { name: 'Nombre', data: 'nombre' },
     { name: 'Tipo', data: 'tipo' },
+    { name: 'Rol', data: 'idRol' },
   ];
   public options = [
     {
