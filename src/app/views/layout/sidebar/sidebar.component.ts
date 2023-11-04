@@ -365,7 +365,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
         ],
       },
       {
-        label: 'Configuración',
+        label: 'Administración',
         isTitle: true,
         view:
           this.accountService.userData.rutasAsignadas.filter(
@@ -424,12 +424,12 @@ export class SidebarComponent implements OnInit, AfterViewInit {
         icon: 'settings',
         view:
           this.accountService.userData.rutasAsignadas.filter(
-            (ruta: any) => ruta.ruta == 'configuration'
+            (ruta: any) => ruta.ruta == 'tutorials-training'
           ).length > 0,
         subItems: [
           {
-            label: 'Roles',
-            link: '/configuration/roles',
+            label: 'Categorías',
+            link: '/tutorials-training/categories',
             view:
               this.accountService.userData.rutasAsignadas.filter(
                 (ruta: any) => ruta.ruta == 'roles'

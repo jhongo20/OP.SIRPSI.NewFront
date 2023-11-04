@@ -1,0 +1,22 @@
+<label class="title">Categorías</label>
+<ngb-accordion [closeOthers]="true" activeIds="static-2">
+  <ngb-panel id="static-1">
+    <ng-template ngbPanelTitle>
+      <span>Registrar categoría</span>
+    </ng-template>
+    <ng-template ngbPanelContent> 1 </ng-template>
+  </ngb-panel>
+  <ngb-panel id="static-2">
+    <ng-template ngbPanelTitle>
+      <span>Categorías</span>
+    </ng-template>
+    <ng-template ngbPanelContent>
+      <app-generic-table
+        [columns]="columns"
+        [delete]="'empresas/EliminarEmpresa'"
+        [table]="table"
+        [options]="options"
+      ></app-generic-table>
+    </ng-template>
+  </ngb-panel>
+</ngb-accordion>

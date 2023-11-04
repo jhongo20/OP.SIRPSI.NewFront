@@ -84,6 +84,14 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },
       {
+        path: 'tutorials-training',
+        loadChildren: () =>
+          import('./views/pages/tutorials-training/tutorials-training.module').then(
+            (m) => m.TutorialsTrainingModule
+          ),
+        canActivate: [AuthGuard],
+      },
+      {
         path: 'psychosocial-evaluation',
         loadChildren: () =>
           import(
