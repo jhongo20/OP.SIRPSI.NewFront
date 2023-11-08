@@ -421,7 +421,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
       },
       {
         label: 'Tutoriales y Capacitación',
-        icon: 'settings',
+        icon: 'help-circle',
         view:
           this.accountService.userData.rutasAsignadas.filter(
             (ruta: any) => ruta.ruta == 'tutorials-training'
@@ -436,33 +436,12 @@ export class SidebarComponent implements OnInit, AfterViewInit {
               ).length > 0,
           },
           {
-            label: 'Rutas',
-            link: '/configuration/routes',
+            label: 'FAQs  - Preguntas frecuentes',
+            link: '/tutorials-training/faqs',
             view:
               this.accountService.userData.rutasAsignadas.filter(
-                (ruta: any) => ruta.ruta == 'routes'
+                (ruta: any) => ruta.ruta == 'faqs'
               ).length > 0,
-          },
-          {
-            label: 'Variables',
-            link: '/configuration/variables',
-            view:
-              this.accountService.userData.rutasAsignadas.filter(
-                (ruta: any) => ruta.ruta == 'variables'
-              ).length > 0,
-          },
-          {
-            label: 'Asignar rutas a roles',
-            link: '/configuration/routes-role',
-            view:
-              this.accountService.userData.rutasAsignadas.filter(
-                (ruta: any) => ruta.ruta == 'routes-role'
-              ).length > 0,
-          },
-          {
-            label: 'Horario trabajo',
-            link: '/apps/calendar',
-            view: true,
           },
         ],
       },

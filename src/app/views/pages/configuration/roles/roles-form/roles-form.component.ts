@@ -34,7 +34,9 @@ export class RolesFormComponent implements OnInit {
       Status: environment.activoEstado,
       Name: ['', Validators.required],
       Description: '',
+      Internal: false,
     });
+    if (this.data.item != null) this.onLoadData();
   }
   onSave() {
     this.loadingService.ChangeStatusLoading(true);
@@ -59,6 +61,33 @@ export class RolesFormComponent implements OnInit {
             title: 'Ha ocurrido un error! ' + error.error.message,
             showConfirmButton: false,
             timer: 2800,
+          });
+        },
+      });
+  }
+  onUpdate() {
+    this.loadingService.ChangeStatusLoading(true);
+    this.genericService
+      .Put('roles/ActualizarRoles', this.form.value)
+      .subscribe({
+        next: (data) => {
+          this.dialogRef.close();
+          setTimeout(() => this.loadingService.ChangeStatusLoading(false), 400);
+          Swal.fire({
+            icon: 'success',
+            title: 'Role actualizado exitosamente.',
+            showConfirmButton: false,
+            timer: 1800,
+          }).then(() => window.location.reload());
+        },
+        error: (error) => {
+          this.loadingService.ChangeStatusLoading(false);
+          console.log('error role' + error.error.message);
+          Swal.fire({
+            icon: 'warning',
+            title: 'Ha ocurrido un error! ' + error.error.message,
+            showConfirmButton: false,
+            timer: 1800,
           });
         },
       });
@@ -104,5 +133,12 @@ export class RolesFormComponent implements OnInit {
   }
   cancelForm() {
     this.dialogRef.close();
+  }
+  onLoadData() {
+    this.form.controls['Id'].setValue(this.data.item.id);
+    this.form.controls['Status'].setValue(this.data.item.status);
+    this.form.controls['Name'].setValue(this.data.item.name);
+    this.form.controls['Description'].setValue(this.data.item.description);
+    this.form.controls['Internal'].setValue(this.data.item.internal);
   }
 }

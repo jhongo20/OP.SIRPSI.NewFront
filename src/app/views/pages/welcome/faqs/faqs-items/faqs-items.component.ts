@@ -9,15 +9,15 @@ import { LoadingService } from 'src/app/shared/services/loading.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-faqs',
-  templateUrl: './faqs.component.html',
-  styleUrls: ['./faqs.component.scss'],
+  selector: 'app-faqs-items',
+  templateUrl: './faqs-items.component.html',
+  styleUrls: ['./faqs-items.component.scss'],
 })
-export class FaqsComponent implements OnInit {
+export class FaqsItemsComponent implements OnInit {
   public form: FormGroup;
   hide = true;
   estadosList: any;
-  categoriasList: any;
+  faqsList: any;
   constructor(
     public formBuilder: FormBuilder,
     public accountService: AccountService,
@@ -44,11 +44,13 @@ export class FaqsComponent implements OnInit {
     });
   }
   getListas() {
+    const id: any = this.activatedRoute.snapshot.paramMap.get('id');
     this.loadingService.ChangeStatusLoading(true);
     this.genericService
-      .GetAll('categorias/ConsultarCategorias')
+      .GetAll('faqs/ConsultarFaqs?categoryId=' + id)
       .subscribe((data: any) => {
-        this.categoriasList = data;
+        this.faqsList = data;
+        console.log(data);
         setTimeout(() => this.loadingService.ChangeStatusLoading(false), 600);
       });
   }

@@ -18,22 +18,23 @@ export class RolesComponent implements OnInit {
   // public filter: string = '&Usuario=' + this.accountService.userData.id;
   public table: string = 'roles/ConsultarRoles';
   public columns = [
-    { name: 'Id', data: 'id' },
+    // { name: 'Id', data: 'id' },
     { name: 'Nombre', data: 'name' },
     { name: 'Descripción', data: 'description' },
     { name: 'Estado', data: 'estado', property: 'nombre' },
+    { name: 'Es interno', data: 'istInternal' },
     { name: 'F. Registro', data: 'registrationDate', pipeDate: 'YYYY/dd/MM' },
   ];
   public options = [
-    // {
-    //   delete: true,
-    //   edit: true,
-    //   details: true,
-    //   select: true,
-    //   state: true,
-    //   pdf: true,
-    //   validationSelect: true,
-    // },
+    {
+      delete: true,
+      edit: true,
+      details: false,
+      select: false,
+      state: false,
+      pdf: false,
+      validationSelect: false,
+    },
   ];
 
   constructor(
@@ -48,22 +49,9 @@ export class RolesComponent implements OnInit {
     setTimeout(() => this.loadingService.ChangeStatusLoading(false), 500);
   }
 
-  OpenFormDialog(id: number) {
-    this.router.navigate(['/reservation/form/' + id + '/' + 'view']);
-  }
-  DownloadPDF(id: number) {
-    this.router.navigate(['/reservation/form/' + id + '/' + 'download']);
-  }
-  SelectReservation(id: any) {
-    this.genericService
-      .GetAll('BookingPersons?PageNumber=1&PageSize=100000&Reserva=' + id)
-      .subscribe((data: any) => {
-        // this.dataTable = data.data;
-      });
-  }
-  openFormDialogUser() {
+  openFormDialogUser(item: any = null, type: number = 0) {
     const dialogRef = this.dialog.open(RolesFormComponent, {
-      data: { id: this.id, type: 0, reload: true },
+      data: { item: item, type: type, reload: true },
     });
     dialogRef.afterClosed().subscribe();
   }

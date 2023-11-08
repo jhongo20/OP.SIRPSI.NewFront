@@ -140,8 +140,9 @@ export class GenericTableComponent implements OnInit {
               () => this.loadingService.ChangeStatusLoading(false),
               600
             );
-            if (this.dataTable == undefined) this.Get();
-            else window.location.reload();
+            // if (this.dataTable == undefined) this.Get();
+            // else window.location.reload();
+            window.location.reload();
           },
           (error) => {
             console.error(error);

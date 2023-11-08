@@ -1,0 +1,108 @@
+<label class="title">Registrar preguntas frecuentes - FAQs</label>
+<form class="row" #f="ngForm" [formGroup]="this.form">
+  <hr class="hr" />
+  <div class="col-md-4 mb-3">
+    <label class="form-label"
+      >Nombre
+      <i
+        class="mdi mdi-information"
+        #tooltip="matTooltip"
+        matTooltip="Ingrese un nombre"
+      ></i
+    ></label>
+    <input
+      class="form-control"
+      type="text"
+      #Titulo
+      placeholder="Nombre"
+      formControlName="Titulo"
+    />
+    <p class="text-danger mt-1" *ngIf="form.controls.Titulo.errors?.required">
+      Este campo es obligatorio
+    </p>
+  </div>
+  <div class="col-md-4 mb-3">
+    <label class="form-label"
+      >Categoría
+      <i
+        class="mdi mdi-information"
+        #tooltip="matTooltip"
+        matTooltip="Seleccione una categoría"
+      ></i
+    ></label>
+    <ng-select
+      id="IdCategoria"
+      #IdCategoria
+      formControlName="IdCategoria"
+      [items]="categoriasList"
+      bindLabel="nombre"
+      bindValue="id"
+      [(ngModel)]="this.form.value.IdCategoria"
+    >
+    </ng-select>
+  </div>
+  <div class="col-md-4 mb-3">
+    <label class="form-label"
+      >Estado
+      <i
+        class="mdi mdi-information"
+        #tooltip="matTooltip"
+        matTooltip="Seleccione un estado"
+      ></i
+    ></label>
+    <ng-select
+      id="IdEstado"
+      #IdEstado
+      formControlName="IdEstado"
+      [items]="estadosList"
+      bindLabel="nombre"
+      bindValue="id"
+      [(ngModel)]="this.form.value.IdEstado"
+      required
+    >
+    </ng-select>
+    <p class="text-danger mt-1" *ngIf="form.controls.IdEstado.errors?.required">
+      Este campo es obligatorio
+    </p>
+  </div>
+</form>
+<hr class="hr" />
+<div class="card-body"> 
+  <label class="form-label"
+    >Contenido
+    <i
+      class="mdi mdi-information"
+      #tooltip="matTooltip"
+      matTooltip="Seleccione un estado"
+    ></i
+  ></label>
+  <quill-editor
+    placeholder="Ingresa aqui el contenido..."
+    [modules]="quillConfig"
+    #Contenido
+    [(ngModel)]="this.form.value.Contenido"
+  >
+  </quill-editor>
+
+  <div class="mt-3">
+    <pre class="mb-0">{{ this.form.value.Contenido }}</pre>
+  </div>
+</div>
+<hr class="hr" />
+<div>
+  <button
+    type="submit"
+    class="btn btn-primary me-2 mb-2 mb-md-0"
+    (click)="onSave()"
+  >
+    Registrar
+  </button>
+  <button
+    class="btn btn-secondary"
+    type="submit"
+    style="margin-right: 8px"
+    (click)="cancelarForm()"
+  >
+    Cancelar
+  </button>
+</div>

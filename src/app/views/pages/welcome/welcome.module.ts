@@ -20,6 +20,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { FeatherIconModule } from 'src/app/core/feather-icon/feather-icon.module';
 import { NgxMaskModule } from 'ngx-mask';
 import { TutorialsTrainingComponent } from './tutorials-training/tutorials-training.component';
+import { FaqsComponent } from './faqs/faqs.component';
 
 @NgModule({
   declarations: [WelcomeComponent, TutorialsTrainingComponent],

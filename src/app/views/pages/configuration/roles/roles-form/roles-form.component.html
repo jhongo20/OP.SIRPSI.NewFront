@@ -1,23 +1,33 @@
-<form class="row" #f="ngForm" [formGroup]="this.form" *ngIf="type == 0">
+<label class="title">Roles</label>
+<form class="row" #f="ngForm" [formGroup]="this.form">
     <label style="color:white;">This dialog showcases the title, close, content and actions
         elemasdasdadaen</label>
-    <div class="col-md-6">
-        <mat-form-field class="example-full-width" appearance="outline" style="width: 100%">
-            <mat-label>Nombre:</mat-label>
-            <input type="text" matInput #Name placeholder="Nombre" formControlName="Name"
-                [readonly]="this.option == 'view'">
-        </mat-form-field>
+    <div class="col-md-4 mb-3">
+        <label class="form-label">Nombre <i class="mdi mdi-information" #tooltip="matTooltip"
+                matTooltip="Ingrese el nombre para el rol"></i></label>
+        <input class="form-control" type="text" #Name placeholder="Nombre"
+            formControlName="Name" required />
+        <p class="text-danger" *ngIf="form.controls.Name.errors?.required">Este
+            campo es obligatorio
+        </p>
     </div>
-    <div class="col-md-6">
-        <mat-form-field class="example-full-width" appearance="outline" style="width: 100%">
-            <mat-label>Descripción:</mat-label>
-            <input type="text" matInput #Description placeholder="Descripción" formControlName="Description"
-                [readonly]="this.option == 'view'">
-        </mat-form-field>
+    <div class="col-md-8 mb-3">
+        <label class="form-label">Descripción <i class="mdi mdi-information" #tooltip="matTooltip"
+                matTooltip="Ingrese una descripción"></i></label>
+        <input class="form-control" type="text" #Description placeholder="Descripción"
+            formControlName="Description" />
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="form-check form-switch mb-2">
+            <input type="checkbox" class="form-check-input" id="Internal" formControlName="Internal" #Internal>
+            <label class="form-check-label" for="Internal">¿Es un rol interno?</label>
+        </div>
     </div>
 </form>
 <div style="padding: 20px 0 25px 0;">
     <button type="submit" class="btn btn-primary me-2" (click)="onSave()" [disabled]="this.form.invalid"
         *ngIf="type == 0">Registrar</button>
+        <button type="submit" class="btn btn-primary me-2" (click)="onUpdate()" [disabled]="this.form.invalid"
+        *ngIf="type == 1">Actualizar</button>
     <button type="submit" class="btn btn-secondary" (click)="cancelForm()">Cancelar</button>
 </div>

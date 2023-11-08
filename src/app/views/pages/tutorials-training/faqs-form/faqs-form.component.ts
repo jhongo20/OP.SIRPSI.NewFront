@@ -10,15 +10,38 @@ import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-tutorials-training',
-  templateUrl: './tutorials-training.component.html',
-  styleUrls: ['./tutorials-training.component.scss'],
+  selector: 'app-faqs-form',
+  templateUrl: './faqs-form.component.html',
+  styleUrls: ['./faqs-form.component.scss'],
 })
-export class TutorialsTrainingComponent implements OnInit {
+export class FaqsFormComponent implements OnInit {
   public form: FormGroup;
   hide = true;
   estadosList: any;
   categoriasList: any;
+  quillConfig = {
+    toolbar: {
+      container: [
+        ['bold', 'italic', 'underline', 'strike'], // toggled buttons
+        ['code-block'],
+        //  [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+        [{ list: 'ordered' }, { list: 'bullet' }],
+        [{ script: 'sub' }, { script: 'super' }], // superscript/subscript
+        [{ indent: '-1' }, { indent: '+1' }], // outdent/indent
+        //  [{ 'direction': 'rtl' }],                         // text direction
+
+        //  [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+        [{ header: [1, 2, 3, 4, 5, 6, false] }],
+
+        [{ align: [] }],
+
+        //  ['clean'],                                         // remove formatting button
+
+        //  ['link'],
+        ['link', 'image', 'video'],
+      ],
+    },
+  };
   constructor(
     public formBuilder: FormBuilder,
     public accountService: AccountService,
@@ -31,6 +54,13 @@ export class TutorialsTrainingComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.form = this.formBuilder.group({
+      // Id: '',
+      Titulo: ['', Validators.required],
+      Contenido: ['', Validators.required],
+      IdCategoria: '',
+      IdEstado: [environment.activoEstado, Validators.required],
+    });
     this.getListas();
   }
 

@@ -16,6 +16,7 @@ export class CategoriesFormComponent implements OnInit {
   public form: FormGroup;
   public option: string;
   listRoles: any;
+  listTypes: any;
   constructor(
     public formBuilder: FormBuilder,
     public dialog: MatDialog,
@@ -27,17 +28,12 @@ export class CategoriesFormComponent implements OnInit {
   ngOnInit(): void {
     this.getListas();
     this.form = this.formBuilder.group({
-      Id: ['', Validators.required],
       Nombre: ['', Validators.required],
       Tipo: '',
       IdRol: '',
     });
   }
   onSave() {
-    var body = {
-      Empresa: this.form.value,
-    };
-    console.log(body);
     Swal.fire({
       title: '¿Estas seguro?',
       icon: 'info',
@@ -47,22 +43,24 @@ export class CategoriesFormComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.loadingService.ChangeStatusLoading(true);
-        this.genericService.Put('empresas/ActualizarEmpresa', body).subscribe({
-          next: (data) => {
-            this.loadingService.ChangeStatusLoading(false);
-            Swal.fire({
-              icon: 'success',
-              title: 'Empresa, Actualizada exitosamente.',
-              showConfirmButton: false,
-              timer: 1500,
-            }).then(() => window.location.reload());
-          },
-          error: (error) => {
-            console.error(error);
-            this.openSnackBar(error.error.message);
-            this.loadingService.ChangeStatusLoading(false);
-          },
-        });
+        this.genericService
+          .Post('categorias/RegistrarCategorias', this.form.value)
+          .subscribe({
+            next: (data) => {
+              this.loadingService.ChangeStatusLoading(false);
+              Swal.fire({
+                icon: 'success',
+                title: 'La categoría fue registrada exitosamente.',
+                showConfirmButton: false,
+                timer: 1500,
+              }).then(() => window.location.reload());
+            },
+            error: (error) => {
+              console.error(error);
+              this.openSnackBar(error.error.message);
+              this.loadingService.ChangeStatusLoading(false);
+            },
+          });
       }
     });
   }
@@ -74,6 +72,10 @@ export class CategoriesFormComponent implements OnInit {
   }
   getListas() {
     this.loadingService.ChangeStatusLoading(true);
+    this.listTypes = [
+      { id: 1, name: 'FAQS' },
+      { id: 2, name: 'Material de capacitación' },
+    ];
     this.genericService
       .GetAll('roles/ConsultarRoles')
       .subscribe((data: any) => {

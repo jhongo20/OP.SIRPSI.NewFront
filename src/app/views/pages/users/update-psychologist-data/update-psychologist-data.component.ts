@@ -9,7 +9,7 @@ import { LoadingService } from 'src/app/shared/services/loading.service';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import { OccupationalLicenseComponent } from './occupational-license/occupational-license.component';
-import { getService } from 'src/app/shared/services/get,services';
+import { getService } from 'src/app/shared/services/get.services';
 
 @Component({
   selector: 'app-update-psychologist-data',

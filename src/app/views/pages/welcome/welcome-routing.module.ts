@@ -10,7 +10,7 @@ const routes: Routes = [
   },
   {
     path: 'faqs',
-    component: FaqsComponent,
+    loadChildren: () => import('./faqs/faqs.module').then((m) => m.FaqsModule),
   },
 ];
 

@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 import { RolesEnum } from 'src/app/core/enums/Roles';
 import { AccountService } from 'src/app/shared/services/account.service';
 import { GenericService } from 'src/app/shared/services/generic.service';
-import { getService } from 'src/app/shared/services/get,services';
+import { getService } from 'src/app/shared/services/get.services';
 import { LoadingService } from 'src/app/shared/services/loading.service';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';

@@ -20,9 +20,17 @@ import { FeatherIconModule } from 'src/app/core/feather-icon/feather-icon.module
 import { MatTabsModule } from '@angular/material/tabs';
 import { NgxMaskModule } from 'ngx-mask';
 import { CategoriesFormComponent } from './categories-form/categories-form.component';
+import { FaqsComponent } from './faqs/faqs.component';
+import { FaqsFormComponent } from './faqs-form/faqs-form.component';
+import { QuillModule } from 'ngx-quill';
 
 @NgModule({
-  declarations: [CategoriesComponent, CategoriesFormComponent],
+  declarations: [
+    CategoriesComponent,
+    CategoriesFormComponent,
+    FaqsComponent,
+    FaqsFormComponent,
+  ],
   imports: [
     CommonModule,
     TutorialsTrainingRoutingModule,
@@ -43,6 +51,7 @@ import { CategoriesFormComponent } from './categories-form/categories-form.compo
     MatTooltipModule,
     FeatherIconModule,
     MatTabsModule,
+    QuillModule.forRoot(), // ngx-quill
     NgxMaskModule.forRoot({ validation: true }),
   ],
 })

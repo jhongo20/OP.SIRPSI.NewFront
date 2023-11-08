@@ -3,11 +3,22 @@
     <div class="col-md-4 mb-2">
         <label class="form-label">Nombre <i class="mdi mdi-information" #tooltip="matTooltip"
                 matTooltip="Ingrese el nombre de la categoría"></i></label>
-        <input readonly="true" class="form-control" type="text" #Nombre placeholder="Nombre categoría"
+        <input class="form-control" type="text" #Nombre placeholder="Nombre categoría"
             formControlName="Nombre" required />
         <p class="text-danger" *ngIf="form.controls.Nombre.errors?.required">Este
             campo es obligatorio
         </p>
+    </div>
+    <div class="col-md-4 mb-2">
+        <label class="form-label">Tipo <i class="mdi mdi-information" #tooltip="matTooltip"
+                matTooltip="Seleccione el tipo para la categoría"></i></label>
+        <ng-select id="Tipo" #Tipo formControlName="Tipo"
+            [items]="listTypes" bindLabel="name" bindValue="id"
+            [(ngModel)]="this.form.value.Tipo" [searchWhileComposing]="true">
+        </ng-select>
+        <!-- <p class="text-danger" *ngIf="form.controls.Tipo.errors?.required">Este
+            campo es obligatorio
+        </p> -->
     </div>
     <div class="col-md-4 mb-2">
         <label class="form-label">Rol <i class="mdi mdi-information" #tooltip="matTooltip"
@@ -24,6 +35,6 @@
 <hr class="hr" />
 <div style="padding: 20px 0 25px 0;">
     <button type="submit" class="btn btn-primary me-2" (click)="onSave()"
-        [disabled]="this.form.invalid">Actualizar</button>
+        [disabled]="this.form.invalid">Registrar</button>
     <button class="btn btn-secondary" (click)="cancelarForm()">Cancelar</button>
 </div>

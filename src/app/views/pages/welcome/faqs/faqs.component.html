@@ -1,1 +1,31 @@
-<p>faqs works!</p>
+<div class="container">
+  <div class="wrapper">
+    <label class="title">Preguntas frecuentes - FAQs</label>
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div
+            class="col-md-3"
+            *ngFor="let category of categoriasList; let i = index"
+          >
+            <a (click)="onRedirectFaqs(category.id)">
+              <div class="cont-category">
+                <div class="wrapper-category">
+                  <i
+                    class="fa fa-archive"
+                    aria-hidden="true"
+                    style="font-size: 230%; padding: 5px"
+                  ></i>
+                  <label class="title">{{ category.nombre }}</label>
+                  <label class="subtitle"
+                    >sdasaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</label
+                  >
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
