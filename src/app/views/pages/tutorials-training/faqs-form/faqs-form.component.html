@@ -1,4 +1,4 @@
-<label class="title">Registrar preguntas frecuentes - FAQs</label>
+<label class="title">{{ title }}</label>
 <form class="row" #f="ngForm" [formGroup]="this.form">
   <hr class="hr" />
   <div class="col-md-4 mb-3">
@@ -67,7 +67,7 @@
   </div>
 </form>
 <hr class="hr" />
-<div class="card-body"> 
+<div class="card-body">
   <label class="form-label"
     >Contenido
     <i
@@ -94,8 +94,17 @@
     type="submit"
     class="btn btn-primary me-2 mb-2 mb-md-0"
     (click)="onSave()"
+    *ngIf="this.id == null"
   >
     Registrar
+  </button>
+  <button
+    type="submit"
+    class="btn btn-primary me-2 mb-2 mb-md-0"
+    (click)="onUpdate()"
+    *ngIf="this.id != null"
+  >
+    Actualizar
   </button>
   <button
     class="btn btn-secondary"

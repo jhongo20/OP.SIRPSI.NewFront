@@ -19,6 +19,8 @@ export class FaqsFormComponent implements OnInit {
   hide = true;
   estadosList: any;
   categoriasList: any;
+  public id: string | null = this.activatedRoute.snapshot.paramMap.get('id');
+  public title: string = 'Registrar preguntas frecuentes - FAQs';
   quillConfig = {
     toolbar: {
       container: [
@@ -55,17 +57,17 @@ export class FaqsFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      // Id: '',
+      Id: '',
       Titulo: ['', Validators.required],
       Contenido: ['', Validators.required],
       IdCategoria: '',
       IdEstado: [environment.activoEstado, Validators.required],
     });
+    if (this.id != null) this.onLoadData();
     this.getListas();
   }
 
   onSave() {
-    console.log(this.form.value);
     Swal.fire({
       title: '¿Estas seguro?',
       icon: 'info',
@@ -86,7 +88,40 @@ export class FaqsFormComponent implements OnInit {
                   'La pregunta frecuente (FAQS) fue registrada exitosamente.',
                 showConfirmButton: false,
                 timer: 1500,
-              }).then(() => window.location.reload());
+              }).then(() => this.router.navigate(['tutorials-training/faqs']));
+            },
+            error: (error) => {
+              console.error(error);
+              this.openSnackBar(error.error.message);
+              this.loadingService.ChangeStatusLoading(false);
+            },
+          });
+      }
+    });
+  }
+
+  onUpdate() {
+    Swal.fire({
+      title: '¿Estas seguro?',
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonText: 'Si',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.loadingService.ChangeStatusLoading(true);
+        this.genericService
+          .Put('faqs/ActualizarFaqs', this.form.value)
+          .subscribe({
+            next: (data) => {
+              this.loadingService.ChangeStatusLoading(false);
+              Swal.fire({
+                icon: 'success',
+                title:
+                  'La pregunta frecuente (FAQS) fue actualizada exitosamente.',
+                showConfirmButton: false,
+                timer: 1500,
+              }).then(() => this.router.navigate(['tutorials-training/faqs']));
             },
             error: (error) => {
               console.error(error);
@@ -104,6 +139,7 @@ export class FaqsFormComponent implements OnInit {
       verticalPosition: 'bottom',
     });
   }
+
   getListas() {
     this.loadingService.ChangeStatusLoading(true);
     this.genericService
@@ -121,6 +157,7 @@ export class FaqsFormComponent implements OnInit {
           });
       });
   }
+
   cancelarForm() {
     Swal.fire({
       title: '¿Estas seguro?',
@@ -134,5 +171,19 @@ export class FaqsFormComponent implements OnInit {
         this.router.navigate(['tutorials-training/faqs']);
       }
     });
+  }
+
+  onLoadData() {
+    this.title = 'Actualizar preguntas frecuentes - FAQs';
+    this.genericService
+      .GetAll('faqs/ConsultarFaq?id=' + this.id)
+      .subscribe((data: any) => {
+        this.form.controls['Id'].setValue(data.id);
+        this.form.controls['Titulo'].setValue(data.titulo);
+        this.form.controls['Contenido'].setValue(data.contenido);
+        this.form.controls['IdCategoria'].setValue(data.idCategoria);
+        this.form.controls['IdEstado'].setValue(data.idEstado);
+        setTimeout(() => this.loadingService.ChangeStatusLoading(false), 600);
+      });
   }
 }

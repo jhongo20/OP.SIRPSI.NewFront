@@ -13,7 +13,7 @@
         <div class="col-md-12">
             <div class="col-md-12 space"></div>
             <app-generic-table [columns]="columns" [options]="optionsWork" [table]="this.table"
-                 [filter]="filter" [delete]="'faqs/EliminarFaqs'"></app-generic-table>
+                 [filter]="filter" [delete]="'faqs/EliminarFaqs'" (edit)="openFormDialogUser($event)"></app-generic-table>
         </div>
     </div>
 </div>

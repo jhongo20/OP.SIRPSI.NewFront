@@ -21,6 +21,11 @@ const routes: Routes = [
     component: FaqsFormComponent,
     canActivate: [AuthGuard],
   },
+  {
+    path: 'faqs/:id/edit',
+    component: FaqsFormComponent,
+    // canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({

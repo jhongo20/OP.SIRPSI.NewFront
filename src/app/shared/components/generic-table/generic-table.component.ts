@@ -138,7 +138,7 @@ export class GenericTableComponent implements OnInit {
             this.openSnackBar(data.message);
             setTimeout(
               () => this.loadingService.ChangeStatusLoading(false),
-              600
+              1500
             );
             // if (this.dataTable == undefined) this.Get();
             // else window.location.reload();
@@ -150,7 +150,7 @@ export class GenericTableComponent implements OnInit {
             this.openSnackBar(error.error.message);
             setTimeout(
               () => this.loadingService.ChangeStatusLoading(false),
-              1000
+              1500
             );
           }
         );
@@ -204,7 +204,7 @@ export class GenericTableComponent implements OnInit {
               this.openSnackBar(error.error.message);
               setTimeout(
                 () => this.loadingService.ChangeStatusLoading(false),
-                1000
+                1500
               );
             }
           );
