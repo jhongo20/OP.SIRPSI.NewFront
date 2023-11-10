@@ -71,9 +71,35 @@ export class PsychosocialQuestionnaireService {
       );
   }
 
-  public getResultQuizFinal(id : string): Observable<any> {
+  public getQuizClasificacion(id : string): Observable<any> {
     return this.http
-      .get<any>(environment.urlApi + `Preguntas/ConsultarBrutoDimension?IdEvaluacion=${id}`)
+      .get<any>(environment.urlApi + `Preguntas/ConsultarClasificacionUsuarios?idUsuario=${id}`)
+      .pipe(
+        map((res) => {
+          if (res.Status == '400') {
+            console.log(res);
+          }
+          return res;
+        })
+      );
+  }
+
+  public getQuiz(id : string): Observable<any> {
+    return this.http
+      .get<any>(environment.urlApi + `evaluacionPsicosocial/ConsultarEvaluacionUsuarioId?idUsers=${id}`)
+      .pipe(
+        map((res) => {
+          if (res.Status == '400') {
+            console.log(res);
+          }
+          return res;
+        })
+      );
+  }
+
+  public getResultQuizFinal(id : string, forma : string): Observable<any> {
+    return this.http
+      .get<any>(environment.urlApi + `Preguntas/ConsultarBrutoDimension?IdEvaluacion=${id}&formaId=${forma}`)
       .pipe(
         map((res) => {
           if (res.Status == '400') {
@@ -87,6 +113,16 @@ export class PsychosocialQuestionnaireService {
   public updatePsychosocialQuestionnaire(id : string, res : number, punt : string): Observable<any> {
     return this.http
       .put(environment.urlApi + `Preguntas/ActualizarRespuestasPreguntas?id_pregunta=${id}&responseData=${res}&puntuacion=${punt}`, {})
+      .pipe(
+        map((res) => {
+          return res;
+        })
+      );
+  }
+
+  public saveRadicado(id : string, radicado : string): Observable<any> {
+    return this.http
+      .put(environment.urlApi + `evaluacionPsicosocial/RegistrarRadicadoEvaluacion?IdEvaluacion=${id}&radicado=${radicado}`, {})
       .pipe(
         map((res) => {
           return res;

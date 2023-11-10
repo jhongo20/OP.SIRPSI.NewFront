@@ -304,7 +304,10 @@ export class SidebarComponent implements OnInit, AfterViewInit {
           {
             label: 'Cuestionario de evaluaciones psicosociales',
             link: 'psychosocial-evaluation/worker/questionnair',
-            view: true,
+            view:
+              this.accountService.userData.rutasAsignadas.filter(
+                (ruta: any) => ruta.ruta == 'questionnair'
+              ).length > 0,
           },
           {
             label: 'Avances evaluación psicosocial',

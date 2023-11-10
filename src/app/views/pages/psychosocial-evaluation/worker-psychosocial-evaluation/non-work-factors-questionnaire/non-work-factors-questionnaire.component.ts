@@ -16,15 +16,29 @@ export class NonWorkFactorsQuestionnaireComponent implements OnInit {
   startQuiz = false;
 
   progress = 0;
+  progressA = 0;
 
+  index = 0;
+
+  dataListA: any[] = [];
   dataList: any[] = [];
 
   dataListText = [
     {
-      title: 'Las siguientes preguntas están relacionadas con varias condiciones de la zona donde usted vive: [1-13]'
+      title: 'Las siguientes preguntas están relacionadas con varias condiciones de la zona donde usted vive: [1-13]',
+      option: false,
+      quiz: true,
+      buton: true,
+      min: 1,
+      max: 13
     },
     {
-      title: 'Las siguientes preguntas están relacionadas con su vida fuera del trabajo: [14-31]'
+      title: 'Las siguientes preguntas están relacionadas con su vida fuera del trabajo: [14-31]',
+      option: false,
+      quiz: true,
+      buton: true,
+      min: 14,
+      max: 31
     }
   ]
 
@@ -43,6 +57,12 @@ export class NonWorkFactorsQuestionnaireComponent implements OnInit {
     this.progress = (answeredItems / totalItems) * 100;
   }
 
+  calculateProgressA() {
+    const totalItems = this.dataListA.length;
+    const answeredItems = this.dataListA.filter(data => data.puntuacionA !== null).length;
+    this.progressA = (answeredItems / totalItems) * 100;
+  }
+
 
   startQuizData() {
     this.startQuiz = true;
@@ -52,14 +72,17 @@ export class NonWorkFactorsQuestionnaireComponent implements OnInit {
   getDataList(lista: any[]) {
     this.psychosocialQuestionnaireService.getList().subscribe({
       next: (data) => {
-        const list: any[] = data;
+        let list: any[] = data;
+        list = list.sort((a, b) => a.posicion - b.posicion);
         this.dataList = list.filter(d => d.forma === 'A3');
+        console.log(this.dataList);
         this.dataList.forEach((objeto) => {
           objeto.puntuacion = null;
           objeto.puntuacionA = null;
         });
         this.asignarPuntuaciones(lista);
         this.calculateProgress();
+        this.asginarPosicion();
       },
     })
   }
@@ -75,8 +98,39 @@ export class NonWorkFactorsQuestionnaireComponent implements OnInit {
     });
   }
 
+  asginarPosicion() {
+    let numero;
+    const lista = this.dataList.filter(p => p.puntuacion === null && p.puntuacionA === null);
+    if (lista.length === 0) {
+      numero = 0;
+    } else {
+      numero = lista[0].posicion;
+    }
+    switch (true) {
+      case numero >= 1 && numero <= 13:
+        this.index = 0;
+        break;
+      case numero >= 14 && numero <= 31:
+        this.index = 1;
+        break;
+      case numero === 0:
+        this.propagar.emit();
+        break;
+      default:
+        break;
+    }
+    this.dataListA = this.dataList.filter(r => r.posicion >= this.dataListText[this.index].min && r.posicion <= this.dataListText[this.index].max);
+    this.calculateProgressA();
+  }
+
   clickContinue() {
-    this.propagar.emit();
+    if (this.dataListText.length === this.index + 1) {
+      this.propagar.emit();
+    } else {      
+      this.index++;
+      this.progressA = 0;
+      this.dataListA = this.dataList.filter(r => r.posicion >= this.dataListText[this.index].min && r.posicion <= this.dataListText[this.index].max);
+    }
   }
 
   changeResponse(e: any, data: any) {
@@ -100,6 +154,7 @@ export class NonWorkFactorsQuestionnaireComponent implements OnInit {
         break;
     }
     this.calculateProgress();
+    this.calculateProgressA();
   }
 
   getQuestions() {
@@ -107,6 +162,7 @@ export class NonWorkFactorsQuestionnaireComponent implements OnInit {
       next: (data) => {
         const list: any[] = data;
         if (list.length !== 0) {
+          this.startQuiz = true;
           this.getDataList(list);
         }
       },

@@ -42,7 +42,8 @@ export class StressQuestionnaireComponent implements OnInit {
   getDataList(lista: any[]) {
     this.psychosocialQuestionnaireService.getList().subscribe({
       next: (data) => {
-        const list: any[] = data;
+        let list: any[] = data;
+        list = list.sort((a, b) => a.posicion - b.posicion);
         this.dataList = list.filter(d => d.forma === 'A4');
         this.dataList.forEach((objeto) => {
           objeto.puntuacion = null;
@@ -50,6 +51,7 @@ export class StressQuestionnaireComponent implements OnInit {
         });
         this.asignarPuntuaciones(lista);
         this.calculateProgress();
+        this.asginarPosicion();
       },
     })
   }
@@ -63,6 +65,23 @@ export class StressQuestionnaireComponent implements OnInit {
         }
       });
     });
+  }
+
+  asginarPosicion() {
+    let numero;
+    const lista = this.dataList.filter(p => p.puntuacion === null && p.puntuacionA === null);
+    if (lista.length === 0) {
+      numero = 0;
+    } else {
+      numero = lista[0].posicion;
+    }
+    switch (true) {
+      case numero === 0:
+        this.propagar.emit();
+        break;
+      default:
+        break;
+    }
   }
 
   clickContinue() {
@@ -97,6 +116,7 @@ export class StressQuestionnaireComponent implements OnInit {
       next: (data) => {
         const list: any[] = data;
         if (list.length !== 0) {
+          this.startQuiz = true;
           this.getDataList(list);
         }
       },

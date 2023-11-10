@@ -4,14 +4,15 @@
     <div class="d-flex justify-content-end">
         <div>
             <div class="data-psychologist">Datos del Psicólogo Especialista SST</div>
-            <div class="text-psychologist">Nombre Completo: <span>Carlos Zarate</span> </div>
-            <div class="text-psychologist" style="margin-bottom: 1em;">Datos de contacto: <span>320129301</span></div>
+            <div class="text-psychologist">Nombre Completo: <span>{{nombrePsicologo}}</span> </div>
+            <div class="text-psychologist">Correo: <span>{{emailPsicologo}}</span> </div>
+            <div class="text-psychologist" style="margin-bottom: 1em;">Datos de contacto: <span>{{telPsicologo}}</span></div>
         </div>
-        <div class="ms-auto d-flex" id="cronometro" *ngIf="cronometroActivo">
+        <div class="ms-auto d-flex" id="cronometro" *ngIf="cronometroActivo && !final">
             <div class="data-psychologist" style="margin-right: .5em;">Tiempo Restante:</div>
             {{ horas + ':' + minutos + ':' + segundos }}
         </div>
-        <div class="ms-auto d-flex" id="cronometro" *ngIf="!cronometroActivo">
+        <div class="ms-auto d-flex" id="cronometro" *ngIf="!cronometroActivo || final">
         </div>
     </div>
 
@@ -20,7 +21,7 @@
             <li [ngbNavItem]="1">
                 <a ngbNavLink [class]="tab1 ? 'disabled' : ''">Cuestionario Factores Intralaborales</a>
                 <ng-template ngbNavContent>
-                    <app-intra-work-factors-questionnaire [idQuiz]="idQuiz" (propagar)="completeQuiz1()"
+                    <app-intra-work-factors-questionnaire [idQuiz]="idQuiz" [clasificacion]="clasificacion" (propagar)="completeQuiz1()"
                         (propagarStart)="startQuiz()"></app-intra-work-factors-questionnaire>
                 </ng-template>
             </li>
@@ -48,14 +49,21 @@
     </div>
 </div>
 
-<div *ngIf="final">
+<div *ngIf="final && view">
     <label class="title" style="margin-top: 1.5em; margin-bottom: 1.5em;">Cuestionario de evaluaciones
         psicosociales</label>
     <div style="padding: 3em;">
-        <h2 class="text-center">RESULTADOS</h2>
-        <p>Se ha terminado correctamente la evaluación psicosocial para la presente vigencia y le asignará y mostrará el
-            radicado
-            correspondiente:</p>
+        <h1 class="text-center" style="font-weight: 900;">RESULTADOS</h1>
+        <h2 style="padding: 0 5em;">Se ha terminado correctamente la evaluación psicosocial para la presente vigencia y le asignará y mostrará el
+            radicado correspondiente <br> <br>
+            Radicado: {{radicado}}</h2>
     </div>
+</div>
 
+<div *ngIf="tiempoRestante < 0">
+    <label class="title" style="margin-top: 1.5em; margin-bottom: 1.5em;">Tiempo de evaluacion finalizado</label>
+    <div style="padding: 3em;">
+        <h1 class="text-center" style="font-weight: 900;">RESULTADOS</h1>
+        <h2 style="padding: 0 5em;">Se ha terminado correctamente la evaluación psicosocial.</h2>
+    </div>
 </div>
