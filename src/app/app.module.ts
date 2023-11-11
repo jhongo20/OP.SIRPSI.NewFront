@@ -27,6 +27,12 @@ import { QueryReportsComponent } from './views/pages/query-reports/query-reports
 import { SummonWorkerComponent } from './shared/components/summon-worker/summon-worker.component';
 import { DownloadWorkerComponent } from './shared/components/download-worker/download-worker.component';
 import { TutorialsTrainingComponent } from './views/pages/tutorials-training/tutorials-training.component';
+import { NZ_I18N } from 'ng-zorro-antd/i18n';
+import { es_ES } from 'ng-zorro-antd/i18n';
+import { registerLocaleData } from '@angular/common';
+import es from '@angular/common/locales/es';
+
+registerLocaleData(es);
 
 @NgModule({
   declarations: [
@@ -76,6 +82,7 @@ import { TutorialsTrainingComponent } from './views/pages/tutorials-training/tut
       useClass: ServiceInterceptor,
       multi: true,
     },
+    { provide: NZ_I18N, useValue: es_ES },
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

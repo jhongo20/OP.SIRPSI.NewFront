@@ -46,13 +46,11 @@ export class FaqsItemsComponent implements OnInit {
   getListas() {
     const id: any = this.activatedRoute.snapshot.paramMap.get('id');
     this.loadingService.ChangeStatusLoading(true);
-    this.genericService
-      .GetAll('faqs/ConsultarFaqs?categoryId=' + id)
-      .subscribe((data: any) => {
-        this.faqsList = data;
-        console.log(data);
-        setTimeout(() => this.loadingService.ChangeStatusLoading(false), 600);
-      });
+    this.genericService.GetAll('faqs/ConsultarFaqs').subscribe((data: any) => {
+      this.faqsList = data;
+      console.log(data);
+      setTimeout(() => this.loadingService.ChangeStatusLoading(false), 600);
+    });
   }
   cancelarForm() {
     Swal.fire({

@@ -14,6 +14,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./faqs.component.scss'],
 })
 export class FaqsComponent implements OnInit {
+  isCollapsed = false;
   public form: FormGroup;
   hide = true;
   estadosList: any;

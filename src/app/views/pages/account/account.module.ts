@@ -24,7 +24,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { LoadingModule } from 'src/app/shared/components/loading/loading.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxMaskModule } from 'ngx-mask';
-import { NgxCaptchaModule } from 'ngx-captcha';
 
 @NgModule({
   declarations: [
@@ -52,7 +51,6 @@ import { NgxCaptchaModule } from 'ngx-captcha';
     MatDividerModule,
     MatPseudoCheckboxModule,
     MatCheckboxModule,
-    NgxCaptchaModule,
     MatTooltipModule,
     NgSelectModule,
     NgxMaskModule.forRoot({ validation: true }),

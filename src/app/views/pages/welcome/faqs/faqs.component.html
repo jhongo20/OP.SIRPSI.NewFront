@@ -1,31 +1,36 @@
-<div class="container">
-  <div class="wrapper">
-    <label class="title">Preguntas frecuentes - FAQs</label>
-    <div class="card">
-      <div class="card-body">
-        <div class="row">
-          <div
-            class="col-md-3"
-            *ngFor="let category of categoriasList; let i = index"
-          >
-            <a (click)="onRedirectFaqs(category.id)">
-              <div class="cont-category">
-                <div class="wrapper-category">
-                  <i
-                    class="fa fa-archive"
-                    aria-hidden="true"
-                    style="font-size: 230%; padding: 5px"
-                  ></i>
-                  <label class="title">{{ category.nombre }}</label>
-                  <label class="subtitle"
-                    >sdasaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</label
-                  >
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
+<nz-layout class="layout">
+  <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
+    <div class="logo">FAQS</div>
+    <ul nz-menu nzTheme="dark" nzMode="inline">
+      <li nz-menu-item *ngFor="let category of categoriasList; let i = index">
+        <span nz-icon nzType="file"></span>
+        <span>{{ category.nombre }}</span>
+      </li>
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-header>
+      <span
+        class="trigger"
+        nz-icon
+        [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+        (click)="isCollapsed = !isCollapsed"
+      ></span>
+      <div class="search-content">
+        <nz-input-group [nzSuffix]="suffixIconSearch">
+          <input type="text" nz-input placeholder="¿En qué podemos ayudarte?" />
+        </nz-input-group>
+        <ng-template #suffixIconSearch>
+          <span nz-icon nzType="search"></span>
+        </ng-template>
       </div>
-    </div>
-  </div>
-</div>
+      <span class="trigger right" nz-icon [nzType]="'caret-left'"  onclick="window.location = '/welcome'"></span>
+    </nz-header>
+    <nz-content>
+      <div class="inner-content">
+        <app-faqs-items></app-faqs-items>
+      </div>
+    </nz-content>
+    <nz-footer>Copyright © 2023 SIRPSI.</nz-footer>
+  </nz-layout>
+</nz-layout>

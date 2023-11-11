@@ -86,9 +86,9 @@ const routes: Routes = [
       {
         path: 'tutorials-training',
         loadChildren: () =>
-          import('./views/pages/tutorials-training/tutorials-training.module').then(
-            (m) => m.TutorialsTrainingModule
-          ),
+          import(
+            './views/pages/tutorials-training/tutorials-training.module'
+          ).then((m) => m.TutorialsTrainingModule),
         canActivate: [AuthGuard],
       },
       {
@@ -120,25 +120,11 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'advanced-ui',
-        loadChildren: () =>
-          import('./views/pages/advanced-ui/advanced-ui.module').then(
-            (m) => m.AdvancedUiModule
-          ),
-      },
-      {
         path: 'form-elements',
         loadChildren: () =>
           import('./views/pages/form-elements/form-elements.module').then(
             (m) => m.FormElementsModule
           ),
-      },
-      {
-        path: 'advanced-form-elements',
-        loadChildren: () =>
-          import(
-            './views/pages/advanced-form-elements/advanced-form-elements.module'
-          ).then((m) => m.AdvancedFormElementsModule),
       },
       {
         path: 'charts-graphs',
