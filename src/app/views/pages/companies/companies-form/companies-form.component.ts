@@ -37,6 +37,7 @@ export class CompaniesFormComponent implements OnInit {
   listUsuario: any;
   listMinisterios: any;
   listDocs: any;
+  listDocsUser: any;
   listTipoEmpresa: any;
   listEmpresas: any;
   listPaises: any;
@@ -108,7 +109,7 @@ export class CompaniesFormComponent implements OnInit {
       Id: '21',
       TypeDocument: ['', Validators.required],
       Document: ['', Validators.required],
-      IdCountry: ['', Validators.required],
+      // IdCountry: ['', Validators.required],
       IdCompany: '',
       Names: ['', Validators.required],
       Surnames: ['', Validators.required],
@@ -205,62 +206,67 @@ export class CompaniesFormComponent implements OnInit {
       .subscribe((data: any) => {
         this.listMinisterios = data;
         this.form.controls['IdMinisterio'].setValue(this.listMinisterios[0].id);
-        // this.genericService
-        //   .GetAll('tipodocumento/ConsultarTipoDocumento')
-        //   .subscribe((data: any) => {
-        //     this.listDocs = data;
         this.genericService
-          .GetAll('tiposempresa/ConsultarTipoEmpresa')
+          .GetAll('tipodocumento/ConsultarTipoDocumento')
           .subscribe((data: any) => {
-            this.listTipoEmpresa = data;
+            this.listDocsUser = data;
             this.genericService
-              .GetAll('estados/ConsultarEstados')
+              .GetAll('tiposempresa/ConsultarTipoEmpresa')
               .subscribe((data: any) => {
-                this.estadosList = data;
+                this.listTipoEmpresa = data;
                 this.genericService
-                  .GetAll('empresas/ConsultarEmpresas')
+                  .GetAll('estados/ConsultarEstados')
                   .subscribe((data: any) => {
-                    this.listEmpresas = data;
+                    this.estadosList = data;
                     this.genericService
-                      .GetAll('pais/ConsultarPaises')
+                      .GetAll('empresas/ConsultarEmpresas')
                       .subscribe((data: any) => {
-                        this.listPaises = data;
+                        this.listEmpresas = data;
                         this.genericService
-                          .GetAll('roles/ConsultarRoles')
+                          .GetAll('pais/ConsultarPaises')
                           .subscribe((data: any) => {
-                            this.listRoles = data;
+                            this.listPaises = data;
                             this.genericService
-                              .GetAll(
-                                'regimenesTributario/ConsultarRegimenesTributario'
-                              )
+                              .GetAll('roles/ConsultarRoles')
                               .subscribe((data: any) => {
-                                this.listRegimenes = data;
+                                this.listRoles = data;
                                 this.genericService
-                                  .GetAll('tiposPersonas/ConsultarTiposPersona')
+                                  .GetAll(
+                                    'regimenesTributario/ConsultarRegimenesTributario'
+                                  )
                                   .subscribe((data: any) => {
-                                    this.listTiposPersona = data;
+                                    this.listRegimenes = data;
                                     this.genericService
                                       .GetAll(
-                                        'actividadEconomica/ConsultarActividadEconomica'
+                                        'tiposPersonas/ConsultarTiposPersona'
                                       )
                                       .subscribe((data: any) => {
-                                        this.listActividadEconomica = data;
+                                        this.listTiposPersona = data;
                                         this.genericService
-                                          .GetAll('usuario/ConsultarUsuarios')
+                                          .GetAll(
+                                            'actividadEconomica/ConsultarActividadEconomica'
+                                          )
                                           .subscribe((data: any) => {
-                                            this.listUsuario = data;
-                                            this.listUsuario.push({
-                                              id: '0',
-                                              nombreUsuario: 'Registrar',
-                                              apellidosUsuario: '',
-                                            });
-                                            setTimeout(
-                                              () =>
-                                                this.loadingService.ChangeStatusLoading(
-                                                  false
-                                                ),
-                                              500
-                                            );
+                                            this.listActividadEconomica = data;
+                                            this.genericService
+                                              .GetAll(
+                                                'usuario/ConsultarUsuarios'
+                                              )
+                                              .subscribe((data: any) => {
+                                                this.listUsuario = data;
+                                                this.listUsuario.push({
+                                                  id: '0',
+                                                  nombreUsuario: 'Registrar',
+                                                  apellidosUsuario: '',
+                                                });
+                                                setTimeout(
+                                                  () =>
+                                                    this.loadingService.ChangeStatusLoading(
+                                                      false
+                                                    ),
+                                                  500
+                                                );
+                                              });
                                           });
                                       });
                                   });
@@ -270,7 +276,6 @@ export class CompaniesFormComponent implements OnInit {
                   });
               });
           });
-        // });
       });
   }
   cancelarForm() {

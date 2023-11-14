@@ -33,6 +33,10 @@ import { OccupationalLicenseComponent } from './update-psychologist-data/occupat
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { WorkerDataFormModule } from 'src/app/shared/components/worker-data-form/worker-data-form.module';
+import { NzCollapseModule } from 'ng-zorro-antd/collapse';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { NzInputModule } from 'ng-zorro-antd/input';
 
 @NgModule({
   declarations: [
@@ -75,6 +79,10 @@ import { WorkerDataFormModule } from 'src/app/shared/components/worker-data-form
     MatTabsModule,
     MatRadioModule,
     WorkerDataFormModule,
+    NzInputModule,
+    NzMenuModule,
+    NzIconModule,
+    NzCollapseModule,
   ],
 })
 export class UsersModule {}

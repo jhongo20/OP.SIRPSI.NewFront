@@ -19,6 +19,11 @@ import { FeatherIconModule } from 'src/app/core/feather-icon/feather-icon.module
 import { NgxMaskModule } from 'ngx-mask';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from '@angular/material/icon';
+import { NzCollapseModule } from 'ng-zorro-antd/collapse';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzLayoutModule } from 'ng-zorro-antd/layout';
 
 @NgModule({
   declarations: [CompaniesFormComponent],
@@ -42,6 +47,11 @@ import { MatIconModule } from '@angular/material/icon';
     MatOptionModule,
     MatTooltipModule,
     FeatherIconModule,
+    NzLayoutModule,
+    NzInputModule,
+    NzMenuModule,
+    NzIconModule,
+    NzCollapseModule,
     NgxMaskModule.forRoot({ validation: true }),
     MatTabsModule,
   ],

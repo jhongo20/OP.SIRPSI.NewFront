@@ -94,7 +94,7 @@ export class CompanyInformationFirstComponent implements OnInit {
       Id: ['', Validators.required],
       TypeDocument: ['', Validators.required],
       Document: ['', Validators.required],
-      IdCountry: ['', Validators.required],
+      // IdCountry: ['', Validators.required],
       IdCompany: '',
       Names: ['', Validators.required],
       Surnames: ['', Validators.required],
@@ -149,7 +149,9 @@ export class CompanyInformationFirstComponent implements OnInit {
   }
   onGetDepartment(url: string) {
     this.servicio.obtenerDatos(url).subscribe((data) => {
-      this.listDepartament = data.sort((x: any, y: any) => x.name.localeCompare(y.name));
+      this.listDepartament = data.sort((x: any, y: any) =>
+        x.name.localeCompare(y.name)
+      );
     });
   }
   getListas() {
@@ -327,7 +329,7 @@ export class CompanyInformationFirstComponent implements OnInit {
         event.usuario.typeDocument
       );
       this.formUser.controls['Document'].setValue(event.usuario.document);
-      this.formUser.controls['IdCountry'].setValue(event.usuario.idCountry);
+      // this.formUser.controls['IdCountry'].setValue(event.usuario.idCountry);
       this.formUser.controls['IdCompany'].setValue(event.usuario.idCompany);
       this.formUser.controls['Names'].setValue(event.usuario.names);
       this.formUser.controls['Surnames'].setValue(event.usuario.surnames);
@@ -352,7 +354,9 @@ export class CompanyInformationFirstComponent implements OnInit {
         environment.urlApiColombia + `Department/${url.IdDepartamento}/cities`
       )
       .subscribe((data) => {
-        this.listCity = data.sort((x: any, y: any) => x.name.localeCompare(y.name));
+        this.listCity = data.sort((x: any, y: any) =>
+          x.name.localeCompare(y.name)
+        );
       });
   }
   onGetTypeDocument(url: any) {

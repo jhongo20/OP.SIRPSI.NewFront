@@ -296,40 +296,40 @@ export class SidebarComponent implements OnInit, AfterViewInit {
           },
         ],
       },
-      {
-        label: 'Realizar',
-        icon: 'file-text',
-        view: true,
-        subItems: [
-          {
-            label: 'Convocar trabajadores',
-            link: '#',
-            view: true,
-          },
-          {
-            label: 'Avances evaluación psicosocial',
-            link: '#',
-            view: true,
-          },
-          {
-            label: 'Generar radicado evaluación psicosocial',
-            link: '#',
-            view: true,
-          },
-        ],
-      },
-      {
-        label: 'Apoyar',
-        icon: 'plus',
-        view: true,
-        link: '#',
-      },
-      {
-        label: 'Planes de Intervención y control',
-        icon: 'trello',
-        view: true,
-        link: '#',
-      },
+      // {
+      //   label: 'Realizar',
+      //   icon: 'file-text',
+      //   view: true,
+      //   subItems: [
+      //     {
+      //       label: 'Convocar trabajadores',
+      //       link: '#',
+      //       view: true,
+      //     },
+      //     {
+      //       label: 'Avances evaluación psicosocial',
+      //       link: '#',
+      //       view: true,
+      //     },
+      //     {
+      //       label: 'Generar radicado evaluación psicosocial',
+      //       link: '#',
+      //       view: true,
+      //     },
+      //   ],
+      // },
+      // {
+      //   label: 'Apoyar',
+      //   icon: 'plus',
+      //   view: true,
+      //   link: '#',
+      // },
+      // {
+      //   label: 'Planes de Intervención y control',
+      //   icon: 'trello',
+      //   view: true,
+      //   link: '#',
+      // },
       {
         label: 'Reportes',
         isTitle: true,

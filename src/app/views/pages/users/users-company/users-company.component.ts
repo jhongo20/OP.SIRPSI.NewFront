@@ -30,7 +30,7 @@ export class UsersCompanyComponent implements OnInit {
   ];
   public options = [
     {
-      delete: true,
+      delete: false,
       edit: false,
       details: false,
       select: false,

@@ -19,6 +19,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { FeatherIconModule } from 'src/app/core/feather-icon/feather-icon.module';
 import { NgxMaskModule } from 'ngx-mask';
 import { MatIconModule } from '@angular/material/icon';
+import { NzCollapseModule } from 'ng-zorro-antd/collapse';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { NzInputModule } from 'ng-zorro-antd/input';
 
 @NgModule({
   declarations: [CompanyInformationFirstComponent],
@@ -43,6 +47,10 @@ import { MatIconModule } from '@angular/material/icon';
     FeatherIconModule,
     MatIconModule,
     MatOptionModule,
+    NzInputModule,
+    NzMenuModule,
+    NzIconModule,
+    NzCollapseModule,
     NgxMaskModule.forRoot({ validation: true }),
   ],
   exports: [CompanyInformationFirstComponent],
