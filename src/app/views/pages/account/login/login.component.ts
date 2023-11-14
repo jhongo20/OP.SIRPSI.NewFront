@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
       IdCompany: ['103365981', Validators.required],
       Document: ['1234567', Validators.required],
       Password: ['Admin123*.', Validators.required],
-      // ReCaptcha: ['', Validators.required],
+      ReCaptcha: ['', Validators.required],
       Tc: [false, Validators.required],
     });
     this.accountService.ValidateSesion();
