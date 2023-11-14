@@ -24,8 +24,6 @@ import { ReloadDirective } from './core/directives/reload.directive';
 import { CompaniesModule } from './views/pages/companies/companies.module';
 import { GenericTableModule } from './shared/components/generic-table/generic-table.module';
 import { QueryReportsComponent } from './views/pages/query-reports/query-reports.component';
-import { SummonWorkerComponent } from './shared/components/summon-worker/summon-worker.component';
-import { DownloadWorkerComponent } from './shared/components/download-worker/download-worker.component';
 import { TutorialsTrainingComponent } from './views/pages/tutorials-training/tutorials-training.component';
 import { NZ_I18N } from 'ng-zorro-antd/i18n';
 import { es_ES } from 'ng-zorro-antd/i18n';
@@ -40,8 +38,6 @@ registerLocaleData(es);
     ErrorPageComponent,
     ReloadDirective,
     QueryReportsComponent,
-    SummonWorkerComponent,
-    DownloadWorkerComponent,
     TutorialsTrainingComponent,
   ],
   imports: [

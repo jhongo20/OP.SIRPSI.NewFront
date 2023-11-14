@@ -98,8 +98,8 @@ export class CompaniesFormComponent implements OnInit {
       IdEstado: environment.activoEstado,
       IdUsuario: '121212',
       IdEmpresa: '121212',
-      IdDepartamento: [0, Validators.required],
-      IdMunicipio: [0, Validators.required],
+      IdDepartamento: 0,
+      IdMunicipio: 0,
       Email: '',
       Celular: '',
       Telefono: '',
@@ -124,13 +124,12 @@ export class CompaniesFormComponent implements OnInit {
 
   onGetDepartment(url: string) {
     this.servicio.obtenerDatos(url).subscribe((data) => {
-      this.listDepartament = data.sort((x: any, y: any) =>
-        x.name.localeCompare(y.name)
-      );
+      this.listDepartament = data;
     });
   }
 
   onGetCity(url: any) {
+    console.log('city', url.IdDepartamento);
     this.listCity = [];
     this.formWorkCenter.value.IdMunicipio = '';
     if (url.IdDepartamento == null) return;
@@ -139,9 +138,7 @@ export class CompaniesFormComponent implements OnInit {
         environment.urlApiColombia + `Department/${url.IdDepartamento}/cities`
       )
       .subscribe((data) => {
-        this.listCity = data.sort((x: any, y: any) =>
-          x.name.localeCompare(y.name)
-        );
+        this.listCity = data;
       });
   }
   onGetTypeDocument(url: any) {

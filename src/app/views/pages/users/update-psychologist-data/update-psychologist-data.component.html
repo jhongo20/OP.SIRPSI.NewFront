@@ -33,15 +33,15 @@
         <!-- <p class="mt-2 text-muted">Id: <span class="fw-bolder">{{this.form.value.TipoDocumento}}</span></p> -->
     </div>
     <div class="col-md-3">
-        <label class="form-label">Número de documento <i class="mdi mdi-information" #tooltip="matTooltip"
-                matTooltip="Ingrese el número de documento"></i></label>
-        <input class="form-control" type="text" #Document placeholder="Número de documento" formControlName="Document" />
+        <label class="form-label">Documento <i class="mdi mdi-information" #tooltip="matTooltip"
+                matTooltip="Ingrese el numero de documento"></i></label>
+        <input class="form-control" type="text" #Document placeholder="Documento" formControlName="Document" />
         <p class="text-danger mt-1" *ngIf="form.controls.Document.errors?.required">Este
             campo es obligatorio
         </p>
     </div>
     <div class="col-md-3">
-        <label class="form-label">Nombre completo <i class="mdi mdi-information" #tooltip="matTooltip"
+        <label class="form-label">Nombre <i class="mdi mdi-information" #tooltip="matTooltip"
                 matTooltip="Ingrese su nombre o nombres"></i></label>
         <input class="form-control" type="text" #Names placeholder="Nombre" formControlName="Names" />
         <p class="text-danger mt-1" *ngIf="form.controls.Names.errors?.required">Este
@@ -59,7 +59,7 @@
     <div class="col-md-3">
         <label class="form-label">Telefono <i class="mdi mdi-information" #tooltip="matTooltip"
                 matTooltip="Ingrese un telefono celular"></i></label>
-        <input class="form-control mb-4 mb-md-0"  mask="(000) 000 00 00" [showMaskTyped]="true"
+        <input class="form-control mb-4 mb-md-0" prefix="+57 " mask="(000) 000 00 00" [showMaskTyped]="true"
             #PhoneNumber placeholder="Telefono" formControlName="PhoneNumber" />
     </div>
     <div class="col-md-3">
@@ -91,49 +91,6 @@
         <ng-select id="IdEstado" #IdEstado formControlName="IdEstado" [items]="estadosList" bindLabel="nombre"
             bindValue="id" [(ngModel)]="this.form.value.IdEstado" required>
         </ng-select>
-    </div>
-    <div class="col-md-3">
-        <label class="form-label">Sexo <i class="mdi mdi-information" #tooltip="matTooltip"
-                matTooltip="Seleccione un sexo"></i></label>
-        <ng-select id="IdSex" #IdSex formControlName="IdSex" [items]="listSexos" bindLabel="nombre"
-            bindValue="id" [(ngModel)]="this.form.value.IdSex" required>
-        </ng-select>
-        <p class="text-danger mt-1" *ngIf="form.controls.IdSex.errors?.required">Este
-            campo es obligatorio
-        </p>
-    </div>
-    <div class="col-md-3">
-        <label class="form-label">Fecha de nacimiento <i class="mdi mdi-information" #tooltip="matTooltip"
-                matTooltip="Ingrese la fecha de nacimiento"></i></label>
-        <input class="form-control" placeholder="yyyy-mm-dd" #Birthdate type="date" id="prueba"
-        formControlName="Birthdate">
-        <p class="text-danger mt-1" *ngIf="form.controls.Birthdate.errors?.required">Este
-            campo es obligatorio
-        </p>
-    </div>
-    <hr class="hr" />
-    <h2><b>Lugar de nacimiento</b></h2>
-    <div class="row">
-        <div class="col-md-4 mb-2">
-            <label class="form-label">Departamento <i class="mdi mdi-information" #tooltip="matTooltip"
-                    matTooltip="Ingrese Departamento"></i></label>
-            <ng-select id="PlaceBirthDepartment" #PlaceBirthDepartment formControlName="PlaceBirthDepartment" [items]="listDepartament"
-                bindLabel="name" bindValue="id" [(ngModel)]="form.value.PlaceBirthDepartment" (change)="onGetCity(form.value)">
-            </ng-select>
-            <p class="text-danger" *ngIf="form.controls.PlaceBirthDepartment.errors?.required">Este
-                campo es obligatorio
-            </p>
-        </div>
-        <div class="col-md-4 mb-2">
-            <label class="form-label">Ciudad <i class="mdi mdi-information" #tooltip="matTooltip"
-                    matTooltip="Ingrese Ciudad"></i></label>
-            <ng-select id="PlaceBirthCity" #PlaceBirthCity formControlName="PlaceBirthCity" [items]="listCity" bindLabel="name"
-                bindValue="id" [(ngModel)]="form.value.PlaceBirthCity">
-            </ng-select>
-            <p class="text-danger" *ngIf="form.controls.PlaceBirthCity.errors?.required">Este
-                campo es obligatorio
-            </p>
-        </div>
     </div>
 </form>
 <form #f="ngForm" [formGroup]="this.formEmail" *ngIf="this.formInitial.valid">

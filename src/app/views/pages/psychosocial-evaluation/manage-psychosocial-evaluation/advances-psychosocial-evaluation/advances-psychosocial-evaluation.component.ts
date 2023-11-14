@@ -3,16 +3,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SummonWorkerComponent } from 'src/app/shared/components/summon-worker/summon-worker.component';
 import { WorkerDataFormComponent } from 'src/app/shared/components/worker-data-form/worker-data-form.component';
 import { AccountService } from 'src/app/shared/services/account.service';
 import { GenericService } from 'src/app/shared/services/generic.service';
 import { LoadingService } from 'src/app/shared/services/loading.service';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
-import { RegisterEvaluationComponent } from '../summon-workers-psychosocial-evaluation/register-evaluation/register-evaluation.component';
-import { RolesComponent } from '../../../configuration/roles/roles.component';
-import { DownloadWorkerComponent } from 'src/app/shared/components/download-worker/download-worker.component';
 
 @Component({
   selector: 'app-advances-psychosocial-evaluation',
@@ -159,27 +155,14 @@ export class AdvancesPsychosocialEvaluationComponent implements OnInit {
   selectedWorkCenter(event: any) {
     // this.loadingService.ChangeStatusLoading(true);
   }
-  selectedRow(event: any, type: number) {
-    console.log(event);
-    if (event.porcentaje != 100 && type == 3) {
-      Swal.fire(
-        'El usuario debe completar toda la evaluación para poder descargarlo.'
-      );
-      return;
-    }
-    const dialogRef = this.dialog.open(
-      type == 1
-        ? WorkerDataFormComponent
-        : type == 2
-        ? SummonWorkerComponent
-        : DownloadWorkerComponent,
-      {
-        data: {
-          info: event,
-          details: true,
-        },
-      }
-    );
+  selectedRow(event: any) {
+    // console.log(event);
+    const dialogRef = this.dialog.open(WorkerDataFormComponent, {
+      data: {
+        info: event,
+        details: true,
+      },
+    });
     dialogRef.afterClosed().subscribe();
   }
   searchWorkers() {

@@ -29,8 +29,6 @@ export class CompanyInformationSecondComponent implements OnInit {
     { name: 'Descripción', data: 'descripcion' },
     { name: 'Empresa', data: 'empresa', property: 'nombre' },
     { name: 'Estado', data: 'estados', property: 'nombre' },
-    { name: 'Departamento', data: 'departamento', property: 'name' },
-    { name: 'Municipio', data: 'municipio', property: 'name' },
     // { name: 'Psicologo', data: 'usuario', property: 'names' },
   ];
   public optionsWork = [

@@ -36,9 +36,9 @@ export class NavbarComponent implements OnInit {
     @Inject(DOCUMENT) private document: Document,
     private renderer: Renderer2,
     private router: Router
-  ) {}
+  ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   toggleSidebar(e: Event) {
     e.preventDefault();
@@ -46,6 +46,8 @@ export class NavbarComponent implements OnInit {
   }
 
   onLogout(e: Event) {
+    localStorage.removeItem('final');
+    localStorage.removeItem('viewQuiz');
     this.accountService.CloseUserSession();
   }
   updateDataPersonal() {

@@ -212,64 +212,36 @@
             </tfoot>
           </table>
         </div>
-      </div>
     </div>
-  </div>
 </div>
-<br />
+<br>
 <div class="row" *ngIf="this.export">
-  <div class="col-md-12 stretch-card">
-    <div class="card">
-      <div class="card-body">
-        <button
-          type="button"
-          class="btn btn-info"
-          (click)="exportTableExcel()"
-          style="
-            margin: 4px;
-            background: #1e973e;
-            border-color: #1a8336;
-            color: white;
-          "
-        >
-          Exportar a Excel
-          <i class="fa-solid fa-file-excel" style="font-size: 22px"></i>
-        </button>
-        <button
-          type="button"
-          class="btn btn-info"
-          style="
-            margin: 4px;
-            background: #1a73e8;
-            border-color: #1868d0;
-            color: white;
-          "
-          (click)="exportTableType()"
-        >
-          Exportar a Json
-          <i class="fa-solid fa-file-code" style="font-size: 22px"></i>
-        </button>
-        <!-- <button type="button" class="btn btn-info"
+    <div class="col-md-12 stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <button type="button" class="btn btn-info" (click)="exportTableExcel();"
+                    style="margin: 4px;background: #1e973e;border-color:#1a8336; color: white;">
+                    Exportar a Excel
+                    <i class="fa-solid fa-file-excel" style="font-size: 22px;"></i>
+                </button>
+                <button type="button" class="btn btn-info"
+                    style="margin: 4px;background: #1A73E8;border-color:#1868d0; color: white;"
+                    (click)="exportTableType()">
+                    Exportar a Json
+                    <i class="fa-solid fa-file-code" style="font-size: 22px;"></i>
+                </button>
+                <!-- <button type="button" class="btn btn-info"
                     style="margin: 4px;background: #797979;border-color:#6b6b6b; color: white;"
                     (click)="exportTableType()">
                     Exportar a Txt
                     <i class="fa-solid fa-file-lines" style="font-size: 22px;"></i>
                 </button> -->
-        <button
-          type="button"
-          class="btn btn-info"
-          (click)="exportToPDF()"
-          style="
-            margin: 4px;
-            background: #971e1e;
-            border-color: #831a1a;
-            color: white;
-          "
-        >
-          Exportar a Pdf
-          <i class="fa-solid fa-file-pdf" style="font-size: 22px"></i>
-        </button>
-      </div>
+                <button type="button" class="btn btn-info" (click)="exportToPDF();"
+                    style="margin: 4px;background: #971e1e;border-color:#831a1a; color: white;">
+                    Exportar a Pdf
+                    <i class="fa-solid fa-file-pdf" style="font-size: 22px;"></i>
+                </button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>

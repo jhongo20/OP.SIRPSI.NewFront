@@ -26,5 +26,5 @@ export class SummonWorkersPsychosocialEvaluationComponent implements OnInit {
       horizontalPosition: 'start',
       verticalPosition: 'bottom',
     });
-  }
+  }  
 }

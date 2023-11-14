@@ -25,9 +25,9 @@ export class RestorePasswordComponent implements OnInit {
       (result) => (this.loading = result)
     );
     this.form = this.formBuilder.group({
-      Empresa: ['', Validators.required],
-      Document: ['', Validators.required],
-      Email: ['', Validators.required],
+      Empresa: ['3467', Validators.required],
+      Document: ['1234567', Validators.required],
+      Email: ['jculma@ministerio.gov.co', Validators.required],
     });
     // this.accountService.ValidateSesion();
     setTimeout(() => this.loadingService.ChangeStatusLoading(false), 800);

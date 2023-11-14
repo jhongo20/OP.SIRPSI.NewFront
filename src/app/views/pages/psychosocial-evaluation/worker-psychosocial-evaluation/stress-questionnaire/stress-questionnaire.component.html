@@ -1,0 +1,85 @@
+<div *ngIf="!startQuiz">
+    <h2 class="text-center">CUESTIONARIO PARA LA EVALUACIÓN DEL ESTRÉS</h2>
+    <p>Señale con la casilla que indique la frecuencia con que se le han presentado los siguientes malestares en los
+        últimos tres meses.</p>
+
+    <div class="d-flex justify-content-end">
+        <button type="submit" class="btn btn-primary me-2" (click)="startQuizData()">Aceptar</button>
+    </div>
+</div>
+
+<div *ngIf="startQuiz">
+    <div>
+        <h5>Progreso</h5>
+        <p class="mb-3"><ngb-progressbar type="primary" [value]="progress" height="25px" style="font-size: large;" [showValue]="true"></ngb-progressbar></p>
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-response">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Pregunta</th>
+                                    <th class="text-center">Siempre</th>
+                                    <th class="text-center">Casi Siempre</th>
+                                    <th class="text-center">Algunas veces</th>
+                                    <th class="text-center">Casi veces</th>
+                                    <th class="text-center">Nunca</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of dataList; let i = index">
+                                    <td style="width: 200px;">{{data.pregunta}}</td>
+                                    <td>
+                                        <div class="form-check mb-2 d-flex justify-content-center">
+                                            <input type="radio" class="form-check-input" value="0"
+                                                [(ngModel)]="data.puntuacionA" name="radioSelected_{{ i }}"
+                                                (click)="$event.stopPropagation()"
+                                                (ngModelChange)="changeResponse($event, data)">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-check mb-2 d-flex justify-content-center">
+                                            <input type="radio" class="form-check-input" value="1"
+                                                [(ngModel)]="data.puntuacionA" name="radioSelected_{{ i }}"
+                                                (click)="$event.stopPropagation()"
+                                                (ngModelChange)="changeResponse($event, data)">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-check mb-2 d-flex justify-content-center">
+                                            <input type="radio" class="form-check-input" value="2"
+                                                [(ngModel)]="data.puntuacionA" name="radioSelected_{{ i }}"
+                                                (click)="$event.stopPropagation()"
+                                                (ngModelChange)="changeResponse($event, data)">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-check mb-2 d-flex justify-content-center">
+                                            <input type="radio" class="form-check-input" value="3"
+                                                [(ngModel)]="data.puntuacionA" name="radioSelected_{{ i }}"
+                                                (click)="$event.stopPropagation()"
+                                                (ngModelChange)="changeResponse($event, data)">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-check mb-2 d-flex justify-content-center">
+                                            <input type="radio" class="form-check-input" value="4"
+                                                [(ngModel)]="data.puntuacionA" name="radioSelected_{{ i }}"
+                                                (click)="$event.stopPropagation()"
+                                                (ngModelChange)="changeResponse($event, data)">
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-end">
+        <button type="submit" class="btn btn-primary me-2" [disabled]="progress == 100 ? false : true"
+            (click)="clickContinue()">Continuar</button>
+    </div>
+</div>

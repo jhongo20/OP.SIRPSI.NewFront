@@ -28,6 +28,16 @@ export class RegisterNewWorkerComponent implements OnInit {
   listDocs: any;
   listPaises: any;
   listOcupacionProfesion: any;
+  listaTipoTrabajador = [
+    {
+      id: '1a8274f0-f552-494d-a6c2-63b4c08ed0f6',
+      nombre: 'Grupo Forma A'
+    },
+    {
+      id: '2e8a1dbf-2a6d-4d0c-8f3f-635fb351896c',
+      nombre: 'Grupo Forma B'
+    }
+  ]
   id: number | undefined;
   listRoles: any;
   public hide = true;
@@ -43,6 +53,7 @@ export class RegisterNewWorkerComponent implements OnInit {
     this.title = 'Ficha de Datos Generales';
     this.getListas();
     this.form = this.formBuilder.group({
+      clasificacion: ['', Validators.required],
       IdTypeDocument: ['', Validators.required],
       Document: ['', Validators.required],
       // ExpeditionDate: ['', Validators.required],
@@ -77,10 +88,10 @@ export class RegisterNewWorkerComponent implements OnInit {
       this.form.value.HaveDisability == '0' ? false : true;
     this.form.value.ReadingWritingSkills =
       this.form.value.ReadingWritingSkills == '0' ? false : true;
-    this.form.value.PhoneNumber = this.form.value.PhoneNumber;
+    this.form.value.PhoneNumber = '+57' + this.form.value.PhoneNumber;
     this.form.value.PhoneNumberAux =
       this.form.value.PhoneNumberAux.length > 0
-        ? this.form.value.PhoneNumberAux
+        ? '+57' + this.form.value.PhoneNumberAux
         : null;
     console.log(this.form.value);
     this.loadingService.ChangeStatusLoading(true);
@@ -118,7 +129,7 @@ export class RegisterNewWorkerComponent implements OnInit {
       .GetAll('ocupacionProfesion/ConsultarOcupacionProfesion')
       .subscribe((data: any) => {
         this.listOcupacionProfesion = data;
-        this.genericService
+        this.genericService 
           .GetAll('empresas/ConsultarEmpresas')
           .subscribe((data: any) => {
             this.listEmpresas = data;

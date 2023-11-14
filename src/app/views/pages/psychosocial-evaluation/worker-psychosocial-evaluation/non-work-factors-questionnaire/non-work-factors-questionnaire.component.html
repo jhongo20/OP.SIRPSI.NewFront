@@ -1,0 +1,98 @@
+<div *ngIf="!startQuiz">
+    <h2 class="text-center">INSTRUCCIONES</h2>
+    <p>Este cuestionario de factores psicosociales busca conocer su opinión sobre algunos aspectos de su vida familiar y
+        personal. Le agradecemos que usted se sirva contestar a las siguientes preguntas de forma absolutamente sincera.
+        Las respuestas que usted de al cuestionario, no son ni buenas, ni malas, lo importante es que Es muy importante
+        que usted responda a todas las preguntas y en cada una de ellas marque una sola respuesta.
+    </p>
+    <p>Por favor lea cuidadosamente cada pregunta y marque la casilla de la respuesta que mejor se ajuste a su modo de
+        pensar. Si se equivoca en una respuesta puede seleccionar otra opción y el sistema automáticamente desmarcará la
+        opción anterior y marcará la nueva opción seleccionada .</p>
+    <p>Si tiene dudas respecto a una pregunta, solicite mayor explicación al Psicólogo Especialista SST asignado por la
+        empresa.</p>
+    <p>Se estima que el tiempo necesario para completar este cuestionario es de aproximadamente 10 minutos. Gracias por
+        su colaboración.</p>
+
+    <div class="d-flex justify-content-end">
+        <button type="submit" class="btn btn-primary me-2" (click)="startQuizData()">Aceptar</button>
+    </div>
+</div>
+
+<div *ngIf="startQuiz">
+    <div>
+        <h4>{{dataListText[index].title}}</h4>
+        <div *ngIf="dataListText[index].quiz">
+            <h5>Progreso</h5>
+            <p class="mb-3"><ngb-progressbar type="primary" [value]="progress" height="25px" style="font-size: large;" [showValue]="true"></ngb-progressbar></p>
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-response">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Pregunta</th>
+                                        <th class="text-center">Siempre</th>
+                                        <th class="text-center">Casi Siempre</th>
+                                        <th class="text-center">Algunas veces</th>
+                                        <th class="text-center">Casi veces</th>
+                                        <th class="text-center">Nunca</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of dataListA; let i = index">
+                                        <td style="width: 200px;">{{data.pregunta}}</td>
+                                        <td>
+                                            <div class="form-check mb-2 d-flex justify-content-center">
+                                                <input type="radio" class="form-check-input" value="0"
+                                                    [(ngModel)]="data.puntuacionA" name="radioSelected_{{ i }}"
+                                                    (click)="$event.stopPropagation()"
+                                                    (ngModelChange)="changeResponse($event, data)">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-check mb-2 d-flex justify-content-center">
+                                                <input type="radio" class="form-check-input" value="1"
+                                                    [(ngModel)]="data.puntuacionA" name="radioSelected_{{ i }}"
+                                                    (click)="$event.stopPropagation()"
+                                                    (ngModelChange)="changeResponse($event, data)">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-check mb-2 d-flex justify-content-center">
+                                                <input type="radio" class="form-check-input" value="2"
+                                                    [(ngModel)]="data.puntuacionA" name="radioSelected_{{ i }}"
+                                                    (click)="$event.stopPropagation()"
+                                                    (ngModelChange)="changeResponse($event, data)">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-check mb-2 d-flex justify-content-center">
+                                                <input type="radio" class="form-check-input" value="3"
+                                                    [(ngModel)]="data.puntuacionA" name="radioSelected_{{ i }}"
+                                                    (click)="$event.stopPropagation()"
+                                                    (ngModelChange)="changeResponse($event, data)">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-check mb-2 d-flex justify-content-center">
+                                                <input type="radio" class="form-check-input" value="4"
+                                                    [(ngModel)]="data.puntuacionA" name="radioSelected_{{ i }}"
+                                                    (click)="$event.stopPropagation()"
+                                                    (ngModelChange)="changeResponse($event, data)">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary me-2" [disabled]="progressA == 100 ? false : true"
+                (click)="clickContinue()">Continuar</button>
+        </div>
+    </div>
+</div>

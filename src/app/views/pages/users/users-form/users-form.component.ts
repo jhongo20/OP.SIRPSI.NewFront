@@ -75,7 +75,7 @@ export class UsersFormComponent implements OnInit {
       .subscribe((data) => (this.listCentrosCosto = data));
   }
   onSave() {
-    this.form.value.PhoneNumber = this.form.value.PhoneNumber;
+    this.form.value.PhoneNumber = '+57' + this.form.value.PhoneNumber;
     this.loadingService.ChangeStatusLoading(true);
     this.genericService.Post('user/RegisterUser', this.form.value).subscribe({
       next: (data) => {

@@ -77,10 +77,10 @@ export class WorkerDataFormComponent implements OnInit {
       this.form.value.HaveDisability == '0' ? false : true;
     this.form.value.ReadingWritingSkills =
       this.form.value.ReadingWritingSkills == '0' ? false : true;
-    this.form.value.PhoneNumber = this.form.value.PhoneNumber;
+    this.form.value.PhoneNumber = '+57' + this.form.value.PhoneNumber;
     this.form.value.PhoneNumberAux =
       this.form.value.PhoneNumberAux != ''
-        ? this.form.value.PhoneNumberAux
+        ? '+57' + this.form.value.PhoneNumberAux
         : null;
     this.loadingService.ChangeStatusLoading(true);
     this.genericService
