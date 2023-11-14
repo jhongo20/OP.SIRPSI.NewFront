@@ -37,6 +37,7 @@ export class CompanyInformationFirstComponent implements OnInit {
   listDepartament: any;
   listCity: any;
   hideUser = true;
+  showDigit: boolean = false;
   @Input('company') company: any = null;
   constructor(
     public formBuilder: FormBuilder,
@@ -362,6 +363,7 @@ export class CompanyInformationFirstComponent implements OnInit {
   onGetTypeDocument(url: any) {
     this.listDocs = [];
     this.form.value.TipoDocumento = '';
+    this.onGetDigit(undefined);
     if (url.IdTipoPersona == null) return;
     this.genericService
       .GetAll(
@@ -371,6 +373,10 @@ export class CompanyInformationFirstComponent implements OnInit {
       .subscribe((data: any) => {
         this.listDocs = data;
       });
+  }
+  onGetDigit(item: any) {
+    console.log(item);
+    this.showDigit = item == undefined ? false : item.tieneDigito;
   }
   cancelarForm() {
     Swal.fire({

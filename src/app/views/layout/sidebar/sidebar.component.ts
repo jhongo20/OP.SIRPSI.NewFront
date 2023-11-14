@@ -299,7 +299,10 @@ export class SidebarComponent implements OnInit, AfterViewInit {
       {
         label: 'Realizar',
         icon: 'file-text',
-        view: true,
+        view:
+          this.accountService.userData.rutasAsignadas.filter(
+            (ruta: any) => ruta.ruta == 'questionnair'
+          ).length > 0,
         subItems: [
           {
             label: 'Cuestionario de evaluaciones psicosociales',

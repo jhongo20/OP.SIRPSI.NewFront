@@ -49,6 +49,7 @@ export class CompaniesFormComponent implements OnInit {
   listRegimenes: any;
   listActividadEconomica: any;
   hideUser = true;
+  showDigit: boolean = false;
   constructor(
     public formBuilder: FormBuilder,
     public dialog: MatDialog,
@@ -147,6 +148,7 @@ export class CompaniesFormComponent implements OnInit {
   onGetTypeDocument(url: any) {
     this.listDocs = [];
     this.form.value.TipoDocumento = '';
+    this.onGetDigit(undefined);
     if (url.IdTipoPersona == null) return;
     this.genericService
       .GetAll(
@@ -156,6 +158,10 @@ export class CompaniesFormComponent implements OnInit {
       .subscribe((data: any) => {
         this.listDocs = data;
       });
+  }
+  onGetDigit(item: any) {
+    console.log(item);
+    this.showDigit = item == undefined ? false : item.tieneDigito;
   }
   onSave() {
     var body = {
