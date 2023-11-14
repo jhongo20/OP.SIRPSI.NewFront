@@ -296,28 +296,31 @@ export class SidebarComponent implements OnInit, AfterViewInit {
           },
         ],
       },
-      // {
-      //   label: 'Realizar',
-      //   icon: 'file-text',
-      //   view: true,
-      //   subItems: [
-      //     {
-      //       label: 'Convocar trabajadores',
-      //       link: '#',
-      //       view: true,
-      //     },
-      //     {
-      //       label: 'Avances evaluación psicosocial',
-      //       link: '#',
-      //       view: true,
-      //     },
-      //     {
-      //       label: 'Generar radicado evaluación psicosocial',
-      //       link: '#',
-      //       view: true,
-      //     },
-      //   ],
-      // },
+      {
+        label: 'Realizar',
+        icon: 'file-text',
+        view: true,
+        subItems: [
+          {
+            label: 'Cuestionario de evaluaciones psicosociales',
+            link: 'psychosocial-evaluation/worker/questionnair',
+            view:
+              this.accountService.userData.rutasAsignadas.filter(
+                (ruta: any) => ruta.ruta == 'questionnair'
+              ).length > 0,
+          },
+          // {
+          //   label: 'Avances evaluación psicosocial',
+          //   link: '#',
+          //   view: true,
+          // },
+          // {
+          //   label: 'Generar radicado evaluación psicosocial',
+          //   link: '#',
+          //   view: true,
+          // },
+        ],
+      },
       // {
       //   label: 'Apoyar',
       //   icon: 'plus',
@@ -432,7 +435,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
             link: '/tutorials-training/categories',
             view:
               this.accountService.userData.rutasAsignadas.filter(
-                (ruta: any) => ruta.ruta == 'roles'
+                (ruta: any) => ruta.ruta == 'categories'
               ).length > 0,
           },
           {

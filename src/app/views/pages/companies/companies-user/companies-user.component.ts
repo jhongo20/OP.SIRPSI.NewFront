@@ -31,7 +31,7 @@ export class CompaniesUserComponent implements OnInit {
     { name: 'Dígito verificación', data: 'digitoVerificacion' },
     { name: 'Tipo empresa', data: 'tipoEmpresa', property: 'nombre' },
     { name: 'Nombre', data: 'nombre' },
-    { name: 'Ministerio', data: 'ministerio', property: 'nombre' },
+    // { name: 'Ministerio', data: 'ministerio', property: 'nombre' },
     // { name: 'Administrador', data: 'usuario', property: 'names' },
     { name: 'Estado', data: 'estado', property: 'nombre' },
   ];
