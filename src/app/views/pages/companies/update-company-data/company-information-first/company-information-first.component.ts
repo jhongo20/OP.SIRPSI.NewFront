@@ -74,8 +74,8 @@ export class CompanyInformationFirstComponent implements OnInit {
       IdEstado: ['', Validators.required],
       IdUsuario: '',
       IdEmpresa: ['', Validators.required],
-      IdDepartamento: 0,
-      IdMunicipio: 0,
+      IdDepartamento: [0, Validators.required],
+      IdMunicipio: [0, Validators.required],
       Email: ['', Validators.required],
       Celular: '',
       Telefono: '',
@@ -346,7 +346,6 @@ export class CompanyInformationFirstComponent implements OnInit {
     setTimeout(() => this.loadingService.ChangeStatusLoading(false), 1500);
   }
   onGetCity(url: any) {
-    console.log('city', url.IdDepartamento);
     this.listCity = [];
     this.formWorkCenter.value.IdMunicipio = '';
     if (url.IdDepartamento == null) return;

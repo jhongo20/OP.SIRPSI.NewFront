@@ -56,7 +56,7 @@ export class UpdateWorkerDataComponent implements OnInit {
       Names: ['', Validators.required],
       Surnames: ['', Validators.required],
       IdRol: environment.trabajadorRole,
-      Password: ['', Validators.required],
+      Password: '',
       PhoneNumber: ['', Validators.required],
       PhoneNumberAux: '',
       Email: ['', Validators.required],
@@ -79,10 +79,10 @@ export class UpdateWorkerDataComponent implements OnInit {
       this.form.value.HaveDisability == '0' ? false : true;
     this.form.value.ReadingWritingSkills =
       this.form.value.ReadingWritingSkills == '0' ? false : true;
-    this.form.value.PhoneNumber = '+57' + this.form.value.PhoneNumber;
+    this.form.value.PhoneNumber = this.form.value.PhoneNumber;
     this.form.value.PhoneNumberAux =
       this.form.value.PhoneNumberAux != ''
-        ? '+57' + this.form.value.PhoneNumberAux
+        ? this.form.value.PhoneNumberAux
         : null;
     this.loadingService.ChangeStatusLoading(true);
     this.genericService

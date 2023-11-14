@@ -34,8 +34,8 @@ export class UsersComponent implements OnInit {
   public options = [
     {
       delete: true,
-      edit: true,
-      details: true,
+      edit: false,
+      details: false,
       select: true,
       state: true,
       pdf: false,
