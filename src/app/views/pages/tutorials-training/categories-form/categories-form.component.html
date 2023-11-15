@@ -1,40 +1,89 @@
 <label class="title">Registrar categorías</label>
 <form class="row" #f="ngForm" [formGroup]="this.form">
-    <div class="col-md-4 mb-2">
-        <label class="form-label">Nombre <i class="mdi mdi-information" #tooltip="matTooltip"
-                matTooltip="Ingrese el nombre de la categoría"></i></label>
-        <input class="form-control" type="text" #Nombre placeholder="Nombre categoría"
-            formControlName="Nombre" required />
-        <p class="text-danger" *ngIf="form.controls.Nombre.errors?.required">Este
-            campo es obligatorio
-        </p>
-    </div>
-    <div class="col-md-4 mb-2">
-        <label class="form-label">Tipo <i class="mdi mdi-information" #tooltip="matTooltip"
-                matTooltip="Seleccione el tipo para la categoría"></i></label>
-        <ng-select id="Tipo" #Tipo formControlName="Tipo"
-            [items]="listTypes" bindLabel="name" bindValue="id"
-            [(ngModel)]="this.form.value.Tipo" [searchWhileComposing]="true">
-        </ng-select>
-        <!-- <p class="text-danger" *ngIf="form.controls.Tipo.errors?.required">Este
+  <div class="col-md-4 mb-2">
+    <label class="form-label"
+      >Nombre
+      <i
+        class="mdi mdi-information"
+        #tooltip="matTooltip"
+        matTooltip="Ingrese el nombre de la categoría"
+      ></i
+    ></label>
+    <input
+      class="form-control"
+      type="text"
+      #Nombre
+      placeholder="Nombre categoría"
+      formControlName="Nombre"
+      required
+    />
+    <p class="text-danger" *ngIf="form.controls.Nombre.errors?.required">
+      Este campo es obligatorio
+    </p>
+  </div>
+  <div class="col-md-4 mb-2">
+    <label class="form-label"
+      >Tipo
+      <i
+        class="mdi mdi-information"
+        #tooltip="matTooltip"
+        matTooltip="Seleccione el tipo para la categoría"
+      ></i
+    ></label>
+    <ng-select
+      id="Tipo"
+      #Tipo
+      formControlName="Tipo"
+      [items]="listTypes"
+      bindLabel="name"
+      bindValue="id"
+      [(ngModel)]="this.form.value.Tipo"
+      [searchWhileComposing]="true"
+    >
+    </ng-select>
+    <!-- <p class="text-danger" *ngIf="form.controls.Tipo.errors?.required">Este
             campo es obligatorio
         </p> -->
-    </div>
-    <div class="col-md-4 mb-2">
-        <label class="form-label">Rol <i class="mdi mdi-information" #tooltip="matTooltip"
-                matTooltip="Seleccione el rol que visualizara la categoría"></i></label>
-        <ng-select id="IdRol" #IdRol formControlName="IdRol"
-            [items]="listRoles" bindLabel="name" bindValue="id"
-            [(ngModel)]="this.form.value.IdRol" [searchWhileComposing]="true">
-        </ng-select>
-        <!-- <p class="text-danger" *ngIf="form.controls.IdRol.errors?.required">Este
+  </div>
+  <div class="col-md-4 mb-2">
+    <label class="form-label"
+      >Rol
+      <i
+        class="mdi mdi-information"
+        #tooltip="matTooltip"
+        matTooltip="Seleccione el rol que visualizara la categoría"
+      ></i
+    ></label>
+    <nz-select
+      [nzMaxTagPlaceholder]="IdRol"
+      nzMode="multiple"
+      nzPlaceHolder="Por favor seleccione un(os) rol(es)"
+      formControlName="IdRol"
+      [nzSize]="'large'"
+    >
+      <nz-option
+        *ngFor="let item of listRoles"
+        [nzLabel]="item.name"
+        [nzValue]="item.id"
+      ></nz-option>
+    </nz-select>
+    <ng-template #IdRol let-selectedList
+      >and {{ selectedList.length }} more selected</ng-template
+    >
+    <!-- <p class="text-danger" *ngIf="form.controls.IdRol.errors?.required">Este
             campo es obligatorio
         </p> -->
-    </div>
+  </div>
 </form>
 <hr class="hr" />
-<div style="padding: 20px 0 25px 0;">
-    <button type="submit" class="btn btn-primary me-2" (click)="onSave()"
-        [disabled]="this.form.invalid">Registrar</button>
-    <button class="btn btn-secondary" (click)="cancelarForm()">Cancelar</button>
+<div style="padding: 20px 0 25px 0">
+  <button
+    type="submit"
+    class="btn btn-primary me-2"
+    (click)="onSave()"
+    [disabled]="this.form.invalid"
+  >
+    Registrar
+  </button>
+  <button class="btn btn-secondary" (click)="cancelarForm()">Cancelar</button>
 </div>

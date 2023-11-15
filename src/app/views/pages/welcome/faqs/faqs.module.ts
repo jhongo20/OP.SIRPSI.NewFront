@@ -9,6 +9,7 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 @NgModule({
   declarations: [FaqsComponent, FaqsItemsComponent],
@@ -22,6 +23,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     FaqsRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    NzToolTipModule,
   ],
 })
 export class FaqsModule {}

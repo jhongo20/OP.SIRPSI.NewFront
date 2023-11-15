@@ -2,7 +2,7 @@
 <div style="float: left; width: 100%;" *ngIf="this.roleList.length > 0">
     <div class="wrapper">
         <form #f="ngForm" [formGroup]="this.form">
-            <h2><b>Bienvenid@</b></h2>
+            <h2><b>Bienvenido/a</b></h2>
             <div class="mb-3">
                 <label class="form-label">Seleccionar rol:</label>
                 <ng-select id="TipoDocumento" #Role formControlName="Role" [items]="roleList" bindLabel="nombre"

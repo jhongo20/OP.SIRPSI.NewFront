@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -18,6 +18,7 @@ export class FaqsItemsComponent implements OnInit {
   hide = true;
   estadosList: any;
   faqsList: any;
+  @Input('list') list: any = [];
   constructor(
     public formBuilder: FormBuilder,
     public accountService: AccountService,

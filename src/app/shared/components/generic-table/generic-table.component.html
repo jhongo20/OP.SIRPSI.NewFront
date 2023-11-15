@@ -76,8 +76,9 @@
                     type="button"
                     class="btn-delete btn btn-danger"
                     style="margin: 0px 6px 0px 6px"
-                    #tooltip="matTooltip"
-                    matTooltip="Eliminar"
+                    [nzTooltipTitle]="'Eliminar'"
+                    nzTooltipPlacement="right"
+                    nz-tooltip
                   >
                     <i class="btn-delete fa-solid fa-trash"></i>
                   </button>
@@ -87,8 +88,9 @@
                     type="button"
                     class="btn-delete btn btn-danger"
                     style="margin: 0px 6px 0px 6px"
-                    #tooltip="matTooltip"
-                    matTooltip="Eliminar"
+                    [nzTooltipTitle]="'Eliminar'"
+                    nzTooltipPlacement="right"
+                    nz-tooltip
                   >
                     <i class="btn-delete fa-solid fa-trash"></i>
                   </button>
@@ -98,8 +100,9 @@
                     type="button"
                     class="btn-edit btn btn-primary"
                     style="margin: 0px 6px 0px 6px"
-                    #tooltip="matTooltip"
-                    matTooltip="Modificar"
+                    [nzTooltipTitle]="'Modificar'"
+                    nzTooltipPlacement="right"
+                    nz-tooltip
                   >
                     <i class="btn-edit fa-solid fa-pencil"></i>
                   </button>
@@ -109,8 +112,9 @@
                     type="button"
                     class="btn-details btn btn-warning"
                     style="margin: 0px 6px 0px 0px"
-                    #tooltip="matTooltip"
-                    matTooltip="Detalle"
+                    [nzTooltipTitle]="'Detalle'"
+                    nzTooltipPlacement="right"
+                    nz-tooltip
                   >
                     <i class="btn-details fa-regular fa-eye"></i>
                   </button>
@@ -124,12 +128,13 @@
                         : 'btn-state btn btn-success'
                     }}"
                     style="margin: 0px 6px 0px 0px"
-                    #tooltip="matTooltip"
-                    [matTooltip]="
+                    [nzTooltipTitle]="
                       da[nameColumnStatus] == this.state
                         ? 'Deshabilitar'
                         : 'Habilitar'
                     "
+                    nzTooltipPlacement="right"
+                    nz-tooltip
                   >
                     <i
                       [ngClass]="
@@ -149,6 +154,9 @@
                       background: #41b234;
                       border-color: #3eaa32;
                     "
+                    [nzTooltipTitle]="'Descargar'"
+                    nzTooltipPlacement="right"
+                    nz-tooltip
                   >
                     <i class="btn-pdf fa-solid fa-download"></i>
                   </button>
@@ -165,8 +173,9 @@
                   >
                     <i
                       class="btn-assign fa fa-user"
-                      #tooltip="matTooltip"
-                      matTooltip="Asignar"
+                      [nzTooltipTitle]="'Asignar'"
+                      nzTooltipPlacement="right"
+                      nz-tooltip
                     ></i>
                   </button>
                   <button
@@ -184,8 +193,9 @@
                   >
                     <i
                       class="btn-select fa-solid fa-arrow-right"
-                      #tooltip="matTooltip"
-                      matTooltip="Consultar"
+                      [nzTooltipTitle]="'Consultar'"
+                      nzTooltipPlacement="right"
+                      nz-tooltip
                     ></i>
                   </button>
                   <input
@@ -195,6 +205,9 @@
                     type="checkbox"
                     value=""
                     id="flexCheckDefault"
+                    [nzTooltipTitle]="'Seleccionar'"
+                    nzTooltipPlacement="right"
+                    nz-tooltip
                     (click)="this.DetailOrEditItem(da, 6)"
                   />
                 </td>
@@ -212,36 +225,64 @@
             </tfoot>
           </table>
         </div>
+      </div>
     </div>
-</div>
-<br>
-<div class="row" *ngIf="this.export">
-    <div class="col-md-12 stretch-card">
+    <br />
+    <div class="row" *ngIf="this.export">
+      <div class="col-md-12 stretch-card">
         <div class="card">
-            <div class="card-body">
-                <button type="button" class="btn btn-info" (click)="exportTableExcel();"
-                    style="margin: 4px;background: #1e973e;border-color:#1a8336; color: white;">
-                    Exportar a Excel
-                    <i class="fa-solid fa-file-excel" style="font-size: 22px;"></i>
-                </button>
-                <button type="button" class="btn btn-info"
-                    style="margin: 4px;background: #1A73E8;border-color:#1868d0; color: white;"
-                    (click)="exportTableType()">
-                    Exportar a Json
-                    <i class="fa-solid fa-file-code" style="font-size: 22px;"></i>
-                </button>
-                <!-- <button type="button" class="btn btn-info"
+          <div class="card-body">
+            <button
+              type="button"
+              class="btn btn-info"
+              (click)="exportTableExcel()"
+              style="
+                margin: 4px;
+                background: #1e973e;
+                border-color: #1a8336;
+                color: white;
+              "
+            >
+              Exportar a Excel
+              <i class="fa-solid fa-file-excel" style="font-size: 22px"></i>
+            </button>
+            <button
+              type="button"
+              class="btn btn-info"
+              style="
+                margin: 4px;
+                background: #1a73e8;
+                border-color: #1868d0;
+                color: white;
+              "
+              (click)="exportTableType()"
+            >
+              Exportar a Json
+              <i class="fa-solid fa-file-code" style="font-size: 22px"></i>
+            </button>
+            <!-- <button type="button" class="btn btn-info"
                     style="margin: 4px;background: #797979;border-color:#6b6b6b; color: white;"
                     (click)="exportTableType()">
                     Exportar a Txt
                     <i class="fa-solid fa-file-lines" style="font-size: 22px;"></i>
                 </button> -->
-                <button type="button" class="btn btn-info" (click)="exportToPDF();"
-                    style="margin: 4px;background: #971e1e;border-color:#831a1a; color: white;">
-                    Exportar a Pdf
-                    <i class="fa-solid fa-file-pdf" style="font-size: 22px;"></i>
-                </button>
-            </div>
+            <button
+              type="button"
+              class="btn btn-info"
+              (click)="exportToPDF()"
+              style="
+                margin: 4px;
+                background: #971e1e;
+                border-color: #831a1a;
+                color: white;
+              "
+            >
+              Exportar a Pdf
+              <i class="fa-solid fa-file-pdf" style="font-size: 22px"></i>
+            </button>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>

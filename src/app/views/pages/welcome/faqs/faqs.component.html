@@ -2,7 +2,14 @@
   <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
     <div class="logo">FAQS</div>
     <ul nz-menu nzTheme="dark" nzMode="inline">
-      <li nz-menu-item *ngFor="let category of categoriasList; let i = index">
+      <li
+        nz-menu-item
+        *ngFor="let category of categoriasList; let i = index"
+        (click)="onGetFaqs(category)"
+        [nzTooltipTitle]="category.nombre"
+        nzTooltipPlacement="right"
+        nz-tooltip
+      >
         <span nz-icon nzType="file"></span>
         <span>{{ category.nombre }}</span>
       </li>
@@ -24,11 +31,16 @@
           <span nz-icon nzType="search"></span>
         </ng-template>
       </div>
-      <span class="trigger right" nz-icon [nzType]="'caret-left'"  onclick="window.location = '/welcome'"></span>
+      <span
+        class="trigger right"
+        nz-icon
+        [nzType]="'caret-left'"
+        onclick="window.location = '/welcome'"
+      ></span>
     </nz-header>
     <nz-content>
       <div class="inner-content">
-        <app-faqs-items></app-faqs-items>
+        <app-faqs-items [list]="this.faqsList"></app-faqs-items>
       </div>
     </nz-content>
     <nz-footer>Copyright © 2023 SIRPSI.</nz-footer>

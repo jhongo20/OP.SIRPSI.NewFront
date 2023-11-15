@@ -28,6 +28,7 @@ export class RegisterNewWorkerComponent implements OnInit {
   listDocs: any;
   listPaises: any;
   listOcupacionProfesion: any;
+  listDiscapacidades: any;
   listaTipoTrabajador = [
     {
       id: '1a8274f0-f552-494d-a6c2-63b4c08ed0f6',
@@ -50,7 +51,7 @@ export class RegisterNewWorkerComponent implements OnInit {
     private snackBar: MatSnackBar
   ) {}
   ngOnInit(): void {
-    this.title = 'Ficha de Datos Generales';
+    this.title = 'Registro de trabajadores';
     this.getListas();
     this.form = this.formBuilder.group({
       clasificacion: ['', Validators.required],
@@ -62,7 +63,7 @@ export class RegisterNewWorkerComponent implements OnInit {
       Names: ['', Validators.required],
       Surnames: ['', Validators.required],
       IdRol: environment.trabajadorRole,
-      Password: ['', Validators.required],
+      Password: '',
       PhoneNumber: ['', Validators.required],
       PhoneNumberAux: '',
       Email: ['', Validators.required],
@@ -71,6 +72,7 @@ export class RegisterNewWorkerComponent implements OnInit {
       IdWorkCenter: ['', Validators.required],
       IdOccupationProfession: ['', Validators.required],
       HaveDisability: '0',
+      Disability: '',
       ReadingWritingSkills: '0',
     });
     this.formEmpresa = this.formBuilder.group({
@@ -93,7 +95,11 @@ export class RegisterNewWorkerComponent implements OnInit {
       this.form.value.PhoneNumberAux.length > 0
         ? this.form.value.PhoneNumberAux
         : null;
-    console.log(this.form.value);
+    this.form.value.Password =
+      'Ept_' +
+      this.accountService.userData.empresa.documento +
+      '_' +
+      this.form.value.Document;
     this.loadingService.ChangeStatusLoading(true);
     this.genericService.Post('user/RegisterUser', this.form.value).subscribe({
       next: (data) => {
@@ -126,40 +132,45 @@ export class RegisterNewWorkerComponent implements OnInit {
   getListas() {
     this.loadingService.ChangeStatusLoading(true);
     this.genericService
-      .GetAll('ocupacionProfesion/ConsultarOcupacionProfesion')
+      .GetAll('discapacidades/ConsultarDiscapacidades')
       .subscribe((data: any) => {
-        this.listOcupacionProfesion = data;
+        this.listDiscapacidades = data;
         this.genericService
-          .GetAll('empresas/ConsultarEmpresas')
+          .GetAll('ocupacionProfesion/ConsultarOcupacionProfesion')
           .subscribe((data: any) => {
-            this.listEmpresas = data;
+            this.listOcupacionProfesion = data;
             this.genericService
-              .GetAll('tipodocumento/ConsultarTipoDocumento')
+              .GetAll('empresas/ConsultarEmpresas')
               .subscribe((data: any) => {
-                this.listDocs = data;
+                this.listEmpresas = data;
                 this.genericService
-                  .GetAll('pais/ConsultarPaises')
+                  .GetAll('tipodocumento/ConsultarTipoDocumento')
                   .subscribe((data: any) => {
-                    this.listPaises = data;
+                    this.listDocs = data;
                     this.genericService
-                      .GetAll('roles/ConsultarRoles')
+                      .GetAll('pais/ConsultarPaises')
                       .subscribe((data: any) => {
-                        this.listRoles = data;
+                        this.listPaises = data;
                         this.genericService
-                          .GetAll('estados/ConsultarEstados')
+                          .GetAll('roles/ConsultarRoles')
                           .subscribe((data: any) => {
-                            this.estadosList = data;
+                            this.listRoles = data;
                             this.genericService
-                              .GetAll('usuario/ConsultarUsuarios')
+                              .GetAll('estados/ConsultarEstados')
                               .subscribe((data: any) => {
-                                this.listUsuario = data;
-                                setTimeout(
-                                  () =>
-                                    this.loadingService.ChangeStatusLoading(
-                                      false
-                                    ),
-                                  600
-                                );
+                                this.estadosList = data;
+                                this.genericService
+                                  .GetAll('usuario/ConsultarUsuarios')
+                                  .subscribe((data: any) => {
+                                    this.listUsuario = data;
+                                    setTimeout(
+                                      () =>
+                                        this.loadingService.ChangeStatusLoading(
+                                          false
+                                        ),
+                                      600
+                                    );
+                                  });
                               });
                           });
                       });

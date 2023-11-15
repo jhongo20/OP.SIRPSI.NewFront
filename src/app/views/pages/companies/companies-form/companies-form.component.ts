@@ -116,6 +116,7 @@ export class CompaniesFormComponent implements OnInit {
       Surnames: ['', Validators.required],
       IdRol: environment.administradorEmpRole,
       Password: ['', Validators.required],
+      VerifyPassword: ['', Validators.required],
       PhoneNumber: '',
       Email: ['', Validators.required, Validators.email],
       Status: environment.inactivoEstado,

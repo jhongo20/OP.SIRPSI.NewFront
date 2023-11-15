@@ -19,6 +19,7 @@ export class FaqsComponent implements OnInit {
   hide = true;
   estadosList: any;
   categoriasList: any;
+  faqsList: any = [];
   constructor(
     public formBuilder: FormBuilder,
     public accountService: AccountService,
@@ -44,6 +45,11 @@ export class FaqsComponent implements OnInit {
       verticalPosition: 'bottom',
     });
   }
+
+  onGetFaqs(item: any) {
+    this.faqsList = item.faqs;
+  }
+
   getListas() {
     this.loadingService.ChangeStatusLoading(true);
     this.genericService

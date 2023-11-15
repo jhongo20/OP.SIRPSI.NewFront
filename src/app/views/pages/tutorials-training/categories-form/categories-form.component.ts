@@ -30,10 +30,11 @@ export class CategoriesFormComponent implements OnInit {
     this.form = this.formBuilder.group({
       Nombre: ['', Validators.required],
       Tipo: '',
-      IdRol: '',
+      IdRol: [],
     });
   }
   onSave() {
+    console.log(this.form.value);
     Swal.fire({
       title: '¿Estas seguro?',
       icon: 'info',

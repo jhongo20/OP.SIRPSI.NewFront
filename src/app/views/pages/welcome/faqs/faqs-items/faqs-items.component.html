@@ -1,5 +1,5 @@
 <nz-collapse [nzBordered]="false">
-  <nz-collapse-panel *ngFor="let faq of faqsList" [nzHeader]="faq.titulo">
+  <nz-collapse-panel *ngFor="let faq of list" [nzHeader]="faq.titulo">
     <div class="accordion-content" id="item1" [innerHTML]="faq.contenido"></div>
   </nz-collapse-panel>
 </nz-collapse>

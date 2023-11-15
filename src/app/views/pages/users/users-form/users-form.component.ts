@@ -1,13 +1,16 @@
-import { Component, inject, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { GenericService } from 'src/app/shared/services/generic.service';
-import { LoadingService } from 'src/app/shared/services/loading.service';
-import Swal from 'sweetalert2';
-import { environment } from 'src/environments/environment';
-import { CompaniesFormComponent } from '../../companies/companies-form/companies-form.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { RolesEnum } from 'src/app/core/enums/Roles';
+import { AccountService } from 'src/app/shared/services/account.service';
+import { GenericService } from 'src/app/shared/services/generic.service';
+import { getService } from 'src/app/shared/services/get.services';
+import { LoadingService } from 'src/app/shared/services/loading.service';
+import { environment } from 'src/environments/environment';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-users-form',
@@ -17,75 +20,95 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class UsersFormComponent implements OnInit {
   public form: FormGroup;
   public formEmpresa: FormGroup;
+  public formValidate: FormGroup;
+  public formLicencia: FormGroup;
   public option: string;
-  public listCentrosCosto: any;
   public viewStatus: boolean = true;
-  public title: string =
-    this.data.title == undefined ? 'Usuarios' : this.data.title;
+  type: any = RolesEnum.AdminEmp;
+  public title: string = '';
   estadosList: any;
   listUsuario: any;
   listEmpresas: any;
   listDocs: any;
   listPaises: any;
   id: number | undefined;
-  type: number = this.data.type;
-  table: number = this.data.table;
   listRoles: any;
+  listSexos: any;
+  listDepartament: any;
+  listCity: any;
   hide = true;
+  psicologoRole: string = environment.psicologoRole;
   constructor(
     public formBuilder: FormBuilder,
     public dialog: MatDialog,
-    private snackBar: MatSnackBar,
     private genericService: GenericService,
     private loadingService: LoadingService,
-    public dialogRef: MatDialogRef<UsersFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    private accountService: AccountService,
+    private activatedRoute: ActivatedRoute,
+    private snackBar: MatSnackBar,
+    private router: Router,
+    private servicio: getService
   ) {}
   ngOnInit(): void {
-    this.viewStatus = this.data.estado == undefined;
+    this.type =
+      this.router.url == '/users/register-new-administrator'
+        ? RolesEnum.AdminEmp
+        : this.router.url == '/users/register-new-psychologist'
+        ? RolesEnum.Psicologo
+        : RolesEnum.Trabajador;
+    this.title = 'Registrar nuevo usuario';
     this.getListas();
+    this.formValidate = this.formBuilder.group({
+      IdTypeDocument: ['', Validators.required],
+      Document: ['', Validators.required],
+      ExpeditionDate: '',
+    });
     this.form = this.formBuilder.group({
       IdTypeDocument: ['', Validators.required],
       Document: ['', Validators.required],
+      // ExpeditionDate: ['', Validators.required],
       IdCountry: ['', Validators.required],
-      IdCompany: this.data.empresa,
+      IdCompany: ['', Validators.required],
       Names: ['', Validators.required],
       Surnames: ['', Validators.required],
-      IdRol:
-        this.data.role == undefined
-          ? ['', Validators.required]
-          : this.data.role == 1
-          ? environment.administradorEmpRole
-          : this.data.role == 2
-          ? environment.psicologoRole
-          : environment.trabajadorRole,
+      IdRol: ['', Validators.required],
       Password: ['', Validators.required],
       PhoneNumber: '',
       Email: ['', Validators.required],
-      IdEstado:
-        this.data.estado != undefined
-          ? environment.inactivoEstado
-          : ['', Validators.required],
+      IdEstado: environment.activoEstado,
+      IdSex: ['', Validators.required],
+      Birthdate: ['', Validators.required],
+      PlaceBirthDepartment: [null, Validators.required],
+      PlaceBirthCity: [null, Validators.required],
+      OccupationalLicense: null,
+      // PhoneNumberAux: '',
+      // EmailAux: '',
+      // IdWorkCenter: '',
+      // IdOccupationProfession: '',
+      // HaveDisability: false,
+      // ReadingWritingSkills: false,
     });
     this.formEmpresa = this.formBuilder.group({
       Usuario: ['', Validators.required],
     });
-    this.genericService
-      .GetAll('centrotrabajo/ConsultarCentroDeTrabajo')
-      .subscribe((data) => (this.listCentrosCosto = data));
+    this.formLicencia = this.formBuilder.group({
+      UsuarioId: '1',
+      Numero: this.type == RolesEnum.Psicologo ? ['', Validators.required] : '',
+      FechaExpedicion:
+        this.type == RolesEnum.Psicologo ? ['', Validators.required] : '',
+    });
+    this.onGetDepartment(environment.urlApiColombia + 'Department');
   }
   onSave() {
-    this.form.value.PhoneNumber = this.form.value.PhoneNumber;
+    this.form.value.IdTypeDocument = this.formValidate.value.IdTypeDocument;
+    this.form.value.Document = this.formValidate.value.Document;
+    this.form.value.OccupationalLicense =
+      this.type == RolesEnum.Psicologo ? this.formLicencia.value : null;
     this.loadingService.ChangeStatusLoading(true);
+    console.log(this.form.value);
     this.genericService.Post('user/RegisterUser', this.form.value).subscribe({
       next: (data) => {
-        if (this.data.reload) '';
-        else this.dialogRef.close();
-        if (data.estadoId == environment.inactivoEstado)
-          this.sendNotifications(
-            data.user.codeActivation,
-            data.user.phoneNumber
-          );
+        this.sendNotifications(data.user.codeActivation, data.user.phoneNumber);
         this.loadingService.ChangeStatusLoading(false);
         Swal.fire({
           icon: 'success',
@@ -93,7 +116,7 @@ export class UsersFormComponent implements OnInit {
           showConfirmButton: false,
           timer: 2800,
         }).then(() => {
-          this.returnViewOrReload(data.user.id);
+          window.location.reload();
         });
       },
       error: (error) => {
@@ -113,132 +136,46 @@ export class UsersFormComponent implements OnInit {
   }
   getListas() {
     this.loadingService.ChangeStatusLoading(true);
-    this.genericService
-      .GetAll('empresas/ConsultarEmpresas')
-      .subscribe((data: any) => {
-        this.listEmpresas = data;
-        this.genericService
-          .GetAll('tipodocumento/ConsultarTipoDocumento')
-          .subscribe((data: any) => {
-            this.listDocs = data;
-            this.genericService
-              .GetAll('pais/ConsultarPaises')
-              .subscribe((data: any) => {
-                this.listPaises = data;
-                this.genericService
-                  .GetAll('roles/ConsultarRoles')
-                  .subscribe((data: any) => {
-                    this.listRoles = data;
-                    this.genericService
-                      .GetAll('estados/ConsultarEstados')
-                      .subscribe((data: any) => {
-                        this.estadosList = data;
-                        this.genericService
-                          .GetAll('usuario/ConsultarUsuarios')
-                          .subscribe((data: any) => {
-                            console.log(data);
-                            this.listUsuario = data.filter(
-                              (data: any) =>
-                                data.idRol ==
-                                (this.data.table == 0
-                                  ? environment.administradorEmpRole
-                                  : this.data.table == 1
-                                  ? environment.psicologoRole
-                                  : environment.trabajadorRole)
-                            );
-                            if (this.data.empresa != null)
-                              this.listUsuario = this.listUsuario.filter(
-                                (data: any) =>
-                                  data.idEmpresa == this.data.empresa
+    this.genericService.GetAll('sexo/ConsultarSexo').subscribe((data: any) => {
+      this.listSexos = data;
+      this.genericService
+        .GetAll('empresas/ConsultarEmpresas')
+        .subscribe((data: any) => {
+          this.listEmpresas = data;
+          this.genericService
+            .GetAll('tipodocumento/ConsultarTipoDocumento')
+            .subscribe((data: any) => {
+              this.listDocs = data;
+              this.genericService
+                .GetAll('pais/ConsultarPaises')
+                .subscribe((data: any) => {
+                  this.listPaises = data;
+                  this.genericService
+                    .GetAll('roles/ConsultarRoles')
+                    .subscribe((data: any) => {
+                      this.listRoles = data;
+                      this.genericService
+                        .GetAll('estados/ConsultarEstados')
+                        .subscribe((data: any) => {
+                          this.estadosList = data;
+                          this.genericService
+                            .GetAll('usuario/ConsultarUsuarios')
+                            .subscribe((data: any) => {
+                              this.listUsuario = data;
+                              setTimeout(
+                                () =>
+                                  this.loadingService.ChangeStatusLoading(
+                                    false
+                                  ),
+                                600
                               );
-                            setTimeout(
-                              () =>
-                                this.loadingService.ChangeStatusLoading(false),
-                              600
-                            );
-                          });
-                      });
-                  });
-              });
-          });
-      });
-  }
-  changeViewFormUser() {
-    this.type = 1;
-    this.dialogRef.close();
-    this.dialog
-      .open(UsersFormComponent, {
-        data: {
-          id: 0,
-          type: 0,
-          reload: false,
-          estado: this.data.estado,
-          role: this.data.role,
-          retornarModal: this.data.retornarModal,
-          empresa: this.data.empresa,
-        },
-      })
-      .afterClosed()
-      .subscribe();
-  }
-  onUpdateEmpresa() {
-    if (this.table == 0) {
-      var empresa = this.data.item;
-      empresa.IdUsuario = this.formEmpresa.value.Usuario;
-      this.genericService
-        .Put('empresas/ActualizarEmpresaAsignar', empresa)
-        .subscribe({
-          next: (data) => {
-            this.dialogRef.close();
-            Swal.fire({
-              icon: 'success',
-              title: 'Usuario asignado exitosamente.',
-              showConfirmButton: false,
-              timer: 1600,
-            }).then(() => window.location.reload());
-          },
-          error: (error) => {
-            Swal.fire({
-              icon: 'warning',
-              title: 'Ha ocurrido un error! ' + error.error.message,
-              showConfirmButton: false,
-              timer: 1600,
+                            });
+                        });
+                    });
+                });
             });
-          },
         });
-    } else if (this.table == 1) {
-      var body = {
-        Workplace: this.data.item.id,
-        User: this.formEmpresa.value.Usuario,
-      };
-      this.savePsychologist(body);
-    } else if (this.table == 2) {
-      var body = {
-        Workplace: this.data.item.id,
-        User: this.formEmpresa.value.Usuario,
-      };
-      this.genericService
-        .Post('userWorkPlace/RegistrarCentroDeTrabajoUsuario', body)
-        .subscribe({
-          next: (data) => {
-            this.dialogRef.close();
-            Swal.fire({
-              icon: 'success',
-              title: 'Usuario asignado exitosamente.',
-              showConfirmButton: false,
-              timer: 2800,
-            }).then(() => window.location.reload());
-          },
-          error: (error) => {
-            Swal.fire({
-              icon: 'warning',
-              title: 'Ha ocurrido un error! ' + error.error.message,
-              showConfirmButton: false,
-              timer: 2800,
-            });
-          },
-        });
-    }
+    });
   }
   sendNotifications(code: string, numberPhone: string) {
     var body = {
@@ -251,47 +188,95 @@ export class UsersFormComponent implements OnInit {
         console.log(data);
       });
   }
-  returnViewOrReload(id: string) {
-    this.loadingService.ChangeStatusLoading(false);
-    if (
-      this.data.retornarModal == environment.retornarModal.registrarTrabajador
-    )
-      window.location.reload();
-    if (this.data.retornarModal == undefined) window.location.reload();
-    if (this.data.retornarModal == environment.retornarModal.registrarAdmin) {
-      this.dialogRef.close();
-      this.dialog
-        .open(CompaniesFormComponent, { data: { user: id, table: 0 } })
-        .afterClosed()
-        .subscribe();
-    }
-    // if (this.data.retornarModal == undefined) window.location.reload();
-  }
-  savePsychologist(body: any) {
+  getUser() {
+    this.loadingService.ChangeStatusLoading(true);
     this.genericService
-      .Post('psicologosCentroTrabajo/RegistrarCentroDeTrabajo', body)
+      .GetAll(
+        'usuario/ConsultarUsuarioDatos?TypeDocumentId=' +
+          this.formValidate.value.IdTypeDocument +
+          '&Document=' +
+          this.formValidate.value.Document +
+          '&ExpeditionDate=' +
+          this.formValidate.value.ExpeditionDate
+      )
       .subscribe({
         next: (data) => {
+          this.loadingService.ChangeStatusLoading(false);
+          this.form.controls['IdTypeDocument'].setValue(data.tipoDocumento);
+          this.form.controls['Document'].setValue(data.documento);
+          this.form.controls['Surnames'].setValue(data.apellidos);
+          this.form.controls['Names'].setValue(data.nombre);
           Swal.fire({
             icon: 'success',
-            title:
-              'Se ha vinculado al(los) Psicólogo(s) Especialista(s) SST seleccionado(s)',
+            title: 'Usuario consultado exitosamente.',
             showConfirmButton: false,
             timer: 1200,
           });
-          setTimeout(() => this.loadingService.ChangeStatusLoading(false), 600);
         },
         error: (error) => {
-          console.error(error.error.message);
-          this.openSnackBar(error.error.message);
-          setTimeout(() => this.loadingService.ChangeStatusLoading(false), 600);
+          this.loadingService.ChangeStatusLoading(false);
+          Swal.fire({
+            icon: 'warning',
+            title:
+              'Ha ocurrido un error! ' + error.error.message ==
+              'Registro de usuario ¡fallido!  Failed : PasswordRequiresNonAlphanumeric,PasswordRequiresLower,PasswordRequiresUpper'
+                ? 'Registro de usuario ¡fallido!  Error: La contraseña no cumple los criterios de seguridad.'
+                : error.error.message,
+            showConfirmButton: false,
+            timer: 1200,
+          });
         },
       });
+  }
+  cancelarForm() {
+    Swal.fire({
+      title: '¿Estas seguro?',
+      text: 'no podras revertir esto!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.form.reset();
+        this.formValidate.reset();
+      }
+    });
   }
   openSnackBar(message: string) {
     this.snackBar.open(message, 'x', {
       horizontalPosition: 'start',
       verticalPosition: 'bottom',
     });
+  }
+  LlenarForm(type: number) {
+    if (type == 0)
+      this.form.controls['IdTypeDocument'].setValue(
+        this.formValidate.value.IdTypeDocument
+      );
+    if (type == 1)
+      this.form.controls['Document'].setValue(this.formValidate.value.Document);
+  }
+  onGetDepartment(url: string) {
+    this.servicio.obtenerDatos(url).subscribe((data) => {
+      this.listDepartament = data.sort((x: any, y: any) =>
+        x.name.localeCompare(y.name)
+      );
+    });
+  }
+  onGetCity(url: any) {
+    this.listCity = [];
+    this.form.value.PlaceBirthCity = '';
+    if (url.PlaceBirthDepartment == null) return;
+    this.servicio
+      .obtenerDatos(
+        environment.urlApiColombia +
+          `Department/${url.PlaceBirthDepartment}/cities`
+      )
+      .subscribe((data) => {
+        this.listCity = data.sort((x: any, y: any) =>
+          x.name.localeCompare(y.name)
+        );
+      });
   }
 }

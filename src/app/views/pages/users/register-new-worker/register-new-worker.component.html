@@ -55,10 +55,10 @@
                     </p>
                 </div>
                 <div class="col-md-3 mb-2">
-                    <label class="form-label">Telefono <i class="mdi mdi-information" #tooltip="matTooltip"
-                            matTooltip="Ingrese un telefono celular"></i></label>
+                    <label class="form-label">Teléfono <i class="mdi mdi-information" #tooltip="matTooltip"
+                            matTooltip="Ingrese un teléfono celular"></i></label>
                     <input class="form-control mb-4 mb-md-0"  mask="(000) 000 00 00" [showMaskTyped]="true"
-                        #PhoneNumber placeholder="Telefono" formControlName="PhoneNumber" />
+                        #PhoneNumber placeholder="Teléfono" formControlName="PhoneNumber" />
                     <p class="text-danger mt-1" *ngIf="form.controls.PhoneNumber.errors?.required">Este
                         campo es obligatorio
                     </p>
@@ -90,9 +90,9 @@
                     </p>
                 </div>
                 <div class="col-md-4 mb-2">
-                    <label class="form-label">Email <i class="mdi mdi-information" #tooltip="matTooltip"
-                            matTooltip="Ingrese su correo"></i></label>
-                    <input class="form-control" type="text" #Email placeholder="Email" formControlName="Email" />
+                    <label class="form-label">Correo electrónico personal <i class="mdi mdi-information" #tooltip="matTooltip"
+                            matTooltip="Ingrese su correo electrónico personal"></i></label>
+                    <input class="form-control" type="email" #Email placeholder="Correo electrónico personal" formControlName="Email" />
                     <p class="text-danger mt-1" *ngIf="form.controls.Email.errors?.email">Email no valido
                     </p>
                     <p class="text-danger mt-1" *ngIf="form.controls.Email.errors?.required">Este
@@ -100,16 +100,16 @@
                     </p>
                 </div>
                 <div class="col-md-4 mb-2">
-                    <label class="form-label">Email alternativo <i class="mdi mdi-information" #tooltip="matTooltip"
-                            matTooltip="Ingrese su correo"></i></label>
-                    <input class="form-control" type="text" #EmailAux placeholder="Email" formControlName="EmailAux" />
+                    <label class="form-label">Correo electrónico laboral <i class="mdi mdi-information" #tooltip="matTooltip"
+                            matTooltip="Ingrese su correo electrónico laboral"></i></label>
+                    <input class="form-control" type="email" #EmailAux placeholder="correo electrónico laboral" formControlName="EmailAux" />
                     <p class="text-danger mt-1" *ngIf="form.controls.EmailAux.errors?.email">Email no valido
                     </p>
                     <p class="text-danger mt-1" *ngIf="form.controls.EmailAux.errors?.required">Este
                         campo es obligatorio
                     </p>
                 </div>
-                <div class="col-md-4 mb-2">
+                <!-- <div class="col-md-4 mb-2">
                     <label class="form-label">Contraseña <i class="mdi mdi-information" #tooltip="matTooltip"
                             matTooltip="Ingrese su contraseña actual"></i></label>
                     <div>
@@ -125,8 +125,8 @@
                     <p class="text-danger mt-1" *ngIf="form.controls.Password.errors?.required" style="float:left;">Este
                         campo es obligatorio
                     </p>
-                </div>
-                <div class="col-md-4 mb-2">
+                </div> -->
+                <div class="col-md-2 mb-2">
                     <label class="form-label" style="width: 100%;">Tiene alguna discapacidad <i
                             class="mdi mdi-information" #tooltip="matTooltip"
                             matTooltip="Seleccione una opción"></i></label>
@@ -135,7 +135,18 @@
                         <mat-radio-button value="0" style="margin-left: 16px;">No</mat-radio-button>
                     </mat-radio-group>
                 </div>
-                <div class="col-md-4 mb-2">
+                <div class="col-md-3 mb-2" *ngIf="this.form.value.HaveDisability == 1">
+                    <label class="form-label">Discapacidad <i class="mdi mdi-information" #tooltip="matTooltip"
+                            matTooltip="Seleccione la discapacidad que presenta"></i></label>
+                    <ng-select id="Disability" #Disability
+                        formControlName="Disability" [items]="listDiscapacidades" bindLabel="nombre"
+                        bindValue="id" [(ngModel)]="this.form.value.Disability">
+                    </ng-select>
+                    <p class="text-danger mt-1" *ngIf="form.controls.Disability.errors?.required">Este
+                        campo es obligatorio
+                    </p>
+                </div>
+                <div class="col-md-3 mb-2">
                     <label class="form-label" style="width: 100%;">
                         Tiene dificultades en las habilidades lecto - escritoras <i class="mdi mdi-information"
                             #tooltip="matTooltip" matTooltip="Seleccione una opción"></i></label>

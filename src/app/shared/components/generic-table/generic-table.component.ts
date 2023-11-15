@@ -101,6 +101,7 @@ export class GenericTableComponent implements OnInit {
         }
       );
   }
+
   AjustarEventosTable(dataTable: DataTable) {
     dataTable.on(
       'datatable.selectrow',
@@ -121,6 +122,7 @@ export class GenericTableComponent implements OnInit {
       }
     );
   }
+
   DeletePeople(id: number) {
     Swal.fire({
       title: '¿Estas seguro?',
@@ -156,6 +158,7 @@ export class GenericTableComponent implements OnInit {
       }
     });
   }
+
   DetailOrEditItem(item: any, type: number) {
     // this.loadingService.ChangeStatusLoading(true);
     if (type == 1) this.dateil.emit(item);
@@ -166,6 +169,7 @@ export class GenericTableComponent implements OnInit {
     if (type == 6) this.check.emit(item);
     // setTimeout(() => this.loadingService.ChangeStatusLoading(false), 600);
   }
+
   SeletedItem(item: any, estado: any, validationSelect: boolean | any) {
     this.loadingService.ChangeStatusLoading(true);
     // if (estado == 0 || validationSelect == false)
@@ -174,12 +178,14 @@ export class GenericTableComponent implements OnInit {
     //   this.openSnackBar("El registro con la id: " + id + " esta deshabilitado.");
     setTimeout(() => this.loadingService.ChangeStatusLoading(false), 600);
   }
+
   openSnackBar(message: string) {
     this.snackBar.open(message, 'x', {
       horizontalPosition: 'start',
       verticalPosition: 'bottom',
     });
   }
+
   ChangeStaTus(item: any) {
     Swal.fire({
       title: '¿Estas seguro?',

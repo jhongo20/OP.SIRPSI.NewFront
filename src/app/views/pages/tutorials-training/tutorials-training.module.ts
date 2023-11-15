@@ -23,6 +23,7 @@ import { CategoriesFormComponent } from './categories-form/categories-form.compo
 import { FaqsComponent } from './faqs/faqs.component';
 import { FaqsFormComponent } from './faqs-form/faqs-form.component';
 import { QuillModule } from 'ngx-quill';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { QuillModule } from 'ngx-quill';
   ],
   imports: [
     CommonModule,
+    NzSelectModule,
     TutorialsTrainingRoutingModule,
     MatSnackBarModule,
     GenericTableModule,
