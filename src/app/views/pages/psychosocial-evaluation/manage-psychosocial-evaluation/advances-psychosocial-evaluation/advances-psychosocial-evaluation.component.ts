@@ -33,7 +33,7 @@ export class AdvancesPsychosocialEvaluationComponent implements OnInit {
     { name: 'Apellidos', data: 'usuario', property: 'apellidosUsuario' },
     { name: 'Aceptación consentimiento', data: 'po' },
     { name: 'cuestionarios', data: 'po' },
-    { name: 'Porcentaje', data: 'porcentaje', porcentaje: true },
+    // { name: 'Porcentaje', data: 'porcentaje', porcentaje: true },
     { name: 'Estado', data: 'estado', property: 'nombre' },
   ];
   public options = [

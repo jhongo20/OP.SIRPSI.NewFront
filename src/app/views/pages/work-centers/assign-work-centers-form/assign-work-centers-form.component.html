@@ -13,12 +13,15 @@
         <label class="form-label">Descripción <i class="mdi mdi-information" #tooltip="matTooltip"
                 matTooltip="Ingrese una descripción"></i></label>
         <textarea class="form-control" type="text" #Descripcion placeholder="Descripción" formControlName="Descripcion"
-            rows="1"></textarea>
+            rows="1" required></textarea>
+        <p class="text-danger mt-1" *ngIf="form.controls.Descripcion.errors?.required">Este
+            campo es obligatorio
+        </p>
     </div>
     <div class="col-md-4 mb-2">
-        <label class="form-label">Email <i class="mdi mdi-information" #tooltip="matTooltip"
-                matTooltip="Ingrese su correo electronico"></i></label>
-        <input class="form-control" type="text" #Email placeholder="Email" formControlName="Email" />
+        <label class="form-label">Correo electrónico <i class="mdi mdi-information" #tooltip="matTooltip"
+                matTooltip="Ingrese su correo electrónico"></i></label>
+        <input class="form-control" type="text" #Email placeholder="Correo electrónico" formControlName="Email" required />
         <p class="text-danger mt-1" *ngIf="form.controls.Email.errors?.email">Email no valido</p>
         <p class="text-danger mt-1" *ngIf="form.controls.Email.errors?.required">Este
             campo es obligatorio
@@ -26,13 +29,16 @@
     </div>
     <div class="col-md-4 mb-2">
         <label class="form-label">Celular <i class="mdi mdi-information" #tooltip="matTooltip"
-                matTooltip="Ingrese su celular de contacto"></i></label>
+                matTooltip="Ingrese su celular de contacto" required></i></label>
         <input class="form-control mb-4 mb-md-0"  mask="(000) 000 00 00" [showMaskTyped]="true" #Celular
-            placeholder="Celular" formControlName="Celular" />
+            placeholder="Celular" formControlName="Celular" required />
+        <p class="text-danger" *ngIf="form.controls.Celular.errors?.required">Este
+            campo es obligatorio
+        </p>
     </div>
     <div class="col-md-4 mb-2">
         <label class="form-label">Teléfono fijo <i class="mdi mdi-information" #tooltip="matTooltip"
-                matTooltip="Ingrese su telefono de contacto"></i></label>
+                matTooltip="Ingrese su teléfono fijo"></i></label>
         <input class="form-control mb-4 mb-md-0"  mask="(000) 000 00 00" [showMaskTyped]="true" #Telefono
             placeholder="Telefono" formControlName="Telefono" />
     </div>
@@ -40,7 +46,7 @@
         <label class="form-label">Departamento <i class="mdi mdi-information" #tooltip="matTooltip"
                 matTooltip="Ingrese Departamento"></i></label>
         <ng-select id="IdDepartamento" #IdDepartamento formControlName="IdDepartamento" [items]="listDepartament"
-            bindLabel="name" bindValue="id" [(ngModel)]="form.value.IdDepartamento" (change)="onGetCity(form.value)">
+            bindLabel="name" bindValue="id" [(ngModel)]="form.value.IdDepartamento" (change)="onGetCity(form.value)" required>
         </ng-select>
         <p class="text-danger" *ngIf="form.controls.IdDepartamento.errors?.required">Este
             campo es obligatorio
@@ -50,16 +56,19 @@
         <label class="form-label">Ciudad <i class="mdi mdi-information" #tooltip="matTooltip"
                 matTooltip="Ingrese Ciudad"></i></label>
         <ng-select id="IdMunicipio" #IdMunicipio formControlName="IdMunicipio" [items]="listCity" bindLabel="name"
-            bindValue="id" [(ngModel)]="form.value.IdMunicipio">
+            bindValue="id" [(ngModel)]="form.value.IdMunicipio" required>
         </ng-select>
         <p class="text-danger" *ngIf="form.controls.IdMunicipio.errors?.required">Este
             campo es obligatorio
         </p>
     </div>
     <div class="col-md-4 mb-2">
-        <label class="form-label">Direccion <i class="mdi mdi-information" #tooltip="matTooltip"
-                matTooltip="Ingrese Direccion"></i></label>
-        <input class="form-control" type="text" #Nombre placeholder="Nombre Direccion" formControlName="Direccion" />
+        <label class="form-label">Dirección <i class="mdi mdi-information" #tooltip="matTooltip"
+                matTooltip="Ingrese dirección"></i></label>
+        <input class="form-control" type="text" #Nombre placeholder="Dirección" formControlName="Direccion" required />
+        <p class="text-danger" *ngIf="form.controls.Direccion.errors?.required">Este
+            campo es obligatorio
+        </p>
     </div>
 </form>
 

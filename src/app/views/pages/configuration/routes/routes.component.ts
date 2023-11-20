@@ -18,23 +18,24 @@ export class RoutesComponent implements OnInit {
   // public filter: string = '&Usuario=' + this.accountService.userData.id;
   public table: string = 'modulos/ConsultarModulos';
   public columns = [
-    { name: 'Id', data: 'id' },
+    // { name: 'Id', data: 'id' },
     { name: 'Nombre', data: 'nombre' },
     { name: 'Ruta', data: 'ruta' },
     { name: 'Tiene hijos', data: 'tieneHijos' },
-    { name: 'Descripción', data: 'descripcion' },
+    { name: 'Tiene mensaje', data: 'tieneMensaje' },
+    // { name: 'Descripción', data: 'descripcion' },
     { name: 'Estado', data: 'estado', property: 'nombre' },
-    { name: 'F. Registro', data: 'registrationDate', pipeDate: 'YYYY/dd/MM' },
+    // { name: 'F. Registro', data: 'registrationDate', pipeDate: 'YYYY/dd/MM' },
   ];
   public options = [
     {
-      // delete: true,
-      // edit: true,
-      // details: true,
-      // select: true,
-      // state: true,
-      // pdf: true,
-      // validationSelect: true,
+      delete: true,
+      edit: true,
+      details: false,
+      select: false,
+      state: false,
+      pdf: false,
+      validationSelect: false,
     },
   ];
 
@@ -53,19 +54,10 @@ export class RoutesComponent implements OnInit {
   OpenFormDialog(id: number) {
     this.router.navigate(['/reservation/form/' + id + '/' + 'view']);
   }
-  DownloadPDF(id: number) {
-    this.router.navigate(['/reservation/form/' + id + '/' + 'download']);
-  }
-  SelectReservation(id: any) {
-    this.genericService
-      .GetAll('BookingPersons?PageNumber=1&PageSize=100000&Reserva=' + id)
-      .subscribe((data: any) => {
-        // this.dataTable = data.data;
-      });
-  }
-  openFormDialogUser() {
+
+  openFormDialogUser(item: any = null, type: number = 0) {
     const dialogRef = this.dialog.open(RoutesFormComponent, {
-      data: { id: this.id, type: 0, reload: true },
+      data: { item: item, type: type, reload: true },
     });
     dialogRef.afterClosed().subscribe();
   }

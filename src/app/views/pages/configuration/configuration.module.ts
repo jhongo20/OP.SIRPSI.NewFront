@@ -21,6 +21,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RolesFormComponent } from './roles/roles-form/roles-form.component';
 import { RoutesFormComponent } from './routes/routes-form/routes-form.component';
+import { QuillModule } from 'ngx-quill';
+import { NzSwitchModule } from 'ng-zorro-antd/switch';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 @NgModule({
   declarations: [
@@ -48,6 +51,9 @@ import { RoutesFormComponent } from './routes/routes-form/routes-form.component'
     MatCheckboxModule,
     MatPaginatorModule,
     MatTooltipModule,
+    NzSwitchModule,
+    NzIconModule,
+    QuillModule.forRoot(), // ngx-quill
   ],
 })
 export class ConfigurationModule {}

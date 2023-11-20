@@ -50,7 +50,6 @@ export class RolesFormComponent implements OnInit {
             icon: 'success',
             title: 'Role Registrado, exitosamente.',
             showConfirmButton: false,
-            timer: 2800,
           }).then(() => window.location.reload());
         },
         error: (error) => {
@@ -60,7 +59,7 @@ export class RolesFormComponent implements OnInit {
             icon: 'warning',
             title: 'Ha ocurrido un error! ' + error.error.message,
             showConfirmButton: false,
-            timer: 2800,
+            timer: 1400,
           });
         },
       });

@@ -34,17 +34,17 @@ export class AssignWorkCentersFormComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       Nombre: ['', Validators.required],
-      Descripcion: '',
+      Descripcion: ['', Validators.required],
       Principal: false,
       IdEstado: [''],
       IdUsuario: '',
       IdEmpresa: [this.data.id, Validators.required],
-      IdDepartamento: [0, Validators.required],
-      IdMunicipio: [0, Validators.required],
+      IdDepartamento: ['', Validators.required],
+      IdMunicipio: ['', Validators.required],
       Email: ['', Validators.required],
       Celular: '',
       Telefono: '',
-      Direccion: '',
+      Direccion: ['', Validators.required],
     });
     this.onGetDepartment(environment.urlApiColombia + 'Department');
   }

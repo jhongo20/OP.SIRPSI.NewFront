@@ -12,8 +12,8 @@
         </div>
         <div class="col-md-12">
             <div class="col-md-12 space"></div>
-            <app-generic-table [columns]="columns" [table]="table" [options]="options" (dateil)="OpenFormDialog($event)"
-                (pdf)="DownloadPDF($event)" (selected)="SelectReservation($event)"></app-generic-table>
+            <app-generic-table [columns]="columns" [table]="table" [options]="options" 
+            (dateil)="OpenFormDialog($event)" [delete]="'modulos/EliminarModulos'" (edit)="openFormDialogUser($event, 1)"></app-generic-table>
         </div>
         <!-- <div class="col-md-12" *ngIf="this.dataTable != null">
             <div class="col-md-12 space"></div>

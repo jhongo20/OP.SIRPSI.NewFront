@@ -9,38 +9,47 @@
                     <ng-template mat-tab-label>{{tab.name}}</ng-template>
                     <br />
                     <div class="row" style="width: 97%; margin: 0 auto; text-align: center;">
-                        <div class="col-md-6" *ngFor="let route of tab.rutasAsignadasRole; let x=index">
+                        <div class="col-md-12">
                             <div class="wrapper table table-responsive">
                                 <table class="table table-responsive">
-                                    <thead class="table-dark align-middle table table-responsive">
+                                    <thead class="align-middle table table-responsive" style="background: #1a73e8;">
                                         <tr>
-                                            <th>Seleccionar</th>
+                                            <th>Asignar</th>
                                             <th>Nombre</th>
                                             <th>Ruta</th>
                                             <th>Crear</th>
-                                            <th>Listar</th>
+                                            <th>Seleccionar</th>
+                                            <th>Detalle</th>
                                             <th>Actualizar</th>
                                             <th>Eliminar</th>
                                         </tr>
                                     </thead>
                                     <tbody class="table table-responsive">
-                                        <tr>
-                                            <td><mat-checkbox [checked]="route.inUse"
-                                                    (change)="SelectedItem(tab.id, route.id, $event)"></mat-checkbox>
+                                        <tr *ngFor="let route of tab.rutasAsignadasRole; let x=index">
+                                            <td>
+                                                <nz-switch [(ngModel)]="route.inUse" [nzControl]="true" (click)="SelectedItem(tab.id, route.id, route.inUse)" [nzLoading]="loading"></nz-switch>
                                             </td>
                                             <td>{{route.nombre}}</td>
                                             <td>{{route.ruta}}</td>
-                                            <td><mat-checkbox [checked]="route.inUse"
-                                                    (change)="SelectedItem(tab.id, route.id, $event)"></mat-checkbox>
+                                            <td>
+                                                <nz-switch [nzDisabled]="!route.inUse" [(ngModel)]="route.crear" [nzControl]="true" 
+                                                    (click)="clickSwitch(route.moduloUserRole.id, 0, route.crear)" [nzLoading]="loading"></nz-switch>
                                             </td>
-                                            <td><mat-checkbox [checked]="route.inUse"
-                                                    (change)="SelectedItem(tab.id, route.id, $event)"></mat-checkbox>
+                                            <td>
+                                                <nz-switch [nzDisabled]="!route.inUse" [(ngModel)]="route.seleccionar" [nzControl]="true" 
+                                                    (click)="clickSwitch(route.moduloUserRole.id, 1, route.seleccionar)" [nzLoading]="loading"></nz-switch>
                                             </td>
-                                            <td><mat-checkbox [checked]="route.inUse"
-                                                    (change)="SelectedItem(tab.id, route.id, $event)"></mat-checkbox>
+                                            <td>
+                                                <nz-switch [nzDisabled]="!route.inUse" [(ngModel)]="route.detalle" [nzControl]="true" 
+                                                    (click)="clickSwitch(route.moduloUserRole.id, 2, route.detalle)" [nzLoading]="loading"></nz-switch>
                                             </td>
-                                            <td><mat-checkbox [checked]="route.inUse"
-                                                    (change)="SelectedItem(tab.id, route.id, $event)"></mat-checkbox>
+                                            <td>
+                                                <nz-switch [nzDisabled]="!route.inUse" [(ngModel)]="route.editar" [nzControl]="true" 
+                                                    (click)="clickSwitch(route.moduloUserRole.id, 3, route.editar)" [nzLoading]="loading"></nz-switch>
+                                            </td>
+                                            <td>
+                                                <nz-switch [nzDisabled]="!route.inUse" [(ngModel)]="route.eliminar" [nzControl]="true" 
+                                                    (click)="clickSwitch(route.moduloUserRole.id, 4, route.eliminar)" [nzLoading]="loading"></nz-switch>
                                             </td>
                                         </tr>
                                     </tbody>

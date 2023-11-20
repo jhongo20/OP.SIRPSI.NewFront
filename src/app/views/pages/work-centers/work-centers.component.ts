@@ -29,7 +29,7 @@ export class WorkCentersComponent implements OnInit {
     { name: 'Descripción', data: 'descripcion' },
     { name: 'Empresa', data: 'empresa', property: 'nombre' },
     { name: 'Estado', data: 'estados', property: 'nombre' },
-    // { name: 'Psicologo', data: 'usuario', property: 'names' },
+    { name: 'Psicólogo', data: 'psicologos'},
   ];
   public optionsWork = [
     {

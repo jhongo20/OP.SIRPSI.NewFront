@@ -5,22 +5,22 @@
             <h2><b>Activar usuario</b></h2>
             <mat-divider style="margin: 10px 0px; float:left; width: 100%;"></mat-divider>
             <div class="mb-3">
-                <label class="form-label">Empresa:</label>
-                <input class="form-control" type="text" #Company placeholder="Empresa" formControlName="Company"
+                <label class="form-label">Nit o documento empresa</label>
+                <input class="form-control" type="text" #Company placeholder="Nit o documento empresa" formControlName="Company"
                     required />
                 <p class="text-danger mt-1" *ngIf="form.controls.Company.errors?.errors">Error en el digito
                 </p>
             </div>
             <div class="mb-3">
-                <label class="form-label">Cedula:</label>
-                <input class="form-control" type="text" #Document placeholder="Cedula" formControlName="Document"
+                <label class="form-label">Número documento del trabajador</label>
+                <input class="form-control" type="text" #Document placeholder="Número documento del trabajador" formControlName="Document"
                     required />
                 <p class="text-danger mt-1" *ngIf="form.controls.Document.errors?.errors">Error en el digito
                 </p>
             </div>
             <div class="mb-3">
-                <label class="form-label">Codigo:</label>
-                <input class="form-control" type="text" #Code placeholder="Codigo" formControlName="Code" required />
+                <label class="form-label">Código de activación</label>
+                <input class="form-control" type="text" #Code placeholder="Código de activación" formControlName="Code" required />
                 <p class="text-danger mt-1" *ngIf="form.controls.Code.errors?.errors">Error en el digito
                 </p>
             </div>

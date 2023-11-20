@@ -1,4 +1,5 @@
-<form class="row" #f="ngForm" [formGroup]="this.form" *ngIf="type == 0">
+<label class="title">{{ title }}</label>
+<form class="row" #f="ngForm" [formGroup]="this.form">
     <label style="color:white;">This dialog showcases the title, close, content and actions
         elemasdasdadaen</label>
     <div class="col-md-6">
@@ -15,16 +16,32 @@
                 [readonly]="this.option == 'view'">
         </mat-form-field>
     </div>
-    <div class="col-md-12">
+    <div class="col-md-12 mb-3">
         <mat-form-field class="example-full-width" appearance="outline" style="width: 100%">
             <mat-label>Ruta:</mat-label>
             <input type="text" matInput #Ruta placeholder="Ruta" formControlName="Ruta"
                 [readonly]="this.option == 'view'">
         </mat-form-field>
     </div>
+    <div class="col-md-4 mb-3">
+        <div class="form-check form-switch mb-2">
+            <input type="checkbox" class="form-check-input" id="TieneMensaje" formControlName="TieneMensaje" #TieneMensaje>
+            <label class="form-check-label" for="TieneMensaje">¿La ruta tiene mensaje?</label>
+        </div>
+    </div>
+    <hr class="hr" />
+    <div class="card-body" *ngIf="this.form.value.TieneMensaje">
+        <label class="form-label">Mensaje <i class="mdi mdi-information" #tooltip="matTooltip" matTooltip="Ingrese un mensaje para la ruta"></i></label>
+        <quill-editor placeholder="Ingresa aqui el mensaje..." [modules]="quillConfig" #Mensaje [(ngModel)]="this.form.value.Mensaje" [formControlName]="'Mensaje'" > </quill-editor>
+        <div class="mt-3">
+          <pre class="mb-0">{{ this.form.value.Mensaje }}</pre>
+        </div>
+      </div>
 </form>
 <div style="padding: 20px 0 25px 0;">
     <button type="submit" class="btn btn-primary me-2" (click)="onSave()" [disabled]="this.form.invalid"
         *ngIf="type == 0">Registrar</button>
+    <button type="submit" class="btn btn-primary me-2" (click)="onUpdate()" [disabled]="this.form.invalid"
+        *ngIf="type == 1">Actualizar</button>
     <button type="submit" class="btn btn-secondary" (click)="cancelForm()">Cancelar</button>
 </div>

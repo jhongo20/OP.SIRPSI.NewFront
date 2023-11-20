@@ -31,6 +31,7 @@ export class UpdateWorkerDataComponent implements OnInit {
   listRoles: any;
   listWorkCenterUser: any;
   listUsersWorkCenter: any = [];
+  listDiscapacidades: any;
   constructor(
     public formBuilder: FormBuilder,
     public dialog: MatDialog,
@@ -65,6 +66,7 @@ export class UpdateWorkerDataComponent implements OnInit {
       IdWorkCenter: ['', Validators.required],
       IdOccupationProfession: ['', Validators.required],
       HaveDisability: '0',
+      Disability: '',
       ReadingWritingSkills: '0',
     });
     this.genericService
@@ -117,47 +119,52 @@ export class UpdateWorkerDataComponent implements OnInit {
   getListas() {
     this.loadingService.ChangeStatusLoading(true);
     this.genericService
-      .GetAll(
-        'centrotrabajo/ConsultarCentroDeTrabajo?companie=' +
-          this.accountService.userData.empresa.idConsecutivo
-      )
+      .GetAll('discapacidades/ConsultarDiscapacidades')
       .subscribe((data: any) => {
-        this.listWorkCenterUser = data;
+        this.listDiscapacidades = data;
         this.genericService
-          .GetAll('ocupacionProfesion/ConsultarOcupacionProfesion')
+          .GetAll(
+            'centrotrabajo/ConsultarCentroDeTrabajo?companie=' +
+              this.accountService.userData.empresa.idConsecutivo
+          )
           .subscribe((data: any) => {
-            this.listOcupacionProfesion = data;
+            this.listWorkCenterUser = data;
             this.genericService
-              .GetAll('empresas/ConsultarEmpresas')
+              .GetAll('ocupacionProfesion/ConsultarOcupacionProfesion')
               .subscribe((data: any) => {
-                this.listEmpresas = data;
+                this.listOcupacionProfesion = data;
                 this.genericService
-                  .GetAll('tipodocumento/ConsultarTipoDocumento')
+                  .GetAll('empresas/ConsultarEmpresas')
                   .subscribe((data: any) => {
-                    this.listDocs = data;
+                    this.listEmpresas = data;
                     this.genericService
-                      .GetAll('pais/ConsultarPaises')
+                      .GetAll('tipodocumento/ConsultarTipoDocumento')
                       .subscribe((data: any) => {
-                        this.listPaises = data;
+                        this.listDocs = data;
                         this.genericService
-                          .GetAll('roles/ConsultarRoles')
+                          .GetAll('pais/ConsultarPaises')
                           .subscribe((data: any) => {
-                            this.listRoles = data;
+                            this.listPaises = data;
                             this.genericService
-                              .GetAll('estados/ConsultarEstados')
+                              .GetAll('roles/ConsultarRoles')
                               .subscribe((data: any) => {
-                                this.estadosList = data;
+                                this.listRoles = data;
                                 this.genericService
-                                  .GetAll('usuario/ConsultarUsuarios')
+                                  .GetAll('estados/ConsultarEstados')
                                   .subscribe((data: any) => {
-                                    this.listUsuario = data;
-                                    setTimeout(
-                                      () =>
-                                        this.loadingService.ChangeStatusLoading(
-                                          false
-                                        ),
-                                      600
-                                    );
+                                    this.estadosList = data;
+                                    this.genericService
+                                      .GetAll('usuario/ConsultarUsuarios')
+                                      .subscribe((data: any) => {
+                                        this.listUsuario = data;
+                                        setTimeout(
+                                          () =>
+                                            this.loadingService.ChangeStatusLoading(
+                                              false
+                                            ),
+                                          600
+                                        );
+                                      });
                                   });
                               });
                           });

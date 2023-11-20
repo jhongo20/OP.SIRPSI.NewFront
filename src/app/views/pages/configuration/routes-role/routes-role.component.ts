@@ -14,6 +14,9 @@ import { LoadingService } from 'src/app/shared/services/loading.service';
 export class RoutesRoleComponent {
   id: string | undefined;
   public rolesList: any;
+  loading = false;
+  switchValue = false;
+
   constructor(
     public genericService: GenericService,
     private router: Router,
@@ -35,35 +38,65 @@ export class RoutesRoleComponent {
         setTimeout(() => this.loadingService.ChangeStatusLoading(false), 500);
       });
   }
+
   SelectedItem(role: string, modulo: string, event: any) {
-    this.loadingService.ChangeStatusLoading(true);
-    let body = {
-      RoleId: role,
-      ModuloId: modulo,
-    };
-    this.genericService
-      .Post(
-        'modulosUserRole/' +
-          (event.checked ? 'RegistrarModulosRole' : 'EliminarModulosRole'),
-        body
-      )
-      .subscribe((data: any) => {
-        this.LoadLists();
-        setTimeout(() => this.loadingService.ChangeStatusLoading(false), 500);
-        this.openSnackBar(
-          event.checked
-            ? 'Se ha asignado correctamente'
-            : 'Se ha desasignado correctamente'
-        );
-      });
+    if (!this.loading) {
+      this.loading = true;
+      let body = {
+        RoleId: role,
+        ModuloId: modulo,
+      };
+      this.genericService
+        .Post(
+          'modulosUserRole/' +
+            (event == false ? 'RegistrarModulosRole' : 'EliminarModulosRole'),
+          body
+        )
+        .subscribe((data: any) => {
+          setTimeout(() => {
+            this.LoadLists();
+            this.loading = false;
+          }, 1200);
+          this.openSnackBar(
+            event == false
+              ? 'Se ha asignado correctamente'
+              : 'Se ha desasignado correctamente'
+          );
+        });
+    }
   }
+
   openSnackBar(message: string) {
     this.snackBar.open(message, 'x', {
       horizontalPosition: 'start',
       verticalPosition: 'bottom',
     });
   }
+
   AssignPermissions(item: any) {
     console.log(item);
+  }
+
+  clickSwitch(item: any, type: number, check: any): void {
+    if (!this.loading) {
+      this.loading = true;
+      let body = {
+        Id: item,
+        Type: type,
+      };
+      this.genericService
+        .Put('modulosUserRole/ChangePermissionsModulosRole', body)
+        .subscribe((data: any) => {
+          setTimeout(() => {
+            this.LoadLists();
+            this.loading = false;
+          }, 1200);
+          this.openSnackBar(
+            check == false
+              ? 'Se ha asignado correctamente'
+              : 'Se ha desasignado correctamente'
+          );
+        });
+    }
   }
 }
