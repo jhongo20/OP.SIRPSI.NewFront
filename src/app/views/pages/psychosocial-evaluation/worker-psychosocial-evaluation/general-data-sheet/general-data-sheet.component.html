@@ -76,24 +76,22 @@
                 <option value="Otra">Otra</option>
             </select>
         </div>
-        <h3> 6. Año de nacimiento:</h3>
+        <h3> 6. Fecha de nacimiento:</h3>
         <div class="mb-3">
             <input type="date" class="form-control" placeholder="Año de nacimiento" formControlName="anio_nacimiento">
         </div>
         <h3> 7. Lugar de residencia actual</h3>
         <div class="mb-3">
             <label for="exampleFormControlSelect1" class="form-label">Departamento</label>
-            <select class="form-select">
-                <option selected disabled value="">Seleccionar</option>
-                <option [value]="dep" *ngFor="let dep of departamentos">{{dep}}</option>
-            </select>
+            <ng-select [items]="listDepartament"
+                bindLabel="name" bindValue="id" (change)="onGetCity($event)" required>
+            </ng-select>
         </div>
         <div class="mb-3">
             <label for="exampleFormControlSelect1" class="form-label">Municipio</label>
-            <select class="form-select" formControlName="lugar_residencia">
-                <option selected disabled value="">Seleccionar</option>
-                <option [value]="mun" *ngFor="let mun of municipios">{{mun}}</option>
-            </select>
+            <ng-select id="lugar_residencia" #lugar_residencia formControlName="lugar_residencia" [items]="listCity" bindLabel="name"
+                bindValue="id" [(ngModel)]="userForm.value.lugar_residencia" required>
+            </ng-select>
         </div>        
         <div class="mb-3">
             <label for="exampleFormControlSelect1" class="form-label">Zona</label>
@@ -121,7 +119,7 @@
                 <option value="Sacerdote / Monja">Sacerdote / Monja</option>
             </select>
         </div>
-        <h3> 9. Ultimo nivel de estudios que alcanzó</h3>
+        <h3> 9. Último nivel de estudios que alcanzó</h3>
         <div class="mb-3">
             <select class="form-select" formControlName="nivel_educativo">
                 <option selected disabled value="">Seleccionar</option>
@@ -147,10 +145,10 @@
             <label for="exampleFormControlSelect1" class="form-label">Ciudad</label>
             <select class="form-select" formControlName="lugar_reidencia">
                 <option selected disabled value="">Seleccionar</option>
-                <option [value]="ciu" *ngFor="let ciu of ciudades">{{ciu}}</option>
+                <option [value]="ciu.id" *ngFor="let ciu of listCities">{{ciu.name}}</option>
             </select>
         </div>
-        <h3> 12. Estato de los servicios públicos de su vivienda:</h3>
+        <h3> 12. Estrato de los servicios públicos de su vivienda:</h3>
         <div class="mb-3">
             <select class="form-select" formControlName="estrado">
                 <option selected disabled value="">Seleccionar</option>
@@ -175,9 +173,9 @@
             </select>
         </div>
 
-        <h3> 14. Numero de personas que dependen económicamente de usted (aunque vivan en otro lugar):</h3>
+        <h3> 14. Número de personas que dependen económicamente de usted (aunque vivan en otro lugar):</h3>
         <div class="mb-3">
-            <input type="text" class="form-control" formControlName="dependientes" placeholder="Personas">
+            <input type="number" class="form-control" formControlName="dependientes" placeholder="Personas">
         </div>
 
         <h3> 15. Lugar donde trabaja actualmente:</h3>
@@ -185,7 +183,7 @@
             <label for="exampleFormControlSelect1" class="form-label">Ciudad</label>
             <select class="form-select" formControlName="lugar_trabajo">
                 <option selected disabled value="">Seleccionar</option>
-                <option [value]="ciu" *ngFor="let ciu of ciudades">{{ciu}}</option>
+                <option [value]="ciu.id" *ngFor="let ciu of listCities">{{ciu.name}}</option>
             </select>
         </div>
 
@@ -203,7 +201,7 @@
             <input type="text" class="form-control" placeholder="Cargo" formControlName="cargo_empresa">
         </div>
 
-        <h3> 18. Seleccione el tipo de cargo que mas se parea al que usted desempeña y señalelo en el cuadro correspondiente de la derecha. Si tiene dudas pida apoyo al Psicologo Especialista SST asignado por la empresa:</h3>
+        <h3> 18. Seleccione el tipo de cargo que más se parece al que usted desempeña y señalelo en el cuadro correspondiente de la derecha. Si tiene dudas pida apoyo al Psicologo Especialista SST asignado por la empresa:</h3>
         <div class="mb-3">
             <select class="form-select" formControlName="seleccion_cargo">
                 <option selected disabled value="">Seleccionar</option>
@@ -240,7 +238,7 @@
         </div>
         <h3> 22. Indique cuántas horas diarias de trabajo están establecidas habitualmente por la empresa para su cargo:</h3>
         <div class="mb-3">
-            <input type="text" class="form-control" formControlName="horasTrabajadasDiarias" placeholder="Horas de trabajo al dia">
+            <input type="number" class="form-control" formControlName="horasTrabajadasDiarias" placeholder="Horas de trabajo al dia">
         </div>
 
         <h3> 23. Seleccione y marque el tipo de salario que recibe:</h3>

@@ -135,7 +135,7 @@ export class IntraWorkFactorsQuestionnaireComponent implements OnInit {
       max: 105
     },
     {
-      title: 'Las siguientes preguntas están relacionadas con la atención a clientes y usuarios. En mi trabajo debo brindar servicio a clientes o usuarios: Si [ ] No [ ]. [106-114]',
+      title: 'Las siguientes preguntas están relacionadas con la atención a clientes y usuarios. En mi trabajo debo brindar servicio a clientes o usuarios. [106-114]',
       option: true,
       quiz: false,
       buton: false,
@@ -143,7 +143,8 @@ export class IntraWorkFactorsQuestionnaireComponent implements OnInit {
       max: 114
     },
     {
-      title: 'Soy jefe de otras personas en mi trabajo: Si [ ] No [ ], Las siguientes preguntas están relacionadas con las personas que usted supervisa o dirige. [115-123]',
+      title: 'Soy jefe de otras personas en mi trabajo.',
+      subtitle: 'Las siguientes preguntas están relacionadas con las personas que usted supervisa o dirige. [115-123]',
       option: true,
       quiz: false,
       buton: false,

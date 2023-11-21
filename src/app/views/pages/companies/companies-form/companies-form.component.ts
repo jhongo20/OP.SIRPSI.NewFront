@@ -47,6 +47,7 @@ export class CompaniesFormComponent implements OnInit {
   listRoles: any;
   listTiposPersona: any;
   listRegimenes: any;
+  listClasificacion: any;
   listActividadEconomica: any;
   hideUser = true;
   showDigit: boolean = false;
@@ -82,6 +83,8 @@ export class CompaniesFormComponent implements OnInit {
           : this.data.estado,
       IdUsuario: '0',
       IdConsecutivo: 1,
+      IdClasificacion: ['', Validators.required],
+      EsGubernamental: '0',
     });
     this.formRepresentative = this.formBuilder.group({
       PrimerNombre: ['', Validators.required],
@@ -94,17 +97,17 @@ export class CompaniesFormComponent implements OnInit {
     this.formWorkCenter = this.formBuilder.group({
       Id: '1212',
       Nombre: ['', Validators.required],
-      Descripcion: '',
+      Descripcion: ['', Validators.required],
       Principal: true,
       IdEstado: environment.activoEstado,
       IdUsuario: '121212',
       IdEmpresa: '121212',
-      IdDepartamento: [0, Validators.required],
-      IdMunicipio: [0, Validators.required],
-      Email: '',
+      IdDepartamento: ['', Validators.required],
+      IdMunicipio: ['', Validators.required],
+      Email: ['', Validators.required],
       Celular: '',
       Telefono: '',
-      Direccion: '',
+      Direccion: ['', Validators.required],
     });
     this.formUser = this.formBuilder.group({
       Id: '21',
@@ -161,23 +164,24 @@ export class CompaniesFormComponent implements OnInit {
       });
   }
   onGetDigit(item: any) {
-    console.log(item);
     this.showDigit = item == undefined ? false : item.tieneDigito;
   }
   onSave() {
+    this.form.controls['EsGubernamental'].setValue(
+      this.form.value.EsGubernamental == 1 ? true : false
+    );
     var body = {
       Empresa: this.form.value,
       CentroTrabajo: this.formWorkCenter.value,
       Usuario: this.formUser.value,
       RepresentanteEmpresa: this.formRepresentative.value,
     };
-    console.log(body);
     Swal.fire({
       title: '¿Estas seguro?',
       icon: 'info',
       showCancelButton: true,
       confirmButtonText: 'Si',
-      cancelButtonText: 'Cancelar',
+      cancelButtonText: 'No',
     }).then((result) => {
       if (result.isConfirmed) {
         this.loadingService.ChangeStatusLoading(true);
@@ -214,65 +218,72 @@ export class CompaniesFormComponent implements OnInit {
         this.listMinisterios = data;
         this.form.controls['IdMinisterio'].setValue(this.listMinisterios[0].id);
         this.genericService
-          .GetAll('tipodocumento/ConsultarTipoDocumento')
+          .GetAll('tiposempresa/ConsultarTipoEmpresa')
           .subscribe((data: any) => {
-            this.listDocsUser = data;
+            this.listClasificacion = data;
             this.genericService
-              .GetAll('tiposempresa/ConsultarTipoEmpresa')
+              .GetAll('tipodocumento/ConsultarTipoDocumento')
               .subscribe((data: any) => {
-                this.listTipoEmpresa = data;
+                this.listDocsUser = data;
                 this.genericService
-                  .GetAll('estados/ConsultarEstados')
+                  .GetAll('tiposempresa/ConsultarTipoEmpresa?type=1')
                   .subscribe((data: any) => {
-                    this.estadosList = data;
+                    this.listTipoEmpresa = data;
                     this.genericService
-                      .GetAll('empresas/ConsultarEmpresas')
+                      .GetAll('estados/ConsultarEstados')
                       .subscribe((data: any) => {
-                        this.listEmpresas = data;
+                        this.estadosList = data;
                         this.genericService
-                          .GetAll('pais/ConsultarPaises')
+                          .GetAll('empresas/ConsultarEmpresas')
                           .subscribe((data: any) => {
-                            this.listPaises = data;
+                            this.listEmpresas = data;
                             this.genericService
-                              .GetAll('roles/ConsultarRoles')
+                              .GetAll('pais/ConsultarPaises')
                               .subscribe((data: any) => {
-                                this.listRoles = data;
+                                this.listPaises = data;
                                 this.genericService
-                                  .GetAll(
-                                    'regimenesTributario/ConsultarRegimenesTributario'
-                                  )
+                                  .GetAll('roles/ConsultarRoles')
                                   .subscribe((data: any) => {
-                                    this.listRegimenes = data;
+                                    this.listRoles = data;
                                     this.genericService
                                       .GetAll(
-                                        'tiposPersonas/ConsultarTiposPersona'
+                                        'regimenesTributario/ConsultarRegimenesTributario'
                                       )
                                       .subscribe((data: any) => {
-                                        this.listTiposPersona = data;
+                                        this.listRegimenes = data;
                                         this.genericService
                                           .GetAll(
-                                            'actividadEconomica/ConsultarActividadEconomica'
+                                            'tiposPersonas/ConsultarTiposPersona'
                                           )
                                           .subscribe((data: any) => {
-                                            this.listActividadEconomica = data;
+                                            this.listTiposPersona = data;
                                             this.genericService
                                               .GetAll(
-                                                'usuario/ConsultarUsuarios'
+                                                'actividadEconomica/ConsultarActividadEconomica'
                                               )
                                               .subscribe((data: any) => {
-                                                this.listUsuario = data;
-                                                this.listUsuario.push({
-                                                  id: '0',
-                                                  nombreUsuario: 'Registrar',
-                                                  apellidosUsuario: '',
-                                                });
-                                                setTimeout(
-                                                  () =>
-                                                    this.loadingService.ChangeStatusLoading(
-                                                      false
-                                                    ),
-                                                  500
-                                                );
+                                                this.listActividadEconomica =
+                                                  data;
+                                                this.genericService
+                                                  .GetAll(
+                                                    'usuario/ConsultarUsuarios'
+                                                  )
+                                                  .subscribe((data: any) => {
+                                                    this.listUsuario = data;
+                                                    this.listUsuario.push({
+                                                      id: '0',
+                                                      nombreUsuario:
+                                                        'Registrar',
+                                                      apellidosUsuario: '',
+                                                    });
+                                                    setTimeout(
+                                                      () =>
+                                                        this.loadingService.ChangeStatusLoading(
+                                                          false
+                                                        ),
+                                                      500
+                                                    );
+                                                  });
                                               });
                                           });
                                       });

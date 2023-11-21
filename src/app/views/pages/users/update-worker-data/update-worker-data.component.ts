@@ -100,9 +100,8 @@ export class UpdateWorkerDataComponent implements OnInit {
             icon: 'success',
             title: 'Usuario Actualizado, exitosamente.',
             showConfirmButton: false,
-            timer: 1400,
           }).then(() => {
-            window.location.reload();
+            this.getListas();
           });
         },
         error: (error) => {

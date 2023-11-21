@@ -1,112 +1,36 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AccountService } from 'src/app/shared/services/account.service';
+import { getService } from 'src/app/shared/services/get.services';
 import { PsychosocialQuestionnaireService } from 'src/app/shared/services/psychosocial-questionnaire.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-general-data-sheet',
   templateUrl: './general-data-sheet.component.html',
-  styleUrls: ['./general-data-sheet.component.scss']
+  styleUrls: ['./general-data-sheet.component.scss'],
 })
 export class GeneralDataSheetComponent implements OnInit {
-
-
   @Output() propagar = new EventEmitter();
   userForm: FormGroup;
-
-  departamentos = [
-    'Amazonas',
-    'Antioquia',
-    'Arauca',
-    'Atlántico',
-    'Bolívar',
-    'Boyacá',
-    'Caldas',
-    'Caquetá',
-    'Casanare',
-    'Cauca',
-    'Cesar',
-    'Chocó',
-    'Córdoba',
-    'Cundinamarca',
-    'Guaviare',
-    'Huila',
-    'Guainía',
-    'Magdalena',
-    'Meta',
-    'Nariño',
-    'Norte de Santander',
-    'Putumayo',
-    'Quindío',
-    'Risaralda',
-    'San Andrés y Providencia',
-    'Santander',
-    'Sucre',
-    'Tolima',
-    'Valle del Cauca',
-    'Vaupés',
-    'Vichada'
-  ];
-
-  municipios = [
-    'Bogotá',
-    'Medellín',
-    'Cali',
-    'Barranquilla',
-    'Cartagena',
-    'Bucaramanga',
-    'Pereira',
-    'Santa Marta',
-    'Cúcuta',
-    'Villavicencio',
-    'Ibagué',
-    'Pasto',
-    'Neiva',
-    'Manizales',
-    'Montería',
-    'Popayán',
-    'Tunja',
-    'Florencia',
-    'Riohacha',
-    'Arauca'
-  ];
-
-  ciudades = [
-    'Bogotá',
-    'Medellín',
-    'Cali',
-    'Barranquilla',
-    'Cartagena',
-    'Bucaramanga',
-    'Pereira',
-    'Santa Marta',
-    'Cúcuta',
-    'Villavicencio',
-    'Ibagué',
-    'Pasto',
-    'Neiva',
-    'Manizales',
-    'Montería',
-    'Popayán',
-    'Tunja',
-    'Florencia',
-    'Riohacha'
-  ];
-
+  listDepartament: any;
+  listCity: any;
+  listCities: any;
   constructor(
     private _fb: FormBuilder,
     private accountService: AccountService,
-    private psychosocialQuestionnaireService : PsychosocialQuestionnaireService
-  ) { }
+    private psychosocialQuestionnaireService: PsychosocialQuestionnaireService,
+    private servicio: getService
+  ) {}
 
-  ngOnInit(){
+  ngOnInit() {
     this.loadForm();
   }
 
   loadForm() {
     this.userForm = this._fb.group({
       id: [''],
-      nombre_completo: ['',[Validators.required] ],
+      nombre_completo: ['', [Validators.required]],
       sexo: ['', [Validators.required]],
       genero: ['', [Validators.required]],
       otro_genero: [''],
@@ -115,12 +39,12 @@ export class GeneralDataSheetComponent implements OnInit {
       discapacidad: ['', [Validators.required]],
       cual_discapacidad: [''],
       anio_nacimiento: ['', [Validators.required]],
-      lugar_residencia: ['', [Validators.required]],      
+      lugar_residencia: ['', [Validators.required]],
       zona: ['', [Validators.required]],
-      cual_rural:  [''],
-      estado_civil:  ['', [Validators.required]],      
-      nivel_educativo:  ['', [Validators.required]],
-      ocupacion: ['', [Validators.required]],      
+      cual_rural: [''],
+      estado_civil: ['', [Validators.required]],
+      nivel_educativo: ['', [Validators.required]],
+      ocupacion: ['', [Validators.required]],
       lugar_reidencia: [''],
       estrado: ['', [Validators.required]],
       tipo_vivienda: ['', [Validators.required]],
@@ -136,9 +60,21 @@ export class GeneralDataSheetComponent implements OnInit {
       tipoSalario: ['', [Validators.required]],
       id_desempleado: [this.accountService.userData.id],
     });
+
+    this.onGetCities();
+    this.onGetDepartment(environment.urlApiColombia + 'Department');
   }
 
-  clickSave(){
+  clickSave() {
+    this.userForm.controls['lugar_residencia'].setValue(
+      this.userForm.value.lugar_residencia.toString()
+    );
+    this.userForm.controls['dependientes'].setValue(
+      this.userForm.value.dependientes.toString()
+    );
+    this.userForm.controls['horasTrabajadasDiarias'].setValue(
+      this.userForm.value.horasTrabajadasDiarias.toString()
+    );
     this.createQuiz(this.userForm.value);
   }
 
@@ -147,9 +83,37 @@ export class GeneralDataSheetComponent implements OnInit {
       next: (data) => {
         this.propagar.emit();
       },
-      error: () => {
-      },
-    })
+      error: () => {},
+    });
   }
 
+  onGetDepartment(url: string) {
+    this.servicio.obtenerDatos(url).subscribe((data) => {
+      this.listDepartament = data.sort((x: any, y: any) =>
+        x.name.localeCompare(y.name)
+      );
+    });
+  }
+
+  onGetCity(url: any) {
+    this.listCity = [];
+    this.userForm.value.lugar_residencia = '';
+    this.servicio
+      .obtenerDatos(environment.urlApiColombia + `Department/${url.id}/cities`)
+      .subscribe((data) => {
+        this.listCity = data.sort((x: any, y: any) =>
+          x.name.localeCompare(y.name)
+        );
+      });
+  }
+
+  onGetCities() {
+    this.servicio
+      .obtenerDatos(environment.urlApiColombia + `City`)
+      .subscribe((data) => {
+        this.listCities = data.sort((x: any, y: any) =>
+          x.name.localeCompare(y.name)
+        );
+      });
+  }
 }

@@ -24,6 +24,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
   declarations: [CompaniesFormComponent],
@@ -52,8 +53,9 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
     NzMenuModule,
     NzIconModule,
     NzCollapseModule,
-    NgxMaskModule.forRoot({ validation: true }),
     MatTabsModule,
+    MatRadioModule,
+    NgxMaskModule.forRoot({ validation: true }),
   ],
   exports: [CompaniesFormComponent],
 })

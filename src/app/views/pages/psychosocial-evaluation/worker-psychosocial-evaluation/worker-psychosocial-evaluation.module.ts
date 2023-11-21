@@ -18,46 +18,53 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { FeatherIconModule } from 'src/app/core/feather-icon/feather-icon.module';
 import { NgxMaskModule } from 'ngx-mask';
 import { MatTabsModule } from '@angular/material/tabs';
-import { NgbAccordionModule, NgbModule, NgbNavModule, NgbProgressbar } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbAccordionModule,
+  NgbModule,
+  NgbNavModule,
+  NgbProgressbar,
+} from '@ng-bootstrap/ng-bootstrap';
 import { WorkerPsychosocialEvaluationRoutingModule } from './worker-psychosocial-evaluation-routing.module';
 import { PsychosocialQuestionnaireComponent } from './psychosocial-questionnaire/psychosocial-questionnaire.component';
 import { IntraWorkFactorsQuestionnaireComponent } from './intra-work-factors-questionnaire/intra-work-factors-questionnaire.component';
 import { NonWorkFactorsQuestionnaireComponent } from './non-work-factors-questionnaire/non-work-factors-questionnaire.component';
 import { StressQuestionnaireComponent } from './stress-questionnaire/stress-questionnaire.component';
 import { GeneralDataSheetComponent } from './general-data-sheet/general-data-sheet.component';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 @NgModule({
-    declarations: [
-        PsychosocialQuestionnaireComponent,
-        IntraWorkFactorsQuestionnaireComponent,
-        NonWorkFactorsQuestionnaireComponent,
-        StressQuestionnaireComponent,
-        GeneralDataSheetComponent
-    ],
-    imports: [
-        CommonModule,
-        FormsModule,
-        WorkerPsychosocialEvaluationRoutingModule,
-        MatSnackBarModule,
-        GenericTableModule,
-        NgSelectModule,
-        MatInputModule,
-        NgbAccordionModule,
-        ReactiveFormsModule,
-        MatSelectModule,
-        MatButtonModule,
-        FileUploadModule,
-        MatDialogModule,
-        HttpClientModule,
-        MatCheckboxModule,
-        MatPaginatorModule,
-        MatNativeDateModule,
-        MatOptionModule,
-        MatTooltipModule,
-        FeatherIconModule,
-        MatTabsModule,
-        NgbModule,
-        NgxMaskModule.forRoot({ validation: true }),
-    ],
+  declarations: [
+    PsychosocialQuestionnaireComponent,
+    IntraWorkFactorsQuestionnaireComponent,
+    NonWorkFactorsQuestionnaireComponent,
+    StressQuestionnaireComponent,
+    GeneralDataSheetComponent,
+  ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    WorkerPsychosocialEvaluationRoutingModule,
+    MatSnackBarModule,
+    GenericTableModule,
+    NzToolTipModule,
+    NgSelectModule,
+    MatInputModule,
+    NgbAccordionModule,
+    ReactiveFormsModule,
+    MatSelectModule,
+    MatButtonModule,
+    FileUploadModule,
+    MatDialogModule,
+    HttpClientModule,
+    MatCheckboxModule,
+    MatPaginatorModule,
+    MatNativeDateModule,
+    MatOptionModule,
+    MatTooltipModule,
+    FeatherIconModule,
+    MatTabsModule,
+    NgbModule,
+    NgxMaskModule.forRoot({ validation: true }),
+  ],
 })
-export class WorkerPsychosocialEvaluationModule { }
+export class WorkerPsychosocialEvaluationModule {}

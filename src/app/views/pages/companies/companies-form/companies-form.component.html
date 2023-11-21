@@ -139,7 +139,7 @@
           Este campo es obligatorio
         </p>
       </div>
-      <div class="col-md-7 mb-2">
+      <div class="col-md-6 mb-2">
         <label class="form-label"
           >Nombre o razón social
           <i
@@ -183,6 +183,34 @@
         <p
           class="text-danger"
           *ngIf="form.controls.IdTipoEmpresa.errors?.required"
+        >
+          Este campo es obligatorio
+        </p>
+        <!-- <p class="mt-2 text-muted">Id: <span class="fw-bolder">{{this.form.value.IdTipoEmpresa}}</span></p> -->
+      </div>
+      <div class="col-md-3 mb-2">
+        <label class="form-label"
+          >Clasificación de la empresa
+          <i
+            class="mdi mdi-information"
+            #tooltip="matTooltip"
+            matTooltip="Seleccione clasificación de la empresa"
+          ></i
+        ></label>
+        <ng-select
+          id="IdClasificacion"
+          #IdClasificacion
+          formControlName="IdClasificacion"
+          [items]="listClasificacion"
+          bindLabel="nombre"
+          bindValue="id"
+          [(ngModel)]="this.form.value.IdClasificacion"
+          required
+        >
+        </ng-select>
+        <p
+          class="text-danger"
+          *ngIf="form.controls.IdClasificacion.errors?.required"
         >
           Este campo es obligatorio
         </p>
@@ -234,6 +262,15 @@
         </p>
         <!-- <p class="mt-2 text-muted">Id: <span class="fw-bolder">{{this.form.value.TipoDocumento}}</span></p> -->
       </div>
+      <div class="col-md-5 mb-2">
+        <label class="form-label" style="width: 100%;">
+          ¿Es esta empresa una Organización No Gubernamental (ONG)? <i class="mdi mdi-information"
+                #tooltip="matTooltip" matTooltip="¿Es esta empresa una Organización No Gubernamental (ONG)?"></i></label>
+        <mat-radio-group #EsGubernamental formControlName="EsGubernamental">
+            <mat-radio-button value="1" style="margin-left: 16px;">Si</mat-radio-button>
+            <mat-radio-button value="0" style="margin-left: 16px;">No</mat-radio-button>
+        </mat-radio-group>
+    </div>
       <!-- <div class="col-md-4 mb-2">
         <label class="form-label">Descripción</label>
         <textarea class="form-control" type="text" #Descripcion placeholder="Descripción" formControlName="Descripcion"
@@ -493,23 +530,31 @@
           placeholder="Descripción"
           formControlName="Descripcion"
           rows="1"
+          required
         ></textarea>
+        <p
+          class="text-danger"
+          *ngIf="form.controls.Descripcion.errors?.required"
+        >
+          Este campo es obligatorio
+        </p>
       </div>
       <div class="col-md-4 mb-2">
         <label class="form-label"
-          >Email
+          >Correo electrónico
           <i
             class="mdi mdi-information"
             #tooltip="matTooltip"
-            matTooltip="Ingrese su correo electronico"
+            matTooltip="Ingrese su correo electrónico"
           ></i
         ></label>
         <input
           class="form-control"
           type="text"
           #Email
-          placeholder="Email"
+          placeholder="Correo electrónico"
           formControlName="Email"
+          required
         />
         <p
           class="text-danger mt-1"
@@ -542,7 +587,7 @@
           <i
             class="mdi mdi-information"
             #tooltip="matTooltip"
-            matTooltip="Ingrese su telefono de contacto"
+            matTooltip="Ingrese su teléfono de contacto"
           ></i
         ></label>
         <input
@@ -550,7 +595,7 @@
           mask="(000) 000 00 00"
           [showMaskTyped]="true"
           #Telefono
-          placeholder="Telefono"
+          placeholder="Teléfono fijo"
           formControlName="Telefono"
         />
       </div>
@@ -622,7 +667,14 @@
           #Nombre
           placeholder="Dirección"
           formControlName="Direccion"
+          required
         />
+        <p
+          class="text-danger mt-1"
+          *ngIf="formWorkCenter.controls.Direccion.errors?.required"
+        >
+          Este campo es obligatorio
+        </p>
       </div>
     </form>
     <hr class="hr" />
@@ -837,18 +889,18 @@
       </div>
       <div class="col-md-4 mb-2">
         <label class="form-label"
-          >Email
+          >Correo electrónico
           <i
             class="mdi mdi-information"
             #tooltip="matTooltip"
-            matTooltip="Ingrese su correo electronico"
+            matTooltip="Ingrese su correo electrónico"
           ></i
         ></label>
         <input
           class="form-control"
           type="text"
           #Email
-          placeholder="Email"
+          placeholder="Correo electrónico"
           formControlName="Email"
         />
         <p

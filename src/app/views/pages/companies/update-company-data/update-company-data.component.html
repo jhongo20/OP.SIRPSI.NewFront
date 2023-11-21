@@ -11,7 +11,7 @@
 </div>
 <mat-tab-group *ngIf="this.company != null">
     <mat-tab>
-        <ng-template mat-tab-label>Primera parte</ng-template>
+        <ng-template mat-tab-label>Actualizar datos empresa</ng-template>
         <br />
         <div class="container-fluid">
             <app-company-information-first (cancelar)="cancelar($event)"
@@ -19,7 +19,7 @@
         </div>
     </mat-tab>
     <mat-tab>
-        <ng-template mat-tab-label>Segunda parte</ng-template>
+        <ng-template mat-tab-label>Actualizar perfil de riesgo y sector</ng-template>
         <br />
         <div class="container-fluid">
             <app-company-information-second [company]="this.company"></app-company-information-second>

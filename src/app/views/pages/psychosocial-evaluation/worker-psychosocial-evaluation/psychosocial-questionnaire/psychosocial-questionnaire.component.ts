@@ -259,7 +259,7 @@ export class PsychosocialQuestionnaireComponent implements OnInit {
   }
 
   completeQuiz4() {
-    this.radicado = `EPE_${this.accountService.userData.empresa.idConsecutivo}_NIT_${this.accountService.userData.empresa.documento}_CC_${this.docPsicologo}_${new Date().getFullYear()}${new Date().getMonth() + 1}${new Date().getDate()}`;
+    this.radicado = `${this.accountService.userData.empresa.documento}${this.docPsicologo}${new Date().getFullYear()}${new Date().getMonth() + 1}${new Date().getDate()}${this.accountService.userData.empresa.idConsecutivo}`;
     this.saveRadicado();
   }
 

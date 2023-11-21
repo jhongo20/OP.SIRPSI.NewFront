@@ -84,7 +84,10 @@ export class RegisterNewUsersComponent implements OnInit {
       Password: ['', Validators.required],
       PhoneNumber: '',
       Email: ['', Validators.required],
-      IdEstado: environment.activoEstado,
+      IdEstado:
+        this.type == RolesEnum.AdminEmp
+          ? environment.activoEstado
+          : environment.inactivoEstado,
       IdSex: ['', Validators.required],
       Birthdate: ['', Validators.required],
       PlaceBirthDepartment: [null, Validators.required],

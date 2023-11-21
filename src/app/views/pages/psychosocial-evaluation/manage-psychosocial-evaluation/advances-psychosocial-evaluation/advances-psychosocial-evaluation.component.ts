@@ -27,12 +27,12 @@ export class AdvancesPsychosocialEvaluationComponent implements OnInit {
   public table: string = '';
   public columns = [
     { name: 'Radicado EPT', data: 'radicado' },
-    { name: 'Fecha convocatoria', data: 'fechaInicio' },
+    { name: 'Fecha convocatoria', data: 'fechaInicio', pipeDate: 'YYYY/dd/MM' },
     { name: 'Cédula', data: 'usuario', property: 'cedula' },
     { name: 'Nombre', data: 'usuario', property: 'nombreUsuario' },
     { name: 'Apellidos', data: 'usuario', property: 'apellidosUsuario' },
-    { name: 'Aceptación consentimiento', data: 'po' },
-    { name: 'cuestionarios', data: 'po' },
+    { name: 'Aceptación consentimiento', data: 'consentimiento' },
+    // { name: 'cuestionarios', data: 'po' },
     // { name: 'Porcentaje', data: 'porcentaje', porcentaje: true },
     { name: 'Estado', data: 'estado', property: 'nombre' },
   ];
