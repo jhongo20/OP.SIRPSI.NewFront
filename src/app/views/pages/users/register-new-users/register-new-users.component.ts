@@ -36,6 +36,7 @@ export class RegisterNewUsersComponent implements OnInit {
   listSexos: any;
   listDepartament: any;
   listCity: any;
+  listCityLicence: any;
   hide = true;
   constructor(
     public formBuilder: FormBuilder,
@@ -71,7 +72,7 @@ export class RegisterNewUsersComponent implements OnInit {
       IdTypeDocument: ['', Validators.required],
       Document: ['', Validators.required],
       // ExpeditionDate: ['', Validators.required],
-      IdCountry: ['', Validators.required],
+      // IdCountry: ['', Validators.required],
       IdCompany: this.accountService.userData.empresaId,
       Names: ['', Validators.required],
       Surnames: ['', Validators.required],
@@ -81,7 +82,8 @@ export class RegisterNewUsersComponent implements OnInit {
           : this.type == RolesEnum.Psicologo
           ? environment.psicologoRole
           : environment.trabajadorRole,
-      Password: ['', Validators.required],
+      Password:
+        this.type == RolesEnum.AdminEmp ? ['', Validators.required] : '',
       PhoneNumber: '',
       Email: ['', Validators.required],
       IdEstado:
@@ -92,6 +94,7 @@ export class RegisterNewUsersComponent implements OnInit {
       Birthdate: ['', Validators.required],
       PlaceBirthDepartment: [null, Validators.required],
       PlaceBirthCity: [null, Validators.required],
+      Address: ['', Validators.required],
       OccupationalLicense: null,
       // PhoneNumberAux: '',
       // EmailAux: '',
@@ -108,6 +111,13 @@ export class RegisterNewUsersComponent implements OnInit {
       Numero: this.type == RolesEnum.Psicologo ? ['', Validators.required] : '',
       FechaExpedicion:
         this.type == RolesEnum.Psicologo ? ['', Validators.required] : '',
+      Titulo: this.type == RolesEnum.Psicologo ? ['', Validators.required] : '',
+      Entidad:
+        this.type == RolesEnum.Psicologo ? ['', Validators.required] : '',
+      IdDepartamento:
+        this.type == RolesEnum.Psicologo ? ['', Validators.required] : '',
+      IdMunicipio:
+        this.type == RolesEnum.Psicologo ? ['', Validators.required] : '',
     });
     this.onGetDepartment(environment.urlApiColombia + 'Department');
   }
@@ -116,8 +126,14 @@ export class RegisterNewUsersComponent implements OnInit {
     this.form.value.Document = this.formValidate.value.Document;
     this.form.value.OccupationalLicense =
       this.type == RolesEnum.Psicologo ? this.formLicencia.value : null;
+    if (this.type != RolesEnum.AdminEmp) {
+      this.form.value.Password =
+        'Ept_' +
+        this.accountService.userData.empresa.documento +
+        '_' +
+        this.form.value.Document;
+    }
     this.loadingService.ChangeStatusLoading(true);
-    console.log(this.form.value);
     this.genericService.Post('user/RegisterUser', this.form.value).subscribe({
       next: (data) => {
         this.sendNotifications(data.user.codeActivation, data.user.phoneNumber);
@@ -287,6 +303,22 @@ export class RegisterNewUsersComponent implements OnInit {
       )
       .subscribe((data) => {
         this.listCity = data.sort((x: any, y: any) =>
+          x.name.localeCompare(y.name)
+        );
+      });
+  }
+  onGetCityLicense(url: any) {
+    console.log(url);
+    this.listCityLicence = [];
+    this.formLicencia.value.IdMunicipio = '';
+    if (url.IdDepartamento == null) return;
+    this.servicio
+      .obtenerDatos(
+        environment.urlApiColombia +
+          `Department/${url.IdDepartamento}/cities`
+      )
+      .subscribe((data) => {
+        this.listCityLicence = data.sort((x: any, y: any) =>
           x.name.localeCompare(y.name)
         );
       });

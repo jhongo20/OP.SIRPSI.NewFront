@@ -31,6 +31,7 @@ export class UpdatePsychologistDataComponent implements OnInit {
   listCity: any;
   id: number | undefined;
   listRoles: any;
+  dataUser: any;
   constructor(
     public formBuilder: FormBuilder,
     public accountService: AccountService,
@@ -61,6 +62,7 @@ export class UpdatePsychologistDataComponent implements OnInit {
       Birthdate: ['', Validators.required],
       PlaceBirthDepartment: [0, Validators.required],
       PlaceBirthCity: [0, Validators.required],
+      Address: ['', Validators.required],
     });
     this.formEmail = this.formBuilder.group({
       OldEmail: ['', Validators.required],
@@ -169,6 +171,7 @@ export class UpdatePsychologistDataComponent implements OnInit {
     );
     this.onGetCity({ PlaceBirthDepartment: data.placeBirthDepartment });
     this.form.controls['PlaceBirthCity'].setValue(data.placeBirthCity);
+    this.form.controls['Address'].setValue(data.address);
     setTimeout(() => this.loadingService.ChangeStatusLoading(false), 600);
   }
   openChangeEmailForm() {
@@ -192,6 +195,7 @@ export class UpdatePsychologistDataComponent implements OnInit {
     const dialogRef = this.dialog.open(OccupationalLicenseComponent, {
       data: {
         type: 1,
+        item: this.dataUser
       },
     });
     dialogRef.afterClosed().subscribe();
@@ -217,6 +221,7 @@ export class UpdatePsychologistDataComponent implements OnInit {
       this.formInitial.reset();
       return;
     }
+    this.dataUser = event;
     this.loadData(event);
   }
   onGetDepartment(url: string) {

@@ -58,7 +58,7 @@ export class RegisterNewWorkerComponent implements OnInit {
       IdTypeDocument: ['', Validators.required],
       Document: ['', Validators.required],
       // ExpeditionDate: ['', Validators.required],
-      IdCountry: ['', Validators.required],
+      // IdCountry: ['', Validators.required],
       IdCompany: this.accountService.userData.empresaId,
       Names: ['', Validators.required],
       Surnames: ['', Validators.required],

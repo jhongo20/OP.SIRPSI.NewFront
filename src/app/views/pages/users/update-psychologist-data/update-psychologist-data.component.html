@@ -112,7 +112,7 @@
         </p>
     </div>
     <hr class="hr" />
-    <h2><b>Lugar de nacimiento</b></h2>
+    <h2><b>Dirección de residencia</b></h2>
     <div class="row">
         <div class="col-md-4 mb-2">
             <label class="form-label">Departamento <i class="mdi mdi-information" #tooltip="matTooltip"
@@ -125,8 +125,8 @@
             </p>
         </div>
         <div class="col-md-4 mb-2">
-            <label class="form-label">Ciudad <i class="mdi mdi-information" #tooltip="matTooltip"
-                    matTooltip="Ingrese Ciudad"></i></label>
+            <label class="form-label">Municipio <i class="mdi mdi-information" #tooltip="matTooltip"
+                    matTooltip="Ingrese su municpio"></i></label>
             <ng-select id="PlaceBirthCity" #PlaceBirthCity formControlName="PlaceBirthCity" [items]="listCity" bindLabel="name"
                 bindValue="id" [(ngModel)]="form.value.PlaceBirthCity">
             </ng-select>
@@ -134,6 +134,30 @@
                 campo es obligatorio
             </p>
         </div>
+        <div class="col-md-4 mb-2">
+            <label class="form-label"
+              >Dirección
+              <i
+                class="mdi mdi-information"
+                #tooltip="matTooltip"
+                matTooltip="Ingrese su dirección"
+              ></i
+            ></label>
+            <input
+              class="form-control"
+              type="text"
+              #Address
+              placeholder="Dirección"
+              formControlName="Address"
+              required
+            />
+            <p
+              class="text-danger mt-1"
+              *ngIf="form.controls.Address.errors?.required"
+            >
+              Este campo es obligatorio
+            </p>
+          </div>
     </div>
 </form>
 <form #f="ngForm" [formGroup]="this.formEmail" *ngIf="this.formInitial.valid">
