@@ -43,7 +43,7 @@ export class RegisterNewUsersComponent implements OnInit {
     public dialog: MatDialog,
     private genericService: GenericService,
     private loadingService: LoadingService,
-    private accountService: AccountService,
+    public accountService: AccountService,
     private activatedRoute: ActivatedRoute,
     private snackBar: MatSnackBar,
     private router: Router,
@@ -136,7 +136,14 @@ export class RegisterNewUsersComponent implements OnInit {
     this.loadingService.ChangeStatusLoading(true);
     this.genericService.Post('user/RegisterUser', this.form.value).subscribe({
       next: (data) => {
-        this.sendNotifications(data.user.codeActivation, data.user.phoneNumber);
+        if (this.type != RolesEnum.AdminEmp)
+          this.sendNotifications(
+            data.user.codeActivation,
+            data.user.phoneNumber,
+            this.form.value.Password,
+            this.form.value.Email
+          );
+          
         this.loadingService.ChangeStatusLoading(false);
         Swal.fire({
           icon: 'success',
@@ -205,16 +212,25 @@ export class RegisterNewUsersComponent implements OnInit {
         });
     });
   }
-  sendNotifications(code: string, numberPhone: string) {
+  sendNotifications(
+    code: string,
+    numberPhone: string,
+    password: string,
+    email: string
+  ) {
     var body = {
-      MessageCodeActivation: code,
-      MessageReceiver: numberPhone,
+      CodeActivation: code,
+      Receiver: email,
+      Password: password,
     };
     this.genericService
-      .Post('mensajes/EnviarNotificaciónMensajeWhatsApp', body)
-      .subscribe((data: any) => {
-        console.log(data);
-      });
+      .Post('mensajes/EnviarNotificacionMensajeCorreo', body)
+      .subscribe();
+
+    body.Receiver = numberPhone;
+    this.genericService
+      .Post('mensajes/EnviarNotificacionMensajeWhatsApp', body)
+      .subscribe();
   }
   getUser() {
     this.loadingService.ChangeStatusLoading(true);
@@ -314,8 +330,7 @@ export class RegisterNewUsersComponent implements OnInit {
     if (url.IdDepartamento == null) return;
     this.servicio
       .obtenerDatos(
-        environment.urlApiColombia +
-          `Department/${url.IdDepartamento}/cities`
+        environment.urlApiColombia + `Department/${url.IdDepartamento}/cities`
       )
       .subscribe((data) => {
         this.listCityLicence = data.sort((x: any, y: any) =>

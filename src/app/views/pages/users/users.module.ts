@@ -37,6 +37,7 @@ import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzInputModule } from 'ng-zorro-antd/input';
+import { ComplementaryCompanyDataModule } from '../companies/update-company-data/complementary-company-data/complementary-company-data.module';
 
 @NgModule({
   declarations: [
@@ -82,6 +83,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
     NzInputModule,
     NzMenuModule,
     NzIconModule,
+    ComplementaryCompanyDataModule,
     NzCollapseModule,
   ],
 })

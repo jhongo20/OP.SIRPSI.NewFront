@@ -137,7 +137,7 @@ export class ChangeDataProfileComponent implements OnInit {
         this.form.controls['Id'].setValue(data.id);
         this.form.controls['IdTypeDocument'].setValue(data.idTipoDocumento);
         this.form.controls['Document'].setValue(data.cedula);
-        this.form.controls['IdCountry'].setValue(data.idPais);
+        // this.form.controls['IdCountry'].setValue(data.idPais);
         this.form.controls['IdCompany'].setValue(data.idEmpresa);
         this.form.controls['Names'].setValue(data.nombreUsuario);
         this.form.controls['Surnames'].setValue(data.apellidosUsuario);

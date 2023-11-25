@@ -47,8 +47,8 @@ export class RegisterNewWorkerComponent implements OnInit {
     public dialog: MatDialog,
     private genericService: GenericService,
     private loadingService: LoadingService,
-    private accountService: AccountService,
-    private snackBar: MatSnackBar
+    public accountService: AccountService,
+    private snackBar: MatSnackBar,
   ) {}
   ngOnInit(): void {
     this.title = 'Registro de trabajadores';
@@ -90,11 +90,6 @@ export class RegisterNewWorkerComponent implements OnInit {
       this.form.value.HaveDisability == '0' ? false : true;
     this.form.value.ReadingWritingSkills =
       this.form.value.ReadingWritingSkills == '0' ? false : true;
-    this.form.value.PhoneNumber = this.form.value.PhoneNumber;
-    this.form.value.PhoneNumberAux =
-      this.form.value.PhoneNumberAux.length > 0
-        ? this.form.value.PhoneNumberAux
-        : null;
     this.form.value.Password =
       'Ept_' +
       this.accountService.userData.empresa.documento +
@@ -103,16 +98,23 @@ export class RegisterNewWorkerComponent implements OnInit {
     this.loadingService.ChangeStatusLoading(true);
     this.genericService.Post('user/RegisterUser', this.form.value).subscribe({
       next: (data) => {
-        this.sendNotifications(data.user.codeActivation, data.user.phoneNumber);
-        this.loadingService.ChangeStatusLoading(false);
-        Swal.fire({
-          icon: 'success',
-          title: 'Usuario Registrado, exitosamente.',
-          showConfirmButton: false,
-          timer: 2800,
-        }).then(() => {
-          window.location.reload();
-        });
+        this.sendNotifications(
+          data.user.codeActivation,
+          data.user.phoneNumber,
+          this.form.value.Password,
+          this.form.value.Email
+        );
+        setTimeout(() => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Usuario Registrado, exitosamente.',
+            showConfirmButton: false,
+            timer: 2800,
+          }).then(() => {
+            window.location.reload();
+          });
+          this.loadingService.ChangeStatusLoading(false);
+        }, 1200);
       },
       error: (error) => {
         this.loadingService.ChangeStatusLoading(false);
@@ -179,16 +181,25 @@ export class RegisterNewWorkerComponent implements OnInit {
           });
       });
   }
-  sendNotifications(code: string, numberPhone: string) {
+  sendNotifications(
+    code: string,
+    numberPhone: string,
+    password: string,
+    email: string
+  ) {
     var body = {
-      MessageCodeActivation: code,
-      MessageReceiver: numberPhone,
+      CodeActivation: code,
+      Receiver: email,
+      Password: password,
     };
     this.genericService
-      .Post('mensajes/EnviarNotificaciónMensajeWhatsApp', body)
-      .subscribe((data: any) => {
-        console.log(data);
-      });
+      .Post('mensajes/EnviarNotificacionMensajeCorreo', body)
+      .subscribe();
+
+    body.Receiver = numberPhone;
+    this.genericService
+      .Post('mensajes/EnviarNotificacionMensajeWhatsApp', body)
+      .subscribe();
   }
   cancelarForm() {
     Swal.fire({

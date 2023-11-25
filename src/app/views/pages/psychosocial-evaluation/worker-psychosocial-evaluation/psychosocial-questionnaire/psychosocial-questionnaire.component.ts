@@ -9,10 +9,9 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-psychosocial-questionnaire',
   templateUrl: './psychosocial-questionnaire.component.html',
-  styleUrls: ['./psychosocial-questionnaire.component.scss']
+  styleUrls: ['./psychosocial-questionnaire.component.scss'],
 })
 export class PsychosocialQuestionnaireComponent implements OnInit {
-
   defaultNavActiveId = 1;
 
   tiempoRestante = 0;
@@ -30,7 +29,6 @@ export class PsychosocialQuestionnaireComponent implements OnInit {
   emailPsicologo: string = '';
   radicado: string = '';
 
-
   horas: string = '02';
   minutos: string = '00';
   segundos: string = '00';
@@ -43,32 +41,33 @@ export class PsychosocialQuestionnaireComponent implements OnInit {
 
   datos: any[] = [];
 
+  evaluation: any = null;
+
   constructor(
     private loadingService: LoadingService,
     private genericService: GenericService,
     private router: Router,
     private psychosocialQuestionnaireService: PsychosocialQuestionnaireService,
     private accountService: AccountService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.loadingService.ChangeStatusLoading(false);
+    localStorage.removeItem('viewQuiz');
     this.getQuiz();
     this.comprobarCronometro();
-    console.log(this.accountService.userData);
-    console.log(new Date().getMonth() + 1);
   }
 
   getDialog() {
     const data = localStorage.getItem('viewQuiz');
-    if (!data) {
-      this.modalAlertConfirmation();
-    } else {
-      this.view = true;
-    }
+    if (data == 'null') this.modalAlertConfirmation();
+    else if (data == 'false') this.router.navigate(['/dashboard']);
+    else this.view = true;
   }
+
   getFinal() {
-    const data = localStorage.getItem('final')?.toLowerCase() === "true" ? true : false;
+    const data =
+      localStorage.getItem('final')?.toLowerCase() === 'true' ? true : false;
     if (data) {
       this.final = true;
       //this.getIdQuizFinal();
@@ -84,14 +83,12 @@ export class PsychosocialQuestionnaireComponent implements OnInit {
       html: messageInfo,
       confirmButtonText: 'Sí Acepto',
       cancelButtonText: 'No Acepto',
-      showCancelButton: true
+      showCancelButton: true,
     }).then((result) => {
+      this.saveConsent(result.isConfirmed);
       if (result.isConfirmed) {
-        localStorage.setItem('viewQuiz', `${result.isConfirmed}`);
         this.view = true;
-      } else {
-        this.router.navigate(['/dashboard']);
-      }
+      } else this.router.navigate(['/dashboard']);
     });
   }
 
@@ -102,7 +99,7 @@ export class PsychosocialQuestionnaireComponent implements OnInit {
       icon: 'info',
       title: 'Estimado(a) usuario(a)',
       html: messageInfo,
-      confirmButtonText: 'Sí Acepto'
+      confirmButtonText: 'Sí Acepto',
     }).then((result) => {
       if (result.isConfirmed) {
         this.router.navigate(['/dashboard']);
@@ -130,60 +127,78 @@ export class PsychosocialQuestionnaireComponent implements OnInit {
   }
 
   getIdQuiz() {
-    this.psychosocialQuestionnaireService.getIdQuiz(this.accountService.userData.id).subscribe({
-      next: (data) => {
-        this.idQuiz = data[0].id;
-        this.getFinal();
-      },
-      error: (err) => {
-        this.view = false;
-      },
-    })
+    this.psychosocialQuestionnaireService
+      .getIdQuiz(this.accountService.userData.id)
+      .subscribe({
+        next: (data) => {
+          this.idQuiz = data[0].id;
+          this.getFinal();
+        },
+        error: (err) => {
+          this.view = false;
+        },
+      });
   }
 
   getClasificacionQuiz() {
-    this.psychosocialQuestionnaireService.getQuizClasificacion(this.accountService.userData.id).subscribe({
-      next: (data) => {
-        this.clasificacion = data.clasificacion;
-      },
-      error: (err) => {
-        this.view = false;
-      },
-    })
+    this.psychosocialQuestionnaireService
+      .getQuizClasificacion(this.accountService.userData.id)
+      .subscribe({
+        next: (data) => {
+          this.clasificacion = data.clasificacion;
+        },
+        error: (err) => {
+          this.view = false;
+        },
+      });
   }
 
   getQuiz() {
-    this.psychosocialQuestionnaireService.getIdQuiz(this.accountService.userData.id).subscribe({
-      next: (data) => {
-        const dataList: any[] = data;
-        if (dataList.length === 0) {
-          this.modalAlertNotFountQuiz();
-        } else {
-          const fechaProvidenciada: Date = new Date(data[0].fechaInicio);
-          const fechaActual: Date = new Date();
-          fechaActual.setHours(0, 0, 0, 0);
-          const quitarHoraZonaHoraria = (fecha: Date): Date => {
-            const nuevaFecha = new Date(fecha.toISOString().split('T')[0]);
-            nuevaFecha.setHours(0, 0, 0, 0);
-            return nuevaFecha;
-          };
-          console.log(quitarHoraZonaHoraria(fechaProvidenciada).getTime() + ' ' + quitarHoraZonaHoraria(fechaActual).getTime());
-
-          if (quitarHoraZonaHoraria(fechaProvidenciada).getTime() !== quitarHoraZonaHoraria(fechaActual).getTime()) {
+    this.psychosocialQuestionnaireService
+      .getIdQuiz(this.accountService.userData.id)
+      .subscribe({
+        next: (data) => {
+          this.evaluation = data;
+          localStorage.setItem(
+            'viewQuiz',
+            `${data.length > 0 ? data[0].consentimiento : null}`
+          );
+          const dataList: any[] = data;
+          if (dataList.length === 0) {
             this.modalAlertNotFountQuiz();
           } else {
-            this.nombrePsicologo = data[0].namePsicologo;
-            this.telPsicologo = data[0].telefono;
-            this.docPsicologo = data[0].documentoPsicologo;
-            this.emailPsicologo = data[0].emailPsicologo;          
-            this.getDialog();
+            const fechaProvidenciada: Date = new Date(data[0].fechaInicio);
+            const fechaActual: Date = new Date();
+            fechaActual.setHours(0, 0, 0, 0);
+            const quitarHoraZonaHoraria = (fecha: Date): Date => {
+              const nuevaFecha = new Date(fecha.toISOString().split('T')[0]);
+              nuevaFecha.setHours(0, 0, 0, 0);
+              return nuevaFecha;
+            };
+            console.log(
+              quitarHoraZonaHoraria(fechaProvidenciada).getTime() +
+                ' ' +
+                quitarHoraZonaHoraria(fechaActual).getTime()
+            );
+
+            if (
+              quitarHoraZonaHoraria(fechaProvidenciada).getTime() !==
+              quitarHoraZonaHoraria(fechaActual).getTime()
+            ) {
+              this.modalAlertNotFountQuiz();
+            } else {
+              this.nombrePsicologo = data[0].namePsicologo;
+              this.telPsicologo = data[0].telefono;
+              this.docPsicologo = data[0].documentoPsicologo;
+              this.emailPsicologo = data[0].emailPsicologo;
+              this.getDialog();
+            }
           }
-        }
-      },
-      error: (err) => {
-        this.modalAlertNotFountQuiz();
-      },
-    })
+        },
+        error: (err) => {
+          this.modalAlertNotFountQuiz();
+        },
+      });
   }
 
   comprobarCronometro() {
@@ -238,6 +253,7 @@ export class PsychosocialQuestionnaireComponent implements OnInit {
   }
 
   completeQuiz1() {
+    this.updateCompletedQuestionnaires(1);
     this.tab1 = true;
     this.tab2 = false;
     this.defaultNavActiveId = 2;
@@ -245,6 +261,7 @@ export class PsychosocialQuestionnaireComponent implements OnInit {
   }
 
   completeQuiz2() {
+    this.updateCompletedQuestionnaires(2);
     this.tab2 = true;
     this.tab3 = false;
     this.defaultNavActiveId = 3;
@@ -252,6 +269,7 @@ export class PsychosocialQuestionnaireComponent implements OnInit {
   }
 
   completeQuiz3() {
+    this.updateCompletedQuestionnaires(3);
     this.tab3 = true;
     this.tab4 = false;
     this.defaultNavActiveId = 4;
@@ -259,24 +277,59 @@ export class PsychosocialQuestionnaireComponent implements OnInit {
   }
 
   completeQuiz4() {
-    this.radicado = `${this.accountService.userData.empresa.documento}${this.docPsicologo}${new Date().getFullYear()}${new Date().getMonth() + 1}${new Date().getDate()}${this.accountService.userData.empresa.idConsecutivo}`;
+    this.updateCompletedQuestionnaires(4);
+    this.radicado = `${this.accountService.userData.empresa.documento}${
+      this.docPsicologo
+    }${new Date().getFullYear()}${
+      new Date().getMonth() + 1
+    }${new Date().getDate()}${
+      this.accountService.userData.empresa.idConsecutivo
+    }`;
     this.saveRadicado();
   }
 
   saveRadicado() {
-    this.psychosocialQuestionnaireService.saveRadicado(this.idQuiz, this.radicado).subscribe({
-      next: (data) => {
-        this.final = true;
-        localStorage.clear();
-        localStorage.setItem('final', "true");
-        localStorage.setItem('viewQuiz', "true");
-      },
-      error: () => {
-        this.final = true;
-        localStorage.clear();
-        localStorage.setItem('final', "true");
-        localStorage.setItem('viewQuiz', "true");
-      },
-    })
+    this.psychosocialQuestionnaireService
+      .saveRadicado(this.idQuiz, this.radicado)
+      .subscribe({
+        next: (data) => {
+          this.final = true;
+          localStorage.clear();
+          localStorage.setItem('final', 'true');
+          localStorage.setItem('viewQuiz', 'true');
+        },
+        error: () => {
+          this.final = true;
+          localStorage.clear();
+          localStorage.setItem('final', 'true');
+          localStorage.setItem('viewQuiz', 'true');
+        },
+      });
+  }
+
+  saveConsent(Consent: boolean) {
+    var data = {
+      Id: this.evaluation[0].id,
+      Consentimiento: Consent,
+    };
+    this.genericService
+      .Put('evaluacionPsicosocial/ActualizarConsentimientoEvaluacion', data)
+      .subscribe(() => localStorage.setItem('viewQuiz', `${Consent}`));
+  }
+
+  async updateCompletedQuestionnaires(Quest: number) {
+    this.loadingService.ChangeStatusLoading(true);
+    var data = {
+      Id: this.evaluation[0].id,
+      Cuestionario: Quest,
+    };
+    this.genericService
+      .Put('evaluacionPsicosocial/ActualizarCuestionariosRealizados', data)
+      .subscribe(() => {
+        setInterval(() => {
+          this.loadingService.ChangeStatusLoading(true);
+        }, 1000);
+        return true;
+      });
   }
 }

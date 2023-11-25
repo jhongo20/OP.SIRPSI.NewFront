@@ -108,7 +108,12 @@ export class UsersFormComponent implements OnInit {
     console.log(this.form.value);
     this.genericService.Post('user/RegisterUser', this.form.value).subscribe({
       next: (data) => {
-        this.sendNotifications(data.user.codeActivation, data.user.phoneNumber);
+        this.sendNotifications(
+          data.user.codeActivation,
+          data.user.phoneNumber,
+          this.form.value.Password,
+          this.form.value.Email
+        );
         this.loadingService.ChangeStatusLoading(false);
         Swal.fire({
           icon: 'success',
@@ -177,16 +182,25 @@ export class UsersFormComponent implements OnInit {
         });
     });
   }
-  sendNotifications(code: string, numberPhone: string) {
+  sendNotifications(
+    code: string,
+    numberPhone: string,
+    password: string,
+    email: string
+  ) {
     var body = {
-      MessageCodeActivation: code,
-      MessageReceiver: numberPhone,
+      CodeActivation: code,
+      Receiver: email,
+      Password: password,
     };
     this.genericService
-      .Post('mensajes/EnviarNotificaciónMensajeWhatsApp', body)
-      .subscribe((data: any) => {
-        console.log(data);
-      });
+      .Post('mensajes/EnviarNotificacionMensajeCorreo', body)
+      .subscribe();
+
+    body.Receiver = numberPhone;
+    this.genericService
+      .Post('mensajes/EnviarNotificacionMensajeWhatsApp', body)
+      .subscribe();
   }
   getUser() {
     this.loadingService.ChangeStatusLoading(true);

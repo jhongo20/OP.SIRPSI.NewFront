@@ -81,11 +81,6 @@ export class UpdateWorkerDataComponent implements OnInit {
       this.form.value.HaveDisability == '0' ? false : true;
     this.form.value.ReadingWritingSkills =
       this.form.value.ReadingWritingSkills == '0' ? false : true;
-    this.form.value.PhoneNumber = this.form.value.PhoneNumber;
-    this.form.value.PhoneNumberAux =
-      this.form.value.PhoneNumberAux != ''
-        ? this.form.value.PhoneNumberAux
-        : null;
     this.loadingService.ChangeStatusLoading(true);
     this.genericService
       .Put('usuario/ActualizarUsuario', this.form.value)
@@ -93,7 +88,9 @@ export class UpdateWorkerDataComponent implements OnInit {
         next: (data) => {
           // this.sendNotifications(
           //   data.user.codeActivation,
-          //   data.user.phoneNumber
+          //   data.user.phoneNumber,
+          //   this.form.value.Password,
+          //   this.form.value.Email
           // );
           this.loadingService.ChangeStatusLoading(false);
           Swal.fire({
@@ -173,16 +170,25 @@ export class UpdateWorkerDataComponent implements OnInit {
           });
       });
   }
-  sendNotifications(code: string, numberPhone: string) {
+  sendNotifications(
+    code: string,
+    numberPhone: string,
+    password: string,
+    email: string
+  ) {
     var body = {
-      MessageCodeActivation: code,
-      MessageReceiver: numberPhone,
+      CodeActivation: code,
+      Receiver: email,
+      Password: password,
     };
     this.genericService
-      .Post('mensajes/EnviarNotificaciónMensajeWhatsApp', body)
-      .subscribe((data: any) => {
-        console.log(data);
-      });
+      .Post('mensajes/EnviarNotificacionMensajeCorreo', body)
+      .subscribe();
+
+    body.Receiver = numberPhone;
+    this.genericService
+      .Post('mensajes/EnviarNotificacionMensajeWhatsApp', body)
+      .subscribe();
   }
   cancelarForm() {
     Swal.fire({
@@ -227,7 +233,7 @@ export class UpdateWorkerDataComponent implements OnInit {
         this.form.controls['Id'].setValue(data.id);
         this.form.controls['IdTypeDocument'].setValue(data.idTipoDocumento);
         this.form.controls['Document'].setValue(data.cedula);
-        this.form.controls['IdCountry'].setValue(data.idPais);
+        // this.form.controls['IdCountry'].setValue(data.idPais);
         this.form.controls['IdCompany'].setValue(data.idEmpresa);
         this.form.controls['Names'].setValue(data.nombreUsuario);
         this.form.controls['Surnames'].setValue(data.apellidosUsuario);

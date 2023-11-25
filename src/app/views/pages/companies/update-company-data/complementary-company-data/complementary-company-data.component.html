@@ -1,0 +1,98 @@
+<h4>
+  Para registrar un nuevo psicólogo especialista SST se debe verificar los
+  siguientes datos de la empresa:
+</h4>
+<form class="row" #f="ngForm" [formGroup]="this.form">
+  <div class="col-md-2 mb-2">
+    <label class="form-label"
+      >Número de trabajadores<i
+        class="mdi mdi-information"
+        #tooltip="matTooltip"
+        matTooltip="Ingrese el numero de trabajadores"
+      ></i
+    ></label>
+    <input
+      class="form-control"
+      type="number"
+      #NumeroTrabajadores
+      placeholder="NumeroTrabajadores"
+      formControlName="NumeroTrabajadores"
+      required
+    />
+    <p
+      class="text-danger"
+      *ngIf="form.controls.NumeroTrabajadores.errors?.required"
+    >
+      Este campo es obligatorio
+    </p>
+  </div>
+  <div class="col-md-2 mb-2">
+    <label class="form-label"
+      >Clase de riesgo<i
+        class="mdi mdi-information"
+        #tooltip="matTooltip"
+        matTooltip="Seleccione una clase de riesgo"
+      ></i
+    ></label>
+    <ng-select
+      id="ClaseRiesgo"
+      #ClaseRiesgo
+      formControlName="ClaseRiesgo"
+      [items]="listClaseRiesgo"
+      bindLabel="nombre"
+      bindValue="id"
+      [(ngModel)]="this.form.value.ClaseRiesgo"
+      required
+    >
+    </ng-select>
+    <p class="text-danger" *ngIf="form.controls.ClaseRiesgo.errors?.required">
+      Este campo es obligatorio
+    </p>
+  </div>
+  <div class="col-md-8 mb-2">
+    <label class="form-label"
+      >Sector económico<i
+        class="mdi mdi-information"
+        #tooltip="matTooltip"
+        matTooltip="Seleccione un sector económico"
+      ></i
+    ></label>
+    <ng-select
+      id="IdSectorEconomico"
+      #IdSectorEconomico
+      formControlName="IdSectorEconomico"
+      [items]="listSectorEconomico"
+      bindLabel="nombre"
+      bindValue="id"
+      [(ngModel)]="this.form.value.IdSectorEconomico"
+      required
+    >
+    </ng-select>
+    <p
+      class="text-danger"
+      *ngIf="form.controls.IdSectorEconomico.errors?.required"
+    >
+      Este campo es obligatorio
+    </p>
+  </div>
+</form>
+<div style="padding: 20px 0 25px 0">
+  <button
+    type="submit"
+    class="btn btn-primary me-2"
+    (click)="onSave()"
+    [disabled]="this.form.invalid"
+    *ngIf="type == 1"
+  >
+    Actualizar
+  </button>
+  <button
+    type="submit"
+    class="btn btn-primary me-2"
+    (click)="onSave()"
+    [disabled]="this.form.invalid"
+    *ngIf="type == 2"
+  >
+    Verificar
+  </button>
+</div>

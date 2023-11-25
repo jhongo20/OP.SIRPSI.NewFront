@@ -7,6 +7,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 @NgModule({
   declarations: [GenericTableComponent],
@@ -19,6 +20,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
     MatTooltipModule,
     MatCheckboxModule,
     NzToolTipModule,
+    NzIconModule,
   ],
   exports: [GenericTableComponent],
 })
