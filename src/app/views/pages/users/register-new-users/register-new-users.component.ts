@@ -11,6 +11,7 @@ import { getService } from 'src/app/shared/services/get.services';
 import { LoadingService } from 'src/app/shared/services/loading.service';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
+import { NzModalService } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-register-new-users',
@@ -47,9 +48,11 @@ export class RegisterNewUsersComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private snackBar: MatSnackBar,
     private router: Router,
-    private servicio: getService
+    private servicio: getService,
+    private modal: NzModalService
   ) {}
   ngOnInit(): void {
+    this.onValidateCompanie();
     this.type =
       this.router.url == '/users/register-new-administrator'
         ? RolesEnum.AdminEmp
@@ -143,7 +146,7 @@ export class RegisterNewUsersComponent implements OnInit {
             this.form.value.Password,
             this.form.value.Email
           );
-          
+
         this.loadingService.ChangeStatusLoading(false);
         Swal.fire({
           icon: 'success',
@@ -169,6 +172,7 @@ export class RegisterNewUsersComponent implements OnInit {
       },
     });
   }
+
   getListas() {
     this.loadingService.ChangeStatusLoading(true);
     this.genericService.GetAll('sexo/ConsultarSexo').subscribe((data: any) => {
@@ -212,6 +216,7 @@ export class RegisterNewUsersComponent implements OnInit {
         });
     });
   }
+
   sendNotifications(
     code: string,
     numberPhone: string,
@@ -232,6 +237,7 @@ export class RegisterNewUsersComponent implements OnInit {
       .Post('mensajes/EnviarNotificacionMensajeWhatsApp', body)
       .subscribe();
   }
+
   getUser() {
     this.loadingService.ChangeStatusLoading(true);
     this.genericService
@@ -272,6 +278,7 @@ export class RegisterNewUsersComponent implements OnInit {
         },
       });
   }
+
   cancelarForm() {
     Swal.fire({
       title: '¿Estas seguro?',
@@ -287,12 +294,14 @@ export class RegisterNewUsersComponent implements OnInit {
       }
     });
   }
+
   openSnackBar(message: string) {
     this.snackBar.open(message, 'x', {
       horizontalPosition: 'start',
       verticalPosition: 'bottom',
     });
   }
+
   LlenarForm(type: number) {
     if (type == 0)
       this.form.controls['IdTypeDocument'].setValue(
@@ -301,6 +310,7 @@ export class RegisterNewUsersComponent implements OnInit {
     if (type == 1)
       this.form.controls['Document'].setValue(this.formValidate.value.Document);
   }
+
   onGetDepartment(url: string) {
     this.servicio.obtenerDatos(url).subscribe((data) => {
       this.listDepartament = data.sort((x: any, y: any) =>
@@ -308,6 +318,7 @@ export class RegisterNewUsersComponent implements OnInit {
       );
     });
   }
+
   onGetCity(url: any) {
     this.listCity = [];
     this.form.value.PlaceBirthCity = '';
@@ -323,6 +334,7 @@ export class RegisterNewUsersComponent implements OnInit {
         );
       });
   }
+
   onGetCityLicense(url: any) {
     console.log(url);
     this.listCityLicence = [];
@@ -337,5 +349,16 @@ export class RegisterNewUsersComponent implements OnInit {
           x.name.localeCompare(y.name)
         );
       });
+  }
+
+  onValidateCompanie() {
+    if (this.accountService.userData.empresa.fechaModifico == null) {
+      this.modal.info({
+        nzContent:
+          '<p>Es necesario acula información de la empresa y diligenciar todos la información solicitada</p>',
+        nzClosable: false,
+        nzOnOk: () => this.router.navigate(['/companies/update-company-data']),
+      });
+    }
   }
 }

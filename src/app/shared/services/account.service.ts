@@ -56,7 +56,7 @@ export class AccountService {
             //   Reservations: user.rutas.filter((ruta: any) => ruta.ruta == 'reservation').length > 0,
             //   Configurations: user.rutas.filter((ruta: any) => ruta.ruta == 'configuration').length > 0,
             // };
-            this.CreateUserSession(user);
+            this.CreateUserSession(user, 0);
           }
           return res;
         })
@@ -80,19 +80,20 @@ export class AccountService {
       );
   }
 
-  public CreateUserSession(auth: AuthenticationResponse) {
+  public CreateUserSession(auth: AuthenticationResponse, type: number) {
     sessionStorage.setItem('user', JSON.stringify(auth));
     this.userSubject.next(auth);
     this.menuProperties = this.userSubject.asObservable();
-    Swal.fire({
-      icon: 'success',
-      title: 'Se ha iniciado sesión correctamente.',
-      showConfirmButton: false,
-      timer: 1500,
-    }).then(() => {
-      this.ValidateSesion(1);
-      // window.location.reload();
-    });
+    if (type == 0)
+      Swal.fire({
+        icon: 'success',
+        title: 'Se ha iniciado sesión correctamente.',
+        showConfirmButton: false,
+        timer: 1500,
+      }).then(() => {
+        this.ValidateSesion(1);
+        // window.location.reload();
+      });
   }
 
   public CloseUserSession() {
@@ -157,6 +158,7 @@ export class AccountService {
         })
       );
   }
+
   public ChangePassword(data: ChangePasswordRequest): Observable<any> {
     return this.http
       .post<any>(environment.urlApi + 'User/ChangePassword', data)
@@ -169,6 +171,7 @@ export class AccountService {
         })
       );
   }
+
   public ChangeEmail(data: ChangeEmailRequest): Observable<any> {
     return this.http
       .post<any>(environment.urlApi + 'User/ChangeEmail', data)
@@ -176,6 +179,20 @@ export class AccountService {
         map((res) => {
           if (res.Status == '400') {
             console.log(res);
+          }
+          return res;
+        })
+      );
+  }
+
+  public RenewToken(): Observable<AuthenticationResponse> {
+    return this.http
+      .get<AuthenticationResponse>(environment.urlApi + 'User/RenewToken')
+      .pipe(
+        map((res) => {
+          if (res) {
+            const user: AuthenticationResponse = res;
+            this.CreateUserSession(user, 1);
           }
           return res;
         })

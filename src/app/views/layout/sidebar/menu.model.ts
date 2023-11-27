@@ -9,4 +9,6 @@ export interface MenuItem {
   badge?: any;
   parentId?: number;
   view?: boolean;
+  showMessage?: boolean;
+  message?: string;
 }

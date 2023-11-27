@@ -38,6 +38,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { ComplementaryCompanyDataModule } from '../companies/update-company-data/complementary-company-data/complementary-company-data.module';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { ComplementaryCompanyDataModule } from '../companies/update-company-data
   ],
   imports: [
     CommonModule,
+    NzModalModule,
     UsersRoutingModule,
     MatSnackBarModule,
     GenericTableModule,

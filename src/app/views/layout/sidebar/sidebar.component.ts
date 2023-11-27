@@ -312,30 +312,32 @@ export class SidebarComponent implements OnInit, AfterViewInit {
                 (ruta: any) => ruta.ruta == 'questionnair'
               ).length > 0,
           },
-          // {
-          //   label: 'Avances evaluación psicosocial',
-          //   link: '#',
-          //   view: true,
-          // },
-          // {
-          //   label: 'Generar radicado evaluación psicosocial',
-          //   link: '#',
-          //   view: true,
-          // },
         ],
       },
-      // {
-      //   label: 'Apoyar',
-      //   icon: 'plus',
-      //   view: true,
-      //   link: '#',
-      // },
-      // {
-      //   label: 'Planes de Intervención y control',
-      //   icon: 'trello',
-      //   view: true,
-      //   link: '#',
-      // },
+      {
+        label: 'Apoyar',
+        icon: 'plus',
+        showMessage: true,
+        message:
+          'Estimado/a Usuario/a, en este módulo puede brindar apoyo en la realización y registro de la evaluación psicosocial de los trabajadores que hayan reportado alguna discapacidad visual, auditiva, cognitiva o motora en miembros superiores, o dificultades en las habilidades lecto-escritoras. Para ello, deberá descargar los cuestionarios de la evaluación psicosocial del trabajador, imprimirlos, leer las instrucciones, los ítems y las opciones de respuesta, y una vez el trabajador verbaliza su respuesta, el Psicólogo Especialista SST la diligencia en el formato y posteriormente las registrará en el sistema SIRPSI. Para aprender más sobre este proceso puede consultar el material de capacitación disponible en el siguiente enlace <a>link</a>.',
+        view:
+          this.accountService.userData.rutasAsignadas.filter(
+            (ruta: any) => ruta.ruta == 'support'
+          ).length > 0,
+        link: 'psychosocial-evaluation/support',
+      },
+      {
+        label: 'Planes de Intervención y control',
+        icon: 'trello',
+        showMessage: true,
+        message:
+          'Estimado/a Usuario/a. Este módulo le permite registrar un Plan de Intervención y Control para la empresa en función del resultado de la evaluación psicosocial realizada en un período determinado. Como Psicólogo Especialista en Seguridad y Salud en el Trabajo (SST), es su responsabilidad asesorar a la empresa y establecer estrategias para mejorar el ambiente psicosocial de los trabajadores. Además, deberá mantener una comunicación constante con la empresa y brindar apoyo en la implementación del plan de intervención y control para garantizar su éxito.” Para aprender más sobre este proceso puede consultar el material de capacitación disponible en el siguiente enlace <a>link</a>.',
+        view:
+          this.accountService.userData.rutasAsignadas.filter(
+            (ruta: any) => ruta.ruta == 'intervention-control-plans'
+          ).length > 0,
+        link: 'psychosocial-evaluation/intervention-control-plans',
+      },
       {
         label: 'Reportes',
         isTitle: true,
@@ -647,11 +649,11 @@ export class SidebarComponent implements OnInit, AfterViewInit {
       }
     }
   }
-  showMessageRedirect(url: any, show: boolean, message: string) {
+  showMessageRedirect(url: any, show?: boolean, message?: string) {
     if (show == true) this.showMessage(url, message);
     else if (url != undefined) this.router.navigate([url]);
   }
-  showMessage(url: any, message: string) {
+  showMessage(url: any, message?: string) {
     var messageInfo = '<p class="texto-mensaje">' + message + '</p>';
     Swal.fire({
       icon: 'info',

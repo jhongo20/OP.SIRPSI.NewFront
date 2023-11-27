@@ -1,4 +1,6 @@
-<label class="title">Avances evaluación psicosocial</label>
+<label class="title"
+  >Asistente para Registrar Evaluación Psicosocial del Trabajador</label
+>
 <div class="container-fluid">
   <br />
   <form #f="ngForm" [formGroup]="this.formInitial">
@@ -20,7 +22,6 @@
           id="IdCentroTrabajo"
           #IdCentroTrabajo
           formControlName="IdCentroTrabajo"
-          (change)="selectedWorkCenter($event)"
         >
         </ng-select>
         <p
@@ -55,9 +56,9 @@
         [delete]="'user/DeleteUser'"
         [changeStatus]="'user/ChangeStatusUser'"
         [nameColumnStatus]="'idEstado'"
-        (dateil)="selectedRow($event, 1)"
+        (selected)="selectedRow($event, 1)"
         (edit)="selectedRow($event, 2)"
-        (pdf)="selectedRow($event, 3)"
+        (pdf)="downloadPdf()"
         [filter]="filter"
       ></app-generic-table>
     </div>

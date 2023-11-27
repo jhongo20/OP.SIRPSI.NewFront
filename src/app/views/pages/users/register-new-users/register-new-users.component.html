@@ -1,5 +1,4 @@
 <label class="title">{{ title }}</label>
-<app-complementary-company-data [company]="this.accountService.userData.empresa" [type]="2"></app-complementary-company-data>
 <nz-collapse [nzBordered]="false">
   <nz-collapse-panel [nzHeader]="'Información básica'" [nzActive]="true">
     <form class="row" #f="ngForm" [formGroup]="this.formValidate">
@@ -554,24 +553,59 @@
           </p>
         </div>
         <div class="col-md-4 mb-2">
-          <label class="form-label">Departamento <i class="mdi mdi-information" #tooltip="matTooltip"
-                  matTooltip="Ingrese Departamento"></i></label>
-          <ng-select id="IdDepartamento" #IdDepartamento formControlName="IdDepartamento" [items]="listDepartament"
-              bindLabel="name" bindValue="id" [(ngModel)]="formLicencia.value.IdDepartamento" (change)="onGetCityLicense(formLicencia.value)" required>
+          <label class="form-label"
+            >Departamento
+            <i
+              class="mdi mdi-information"
+              #tooltip="matTooltip"
+              matTooltip="Ingrese Departamento"
+            ></i
+          ></label>
+          <ng-select
+            id="IdDepartamento"
+            #IdDepartamento
+            formControlName="IdDepartamento"
+            [items]="listDepartament"
+            bindLabel="name"
+            bindValue="id"
+            [(ngModel)]="formLicencia.value.IdDepartamento"
+            (change)="onGetCityLicense(formLicencia.value)"
+            required
+          >
           </ng-select>
-          <p class="text-danger" *ngIf="formLicencia.controls.IdDepartamento.errors?.required">Este
-              campo es obligatorio
+          <p
+            class="text-danger"
+            *ngIf="formLicencia.controls.IdDepartamento.errors?.required"
+          >
+            Este campo es obligatorio
           </p>
         </div>
         <div class="col-md-4 mb-2">
-            <label class="form-label">Ciudad <i class="mdi mdi-information" #tooltip="matTooltip"
-                    matTooltip="Ingrese Ciudad"></i></label>
-            <ng-select id="IdMunicipio" #IdMunicipio formControlName="IdMunicipio" [items]="listCityLicence" bindLabel="name"
-                bindValue="id" [(ngModel)]="formLicencia.value.IdMunicipio" required>
-            </ng-select>
-            <p class="text-danger" *ngIf="formLicencia.controls.IdMunicipio.errors?.required">Este
-                campo es obligatorio
-            </p>
+          <label class="form-label"
+            >Ciudad
+            <i
+              class="mdi mdi-information"
+              #tooltip="matTooltip"
+              matTooltip="Ingrese Ciudad"
+            ></i
+          ></label>
+          <ng-select
+            id="IdMunicipio"
+            #IdMunicipio
+            formControlName="IdMunicipio"
+            [items]="listCityLicence"
+            bindLabel="name"
+            bindValue="id"
+            [(ngModel)]="formLicencia.value.IdMunicipio"
+            required
+          >
+          </ng-select>
+          <p
+            class="text-danger"
+            *ngIf="formLicencia.controls.IdMunicipio.errors?.required"
+          >
+            Este campo es obligatorio
+          </p>
         </div>
       </div>
     </form>

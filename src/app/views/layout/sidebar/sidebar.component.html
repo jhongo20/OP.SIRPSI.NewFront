@@ -35,8 +35,8 @@
             <span class="link-arrow" data-feather="chevron-down" appFeatherIcon></span>
           </a>
 
-          <a class="nav-link nav-link-ref" [routerLink]="item.link" *ngIf="!hasItems(item) && item.view"
-            [attr.data-parent]="item.parentId">
+          <a class="nav-link nav-link-ref" *ngIf="!hasItems(item) && item.view"
+            [attr.data-parent]="item.parentId" (click)="showMessageRedirect(item.link, item.showMessage, item.message)">
             <i class="link-icon" [attr.data-feather]="item.icon" appFeatherIcon *ngIf="item.icon"></i>
             <span class="link-title"> {{ item.label }}</span>
             <span class="badge bg-{{item.badge.variant}}" *ngIf="item.badge">{{item.badge.text}}</span>

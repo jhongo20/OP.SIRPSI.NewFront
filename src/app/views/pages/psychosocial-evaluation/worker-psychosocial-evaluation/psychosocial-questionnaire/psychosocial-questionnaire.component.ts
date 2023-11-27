@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, Optional } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AccountService } from 'src/app/shared/services/account.service';
 import { GenericService } from 'src/app/shared/services/generic.service';
@@ -43,15 +44,24 @@ export class PsychosocialQuestionnaireComponent implements OnInit {
 
   evaluation: any = null;
 
+  idUsuario: string = this.accountService.userData.id;
+  documentoEmpresa: string = this.accountService.userData.empresa.documento;
+  consecutivoEmpresa: number =
+    this.accountService.userData.empresa.idConsecutivo;
+
   constructor(
     private loadingService: LoadingService,
     private genericService: GenericService,
     private router: Router,
     private psychosocialQuestionnaireService: PsychosocialQuestionnaireService,
-    private accountService: AccountService
+    private accountService: AccountService,
+    @Optional()
+    public dialogRef: MatDialogRef<PsychosocialQuestionnaireComponent>,
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 
   ngOnInit(): void {
+    this.formOfRealization(this.data.item);
     this.loadingService.ChangeStatusLoading(false);
     localStorage.removeItem('viewQuiz');
     this.getQuiz();
@@ -102,7 +112,8 @@ export class PsychosocialQuestionnaireComponent implements OnInit {
       confirmButtonText: 'Sí Acepto',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.router.navigate(['/dashboard']);
+        if (this.data != null) this.dialogRef.close();
+        else this.router.navigate(['/dashboard']);
       }
     });
   }
@@ -127,22 +138,20 @@ export class PsychosocialQuestionnaireComponent implements OnInit {
   }
 
   getIdQuiz() {
-    this.psychosocialQuestionnaireService
-      .getIdQuiz(this.accountService.userData.id)
-      .subscribe({
-        next: (data) => {
-          this.idQuiz = data[0].id;
-          this.getFinal();
-        },
-        error: (err) => {
-          this.view = false;
-        },
-      });
+    this.psychosocialQuestionnaireService.getIdQuiz(this.idUsuario).subscribe({
+      next: (data) => {
+        this.idQuiz = data[0].id;
+        this.getFinal();
+      },
+      error: (err) => {
+        this.view = false;
+      },
+    });
   }
 
   getClasificacionQuiz() {
     this.psychosocialQuestionnaireService
-      .getQuizClasificacion(this.accountService.userData.id)
+      .getQuizClasificacion(this.idUsuario)
       .subscribe({
         next: (data) => {
           this.clasificacion = data.clasificacion;
@@ -154,51 +163,49 @@ export class PsychosocialQuestionnaireComponent implements OnInit {
   }
 
   getQuiz() {
-    this.psychosocialQuestionnaireService
-      .getIdQuiz(this.accountService.userData.id)
-      .subscribe({
-        next: (data) => {
-          this.evaluation = data;
-          localStorage.setItem(
-            'viewQuiz',
-            `${data.length > 0 ? data[0].consentimiento : null}`
+    this.psychosocialQuestionnaireService.getIdQuiz(this.idUsuario).subscribe({
+      next: (data) => {
+        this.evaluation = data;
+        localStorage.setItem(
+          'viewQuiz',
+          `${data.length > 0 ? data[0].consentimiento : null}`
+        );
+        const dataList: any[] = data;
+        if (dataList.length === 0) {
+          this.modalAlertNotFountQuiz();
+        } else {
+          const fechaProvidenciada: Date = new Date(data[0].fechaInicio);
+          const fechaActual: Date = new Date();
+          fechaActual.setHours(0, 0, 0, 0);
+          const quitarHoraZonaHoraria = (fecha: Date): Date => {
+            const nuevaFecha = new Date(fecha.toISOString().split('T')[0]);
+            nuevaFecha.setHours(0, 0, 0, 0);
+            return nuevaFecha;
+          };
+          console.log(
+            quitarHoraZonaHoraria(fechaProvidenciada).getTime() +
+              ' ' +
+              quitarHoraZonaHoraria(fechaActual).getTime()
           );
-          const dataList: any[] = data;
-          if (dataList.length === 0) {
+
+          if (
+            quitarHoraZonaHoraria(fechaProvidenciada).getTime() !==
+            quitarHoraZonaHoraria(fechaActual).getTime()
+          ) {
             this.modalAlertNotFountQuiz();
           } else {
-            const fechaProvidenciada: Date = new Date(data[0].fechaInicio);
-            const fechaActual: Date = new Date();
-            fechaActual.setHours(0, 0, 0, 0);
-            const quitarHoraZonaHoraria = (fecha: Date): Date => {
-              const nuevaFecha = new Date(fecha.toISOString().split('T')[0]);
-              nuevaFecha.setHours(0, 0, 0, 0);
-              return nuevaFecha;
-            };
-            console.log(
-              quitarHoraZonaHoraria(fechaProvidenciada).getTime() +
-                ' ' +
-                quitarHoraZonaHoraria(fechaActual).getTime()
-            );
-
-            if (
-              quitarHoraZonaHoraria(fechaProvidenciada).getTime() !==
-              quitarHoraZonaHoraria(fechaActual).getTime()
-            ) {
-              this.modalAlertNotFountQuiz();
-            } else {
-              this.nombrePsicologo = data[0].namePsicologo;
-              this.telPsicologo = data[0].telefono;
-              this.docPsicologo = data[0].documentoPsicologo;
-              this.emailPsicologo = data[0].emailPsicologo;
-              this.getDialog();
-            }
+            this.nombrePsicologo = data[0].namePsicologo;
+            this.telPsicologo = data[0].telefono;
+            this.docPsicologo = data[0].documentoPsicologo;
+            this.emailPsicologo = data[0].emailPsicologo;
+            this.getDialog();
           }
-        },
-        error: (err) => {
-          this.modalAlertNotFountQuiz();
-        },
-      });
+        }
+      },
+      error: (err) => {
+        this.modalAlertNotFountQuiz();
+      },
+    });
   }
 
   comprobarCronometro() {
@@ -278,13 +285,11 @@ export class PsychosocialQuestionnaireComponent implements OnInit {
 
   completeQuiz4() {
     this.updateCompletedQuestionnaires(4);
-    this.radicado = `${this.accountService.userData.empresa.documento}${
+    this.radicado = `${this.documentoEmpresa}${
       this.docPsicologo
     }${new Date().getFullYear()}${
       new Date().getMonth() + 1
-    }${new Date().getDate()}${
-      this.accountService.userData.empresa.idConsecutivo
-    }`;
+    }${new Date().getDate()}${this.consecutivoEmpresa}`;
     this.saveRadicado();
   }
 
@@ -331,5 +336,20 @@ export class PsychosocialQuestionnaireComponent implements OnInit {
         }, 1000);
         return true;
       });
+  }
+
+  formOfRealization(data?: any) {
+    this.idUsuario =
+      data != null ? data.idUsuario : this.accountService.userData.id;
+
+    this.documentoEmpresa =
+      data != null
+        ? data.usuario.empresa.documento
+        : this.accountService.userData.empresa.documento;
+
+    this.consecutivoEmpresa =
+      data != null
+        ? data.usuario.empresa.idConsecutivo
+        : this.accountService.userData.empresa.idConsecutivo;
   }
 }

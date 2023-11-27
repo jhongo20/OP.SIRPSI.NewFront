@@ -119,6 +119,7 @@ export class GenericTableComponent implements OnInit {
         if (btn.contains('btn-assign')) this.DetailOrEditItem(item, 4);
         if (btn.contains('btn-select')) this.SeletedItem(item, null, null);
         if (btn.contains('check-item')) this.DetailOrEditItem(item, 6);
+        if (btn.contains('btn-pdf')) this.DetailOrEditItem(item, 3);
       }
     );
   }
