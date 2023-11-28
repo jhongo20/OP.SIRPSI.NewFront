@@ -1,1 +1,72 @@
-<p>download-worker works!</p>
+<div>
+  <label class="title" style="margin-top: 1.5em"
+    >INFORME DE RESULTADOS DEL CUESTIONARIO PARA LA EVALUACIÓN</label
+  >
+
+  <div class="d-flex justify-content">
+    <div>
+      <div class="data-psychologist">Datos del Psicólogo Especialista SST</div>
+      <div class="text-psychologist">
+        Nombre Completo: {{ this.accountService.userData.user.names }}
+        {{ this.accountService.userData.user.surnames }}
+      </div>
+      <div class="text-psychologist">
+        Correo: {{ this.accountService.userData.user.email }}
+      </div>
+      <div class="text-psychologist" style="margin-bottom: 1em">
+        Número de documento: {{ this.accountService.userData.user.email }}
+      </div>
+    </div>
+  </div>
+
+  <div class="example">
+    <ul
+      ngbNav
+      #defaultNav="ngbNav"
+      [(activeId)]="defaultNavActiveId"
+      class="nav-tabs"
+    >
+      <li [ngbNavItem]="1" *ngIf="this.data.info.forma == 'Grupo forma A'">
+        <a ngbNavLink>Cuestionario de Factores de Riesgo - Forma A</a>
+        <ng-template ngbNavContent>
+          <app-results-intra-work-factors-questionnaire
+            [user]="this.user"
+            [userRegister]="this.userRegister"
+            [evaluacion]="this.data.info"
+          ></app-results-intra-work-factors-questionnaire>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="2" *ngIf="this.data.info.forma == 'Grupo forma B'">
+        <a ngbNavLink>Cuestionario de Factores de Riesgo - Forma B</a>
+        <ng-template ngbNavContent>
+          <app-results-intra-work-factors-questionnaire-form-b
+            [user]="this.user"
+            [userRegister]="this.userRegister"
+            [evaluacion]="this.data.info"
+          ></app-results-intra-work-factors-questionnaire-form-b>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="3">
+        <a ngbNavLink>Cuestionario Estrés</a>
+        <ng-template ngbNavContent>
+          <app-evaluation-stress-questionnaire
+            [user]="this.user"
+            [userRegister]="this.userRegister"
+            [evaluacion]="this.data.info"
+          ></app-evaluation-stress-questionnaire>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="4">
+        <a ngbNavLink>Cuestionario Factores Extralaborales</a>
+        <ng-template ngbNavContent>
+          <app-factors-risk-extra-work-questionnaire
+            [user]="this.user"
+            [userRegister]="this.userRegister"
+            [evaluacion]="this.data.info"
+          ></app-factors-risk-extra-work-questionnaire>
+        </ng-template>
+      </li>
+    </ul>
+    <div [ngbNavOutlet]="defaultNav" class="border border-top-0 p-3"></div>
+  </div>
+</div>

@@ -161,26 +161,34 @@ export class AdvancesPsychosocialEvaluationComponent implements OnInit {
     // this.loadingService.ChangeStatusLoading(true);
   }
   selectedRow(event: any, type: number) {
-    console.log(event);
+    var dialogRef: any;
     if (event.porcentaje != 100 && type == 3) {
       Swal.fire(
         'El usuario debe completar toda la evaluación para poder descargarlo.'
       );
       return;
     }
-    const dialogRef = this.dialog.open(
-      type == 1
-        ? WorkerDataFormComponent
-        : type == 2
-        ? SummonWorkerComponent
-        : DownloadWorkerComponent,
-      {
+    if (type == 1)
+      dialogRef = this.dialog.open(WorkerDataFormComponent, {
         data: {
           info: event,
           details: true,
         },
-      }
-    );
+      });
+    else if (type == 2)
+      dialogRef = this.dialog.open(SummonWorkerComponent, {
+        data: {
+          info: event,
+          details: true,
+        },
+      });
+    else
+      dialogRef = this.dialog.open(DownloadWorkerComponent, {
+        data: {
+          info: event,
+          details: true,
+        },
+      });
     dialogRef.afterClosed().subscribe();
   }
   searchWorkers() {

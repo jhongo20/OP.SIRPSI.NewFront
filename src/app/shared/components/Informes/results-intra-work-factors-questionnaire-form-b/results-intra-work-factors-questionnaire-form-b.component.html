@@ -1,0 +1,223 @@
+<div class="wrapper" id="formulario">
+  <label class="title" style="margin-top: 0.5em"
+    ><div class="content-text" style="width: 90%; margin: 0 auto">
+      INFORME DE RESULTADOS DEL CUESTIONARIO DE FACTORES DE RIESGO PSICOSOCIAL
+      INTRALABORAL – FORMA B
+    </div></label
+  >
+  <label class="subtitle">DATOS GENERALES DEL TRABAJADOR</label>
+  <table>
+    <tbody>
+      <tr>
+        <td class="subtitle tableTitle">Nombre del trabajador:</td>
+        <td class="subtitle tableData">
+          {{ this.user.nombreUsuario }} {{ this.user.apellidoUsuario }}
+        </td>
+      </tr>
+      <tr>
+        <td class="subtitle tableTitle">Número de identificación (ID):</td>
+        <td class="subtitle tableData">{{ this.user.cedula }}</td>
+      </tr>
+      <tr>
+        <td class="subtitle tableTitle">Cargo:</td>
+        <td class="subtitle tableData">{{ this.user.role.name }}</td>
+      </tr>
+      <tr>
+        <td class="subtitle tableTitle">Departamento o sección:</td>
+        <td class="subtitle tableData"></td>
+      </tr>
+      <tr>
+        <td class="subtitle tableTitle">Edad:</td>
+        <td class="subtitle tableData">{{ this.user.edad }}</td>
+      </tr>
+      <tr>
+        <td class="subtitle tableTitle">Sexo:</td>
+        <td class="subtitle tableData">
+          {{ this.user.sexo != null ? this.user.sexo.nombre : "" }}
+        </td>
+      </tr>
+      <tr>
+        <td class="subtitle tableTitle">
+          Fecha de aplicación del cuestionario:
+        </td>
+        <td class="subtitle tableData">
+          {{ this.evaluacion.fechaInicio | date : "dd/MM/yyyy" }}
+        </td>
+      </tr>
+      <tr>
+        <td class="subtitle tableTitle">Nombre de la empresa:</td>
+        <td class="subtitle tableData">{{ this.user.empresa.nombre }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <br />
+  <label class="subtitle">DATOS DEL EVALUADOR</label>
+  <table>
+    <tbody>
+      <tr>
+        <td class="subtitle tableTitle">Nombre del evaluador:</td>
+        <td class="subtitle tableData">
+          {{ this.userRegister.nombreUsuario }}
+          {{ this.userRegister.apellidoUsuario }}
+        </td>
+      </tr>
+      <tr>
+        <td class="subtitle tableTitle">Número de identificación (c.c.):</td>
+        <td class="subtitle tableData">{{ this.userRegister.cedula }}</td>
+      </tr>
+      <tr>
+        <td class="subtitle tableTitle">Profesión:</td>
+        <td class="subtitle tableData">{{ this.userRegister.role.name }}</td>
+      </tr>
+      <tr>
+        <td class="subtitle tableTitle">Postgrado:</td>
+        <td class="subtitle tableData">
+          {{
+            this.userRegister.licenciaOcupacional != null
+              ? this.userRegister.licenciaOcupacional.titulo
+              : ""
+          }}
+        </td>
+      </tr>
+      <tr>
+        <td class="subtitle tableTitle">No Tarjeta profesional*:</td>
+        <td class="subtitle tableData">
+          {{
+            this.userRegister.licenciaOcupacional.numero != null
+              ? this.userRegister.licenciaOcupacional.numero
+              : ""
+          }}
+        </td>
+      </tr>
+      <tr>
+        <td class="subtitle tableTitle">No. Licencia en salud ocupacional*:</td>
+        <td class="subtitle tableData">
+          {{
+            this.userRegister.licenciaOcupacional.numero != null
+              ? this.userRegister.licenciaOcupacional.numero
+              : ""
+          }}
+        </td>
+      </tr>
+      <tr>
+        <td class="subtitle tableTitle">
+          Fecha de expedición de la licencia en salud ocupacional*:
+        </td>
+        <td class="subtitle tableData">
+          {{
+            this.userRegister.licenciaOcupacional != null
+              ? this.userRegister.licenciaOcupacional.fechaExpedicion
+              : ("" | date : "dd/MM/yyyy")
+          }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h2>* Todo informe que carezca de estos datos no será válido.</h2>
+  <label class="subtitle">RESULTADOS DEL CUESTIONARIO</label>
+  <table>
+    <thead>
+      <tr>
+        <th>Dominio</th>
+        <th>Dimensiones</th>
+        <th>Puntaje</th>
+        <th>Nivel de riesgo</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let dominio of cuestionarioList; let i = index">
+      <tr *ngFor="let dimension of dominio.detalle; let i = index">
+        <td class="subtitl tableTitle" style="text-align: center">
+          {{ dimension.nombreDominio }}
+        </td>
+        <td class="subtitl tableTitle" style="text-align: center">
+          {{ dimension.nombreDimension }}
+        </td>
+        <td class="subtitl tableData" style="text-align: center">
+          {{ dimension.sumaRespuestas }}
+        </td>
+        <td class="subtitl tableData" style="text-align: center">
+          {{ dimension.sumaRespuestas }}
+        </td>
+      </tr>
+      <tr>
+        <td class="subtitle tableTitle" style="text-align: center" colspan="4">
+          {{ dominio.nombreDominio }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <label class="subtitle"
+    >INTERPRETACIÓN GENÉRICA DE LOS NIVELES DE RIESGO</label
+  >
+  <div class="content">
+    <p>
+      <li>
+        Sin riesgo o riesgo despreciable: ausencia de riesgo o riesgo tan bajo
+        que no amerita desarrollar actividades de intervención. Las dimensiones
+        y dominios que se encuentren bajo esta categoría serán objeto de
+        acciones o programas de promoción.
+      </li>
+      <br />
+      <li>
+        Riesgo bajo: no se espera que los factores psicosociales que obtengan
+        puntuaciones de este nivel estén relacionados con síntomas o respuestas
+        de estrés significativas. Las dimensiones y dominios que se encuentren
+        bajo esta categoría serán objeto de acciones o programas de
+        intervención, a fin de mantenerlos en los niveles de riesgo más bajos
+        posibles.
+      </li>
+      <br />
+      <li>
+        Riesgo medio: nivel de riesgo en el que se esperaría una respuesta de
+        estrés moderada. Las dimensiones y dominios que se encuentren bajo esta
+        categoría ameritan observación y acciones sistemáticas de intervención
+        para prevenir efectos perjudiciales en la salud.
+      </li>
+      <br />
+      <li>
+        Riesgo alto: nivel de riesgo que tiene una importante posibilidad de
+        asociación con respuestas de estrés alto y por tanto, las dimensiones y
+        dominios que se encuentren bajo esta categoría requieren intervención en
+        el marco de un sistema de vigilancia epidemiológica.
+      </li>
+      <br />
+      <li>
+        Riesgo muy alto: nivel de riesgo con amplia posibilidad de asociarse a
+        respuestas muy altas de estrés. Por consiguiente las dimensiones y
+        dominios que se encuentren bajo esta categoría requieren intervención
+        inmediata en el marco de un sistema de vigilancia epidemiológica.
+      </li>
+    </p>
+  </div>
+
+  <label class="subtitle">OBSERVACIONES Y COMENTARIOS DEL EVALUADOR</label>
+  <div class="content"></div>
+
+  <label class="subtitle">RECOMENDACIONES PARTICULARES</label>
+  <div class="content"></div>
+
+  <table>
+    <tbody>
+      <tr>
+        <td class="subtitle tableTitle">Fecha de elaboración del informe:</td>
+        <td class="subtitle tableData"></td>
+      </tr>
+      <tr>
+        <td class="subtitle tableTitle">Firma del evaluador:</td>
+        <td class="subtitle tableData"></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div style="padding: 20px 0 25px 0">
+  <button
+    type="submit"
+    class="btn btn-primary me-2"
+    style="margin-right: 8px"
+    (click)="downloadReportQuestionnaire()"
+  >
+    Descargar
+  </button>
+</div>

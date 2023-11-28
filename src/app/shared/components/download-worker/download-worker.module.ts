@@ -1,27 +1,25 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Routes, RouterModule } from '@angular/router';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { DownloadWorkerRoutingModule } from './download-worker-routing.module';
+import { DownloadWorkerComponent } from './download-worker.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FeatherIconModule } from 'src/app/core/feather-icon/feather-icon.module';
 import {
-  NgbDropdownModule,
-  NgbDatepickerModule,
   NgbAccordionModule,
+  NgbDatepickerModule,
+  NgbDropdownModule,
   NgbModule,
 } from '@ng-bootstrap/ng-bootstrap';
-
-// Ng-ApexCharts
 import { NgApexchartsModule } from 'ng-apexcharts';
-import { DashboardComponent } from './dashboard.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { GenericTableModule } from 'src/app/shared/components/generic-table/generic-table.module';
+import { GenericTableModule } from '../generic-table/generic-table.module';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
-import { FileUploadModule } from 'src/app/shared/components/file-upload/file-upload.module';
+import { FileUploadModule } from '../file-upload/file-upload.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { HttpClientModule } from '@angular/common/http';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -29,20 +27,23 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTabsModule } from '@angular/material/tabs';
-import { DownloadWorkerModule } from 'src/app/shared/components/download-worker/download-worker.module';
-
-const routes: Routes = [
-  {
-    path: '',
-    component: DashboardComponent,
-  },
-];
+import { ResultsIntraWorkFactorsQuestionnaireComponent } from '../Informes/results-intra-work-factors-questionnaire/results-intra-work-factors-questionnaire.component';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { ResultsIntraWorkFactorsQuestionnaireFormBComponent } from '../Informes/results-intra-work-factors-questionnaire-form-b/results-intra-work-factors-questionnaire-form-b.component';
+import { EvaluationStressQuestionnaireComponent } from '../Informes/evaluation-stress-questionnaire/evaluation-stress-questionnaire.component';
+import { FactorsRiskExtraWorkQuestionnaireComponent } from '../Informes/factors-risk-extra-work-questionnaire/factors-risk-extra-work-questionnaire.component';
 
 @NgModule({
-  declarations: [DashboardComponent],
+  declarations: [
+    DownloadWorkerComponent,
+    ResultsIntraWorkFactorsQuestionnaireComponent,
+    ResultsIntraWorkFactorsQuestionnaireFormBComponent,
+    EvaluationStressQuestionnaireComponent,
+    FactorsRiskExtraWorkQuestionnaireComponent,
+  ],
   imports: [
     CommonModule,
-    RouterModule.forChild(routes),
+    DownloadWorkerRoutingModule,
     FormsModule,
     FeatherIconModule,
     NgbDropdownModule,
@@ -67,7 +68,8 @@ const routes: Routes = [
     MatTooltipModule,
     MatTabsModule,
     NgbModule,
-    DownloadWorkerModule,
+    NzFormModule,
   ],
+  exports: [DownloadWorkerComponent],
 })
-export class DashboardModule {}
+export class DownloadWorkerModule {}

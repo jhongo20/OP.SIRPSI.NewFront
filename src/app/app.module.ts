@@ -30,7 +30,6 @@ import { es_ES } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
 import { SummonWorkerComponent } from './shared/components/summon-worker/summon-worker.component';
-import { DownloadWorkerComponent } from './shared/components/download-worker/download-worker.component';
 
 registerLocaleData(es);
 
@@ -42,7 +41,6 @@ registerLocaleData(es);
     QueryReportsComponent,
     TutorialsTrainingComponent,
     SummonWorkerComponent,
-    DownloadWorkerComponent,
   ],
   imports: [
     HttpClientModule,

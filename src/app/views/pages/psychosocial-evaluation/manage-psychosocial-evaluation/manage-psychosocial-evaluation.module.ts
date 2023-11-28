@@ -25,6 +25,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import { RegisterEvaluationComponent } from './summon-workers-psychosocial-evaluation/register-evaluation/register-evaluation.component';
 import { SummonWorkersComponent } from './summon-workers-psychosocial-evaluation/summon-workers/summon-workers.component';
+import { DownloadWorkerModule } from 'src/app/shared/components/download-worker/download-worker.module';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { SummonWorkersComponent } from './summon-workers-psychosocial-evaluation
     MatTooltipModule,
     FeatherIconModule,
     MatTabsModule,
+    DownloadWorkerModule,
     NgxMaskModule.forRoot({ validation: true }),
   ],
 })
