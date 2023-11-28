@@ -28,8 +28,10 @@ export class GeneralDataSheetComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.formOfRealization(this.usuario);
-    this.loadForm();
+    this.formOfRealization(this.usuario).then((data: any) => {
+      console.log(data);
+      this.loadForm();
+    });
   }
 
   loadForm() {
@@ -122,9 +124,10 @@ export class GeneralDataSheetComponent implements OnInit {
       });
   }
 
-  formOfRealization(data?: any) {
+  async formOfRealization(data?: any) {
     console.log(data);
     this.idUsuario =
       data != null ? data.idUsuario : this.accountService.userData.id;
+    return true;
   }
 }

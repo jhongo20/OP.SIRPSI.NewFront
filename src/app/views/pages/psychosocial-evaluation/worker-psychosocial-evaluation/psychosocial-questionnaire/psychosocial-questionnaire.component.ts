@@ -61,11 +61,15 @@ export class PsychosocialQuestionnaireComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.formOfRealization(this.data != null ? this.data.item : null);
-    this.loadingService.ChangeStatusLoading(false);
     localStorage.removeItem('viewQuiz');
-    this.getQuiz();
-    this.comprobarCronometro();
+    this.formOfRealization(this.data != null ? this.data.item : null).then(
+      (data: any) => {
+        console.log(data);
+        this.loadingService.ChangeStatusLoading(false);
+        this.getQuiz();
+        this.comprobarCronometro();
+      }
+    );
   }
 
   getDialog() {
@@ -333,7 +337,7 @@ export class PsychosocialQuestionnaireComponent implements OnInit {
       });
   }
 
-  formOfRealization(data?: any) {
+  async formOfRealization(data?: any) {
     this.idUsuario =
       data != null ? data.idUsuario : this.accountService.userData.id;
 
@@ -346,5 +350,6 @@ export class PsychosocialQuestionnaireComponent implements OnInit {
       data != null
         ? data.usuario.empresa.idConsecutivo
         : this.accountService.userData.empresa.idConsecutivo;
+    return true;
   }
 }

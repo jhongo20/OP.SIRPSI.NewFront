@@ -26,8 +26,10 @@ export class StressQuestionnaireComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.formOfRealization(this.usuario);
-    this.getQuestions();
+    this.formOfRealization(this.usuario).then((data: any) => {
+      console.log(data);
+      this.getQuestions();
+    });
   }
 
   calculateProgress() {
@@ -178,9 +180,10 @@ export class StressQuestionnaireComponent implements OnInit {
       });
   }
 
-  formOfRealization(data?: any) {
+  async formOfRealization(data?: any) {
     console.log(data);
     this.idUsuario =
       data != null ? data.idUsuario : this.accountService.userData.id;
+    return true;
   }
 }
