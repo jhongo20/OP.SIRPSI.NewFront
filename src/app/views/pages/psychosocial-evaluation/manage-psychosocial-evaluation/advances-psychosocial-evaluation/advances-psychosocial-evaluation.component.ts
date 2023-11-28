@@ -169,7 +169,7 @@ export class AdvancesPsychosocialEvaluationComponent implements OnInit {
       return;
     }
     if (event.porcentaje == 100 && type == 2) {
-      Swal.fire('El usuario ya completodo la evaluación.');
+      Swal.fire('El usuario ya completo la evaluación.');
       return;
     }
     if (type == 1)
