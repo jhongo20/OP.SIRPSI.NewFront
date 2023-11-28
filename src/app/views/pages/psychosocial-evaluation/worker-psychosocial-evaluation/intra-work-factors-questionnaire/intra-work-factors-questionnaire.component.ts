@@ -5,15 +5,16 @@ import { PsychosocialQuestionnaireService } from 'src/app/shared/services/psycho
 @Component({
   selector: 'app-intra-work-factors-questionnaire',
   templateUrl: './intra-work-factors-questionnaire.component.html',
-  styleUrls: ['./intra-work-factors-questionnaire.component.scss']
+  styleUrls: ['./intra-work-factors-questionnaire.component.scss'],
 })
 export class IntraWorkFactorsQuestionnaireComponent implements OnInit {
-
-
   @Input() idQuiz: string;
   @Input() clasificacion: string;
+  @Input() usuario: any = null;
   @Output() propagar = new EventEmitter();
   @Output() propagarStart = new EventEmitter();
+
+  idUsuario: string = this.accountService.userData.id;
 
   startQuiz = false;
 
@@ -31,234 +32,262 @@ export class IntraWorkFactorsQuestionnaireComponent implements OnInit {
   dataListText: any = undefined;
   dataListTextA1 = [
     {
-      title: 'Las siguientes preguntas están relacionadas con las condiciones ambientales del(los) sitio(s) o lugar(es) donde habitualmente rea liza su trabajo. [1-12]',
+      title:
+        'Las siguientes preguntas están relacionadas con las condiciones ambientales del(los) sitio(s) o lugar(es) donde habitualmente rea liza su trabajo. [1-12]',
       option: false,
       quiz: true,
       buton: true,
       min: 1,
-      max: 12
+      max: 12,
     },
     {
-      title: 'Para responder a las siguientes preguntas piense en la cantidad de trabajo que usted tiene a cargo. [13-15]',
+      title:
+        'Para responder a las siguientes preguntas piense en la cantidad de trabajo que usted tiene a cargo. [13-15]',
       option: false,
       quiz: true,
       buton: true,
       min: 13,
-      max: 15
+      max: 15,
     },
     {
-      title: 'Las siguientes preguntas están relacionadas con el esfuerzo mental que le exige su trabajo [16-21]',
+      title:
+        'Las siguientes preguntas están relacionadas con el esfuerzo mental que le exige su trabajo [16-21]',
       option: false,
       quiz: true,
       buton: true,
       min: 16,
-      max: 21
+      max: 21,
     },
     {
-      title: 'Las siguientes preguntas están relacionadas con las responsabilidades y actividades que usted debe hacer en su trabajo. [22-30]',
+      title:
+        'Las siguientes preguntas están relacionadas con las responsabilidades y actividades que usted debe hacer en su trabajo. [22-30]',
       option: false,
       quiz: true,
       buton: true,
       min: 22,
-      max: 30
+      max: 30,
     },
     {
-      title: 'Las siguientes preguntas están relacionadas con la jornada de trabajo. [31-38]',
+      title:
+        'Las siguientes preguntas están relacionadas con la jornada de trabajo. [31-38]',
       option: false,
       quiz: true,
       buton: true,
       min: 31,
-      max: 38
+      max: 38,
     },
     {
-      title: 'Las siguientes preguntas están relacionadas con las decisiones y el control que le permite su trabajo. [39-47]',
+      title:
+        'Las siguientes preguntas están relacionadas con las decisiones y el control que le permite su trabajo. [39-47]',
       option: false,
       quiz: true,
       buton: true,
       min: 39,
-      max: 47
+      max: 47,
     },
     {
-      title: 'Las siguientes preguntas están relacionadas con cualquier tipo de cambio que ocurra en su trabajo. [48-52]',
+      title:
+        'Las siguientes preguntas están relacionadas con cualquier tipo de cambio que ocurra en su trabajo. [48-52]',
       option: false,
       quiz: true,
       buton: true,
       min: 48,
-      max: 52
+      max: 52,
     },
     {
-      title: 'Las siguientes preguntas están relacionadas con la información que la empresa le ha dado sobre su trabajo. [53-59]',
+      title:
+        'Las siguientes preguntas están relacionadas con la información que la empresa le ha dado sobre su trabajo. [53-59]',
       option: false,
       quiz: true,
       buton: true,
       min: 53,
-      max: 59
+      max: 59,
     },
     {
-      title: 'Las siguientes preguntas están relacionadas con la formación y capacitación que la empresa le facilita para hacer su trabajo. [60-62]',
+      title:
+        'Las siguientes preguntas están relacionadas con la formación y capacitación que la empresa le facilita para hacer su trabajo. [60-62]',
       option: false,
       quiz: true,
       buton: true,
       min: 60,
-      max: 62
+      max: 62,
     },
     {
-      title: 'Las siguientes preguntas están relacionadas con el o los jefes con quien tenga más contacto. [63-75]',
+      title:
+        'Las siguientes preguntas están relacionadas con el o los jefes con quien tenga más contacto. [63-75]',
       option: false,
       quiz: true,
       buton: true,
       min: 63,
-      max: 75
+      max: 75,
     },
     {
-      title: 'Las siguientes preguntas indagan sobre las relaciones con otras personas y el apoyo entre las personas de su trabajo. [76-89]',
+      title:
+        'Las siguientes preguntas indagan sobre las relaciones con otras personas y el apoyo entre las personas de su trabajo. [76-89]',
       option: false,
       quiz: true,
       buton: true,
       min: 76,
-      max: 89
+      max: 89,
     },
     {
-      title: 'Las siguientes preguntas están relacionadas con la información que usted recibe sobre su rendimiento en el trabajo. [90-94]',
+      title:
+        'Las siguientes preguntas están relacionadas con la información que usted recibe sobre su rendimiento en el trabajo. [90-94]',
       option: false,
       quiz: true,
       buton: true,
       min: 90,
-      max: 94
+      max: 94,
     },
     {
-      title: 'Las siguientes preguntas están relacionadas con la satisfacción, reconocimiento y la seguridad que le ofrece su trabajo. [95-105]',
+      title:
+        'Las siguientes preguntas están relacionadas con la satisfacción, reconocimiento y la seguridad que le ofrece su trabajo. [95-105]',
       option: false,
       quiz: true,
       buton: true,
       min: 95,
-      max: 105
+      max: 105,
     },
     {
-      title: 'Las siguientes preguntas están relacionadas con la atención a clientes y usuarios. En mi trabajo debo brindar servicio a clientes o usuarios. [106-114]',
+      title:
+        'Las siguientes preguntas están relacionadas con la atención a clientes y usuarios. En mi trabajo debo brindar servicio a clientes o usuarios. [106-114]',
       option: true,
       quiz: false,
       buton: false,
       min: 106,
-      max: 114
+      max: 114,
     },
     {
       title: 'Soy jefe de otras personas en mi trabajo.',
-      subtitle: 'Las siguientes preguntas están relacionadas con las personas que usted supervisa o dirige. [115-123]',
+      subtitle:
+        'Las siguientes preguntas están relacionadas con las personas que usted supervisa o dirige. [115-123]',
       option: true,
       quiz: false,
       buton: false,
       min: 115,
-      max: 123
+      max: 123,
     },
-  ]
+  ];
 
   dataListTextA2 = [
     {
-      title: 'Las siguientes preguntas están relacionadas con las condiciones ambientales del(los) sitio(s) o lu gar(es) donde habitualmente realiza su trabajo. [1-12]',
+      title:
+        'Las siguientes preguntas están relacionadas con las condiciones ambientales del(los) sitio(s) o lu gar(es) donde habitualmente realiza su trabajo. [1-12]',
       option: false,
       quiz: true,
       buton: true,
       min: 1,
-      max: 12
+      max: 12,
     },
     {
-      title: 'Para responder a las siguientes preguntas piense en la cantidad de trabajo que usted tiene a cargo. [13-15]',
+      title:
+        'Para responder a las siguientes preguntas piense en la cantidad de trabajo que usted tiene a cargo. [13-15]',
       option: false,
       quiz: true,
       buton: true,
       min: 13,
-      max: 15
+      max: 15,
     },
     {
-      title: 'Las siguientes preguntas están relacionadas con el esfuerzo mental que le exige su trabajo. [16-20]',
+      title:
+        'Las siguientes preguntas están relacionadas con el esfuerzo mental que le exige su trabajo. [16-20]',
       option: false,
       quiz: true,
       buton: true,
       min: 16,
-      max: 20
+      max: 20,
     },
     {
-      title: 'Las siguientes preguntas están relacionadas con la jornada de trabajo. [21-28]',
+      title:
+        'Las siguientes preguntas están relacionadas con la jornada de trabajo. [21-28]',
       option: false,
       quiz: true,
       buton: true,
       min: 21,
-      max: 28
+      max: 28,
     },
     {
-      title: 'Las siguientes preguntas están relacionadas con las decisiones y el control que le permite su trabajo. [29-37]',
+      title:
+        'Las siguientes preguntas están relacionadas con las decisiones y el control que le permite su trabajo. [29-37]',
       option: false,
       quiz: true,
       buton: true,
       min: 29,
-      max: 37
+      max: 37,
     },
     {
-      title: 'Las siguientes preguntas están relacionadas con cualquier tipo de cambio que ocurra en su trabajo. [38-40]',
+      title:
+        'Las siguientes preguntas están relacionadas con cualquier tipo de cambio que ocurra en su trabajo. [38-40]',
       option: false,
       quiz: true,
       buton: true,
       min: 38,
-      max: 40
+      max: 40,
     },
     {
-      title: 'Las siguientes preguntas están relacionadas con la información que la empresa le ha dado sobre su trabajo. [41-45]',
+      title:
+        'Las siguientes preguntas están relacionadas con la información que la empresa le ha dado sobre su trabajo. [41-45]',
       option: false,
       quiz: true,
       buton: true,
       min: 41,
-      max: 45
+      max: 45,
     },
     {
-      title: 'Las siguientes preguntas están relacionadas con la formación y capacitación que la empresa le facilita para hacer su trabajo. [46-48]',
+      title:
+        'Las siguientes preguntas están relacionadas con la formación y capacitación que la empresa le facilita para hacer su trabajo. [46-48]',
       option: false,
       quiz: true,
       buton: true,
       min: 46,
-      max: 48
+      max: 48,
     },
     {
-      title: 'Las siguientes preguntas están relacionadas con el o los jefes con quien tenga más contacto. [49-61]',
+      title:
+        'Las siguientes preguntas están relacionadas con el o los jefes con quien tenga más contacto. [49-61]',
       option: false,
       quiz: true,
       buton: true,
       min: 49,
-      max: 61
+      max: 61,
     },
     {
-      title: 'Las siguientes preguntas indagan sobre las relaciones con otras personas y el apoyo entre las personas de su trabajo. [62-73]',
+      title:
+        'Las siguientes preguntas indagan sobre las relaciones con otras personas y el apoyo entre las personas de su trabajo. [62-73]',
       option: false,
       quiz: true,
       buton: true,
       min: 62,
-      max: 73
+      max: 73,
     },
     {
-      title: 'Las siguientes preguntas están relacionadas con la información que usted recibe sobre su rendimiento en el trabajo. [74-78]',
+      title:
+        'Las siguientes preguntas están relacionadas con la información que usted recibe sobre su rendimiento en el trabajo. [74-78]',
       option: false,
       quiz: true,
       buton: true,
       min: 74,
-      max: 78
+      max: 78,
     },
     {
-      title: 'Las siguientes preguntas están relacionadas con la satisfacción, reconocimiento y la seguridad que le ofrece su trabajo. [79-88]',
+      title:
+        'Las siguientes preguntas están relacionadas con la satisfacción, reconocimiento y la seguridad que le ofrece su trabajo. [79-88]',
       option: false,
       quiz: true,
       buton: true,
       min: 79,
-      max: 88
+      max: 88,
     },
     {
-      title: 'Las siguientes preguntas están relacionadas con la atención a clientes y usuarios. [89-97]',
+      title:
+        'Las siguientes preguntas están relacionadas con la atención a clientes y usuarios. [89-97]',
       option: true,
       quiz: false,
       buton: false,
       min: 89,
-      max: 97
+      max: 97,
     },
-  ]
+  ];
 
   constructor(
     private psychosocialQuestionnaireService: PsychosocialQuestionnaireService,
@@ -268,56 +297,62 @@ export class IntraWorkFactorsQuestionnaireComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log('aqui', this.clasificacion);
+    this.formOfRealization(this.usuario);
     this.getQuestions();
   }
 
   calculateProgress() {
     const totalItems = this.dataList.length;
-    const answeredItems = this.dataList.filter(data => data.puntuacionA !== null).length;
+    const answeredItems = this.dataList.filter(
+      (data) => data.puntuacionA !== null
+    ).length;
     this.progress = (answeredItems / totalItems) * 100;
   }
 
   calculateProgressA() {
     const totalItems = this.dataListA.length;
-    const answeredItems = this.dataListA.filter(data => data.puntuacionA !== null).length;
+    const answeredItems = this.dataListA.filter(
+      (data) => data.puntuacionA !== null
+    ).length;
     this.progressA = (answeredItems / totalItems) * 100;
   }
 
-
-  startQuizData() { 
+  startQuizData() {
     this.startQuiz = true;
     this.propagarStart.emit();
     this.getDataList([]);
   }
 
-
   getDataList(lista: any[]) {
     this.psychosocialQuestionnaireService.getList().subscribe({
-      next: (data) => {   
+      next: (data) => {
         let list: any[] = data;
         list = list.sort((a, b) => a.posicion - b.posicion);
-        this.dataList = list.filter(d => d.forma === (this.clasificacion === 'Grupo Forma A' ? 'A1' : 'A2'));
+        this.dataList = list.filter(
+          (d) =>
+            d.forma === (this.clasificacion === 'Grupo Forma A' ? 'A1' : 'A2')
+        );
         this.dataList.forEach((objeto) => {
           objeto.puntuacion = null;
           objeto.puntuacionA = null;
         });
-        console.log(data);        
         this.asignarPuntuaciones(lista);
         this.calculateProgress();
         if (this.clasificacion === 'Grupo Forma A') {
-          this.dataListText = this.dataListTextA1; 
+          this.dataListText = this.dataListTextA1;
           this.asginarPosicion();
         } else {
           this.dataListText = this.dataListTextA2;
           this.asginarPosicionB();
         }
       },
-    })
+    });
   }
 
   asignarPuntuaciones(list: any[]) {
-    this.dataList.forEach(objeto1 => {
-      list.forEach(objeto2 => {
+    this.dataList.forEach((objeto1) => {
+      list.forEach((objeto2) => {
         if (objeto1.id === objeto2.idPreguntaEvaluacion) {
           objeto1.puntuacion = objeto2.puntuacion;
           objeto1.puntuacionA = objeto2.puntuacion;
@@ -329,14 +364,20 @@ export class IntraWorkFactorsQuestionnaireComponent implements OnInit {
   asginarPosicion() {
     let numero;
     if (this.resPutn1 === false) {
-      this.dataList = this.dataList.filter(p => p.posicion < 106 || p.posicion > 114);
+      this.dataList = this.dataList.filter(
+        (p) => p.posicion < 106 || p.posicion > 114
+      );
     }
 
     if (!this.resPutn2 === false) {
-      this.dataList = this.dataList.filter(p => p.posicion < 115 || p.posicion > 123);
+      this.dataList = this.dataList.filter(
+        (p) => p.posicion < 115 || p.posicion > 123
+      );
     }
 
-    const lista = this.dataList.filter(p => p.puntuacion === null && p.puntuacionA === null);
+    const lista = this.dataList.filter(
+      (p) => p.puntuacion === null && p.puntuacionA === null
+    );
 
     if (lista.length === 0) {
       numero = 0;
@@ -395,16 +436,24 @@ export class IntraWorkFactorsQuestionnaireComponent implements OnInit {
       default:
         break;
     }
-    this.dataListA = this.dataList.filter(r => r.posicion >= this.dataListText[this.index].min && r.posicion <= this.dataListText[this.index].max);
+    this.dataListA = this.dataList.filter(
+      (r) =>
+        r.posicion >= this.dataListText[this.index].min &&
+        r.posicion <= this.dataListText[this.index].max
+    );
     this.calculateProgressA();
   }
 
   asginarPosicionB() {
     let numero;
     if (this.resPutn3 === false) {
-      this.dataList = this.dataList.filter(p => p.posicion < 89 || p.posicion > 97);
+      this.dataList = this.dataList.filter(
+        (p) => p.posicion < 89 || p.posicion > 97
+      );
     }
-    const lista = this.dataList.filter(p => p.puntuacion === null && p.puntuacionA === null);
+    const lista = this.dataList.filter(
+      (p) => p.puntuacion === null && p.puntuacionA === null
+    );
 
     if (lista.length === 0) {
       numero = 0;
@@ -457,7 +506,11 @@ export class IntraWorkFactorsQuestionnaireComponent implements OnInit {
       default:
         break;
     }
-    this.dataListA = this.dataList.filter(r => r.posicion >= this.dataListText[this.index].min && r.posicion <= this.dataListText[this.index].max);
+    this.dataListA = this.dataList.filter(
+      (r) =>
+        r.posicion >= this.dataListText[this.index].min &&
+        r.posicion <= this.dataListText[this.index].max
+    );
     this.calculateProgressA();
   }
 
@@ -467,7 +520,11 @@ export class IntraWorkFactorsQuestionnaireComponent implements OnInit {
     } else {
       this.index++;
       this.progressA = 0;
-      this.dataListA = this.dataList.filter(r => r.posicion >= this.dataListText[this.index].min && r.posicion <= this.dataListText[this.index].max);
+      this.dataListA = this.dataList.filter(
+        (r) =>
+          r.posicion >= this.dataListText[this.index].min &&
+          r.posicion <= this.dataListText[this.index].max
+      );
     }
   }
 
@@ -510,10 +567,12 @@ export class IntraWorkFactorsQuestionnaireComponent implements OnInit {
   }
 
   changeOption2(e: any, i: number) {
+    console.log(e, i);
     if (e) {
       localStorage.setItem('resPutn2', `${e}`);
       this.dataListTextA1[i].quiz = e;
       this.dataListTextA1[i].buton = e;
+      console.log(this.dataListTextA1[i], 'a    ui', this.dataListTextA1);
       this.calculateProgressA();
     } else {
       localStorage.setItem('resPutn2', `${e}`);
@@ -561,18 +620,20 @@ export class IntraWorkFactorsQuestionnaireComponent implements OnInit {
   }
 
   getQuestions() {
-    this.psychosocialQuestionnaireService.getListResponse(this.accountService.userData.id).subscribe({
-      next: (data) => {
-        const list: any[] = data;
-        if (list.length !== 0) {
-          this.startQuiz = true;
-          this.getDataList(list);
-        }
-      },
-      error: () => {
-        this.startQuiz = false;
-      },
-    })
+    this.psychosocialQuestionnaireService
+      .getListResponse(this.idUsuario)
+      .subscribe({
+        next: (data) => {
+          const list: any[] = data;
+          if (list.length !== 0) {
+            this.startQuiz = true;
+            this.getDataList(list);
+          }
+        },
+        error: () => {
+          this.startQuiz = false;
+        },
+      });
   }
 
   saveQuestions(data: any, resp: number, punt: string) {
@@ -591,31 +652,38 @@ export class IntraWorkFactorsQuestionnaireComponent implements OnInit {
       idPreguntaEvaluacion: data.id,
       respuesta: resp,
       puntuacion: punt,
-      idUserEvaluacion: this.accountService.userData.id,
+      idUserEvaluacion: this.idUsuario,
       idDimension: data.idDimension,
-      idDominio: data.dominio
-    }
-    this.psychosocialQuestionnaireService.createPsychosocialQuestionnaire(res).subscribe({
-      next: (data) => {
-        console.log(data);
-      },
-      error: () => {
-        console.log(data);
-      },
-    })
+      idDominio: data.dominio,
+    };
+    this.psychosocialQuestionnaireService
+      .createPsychosocialQuestionnaire(res)
+      .subscribe({
+        next: (data) => {
+          console.log(data);
+        },
+        error: () => {
+          console.log(data);
+        },
+      });
   }
 
   updateQuestions(data: any, resp: number, punt: string) {
-    this.psychosocialQuestionnaireService.updatePsychosocialQuestionnaire(data.id, resp, punt).subscribe({
-      next: (data) => {
-        console.log(data);
-      },
-      error: () => {
-        console.log(data);
-      },
-    })
+    this.psychosocialQuestionnaireService
+      .updatePsychosocialQuestionnaire(data.id, resp, punt)
+      .subscribe({
+        next: (data) => {
+          console.log(data);
+        },
+        error: () => {
+          console.log(data);
+        },
+      });
   }
 
-
-
+  formOfRealization(data?: any) {
+    console.log(data);
+    this.idUsuario =
+      data != null ? data.idUsuario : this.accountService.userData.id;
+  }
 }

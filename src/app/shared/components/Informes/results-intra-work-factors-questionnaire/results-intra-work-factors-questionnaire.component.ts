@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { ExportService } from 'src/app/shared/services/export.service';
 import { GenericService } from 'src/app/shared/services/generic.service';
 import { LoadingService } from 'src/app/shared/services/loading.service';
@@ -8,8 +8,9 @@ import { LoadingService } from 'src/app/shared/services/loading.service';
   templateUrl: './results-intra-work-factors-questionnaire.component.html',
   styleUrls: ['./results-intra-work-factors-questionnaire.component.scss'],
 })
-export class ResultsIntraWorkFactorsQuestionnaireComponent implements OnInit
-{
+export class ResultsIntraWorkFactorsQuestionnaireComponent implements OnInit {
+  @ViewChild('formulario', { static: false }) el!: ElementRef;
+
   @Input('user') user: any;
   @Input('userRegister') userRegister: any;
   @Input('evaluacion') evaluacion: any;
@@ -39,8 +40,10 @@ export class ResultsIntraWorkFactorsQuestionnaireComponent implements OnInit
 
   downloadReportQuestionnaire() {
     this.loadingService.ChangeStatusLoading(true);
-    const html = document.getElementById('formulario');
-    this.exportService.DownloadPdfFromHTML(html, "Cuestionario de Factores de Riesgo - Forma A");
+    this.exportService.DownloadPdfFromHTML(
+      this.el.nativeElement,
+      'Cuestionario de Factores de Riesgo - Forma A'
+    );
     setTimeout(() => this.loadingService.ChangeStatusLoading(false), 500);
   }
 }

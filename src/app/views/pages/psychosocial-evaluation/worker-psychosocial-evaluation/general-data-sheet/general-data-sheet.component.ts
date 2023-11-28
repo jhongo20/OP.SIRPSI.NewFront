@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AccountService } from 'src/app/shared/services/account.service';
 import { getService } from 'src/app/shared/services/get.services';
@@ -12,6 +12,10 @@ import { environment } from 'src/environments/environment';
 })
 export class GeneralDataSheetComponent implements OnInit {
   @Output() propagar = new EventEmitter();
+  @Input() usuario: any = null;
+
+  idUsuario: string = this.accountService.userData.id;
+
   userForm: FormGroup;
   listDepartament: any;
   listCity: any;
@@ -24,6 +28,7 @@ export class GeneralDataSheetComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.formOfRealization(this.usuario);
     this.loadForm();
   }
 
@@ -58,7 +63,7 @@ export class GeneralDataSheetComponent implements OnInit {
       tipoContrato: ['', [Validators.required]],
       horasTrabajadasDiarias: ['', [Validators.required]],
       tipoSalario: ['', [Validators.required]],
-      id_desempleado: [this.accountService.userData.id],
+      id_desempleado: [this.idUsuario],
     });
 
     this.onGetCities();
@@ -115,5 +120,11 @@ export class GeneralDataSheetComponent implements OnInit {
           x.name.localeCompare(y.name)
         );
       });
+  }
+
+  formOfRealization(data?: any) {
+    console.log(data);
+    this.idUsuario =
+      data != null ? data.idUsuario : this.accountService.userData.id;
   }
 }

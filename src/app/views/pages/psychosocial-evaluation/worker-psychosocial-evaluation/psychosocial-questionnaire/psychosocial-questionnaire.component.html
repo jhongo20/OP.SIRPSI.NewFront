@@ -22,26 +22,26 @@
                 <a ngbNavLink [class]="tab1 ? 'disabled' : ''">Cuestionario Factores Intralaborales</a>
                 <ng-template ngbNavContent>
                     <app-intra-work-factors-questionnaire [idQuiz]="idQuiz" [clasificacion]="clasificacion" (propagar)="completeQuiz1()"
-                        (propagarStart)="startQuiz()"></app-intra-work-factors-questionnaire>
+                        (propagarStart)="startQuiz()" [usuario]="this.data != null ? this.data.item : null"></app-intra-work-factors-questionnaire>
                 </ng-template>
             </li>
             <li [ngbNavItem]="2">
                 <a ngbNavLink [class]="tab2 ? 'disabled' : ''">Cuestionario Factores Extralaborales</a>
                 <ng-template ngbNavContent>
                     <app-non-work-factors-questionnaire [idQuiz]="idQuiz"
-                        (propagar)="completeQuiz2()"></app-non-work-factors-questionnaire>
+                        (propagar)="completeQuiz2()" [usuario]="this.data != null ? this.data.item : null"></app-non-work-factors-questionnaire>
                 </ng-template>
             </li>
             <li [ngbNavItem]="3">
                 <a ngbNavLink [class]="tab3 ? 'disabled' : ''">Cuestionario Estrés</a>
                 <ng-template ngbNavContent>
-                    <app-stress-questionnaire [idQuiz]="idQuiz" (propagar)="completeQuiz3()"></app-stress-questionnaire>
+                    <app-stress-questionnaire [idQuiz]="idQuiz" (propagar)="completeQuiz3()" [usuario]="this.data != null ? this.data.item : null"></app-stress-questionnaire>
                 </ng-template>
             </li>
             <li [ngbNavItem]="4">
                 <a ngbNavLink [class]="tab4 ? 'disabled' : ''">Ficha de Datos Generales</a>
                 <ng-template ngbNavContent>
-                    <app-general-data-sheet (propagar)="completeQuiz4()"></app-general-data-sheet>
+                    <app-general-data-sheet (propagar)="completeQuiz4()" [usuario]="this.data != null ? this.data.item : null"></app-general-data-sheet>
                 </ng-template>
             </li>
         </ul>

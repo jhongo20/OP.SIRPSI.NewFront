@@ -6,12 +6,14 @@ import { PsychosocialQuestionnaireService } from 'src/app/shared/services/psycho
 @Component({
   selector: 'app-non-work-factors-questionnaire',
   templateUrl: './non-work-factors-questionnaire.component.html',
-  styleUrls: ['./non-work-factors-questionnaire.component.scss']
+  styleUrls: ['./non-work-factors-questionnaire.component.scss'],
 })
 export class NonWorkFactorsQuestionnaireComponent implements OnInit {
-
   @Input() idQuiz: string;
   @Output() propagar = new EventEmitter();
+  @Input() usuario: any = null;
+
+  idUsuario: string = this.accountService.userData.id;
 
   startQuiz = false;
 
@@ -25,56 +27,61 @@ export class NonWorkFactorsQuestionnaireComponent implements OnInit {
 
   dataListText = [
     {
-      title: 'Las siguientes preguntas están relacionadas con varias condiciones de la zona donde usted vive: [1-13]',
+      title:
+        'Las siguientes preguntas están relacionadas con varias condiciones de la zona donde usted vive: [1-13]',
       option: false,
       quiz: true,
       buton: true,
       min: 1,
-      max: 13
+      max: 13,
     },
     {
-      title: 'Las siguientes preguntas están relacionadas con su vida fuera del trabajo: [14-31]',
+      title:
+        'Las siguientes preguntas están relacionadas con su vida fuera del trabajo: [14-31]',
       option: false,
       quiz: true,
       buton: true,
       min: 14,
-      max: 31
-    }
-  ]
+      max: 31,
+    },
+  ];
 
   constructor(
     private psychosocialQuestionnaireService: PsychosocialQuestionnaireService,
     private accountService: AccountService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
+    this.formOfRealization(this.usuario);
     this.getQuestions();
   }
 
   calculateProgress() {
     const totalItems = this.dataList.length;
-    const answeredItems = this.dataList.filter(data => data.puntuacionA !== null).length;
+    const answeredItems = this.dataList.filter(
+      (data) => data.puntuacionA !== null
+    ).length;
     this.progress = (answeredItems / totalItems) * 100;
   }
 
   calculateProgressA() {
     const totalItems = this.dataListA.length;
-    const answeredItems = this.dataListA.filter(data => data.puntuacionA !== null).length;
+    const answeredItems = this.dataListA.filter(
+      (data) => data.puntuacionA !== null
+    ).length;
     this.progressA = (answeredItems / totalItems) * 100;
   }
-
 
   startQuizData() {
     this.startQuiz = true;
   }
-
 
   getDataList(lista: any[]) {
     this.psychosocialQuestionnaireService.getList().subscribe({
       next: (data) => {
         let list: any[] = data;
         list = list.sort((a, b) => a.posicion - b.posicion);
-        this.dataList = list.filter(d => d.forma === 'A3');
+        this.dataList = list.filter((d) => d.forma === 'A3');
         console.log(this.dataList);
         this.dataList.forEach((objeto) => {
           objeto.puntuacion = null;
@@ -84,12 +91,12 @@ export class NonWorkFactorsQuestionnaireComponent implements OnInit {
         this.calculateProgress();
         this.asginarPosicion();
       },
-    })
+    });
   }
 
   asignarPuntuaciones(list: any[]) {
-    this.dataList.forEach(objeto1 => {
-      list.forEach(objeto2 => {
+    this.dataList.forEach((objeto1) => {
+      list.forEach((objeto2) => {
         if (objeto1.id === objeto2.idPreguntaEvaluacion) {
           objeto1.puntuacion = objeto2.puntuacion;
           objeto1.puntuacionA = objeto2.puntuacion;
@@ -100,7 +107,9 @@ export class NonWorkFactorsQuestionnaireComponent implements OnInit {
 
   asginarPosicion() {
     let numero;
-    const lista = this.dataList.filter(p => p.puntuacion === null && p.puntuacionA === null);
+    const lista = this.dataList.filter(
+      (p) => p.puntuacion === null && p.puntuacionA === null
+    );
     if (lista.length === 0) {
       numero = 0;
     } else {
@@ -119,17 +128,25 @@ export class NonWorkFactorsQuestionnaireComponent implements OnInit {
       default:
         break;
     }
-    this.dataListA = this.dataList.filter(r => r.posicion >= this.dataListText[this.index].min && r.posicion <= this.dataListText[this.index].max);
+    this.dataListA = this.dataList.filter(
+      (r) =>
+        r.posicion >= this.dataListText[this.index].min &&
+        r.posicion <= this.dataListText[this.index].max
+    );
     this.calculateProgressA();
   }
 
   clickContinue() {
     if (this.dataListText.length === this.index + 1) {
       this.propagar.emit();
-    } else {      
+    } else {
       this.index++;
       this.progressA = 0;
-      this.dataListA = this.dataList.filter(r => r.posicion >= this.dataListText[this.index].min && r.posicion <= this.dataListText[this.index].max);
+      this.dataListA = this.dataList.filter(
+        (r) =>
+          r.posicion >= this.dataListText[this.index].min &&
+          r.posicion <= this.dataListText[this.index].max
+      );
     }
   }
 
@@ -158,18 +175,20 @@ export class NonWorkFactorsQuestionnaireComponent implements OnInit {
   }
 
   getQuestions() {
-    this.psychosocialQuestionnaireService.getListResponse(this.accountService.userData.id).subscribe({
-      next: (data) => {
-        const list: any[] = data;
-        if (list.length !== 0) {
-          this.startQuiz = true;
-          this.getDataList(list);
-        }
-      },
-      error: () => {
-        this.startQuiz = false;
-      },
-    })
+    this.psychosocialQuestionnaireService
+      .getListResponse(this.idUsuario)
+      .subscribe({
+        next: (data) => {
+          const list: any[] = data;
+          if (list.length !== 0) {
+            this.startQuiz = true;
+            this.getDataList(list);
+          }
+        },
+        error: () => {
+          this.startQuiz = false;
+        },
+      });
   }
 
   saveQuestions(data: any, resp: number, punt: string) {
@@ -188,29 +207,38 @@ export class NonWorkFactorsQuestionnaireComponent implements OnInit {
       idPreguntaEvaluacion: data.id,
       respuesta: resp,
       puntuacion: punt,
-      idUserEvaluacion: this.accountService.userData.id,
+      idUserEvaluacion: this.idUsuario,
       idDimension: data.idDimension,
-      idDominio: data.dominio
-    }
-    this.psychosocialQuestionnaireService.createPsychosocialQuestionnaire(res).subscribe({
-      next: (data) => {
-        console.log(data);
-      },
-      error: () => {
-        console.log(data);
-      },
-    })
+      idDominio: data.dominio,
+    };
+    this.psychosocialQuestionnaireService
+      .createPsychosocialQuestionnaire(res)
+      .subscribe({
+        next: (data) => {
+          console.log(data);
+        },
+        error: () => {
+          console.log(data);
+        },
+      });
   }
 
   updateQuestions(data: any, resp: number, punt: string) {
-    this.psychosocialQuestionnaireService.updatePsychosocialQuestionnaire(data.id, resp, punt).subscribe({
-      next: (data) => {
-        console.log(data);
-      },
-      error: () => {
-        console.log(data);
-      },
-    })
+    this.psychosocialQuestionnaireService
+      .updatePsychosocialQuestionnaire(data.id, resp, punt)
+      .subscribe({
+        next: (data) => {
+          console.log(data);
+        },
+        error: () => {
+          console.log(data);
+        },
+      });
   }
 
+  formOfRealization(data?: any) {
+    console.log(data);
+    this.idUsuario =
+      data != null ? data.idUsuario : this.accountService.userData.id;
+  }
 }

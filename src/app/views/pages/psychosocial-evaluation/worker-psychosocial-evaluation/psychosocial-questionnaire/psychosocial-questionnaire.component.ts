@@ -61,7 +61,7 @@ export class PsychosocialQuestionnaireComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.formOfRealization(this.data.item);
+    this.formOfRealization(this.data != null ? this.data.item : null);
     this.loadingService.ChangeStatusLoading(false);
     localStorage.removeItem('viewQuiz');
     this.getQuiz();
@@ -182,11 +182,6 @@ export class PsychosocialQuestionnaireComponent implements OnInit {
             nuevaFecha.setHours(0, 0, 0, 0);
             return nuevaFecha;
           };
-          console.log(
-            quitarHoraZonaHoraria(fechaProvidenciada).getTime() +
-              ' ' +
-              quitarHoraZonaHoraria(fechaActual).getTime()
-          );
 
           if (
             quitarHoraZonaHoraria(fechaProvidenciada).getTime() !==
@@ -332,7 +327,7 @@ export class PsychosocialQuestionnaireComponent implements OnInit {
       .Put('evaluacionPsicosocial/ActualizarCuestionariosRealizados', data)
       .subscribe(() => {
         setInterval(() => {
-          this.loadingService.ChangeStatusLoading(true);
+          this.loadingService.ChangeStatusLoading(false);
         }, 1000);
         return true;
       });

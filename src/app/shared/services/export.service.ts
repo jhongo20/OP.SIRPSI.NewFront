@@ -10,33 +10,46 @@ import { AccountService } from './account.service';
 export class ExportService {
   constructor(private accountService: AccountService) {}
 
+  // DownloadPdfFromHTML(data: any, name: string) {
+  //   const doc = new jsPDF('p', 'pt', 'a4');
+  //   const options = { background: 'white', scale: 3 };
+  //   html2canvas(data, options)
+  //     .then((canvas) => {
+  //       const img = canvas.toDataURL('image/PNG');
+  //       const imgProps = (doc as any).getImageProperties(img);
+  //       const pdfWidth = doc.internal.pageSize.getWidth() - 2 * 15;
+  //       const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+  //       doc.addImage(
+  //         img,
+  //         'PNG',
+  //         15,
+  //         15,
+  //         pdfWidth,
+  //         pdfHeight,
+  //         undefined,
+  //         'FAST'
+  //       );
+  //       return doc;
+  //     })
+  //     .then((docResult) => {
+  //       docResult.save(
+  //         this.accountService.userData.user.names +
+  //           `_${new Date().toISOString()}_${name}.pdf`
+  //       );
+  //     });
+  //   return true;
+  // }
+
   DownloadPdfFromHTML(data: any, name: string) {
-    const doc = new jsPDF('p', 'pt', 'a4');
-    const options = { background: 'white', scale: 3 };
-    html2canvas(data, options)
-      .then((canvas) => {
-        const img = canvas.toDataURL('image/PNG');
-        const imgProps = (doc as any).getImageProperties(img);
-        const pdfWidth = doc.internal.pageSize.getWidth() - 2 * 15;
-        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-        doc.addImage(
-          img,
-          'PNG',
-          15,
-          15,
-          pdfWidth,
-          pdfHeight,
-          undefined,
-          'FAST'
-        );
-        return doc;
-      })
-      .then((docResult) => {
-        docResult.save(
+    let pdf = new jsPDF('p', 'pt', 'a4');
+    pdf.html(data, {
+      callback: (pdf) => {
+        pdf.save(
           this.accountService.userData.user.names +
             `_${new Date().toISOString()}_${name}.pdf`
         );
-      });
+      },
+    });
     return true;
   }
 }

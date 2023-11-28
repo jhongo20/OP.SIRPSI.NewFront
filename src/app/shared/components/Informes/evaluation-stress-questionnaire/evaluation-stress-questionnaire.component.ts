@@ -32,7 +32,6 @@ export class EvaluationStressQuestionnaireComponent implements OnInit
       )
       .subscribe((data: any) => {
         this.cuestionarioList = data.contadorPorDominio;
-        console.log(this.cuestionarioList);
         setTimeout(() => this.loadingService.ChangeStatusLoading(false), 600);
       });
   }
