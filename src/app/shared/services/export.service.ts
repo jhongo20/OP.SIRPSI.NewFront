@@ -17,8 +17,8 @@ export class ExportService {
       .then((canvas) => {
         const img = canvas.toDataURL('image/PNG');
         const imgProps = (doc as any).getImageProperties(img);
-        const pdfWidth = doc.internal.pageSize.getWidth() - 2 * 10;
-        const pdfHeight = (imgProps.height * pdfWidth * 3) / imgProps.width;
+        const pdfWidth = doc.internal.pageSize.getWidth() - 2 * 15;
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
         doc.addImage(
           img,
           'PNG',
