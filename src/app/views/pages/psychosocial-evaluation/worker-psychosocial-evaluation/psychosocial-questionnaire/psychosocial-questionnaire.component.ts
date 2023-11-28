@@ -283,7 +283,7 @@ export class PsychosocialQuestionnaireComponent implements OnInit {
   }
 
   completeQuiz4() {
-    this.updateCompletedQuestionnaires(4);
+    // this.updateCompletedQuestionnaires(4);
     this.radicado = `${this.documentoEmpresa}${
       this.docPsicologo
     }${new Date().getFullYear()}${

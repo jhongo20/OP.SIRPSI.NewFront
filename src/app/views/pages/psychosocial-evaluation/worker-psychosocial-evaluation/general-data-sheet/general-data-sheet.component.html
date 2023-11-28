@@ -29,7 +29,7 @@
                 <option value="Otro">Otro</option>
             </select>
         </div>
-        <div class="mb-3" *ngIf="userForm.get('genero')?.value == 'Otro'">  
+        <div class="mb-3" *ngIf="userForm.value.genero == 'Otro'">  
             <label for="exampleFormControlSelect1" class="form-label">¿Cual?</label>
             <input type="text" class="form-control" placeholder="Genero" formControlName="otro_genero">
         </div>
@@ -42,7 +42,7 @@
                 <option value="Indigena">Indigena</option>
             </select>
         </div>
-        <div class="mb-3" *ngIf="userForm.get('etnia')?.value == 'Indigena'">
+        <div class="mb-3" *ngIf="userForm.value.etnia == 'Indigena'">
             <label for="exampleFormControlSelect1" class="form-label">¿A cual pueblo indigena pertenece?</label>
             <select class="form-select" formControlName="cual_indigena">
                 <option selected disabled value="">Seleccionar</option>

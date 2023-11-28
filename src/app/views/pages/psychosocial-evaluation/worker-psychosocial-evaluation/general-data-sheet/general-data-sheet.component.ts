@@ -14,7 +14,7 @@ export class GeneralDataSheetComponent implements OnInit {
   @Output() propagar = new EventEmitter();
   @Input() usuario: any = null;
 
-  idUsuario: string = this.accountService.userData.id;
+  idUsuario: string = "";
 
   userForm: FormGroup;
   listDepartament: any;
@@ -25,13 +25,12 @@ export class GeneralDataSheetComponent implements OnInit {
     private accountService: AccountService,
     private psychosocialQuestionnaireService: PsychosocialQuestionnaireService,
     private servicio: getService
-  ) {}
+  ) {
+    this.formOfRealization(this.usuario);
+  }
 
   ngOnInit() {
-    this.formOfRealization(this.usuario).then((data: any) => {
-      console.log(data);
-      this.loadForm();
-    });
+    this.loadForm();
   }
 
   loadForm() {
@@ -65,7 +64,7 @@ export class GeneralDataSheetComponent implements OnInit {
       tipoContrato: ['', [Validators.required]],
       horasTrabajadasDiarias: ['', [Validators.required]],
       tipoSalario: ['', [Validators.required]],
-      id_desempleado: [this.idUsuario],
+      id_desempleado: this.idUsuario,
     });
 
     this.onGetCities();
@@ -125,7 +124,6 @@ export class GeneralDataSheetComponent implements OnInit {
   }
 
   async formOfRealization(data?: any) {
-    console.log(data);
     this.idUsuario =
       data != null ? data.idUsuario : this.accountService.userData.id;
     return true;
