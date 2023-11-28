@@ -6,10 +6,9 @@ import { LoadingService } from 'src/app/shared/services/loading.service';
 @Component({
   selector: 'app-factors-risk-extra-work-questionnaire',
   templateUrl: './factors-risk-extra-work-questionnaire.component.html',
-  styleUrls: ['./factors-risk-extra-work-questionnaire.component.scss']
+  styleUrls: ['./factors-risk-extra-work-questionnaire.component.scss'],
 })
-export class FactorsRiskExtraWorkQuestionnaireComponent implements OnInit
-{
+export class FactorsRiskExtraWorkQuestionnaireComponent implements OnInit {
   @Input('user') user: any;
   @Input('userRegister') userRegister: any;
   @Input('evaluacion') evaluacion: any;
@@ -38,9 +37,12 @@ export class FactorsRiskExtraWorkQuestionnaireComponent implements OnInit
   }
 
   downloadReportQuestionnaire() {
+    const pages = document.querySelector('#formulario') as HTMLElement;
     this.loadingService.ChangeStatusLoading(true);
-    const html = document.getElementById('formulario');
-    this.exportService.DownloadPdfFromHTML(html, "Cuestionario Factores Extralaborales");
+    this.exportService.exportAllToPDF(
+      pages,
+      'Cuestionario Factores Extralaborales'
+    );
     setTimeout(() => this.loadingService.ChangeStatusLoading(false), 500);
   }
 }

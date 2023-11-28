@@ -41,9 +41,12 @@ export class ResultsIntraWorkFactorsQuestionnaireFormBComponent implements OnIni
   }
 
   downloadReportQuestionnaire() {
+    const pages = document.querySelector('#formulario') as HTMLElement;
     this.loadingService.ChangeStatusLoading(true);
-    const html = document.getElementById('formulario');
-    this.exportService.DownloadPdfFromHTML(html, "Cuestionario de Factores de Riesgo - Forma B");
+    this.exportService.exportAllToPDF(
+      pages,
+      'Cuestionario de Factores de Riesgo - Forma B'
+    );
     setTimeout(() => this.loadingService.ChangeStatusLoading(false), 500);
   }
 }

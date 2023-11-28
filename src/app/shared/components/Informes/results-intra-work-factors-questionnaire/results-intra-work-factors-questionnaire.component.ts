@@ -39,9 +39,10 @@ export class ResultsIntraWorkFactorsQuestionnaireComponent implements OnInit {
   }
 
   downloadReportQuestionnaire() {
+    const pages = document.querySelector('#formulario') as HTMLElement;
     this.loadingService.ChangeStatusLoading(true);
-    this.exportService.DownloadPdfFromHTML(
-      this.el.nativeElement,
+    this.exportService.exportAllToPDF(
+      pages,
       'Cuestionario de Factores de Riesgo - Forma A'
     );
     setTimeout(() => this.loadingService.ChangeStatusLoading(false), 500);

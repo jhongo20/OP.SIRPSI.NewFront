@@ -52,4 +52,21 @@ export class ExportService {
     });
     return true;
   }
+
+  exportAllToPDF(pages: HTMLElement, name: string) {
+    const doc = new jsPDF({
+      unit: 'px',
+      format: [1170, 1500],
+    });
+
+    doc.html(pages, {
+      callback: (doc: jsPDF) => {
+        doc.deletePage(doc.getNumberOfPages());
+        doc.save(
+          this.accountService.userData.user.names +
+            `_${new Date().toISOString()}_${name}.pdf`
+        );
+      },
+    });
+  }
 }

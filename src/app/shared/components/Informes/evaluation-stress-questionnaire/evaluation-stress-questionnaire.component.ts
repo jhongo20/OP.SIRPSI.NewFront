@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { jsPDF } from 'jspdf';
 import { ExportService } from 'src/app/shared/services/export.service';
 import { GenericService } from 'src/app/shared/services/generic.service';
 import { LoadingService } from 'src/app/shared/services/loading.service';
@@ -8,8 +9,7 @@ import { LoadingService } from 'src/app/shared/services/loading.service';
   templateUrl: './evaluation-stress-questionnaire.component.html',
   styleUrls: ['./evaluation-stress-questionnaire.component.scss'],
 })
-export class EvaluationStressQuestionnaireComponent implements OnInit
-{
+export class EvaluationStressQuestionnaireComponent implements OnInit {
   @Input('user') user: any;
   @Input('userRegister') userRegister: any;
   @Input('evaluacion') evaluacion: any;
@@ -37,9 +37,9 @@ export class EvaluationStressQuestionnaireComponent implements OnInit
   }
 
   downloadReportQuestionnaire() {
+    const pages = document.querySelector('#formulario') as HTMLElement;
     this.loadingService.ChangeStatusLoading(true);
-    const html = document.getElementById('formulario');
-    this.exportService.DownloadPdfFromHTML(html, "Cuestionario Estrés");
+    this.exportService.exportAllToPDF(pages, 'Cuestionario Estrés');
     setTimeout(() => this.loadingService.ChangeStatusLoading(false), 500);
   }
 }
