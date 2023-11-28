@@ -53,6 +53,7 @@
             [user]="this.user"
             [userRegister]="this.userRegister"
             [evaluacion]="this.data.info"
+            [clasificacion]="this.data.info.forma == 'Grupo forma A' ? 1 : 2"
           ></app-evaluation-stress-questionnaire>
         </ng-template>
       </li>
@@ -63,6 +64,7 @@
             [user]="this.user"
             [userRegister]="this.userRegister"
             [evaluacion]="this.data.info"
+            [clasificacion]="this.data.info.forma == 'Grupo forma A' ? 1 : 2"
           ></app-factors-risk-extra-work-questionnaire>
         </ng-template>
       </li>

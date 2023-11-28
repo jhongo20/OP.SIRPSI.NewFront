@@ -61,7 +61,7 @@ export class PsychosocialQuestionnaireComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    localStorage.removeItem('viewQuiz');
+    this.cleanData();
     this.formOfRealization(this.data != null ? this.data.item : null).then(
       (data: any) => {
         console.log(data);
@@ -351,5 +351,11 @@ export class PsychosocialQuestionnaireComponent implements OnInit {
         ? data.usuario.empresa.idConsecutivo
         : this.accountService.userData.empresa.idConsecutivo;
     return true;
+  }
+
+  cleanData() {
+    localStorage.removeItem('viewQuiz');
+    localStorage.removeItem('final');
+    localStorage.removeItem('horaInicio');
   }
 }

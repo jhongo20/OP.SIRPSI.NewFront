@@ -13,6 +13,7 @@ export class EvaluationStressQuestionnaireComponent implements OnInit {
   @Input('user') user: any;
   @Input('userRegister') userRegister: any;
   @Input('evaluacion') evaluacion: any;
+  @Input('clasificacion') clasificacion: any;
   public cuestionarioList: any;
 
   constructor(
@@ -28,7 +29,7 @@ export class EvaluationStressQuestionnaireComponent implements OnInit {
   getListas() {
     this.genericService
       .GetAll(
-        `Preguntas/ConsultarBrutoDominio?IdEvaluacion=${this.evaluacion.id}&formaId=A3`
+        `Preguntas/ConsultarBrutoDominio?IdEvaluacion=${this.evaluacion.id}&formaId=A4`
       )
       .subscribe((data: any) => {
         this.cuestionarioList = data.contadorPorDominio;

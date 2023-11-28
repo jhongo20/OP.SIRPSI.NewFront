@@ -12,6 +12,7 @@ export class FactorsRiskExtraWorkQuestionnaireComponent implements OnInit {
   @Input('user') user: any;
   @Input('userRegister') userRegister: any;
   @Input('evaluacion') evaluacion: any;
+  @Input('clasificacion') clasificacion: number;
   public cuestionarioList: any;
 
   constructor(
@@ -27,7 +28,7 @@ export class FactorsRiskExtraWorkQuestionnaireComponent implements OnInit {
   getListas() {
     this.genericService
       .GetAll(
-        `Preguntas/ConsultarBrutoDominio?IdEvaluacion=${this.evaluacion.id}&formaId=A4`
+        `Preguntas/ConsultarBrutoDominio?IdEvaluacion=${this.evaluacion.id}&formaId=A3`
       )
       .subscribe((data: any) => {
         this.cuestionarioList = data.contadorPorDominio;

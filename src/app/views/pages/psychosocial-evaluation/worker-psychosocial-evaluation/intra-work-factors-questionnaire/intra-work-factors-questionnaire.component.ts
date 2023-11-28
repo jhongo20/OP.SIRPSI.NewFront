@@ -573,7 +573,6 @@ export class IntraWorkFactorsQuestionnaireComponent implements OnInit {
       localStorage.setItem('resPutn2', `${e}`);
       this.dataListTextA1[i].quiz = e;
       this.dataListTextA1[i].buton = e;
-      console.log(this.dataListTextA1[i], 'a    ui', this.dataListTextA1);
       this.calculateProgressA();
     } else {
       localStorage.setItem('resPutn2', `${e}`);
@@ -687,5 +686,11 @@ export class IntraWorkFactorsQuestionnaireComponent implements OnInit {
     this.idUsuario =
       data != null ? data.idUsuario : this.accountService.userData.id;
     return true;
+  }
+
+  cleanData() {
+    localStorage.removeItem('resPutn1');
+    localStorage.removeItem('resPutn2');
+    localStorage.removeItem('resPutn3');
   }
 }

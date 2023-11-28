@@ -131,7 +131,7 @@
           {{ dimension.nombreDimension }}
         </td>
         <td class="subtitl tableData" style="text-align: center">
-          {{ dimension.sumaRespuestas }}
+          {{ ((dimension.sumaRespuestas / dimension.valorA1Dimension) * 100).toFixed(2) }}
         </td>
         <td class="subtitl tableData" style="text-align: center">
           {{ dimension.sumaRespuestas }}
