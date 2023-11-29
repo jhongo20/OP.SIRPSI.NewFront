@@ -26,10 +26,10 @@ export class GeneralDataSheetComponent implements OnInit {
     private psychosocialQuestionnaireService: PsychosocialQuestionnaireService,
     private servicio: getService
   ) {
-    this.formOfRealization(this.usuario);
   }
 
   ngOnInit() {
+    this.formOfRealization(this.usuario);
     this.loadForm();
   }
 

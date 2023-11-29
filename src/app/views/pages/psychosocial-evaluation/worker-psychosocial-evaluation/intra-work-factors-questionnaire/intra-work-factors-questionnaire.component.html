@@ -50,7 +50,7 @@
             </div>
         </div>
         <h4 *ngIf="index === 14">{{dataListText[index].subtitle}}</h4>
-        <!-- <div class="mb-4 d-flex" *ngIf="index === 12">
+        <div class="mb-4 d-flex" *ngIf="index === 12">
             <div class="form-check mb-2" style="margin-right: 2em;">
                 <label class="form-check-label" for="radioDefault">
                     Si
@@ -63,7 +63,7 @@
                 </label>
                 <input type="radio" class="form-check-input" [value]="false" name="radioSelectedText_{{ index }}" [(ngModel)]="resPutn3"  (ngModelChange)="changeOption3($event, index)">
             </div>
-        </div> -->
+        </div>
         <div *ngIf="dataListText[index].quiz">
             <h5>Progreso</h5>
             <p class="mb-3"><ngb-progressbar type="primary" [value]="progress" height="25px" style="font-size: large;" [showValue]="true"></ngb-progressbar></p>

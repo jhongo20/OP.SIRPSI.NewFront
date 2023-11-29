@@ -56,6 +56,7 @@ export class AccountService {
             //   Reservations: user.rutas.filter((ruta: any) => ruta.ruta == 'reservation').length > 0,
             //   Configurations: user.rutas.filter((ruta: any) => ruta.ruta == 'configuration').length > 0,
             // };
+            this.CloseUserSession(1);
             this.CreateUserSession(user, 0);
           }
           return res;
@@ -96,15 +97,17 @@ export class AccountService {
       });
   }
 
-  public CloseUserSession() {
+  public CloseUserSession(type: number = 0) {
     this.loadingService.ChangeStatusLoading(true);
     sessionStorage.removeItem('user');
     this.userSubject.next(null);
     this.roleService.SelectRoleUser(false);
-    setInterval(() => {
-      this.loadingService.ChangeStatusLoading(false);
-    }, 1000);
-    this.router.navigate(['/welcome']);
+    if (type == 0) {
+      setInterval(() => {
+        this.loadingService.ChangeStatusLoading(false);
+      }, 1000);
+      this.router.navigate(['/welcome']);
+    }
     // this.ValidateSesion();
     // window.location.reload();
   }
