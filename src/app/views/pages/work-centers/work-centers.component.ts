@@ -29,7 +29,7 @@ export class WorkCentersComponent implements OnInit {
     { name: 'Descripción', data: 'descripcion' },
     { name: 'Empresa', data: 'empresa', property: 'nombre' },
     { name: 'Estado', data: 'estados', property: 'nombre' },
-    { name: 'Psicólogo', data: 'psicologos'},
+    { name: 'Psicólogo', data: 'psicologos' },
   ];
   public optionsWork = [
     {
@@ -142,6 +142,7 @@ export class WorkCentersComponent implements OnInit {
       )
       .subscribe((data: any) => {
         this.dataTableUsers = data;
+        console.log(this.dataTableUsers);
       });
   }
   DeleteUser(workCenter: any, user: any) {

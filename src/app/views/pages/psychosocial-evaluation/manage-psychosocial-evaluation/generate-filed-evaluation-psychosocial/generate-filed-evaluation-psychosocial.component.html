@@ -1,1 +1,37 @@
-<p>generate-filed-evaluation-psychosocial works!</p>
+<label class="title"
+  >Generar radicado evaluación psicosocial para empresa</label
+>
+<div class="container-fluid">
+  <div class="row">
+    <button
+      nz-button
+      nzType="primary"
+      (click)="loadOne()"
+      [nzLoading]="isLoadingOne"
+    >
+      Generar radicaco!
+    </button>
+  </div>
+  <div class="row">
+    <div class="col-md-6" *ngIf="this.linked != null">
+      <app-list-status-users-evaluation
+        *ngFor="let link of linked; let i = index"
+        [data]="link"
+        [type]="1"
+      ></app-list-status-users-evaluation>
+    </div>
+    <div class="col-md-6" *ngIf="this.unlinked != null">
+      <app-list-status-users-evaluation
+        *ngFor="let unlink of unlinked; let i = index"
+        [data]="unlink"
+        [type]="2"
+      ></app-list-status-users-evaluation>
+
+      <app-list-status-users-evaluation
+        *ngFor="let summoning of linkedSummoning; let i = index"
+        [data]="summoning"
+        [type]="2"
+      ></app-list-status-users-evaluation>
+    </div>
+  </div>
+</div>

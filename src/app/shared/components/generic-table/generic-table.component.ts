@@ -49,7 +49,7 @@ export class GenericTableComponent implements OnInit {
   ngOnInit(): void {
     this.loadingService.ChangeStatusLoading(true);
     if (this.dataTable == undefined) this.Get();
-    else if (this.dataTable.length >= 0) {
+    else if (this.dataTable) {
       setTimeout(() => this.loadingService.ChangeStatusLoading(false), 600);
     }
     // this.loadingService.ChangeStatusLoading()

@@ -1,0 +1,45 @@
+<label class="title">{{ title.toUpperCase() }}</label>
+<label class="titleNumber">{{ this.data.usersCount }}</label>
+<div class="col-md-12" *ngIf="this.dataTable != null">
+  <div class="table-responsive">
+    <table [id]="'dataTableExample' + this.title" class="table">
+      <thead style="background: #1a73e8">
+        <tr>
+          <th style="color: white" *ngFor="let column of columns">
+            {{ column.name }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let da of dataTable; let i = index">
+          <td hidden="true">{{ da.id }}</td>
+          <td *ngFor="let column of columns">
+            {{
+              column.burnedData != null
+                ? column.property == null
+                  ? da[column.data] != 0
+                    ? column.burnedData.not
+                    : column.burnedData.yeah
+                  : (da[column.data] != null
+                      ? da[column.data][column.property]
+                      : "") != 0
+                  ? column.burnedData.not
+                  : column.burnedData.yeah
+                : column.property == null
+                ? column.pipeDate != null
+                  ? (da[column.data] | date : column.pipeDate)
+                  : da[column.data]
+                : column.pipeDate != null
+                ? da[column.data] != null
+                  ? da[column.data][column.property]
+                  : ("" | date : column.pipeDate)
+                : da[column.data] != null
+                ? da[column.data][column.property]
+                : ""
+            }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
