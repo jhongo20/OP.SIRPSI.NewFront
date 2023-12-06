@@ -88,10 +88,46 @@ export class GenerateFiledEvaluationPsychosocialComponent implements OnInit {
       cancelButtonText: 'No',
     }).then((result) => {
       if (result.isConfirmed) {
+        this.onSave();
         setTimeout(() => {
           this.isLoadingOne = false;
         }, 5000);
       } else this.isLoadingOne = false;
     });
+  }
+
+  onSave() {
+    var radicado = `EPE_${this.accountService.userData.empresa.idConsecutivo}_${
+      this.accountService.userData.empresa.documento
+    }_${
+      this.accountService.userData.user.document
+    }_CC_${new Date().getFullYear()}${
+      new Date().getMonth() + 1
+    }${new Date().getDate()}`;
+
+    var body: any = {
+      idEmpresa: this.accountService.userData.empresa.id,
+      radicado: radicado,
+      totalTrabajadores: 10,
+    };
+    this.loadingService.ChangeStatusLoading(true);
+    this.genericService
+      .Post('evaluacionPsicosocial/RegistrarRadicadoFinalEvaluacion', body)
+      .subscribe({
+        next: (data) => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Se ha generado el radicado correctamente!',
+            showConfirmButton: false,
+            timer: 1200,
+          }).then(() => window.location.reload());
+          setTimeout(() => this.loadingService.ChangeStatusLoading(false), 600);
+        },
+        error: (error) => {
+          console.error(error.error.message);
+          this.openSnackBar(error.error.message);
+          setTimeout(() => this.loadingService.ChangeStatusLoading(false), 600);
+        },
+      });
   }
 }
