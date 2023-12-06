@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AccountService } from 'src/app/shared/services/account.service';
 import { GenericService } from 'src/app/shared/services/generic.service';
 import { LoadingService } from 'src/app/shared/services/loading.service';
+import { InterventionControlPlansPsychosocialEvaluationFormComponent } from './intervention-control-plans-psychosocial-evaluation-form/intervention-control-plans-psychosocial-evaluation-form.component';
 
 @Component({
   selector: 'app-intervention-control-plans-psychosocial-evaluation',
@@ -34,7 +35,6 @@ export class InterventionControlPlansPsychosocialEvaluationComponent
     { name: 'Total de centros ', data: 'totalCentrosTrabajo' },
     { name: 'Resultado obtenido ', data: 'resultado' },
   ];
-
   public options = [
     {
       delete: false,
@@ -47,6 +47,25 @@ export class InterventionControlPlansPsychosocialEvaluationComponent
       check: false,
     },
   ];
+  public dataTableUsers: any = null;
+
+  public columnsUsers = [
+    { name: 'Nombre', data: 'nombre' },
+    { name: 'Fecha de inicio', data: 'fechaInicio', pipeDate: 'YYYY/dd/MM' },
+    {
+      name: 'Fecha de fianlización',
+      data: 'fechaFinalizacion',
+      pipeDate: 'YYYY/dd/MM',
+    },
+    { name: 'Responsabled', data: 'usuario', property: 'nombreUsuario' },
+    { name: 'Factor', data: 'factorIntervenir', property: 'nombre' },
+  ];
+  public optionsUsers = [
+    {
+    },
+  ];
+
+  public rowSelected: any;
   public title: string = '';
   tab: number = 0;
 
@@ -72,5 +91,28 @@ export class InterventionControlPlansPsychosocialEvaluationComponent
     });
   }
 
-  selectedRow(event: any, type: number) {}
+  registerActivitiesPlans() {
+    var dialogRef = this.dialog.open(
+      InterventionControlPlansPsychosocialEvaluationFormComponent,
+      {
+        data: {
+          item: this.rowSelected,
+          details: true,
+        },
+      }
+    );
+    dialogRef.afterClosed().subscribe();
+  }
+  selectedRow(event: any) {
+    this.rowSelected = event;
+    this.loadingService.ChangeStatusLoading(true);
+    this.genericService
+      .GetAll(
+        'planIntervencion/ConsultaPlanIntervencion?idCompany=' + event.idEmpresa
+      )
+      .subscribe((data: any) => {
+        this.dataTableUsers = data;
+        setTimeout(() => this.loadingService.ChangeStatusLoading(false), 1100);
+      });
+  }
 }

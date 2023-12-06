@@ -30,7 +30,7 @@ export class GenericTableComponent implements OnInit {
   @Input('changeStatus') changeStatus: string = '';
   @Input('nameColumnStatus') nameColumnStatus: string = 'idEstado';
   @Input('filter') filter: any = '';
-  @Input('options') options: any = [];
+  @Input('options') options: any = null;
   @Input('export') export: boolean = false;
   @Input('dataTable') dataTable: any;
   public state: string = environment.activoEstado;

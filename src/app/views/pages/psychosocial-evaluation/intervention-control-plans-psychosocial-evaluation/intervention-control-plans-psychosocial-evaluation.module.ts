@@ -20,9 +20,13 @@ import { NgxMaskModule } from 'ngx-mask';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import { InterventionControlPlansPsychosocialEvaluationComponent } from './intervention-control-plans-psychosocial-evaluation.component';
+import { InterventionControlPlansPsychosocialEvaluationFormComponent } from './intervention-control-plans-psychosocial-evaluation-form/intervention-control-plans-psychosocial-evaluation-form.component';
 
 @NgModule({
-  declarations: [InterventionControlPlansPsychosocialEvaluationComponent],
+  declarations: [
+    InterventionControlPlansPsychosocialEvaluationComponent,
+    InterventionControlPlansPsychosocialEvaluationFormComponent,
+  ],
   imports: [
     CommonModule,
     InterventionControlPlansPsychosocialEvaluationRoutingModule,

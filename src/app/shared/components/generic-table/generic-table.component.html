@@ -14,7 +14,11 @@
                 </th>
                 <th
                   style="color: white"
-                  *ngIf="this.columns.length > 0 && this.options.length > 0"
+                  *ngIf="
+                    this.columns.length > 0 &&
+                    this.options.length > 0 &&
+                    this.columns != null
+                  "
                 >
                   Opciones
                 </th>
@@ -29,7 +33,11 @@
               >
                 <td hidden="true">{{ da.id }}</td>
                 <td *ngFor="let column of columns">
-                  <div *ngIf="column.porcentaje != true && column.acceptance != true">
+                  <div
+                    *ngIf="
+                      column.porcentaje != true && column.acceptance != true
+                    "
+                  >
                     {{
                       column.burnedData != null
                         ? column.property == null
@@ -64,27 +72,33 @@
                       aria-valuemax="100"
                     ></div>
                   </div>
-                  <div class="icons-list" *ngIf="column.acceptance == true" style="text-align: center;">
+                  <div
+                    class="icons-list"
+                    *ngIf="column.acceptance == true"
+                    style="text-align: center"
+                  >
                     <span
                       *ngIf="da[column.data] == true"
                       nz-icon
                       [nzType]="'check-circle'"
                       [nzTheme]="'twotone'"
                       [nzTwotoneColor]="'#52c41a'"
-                      ></span
-                    >
+                    ></span>
                     <span
                       *ngIf="da[column.data] == false"
                       nz-icon
                       [nzType]="'close-circle'"
                       [nzTheme]="'twotone'"
                       [nzTwotoneColor]="'#c41a1a'"
-                      ></span
-                    >
+                    ></span>
                   </div>
                 </td>
                 <td
-                  *ngIf="this.columns.length > 0 && this.options.length > 0"
+                  *ngIf="
+                    this.columns.length > 0 &&
+                    this.options.length > 0 &&
+                    this.columns != null
+                  "
                   style="display: flex"
                   select="6"
                 >

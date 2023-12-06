@@ -142,7 +142,6 @@ export class WorkCentersComponent implements OnInit {
       )
       .subscribe((data: any) => {
         this.dataTableUsers = data;
-        console.log(this.dataTableUsers);
       });
   }
   DeleteUser(workCenter: any, user: any) {

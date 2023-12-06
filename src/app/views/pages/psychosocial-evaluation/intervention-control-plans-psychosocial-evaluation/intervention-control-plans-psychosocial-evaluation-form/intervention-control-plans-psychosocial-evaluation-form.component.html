@@ -1,0 +1,187 @@
+<div>
+  <label class="title" style="margin-top: 1.5em"
+    >Registrar actividad plan de intervención y control</label
+  >
+
+  <div class="d-flex justify-content">
+    <div>
+      <div class="data-psychologist">Datos del Psicólogo Especialista SST</div>
+      <div class="text-psychologist">
+        Empresa: {{ this.accountService.userData.empresa.nombre }} -
+        {{ this.accountService.userData.empresa.documento }}
+      </div>
+      <div class="text-psychologist">
+        Nombre Completo: {{ this.accountService.userData.user.names }}
+        {{ this.accountService.userData.user.surnames }}
+      </div>
+      <div class="text-psychologist">
+        Correo: {{ this.accountService.userData.user.email }}
+      </div>
+      <div class="text-psychologist" style="margin-bottom: 1em">
+        Número de documento: {{ this.accountService.userData.user.document }}
+      </div>
+    </div>
+  </div>
+  <hr class="hr" />
+  <div>
+    <form class="row" #f="ngForm" [formGroup]="this.form">
+      <div class="col-md-6 mb-2">
+        <label class="form-label"
+          >Categoría
+          <i
+            class="mdi mdi-information"
+            #tooltip="matTooltip"
+            matTooltip="Seleccione una categoría"
+          ></i
+        ></label>
+        <ng-select
+          id="IdFactorIntervenir"
+          #IdFactorIntervenir
+          formControlName="IdFactorIntervenir"
+          [items]="listFactors"
+          bindLabel="nombre"
+          bindValue="id"
+          [(ngModel)]="this.form.value.IdFactorIntervenir"
+          required
+        >
+        </ng-select>
+        <p
+          class="text-danger"
+          *ngIf="form.controls.IdFactorIntervenir.errors?.required"
+        >
+          Este campo es obligatorio
+        </p>
+      </div>
+      <div class="col-md-6 mb-2">
+        <label class="form-label"
+          >Nombre de la actividad
+          <i
+            class="mdi mdi-information"
+            #tooltip="matTooltip"
+            matTooltip="Ingrese el nombre de la actividad"
+          ></i
+        ></label>
+        <input
+          class="form-control"
+          type="text"
+          #Nombre
+          placeholder="Nombre de la actividad"
+          formControlName="Nombre"
+          required
+        />
+        <p class="text-danger" *ngIf="form.controls.Nombre.errors?.required">
+          Este campo es obligatorio
+        </p>
+      </div>
+      <div class="col-md-12 mb-2">
+        <label class="form-label"
+          >Descripción de la actividad
+          <i
+            class="mdi mdi-information"
+            #tooltip="matTooltip"
+            matTooltip="Ingrese la descripción de la actividad"
+          ></i
+        ></label>
+        <input
+          class="form-control"
+          type="text"
+          #Descripcion
+          placeholder="Descripción de la actividad"
+          formControlName="Descripcion"
+          required
+        />
+        <p
+          class="text-danger"
+          *ngIf="form.controls.Descripcion.errors?.required"
+        >
+          Este campo es obligatorio
+        </p>
+      </div>
+      <div class="col-md-6 mb-2">
+        <label class="form-label"
+          >Fecha de inicio actividad
+          <i
+            class="mdi mdi-information"
+            #tooltip="matTooltip"
+            matTooltip="Ingrese la fecha de inicio actividad"
+          ></i
+        ></label>
+        <input
+          class="form-control"
+          type="date"
+          #FechaInicio
+          placeholder="Fecha de inicio actividad"
+          formControlName="FechaInicio"
+          required
+        />
+        <p
+          class="text-danger"
+          *ngIf="form.controls.FechaInicio.errors?.required"
+        >
+          Este campo es obligatorio
+        </p>
+      </div>
+      <div class="col-md-6 mb-2">
+        <label class="form-label"
+          >Fecha de finalización actividad
+          <i
+            class="mdi mdi-information"
+            #tooltip="matTooltip"
+            matTooltip="Ingrese la fecha de finalización actividad"
+          ></i
+        ></label>
+        <input
+          class="form-control"
+          type="date"
+          #FechaFinalizacion
+          placeholder="Fecha de finalización actividad"
+          formControlName="FechaFinalizacion"
+          required
+        />
+        <p
+          class="text-danger"
+          *ngIf="form.controls.FechaFinalizacion.errors?.required"
+        >
+          Este campo es obligatorio
+        </p>
+      </div>
+      <div class="col-md-6 mb-2">
+        <label class="form-label"
+          >Observaciones
+          <i
+            class="mdi mdi-information"
+            #tooltip="matTooltip"
+            matTooltip="Ingrese sus observaciones"
+          ></i
+        ></label>
+        <input
+          class="form-control"
+          type="text"
+          #Observaciones
+          placeholder="Observaciones"
+          formControlName="Observaciones"
+          required
+        />
+        <p
+          class="text-danger"
+          *ngIf="form.controls.Observaciones.errors?.required"
+        >
+          Este campo es obligatorio
+        </p>
+      </div>
+    </form>
+    <hr class="hr" />
+  </div>
+
+  <div style="padding: 20px 0 25px 0">
+    <button
+      type="submit"
+      class="btn btn-primary me-2"
+      (click)="onSave()"
+      [disabled]="this.form.invalid"
+    >
+      Registrar
+    </button>
+    <button class="btn btn-secondary" mat-dialog-close>Cancelar</button>
+  </div>
+</div>
