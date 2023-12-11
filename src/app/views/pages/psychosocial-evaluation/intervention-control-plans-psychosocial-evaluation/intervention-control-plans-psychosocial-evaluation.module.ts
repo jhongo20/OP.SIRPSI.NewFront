@@ -21,6 +21,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import { InterventionControlPlansPsychosocialEvaluationComponent } from './intervention-control-plans-psychosocial-evaluation.component';
 import { InterventionControlPlansPsychosocialEvaluationFormComponent } from './intervention-control-plans-psychosocial-evaluation-form/intervention-control-plans-psychosocial-evaluation-form.component';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { InterventionControlPlansPsychosocialEvaluationFormComponent } from './i
     InterventionControlPlansPsychosocialEvaluationRoutingModule,
     MatSnackBarModule,
     GenericTableModule,
+    NzSelectModule,
     NgSelectModule,
     MatInputModule,
     NgbAccordionModule,

@@ -9,6 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { AccountService } from 'src/app/shared/services/account.service';
 import { GenericService } from 'src/app/shared/services/generic.service';
 import { LoadingService } from 'src/app/shared/services/loading.service';
+import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -29,6 +30,7 @@ export class InterventionControlPlansPsychosocialEvaluationFormComponent
   public form: FormGroup;
 
   listFactors: any = [];
+  listUsuario: any = [];
 
   constructor(
     public formBuilder: FormBuilder,
@@ -55,6 +57,7 @@ export class InterventionControlPlansPsychosocialEvaluationFormComponent
       FechaInicio: ['', Validators.required],
       FechaFinalizacion: ['', Validators.required],
       Observaciones: ['', Validators.required],
+      Responsables: [[], Validators.required],
     });
   }
 
@@ -85,7 +88,17 @@ export class InterventionControlPlansPsychosocialEvaluationFormComponent
       .GetAll(`factoresIntervenir/ConsultarFactoresIntervenir`)
       .subscribe((data: any) => {
         this.listFactors = data;
-        setTimeout(() => this.loadingService.ChangeStatusLoading(false), 600);
+        this.genericService
+          .GetAll(
+            'usuario/consultarUsuariosEmpresa?role=' + environment.psicologoRole
+          )
+          .subscribe((data: any) => {
+            this.listUsuario = data;
+            setTimeout(
+              () => this.loadingService.ChangeStatusLoading(false),
+              600
+            );
+          });
       });
   }
 

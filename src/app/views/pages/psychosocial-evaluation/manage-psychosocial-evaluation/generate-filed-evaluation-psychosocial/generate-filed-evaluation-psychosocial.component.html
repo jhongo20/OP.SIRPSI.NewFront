@@ -7,6 +7,11 @@
       nz-button
       nzType="primary"
       (click)="loadOne()"
+      [disabled]="
+        this.unlinked[0].usersCount != 0 &&
+        this.linkedSummoning[0].usersCount != 0 &&
+        this.linked[1].usersCount != 0
+      "
       [nzLoading]="isLoadingOne"
     >
       Generar radicaco!

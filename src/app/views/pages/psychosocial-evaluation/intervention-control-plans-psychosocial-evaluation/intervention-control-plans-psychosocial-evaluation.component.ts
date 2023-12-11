@@ -7,6 +7,7 @@ import { AccountService } from 'src/app/shared/services/account.service';
 import { GenericService } from 'src/app/shared/services/generic.service';
 import { LoadingService } from 'src/app/shared/services/loading.service';
 import { InterventionControlPlansPsychosocialEvaluationFormComponent } from './intervention-control-plans-psychosocial-evaluation-form/intervention-control-plans-psychosocial-evaluation-form.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-intervention-control-plans-psychosocial-evaluation',
@@ -57,13 +58,32 @@ export class InterventionControlPlansPsychosocialEvaluationComponent
       data: 'fechaFinalizacion',
       pipeDate: 'YYYY/dd/MM',
     },
-    { name: 'Responsabled', data: 'usuario', property: 'nombreUsuario' },
+    { name: 'Psicólogo', data: 'usuario', property: 'nombreUsuario' },
     { name: 'Factor', data: 'factorIntervenir', property: 'nombre' },
   ];
   public optionsUsers = [
     {
+      delete: false,
+      edit: false,
+      details: false,
+      select: true,
+      state: false,
+      pdf: false,
+      validationSelect: false,
+      check: false,
     },
   ];
+
+  public dataTableNi: any = null;
+
+  public columnsNi = [
+    { name: 'Documento', data: 'usuario', property: 'cedula' },
+    { name: 'Correo', data: 'usuario', property: 'correo' },
+    { name: 'Teléfono', data: 'usuario', property: 'telefono' },
+    { name: 'Nombre', data: 'usuario', property: 'nombreUsuario' },
+    { name: 'Apellidos', data: 'usuario', property: 'apellidosUsuario' },
+  ];
+  public optionsNi = [{}];
 
   public rowSelected: any;
   public title: string = '';
@@ -103,6 +123,7 @@ export class InterventionControlPlansPsychosocialEvaluationComponent
     );
     dialogRef.afterClosed().subscribe();
   }
+
   selectedRow(event: any) {
     this.rowSelected = event;
     this.loadingService.ChangeStatusLoading(true);
@@ -115,4 +136,20 @@ export class InterventionControlPlansPsychosocialEvaluationComponent
         setTimeout(() => this.loadingService.ChangeStatusLoading(false), 1100);
       });
   }
+
+  selectedRowUsers(event: any) {
+    this.rowSelected = event;
+    this.loadingService.ChangeStatusLoading(true);
+    this.genericService
+      .GetAll(
+        'planIntervencion/ConsultaResponsablePlanIntervencion?idPlan=' +
+          event.id
+      )
+      .subscribe((data: any) => {
+        this.dataTableNi = data;
+        setTimeout(() => this.loadingService.ChangeStatusLoading(false), 1100);
+      });
+  }
+
+  
 }

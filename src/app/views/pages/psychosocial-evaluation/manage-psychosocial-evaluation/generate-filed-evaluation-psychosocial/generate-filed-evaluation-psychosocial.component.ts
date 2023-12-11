@@ -70,6 +70,11 @@ export class GenerateFiledEvaluationPsychosocialComponent implements OnInit {
           this.accountService.userData.empresa.id
       )
       .subscribe((data: any) => {
+        console.log(1234, data);
+        console.log(1234, data.unlinked[0].usersCount);
+        console.log(1234, data.linkedSummoning[0].usersCount);
+        console.log(1234, data.linked[1].usersCount);
+
         this.linked = data != null ? data.linked : null;
         this.unlinked = data != null ? data.unlinked : null;
         this.linkedSummoning = data != null ? data.linkedSummoning : null;

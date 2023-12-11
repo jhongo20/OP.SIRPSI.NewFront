@@ -169,6 +169,39 @@
           Este campo es obligatorio
         </p>
       </div>
+      <div class="col-md-6 mb-2">
+        <label class="form-label"
+          >Responsables
+          <i
+            class="mdi mdi-information"
+            #tooltip="matTooltip"
+            matTooltip="Por favor seleccione un(os) responsable(s)"
+          ></i
+        ></label>
+        <nz-select
+          [nzMaxTagPlaceholder]="Responsables"
+          nzMode="multiple"
+          nzPlaceHolder="Por favor seleccione un(os) responsable(s)"
+          formControlName="Responsables"
+          [nzSize]="'large'"
+          [nzMaxMultipleCount]="2"
+        >
+          <nz-option
+            *ngFor="let item of listUsuario"
+            [nzLabel]="item.nombreUsuario"
+            [nzValue]="item.id"
+          ></nz-option>
+        </nz-select>
+        <ng-template #Responsables let-selectedList
+          >and {{ selectedList.length }} more selected</ng-template
+        >
+        <p
+          class="text-danger"
+          *ngIf="form.controls.Responsables.errors?.required"
+        >
+          Este campo es obligatorio
+        </p>
+      </div>
     </form>
     <hr class="hr" />
   </div>

@@ -35,7 +35,7 @@
         class="btn btn-dark"
         (click)="registerActivitiesPlans()"
       >
-        Asignar usuario
+        Registrar actividad plan de intervención y control
         <i class="fa-solid fa-tower-control"></i>
       </a>
     </div>
@@ -48,6 +48,25 @@
           [dataTable]="this.dataTableUsers"
           [table]="'centrotrabajo/ConsultarUsuariosCentroDeTrabajo'"
           [options]="optionsUsers"
+          (selected)="selectedRowUsers($event)"
+        ></app-generic-table>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-4" *ngIf="this.dataTableNi != null">
+    <div class="col-md-7 space">
+      <label class="title">Responsables</label>
+    </div>
+    <div class="col-md-5 space"></div>
+    <div class="col-md-12">
+      <div class="col-md-12 space"></div>
+      <div class="col-md-12">
+        <div class="col-md-12 space"></div>
+        <app-generic-table
+          [columns]="columnsNi"
+          [dataTable]="this.dataTableNi"
+          [table]="'centrotrabajo/ConsultarUsuariosCentroDeTrabajo'"
+          [options]="optionsNi"
         ></app-generic-table>
       </div>
     </div>
