@@ -53,21 +53,45 @@
       </div>
     </div>
   </div>
-  <div class="row mt-4" *ngIf="this.dataTableNi != null">
-    <div class="col-md-7 space">
-      <label class="title">Responsables</label>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="row mt-4" *ngIf="this.dataTableNi != null">
+        <div class="col-md-7 space">
+          <label class="title">Responsables</label>
+        </div>
+        <div class="col-md-5 space"></div>
+        <div class="col-md-12">
+          <div class="col-md-12 space"></div>
+          <div class="col-md-12">
+            <div class="col-md-12 space"></div>
+            <app-generic-table
+              [columns]="columnsNi"
+              [dataTable]="this.dataTableNi"
+              [table]="'centrotrabajo/ConsultarUsuariosCentroDeTrabajo'"
+              [options]="optionsNi"
+            ></app-generic-table>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="col-md-5 space"></div>
-    <div class="col-md-12">
-      <div class="col-md-12 space"></div>
-      <div class="col-md-12">
-        <div class="col-md-12 space"></div>
-        <app-generic-table
-          [columns]="columnsNi"
-          [dataTable]="this.dataTableNi"
-          [table]="'centrotrabajo/ConsultarUsuariosCentroDeTrabajo'"
-          [options]="optionsNi"
-        ></app-generic-table>
+    <div class="col-md-6">
+      <div class="row mt-4" *ngIf="this.dataTableNi != null">
+        <div class="col-md-7 space">
+          <label class="title">Resumen actividad</label>
+        </div>
+        <div class="col-md-5 space"></div>
+        <div class="col-md-12">
+          <div class="col-md-12 space"></div>
+          <div class="col-md-12">
+            <div class="col-md-12 space"></div>
+            <app-generic-table
+              [columns]="columnsInfoPlan"
+              [dataTable]="this.listInfoPlan"
+              [table]="'centrotrabajo/ConsultarUsuariosCentroDeTrabajo'"
+              [options]="optionsNi"
+            ></app-generic-table>
+          </div>
+        </div>
       </div>
     </div>
   </div>

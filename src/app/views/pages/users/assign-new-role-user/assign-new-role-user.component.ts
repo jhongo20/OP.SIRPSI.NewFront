@@ -8,11 +8,11 @@ import { LoadingService } from 'src/app/shared/services/loading.service';
 import { SelectRoleService } from 'src/app/shared/services/select-role.service';
 
 @Component({
-  selector: 'app-select-role',
-  templateUrl: './select-role.component.html',
-  styleUrls: ['./select-role.component.scss'],
+  selector: 'app-assign-new-role-user',
+  templateUrl: './assign-new-role-user.component.html',
+  styleUrls: ['./assign-new-role-user.component.scss'],
 })
-export class SelectRoleComponent implements OnInit {
+export class AssignNewRoleUserComponent implements OnInit {
   public form: FormGroup;
   public loading: Boolean = true;
   hide = true;
@@ -39,16 +39,15 @@ export class SelectRoleComponent implements OnInit {
     });
 
     this.getListas();
-    this.ValidateSession();
   }
 
   GetInto() {
-    this.accountService
-      .RenewToken(this.accountService.userData.id, this.item.roleId)
-      .subscribe(() => {
-        this.roleService.SelectRoleUser(true);
-        this.accountService.ValidateSesion();
-      });
+    // this.accountService
+    //   .RenewToken(this.accountService.userData.id, this.item.roleId)
+    //   .subscribe(() => {
+    //     this.roleService.SelectRoleUser(true);
+    //     this.accountService.ValidateSesion();
+    //   });
   }
 
   Cancel() {
@@ -61,11 +60,6 @@ export class SelectRoleComponent implements OnInit {
       horizontalPosition: 'start',
       verticalPosition: 'bottom',
     });
-  }
-
-  ValidateSession() {
-    if (this.roleService.roleSelectData) this.router.navigate(['/dashboard']);
-    if (!this.accountService.userData) this.router.navigate(['/account/login']);
   }
 
   getListas() {

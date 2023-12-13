@@ -12,6 +12,7 @@ import { LoadingService } from 'src/app/shared/services/loading.service';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { AssignNewRoleUserComponent } from '../assign-new-role-user/assign-new-role-user.component';
 
 @Component({
   selector: 'app-register-new-users',
@@ -159,16 +160,28 @@ export class RegisterNewUsersComponent implements OnInit {
       },
       error: (error) => {
         this.loadingService.ChangeStatusLoading(false);
-        Swal.fire({
-          icon: 'warning',
-          title:
-            'Ha ocurrido un error! ' + error.error.message ==
-            'Registro de usuario ¡fallido!  Failed : PasswordRequiresNonAlphanumeric,PasswordRequiresLower,PasswordRequiresUpper'
-              ? 'Registro de usuario ¡fallido!  Error: La contraseña no cumple los criterios de seguridad.'
-              : error.error.message,
-          showConfirmButton: false,
-          timer: 2800,
-        });
+        if (error.error.assign == 1)
+          Swal.fire({
+            icon: 'warning',
+            title: error.error.message,
+            html: error.error.otherdata,
+            confirmButtonText: 'Si',
+            cancelButtonText: 'No',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.onAssignNewRole(1, '1', 1);
+            }
+          });
+        else
+          Swal.fire({
+            icon: 'warning',
+            title:
+              'Ha ocurrido un error! ' + error.error.message ==
+              'Registro de usuario ¡fallido!  Failed : PasswordRequiresNonAlphanumeric,PasswordRequiresLower,PasswordRequiresUpper'
+                ? 'Registro de usuario ¡fallido!  Error: La contraseña no cumple los criterios de seguridad.'
+                : error.error.message,
+            showConfirmButton: false,
+          });
       },
     });
   }
@@ -360,5 +373,14 @@ export class RegisterNewUsersComponent implements OnInit {
         nzOnOk: () => this.router.navigate(['/companies/update-company-data']),
       });
     }
+  }
+
+  onAssignNewRole(user: any, role: string, listRoles: any) {
+    const dialogRef = this.dialog.open(AssignNewRoleUserComponent, {
+      data: {
+        id: 0,
+      },
+    });
+    dialogRef.afterClosed().subscribe();
   }
 }

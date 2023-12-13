@@ -1,4 +1,3 @@
-<app-loading *ngIf="this.loading"></app-loading>
 <div style="float: left; width: 100%" *ngIf="this.roleList.length > 0">
   <div class="wrapper">
     <form #f="ngForm" [formGroup]="this.form">
@@ -27,7 +26,7 @@
           style="width: 100%"
           [disabled]="this.form.invalid"
         >
-          Seleccionar
+          Asignar
         </button>
       </div>
       <mat-divider

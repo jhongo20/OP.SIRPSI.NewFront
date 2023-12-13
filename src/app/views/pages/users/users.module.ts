@@ -39,6 +39,7 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { ComplementaryCompanyDataModule } from '../companies/update-company-data/complementary-company-data/complementary-company-data.module';
 import { NzModalModule } from 'ng-zorro-antd/modal';
+import { AssignNewRoleUserComponent } from './assign-new-role-user/assign-new-role-user.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
     UpdateWorkerDataComponent,
     UpdatePsychologistDataComponent,
     OccupationalLicenseComponent,
+    AssignNewRoleUserComponent,
   ],
   imports: [
     CommonModule,

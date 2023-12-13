@@ -44,3 +44,5 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+src/app/views/pages/psychosocial-evaluation/intervention-control-plans-psychosocial-evaluation/intervention-control-plans-psychosocial-evaluation-form/intervention-control-plans-psychosocial-evaluation-form.component.spec.ts
+src/app/views/pages/users/assign-new-role-user/assign-new-role-user.component.spec.ts

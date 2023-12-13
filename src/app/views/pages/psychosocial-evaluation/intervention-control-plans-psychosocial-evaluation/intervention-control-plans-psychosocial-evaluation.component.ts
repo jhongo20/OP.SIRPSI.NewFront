@@ -24,6 +24,7 @@ export class InterventionControlPlansPsychosocialEvaluationComponent
   listEvaluation: any;
   countListUsers: number = 0;
   listUsersSelected: any = [];
+  listInfoPlan: any = [];
   viewTable = false;
   workCenterSelected = '';
   public filter: string = '';
@@ -59,7 +60,7 @@ export class InterventionControlPlansPsychosocialEvaluationComponent
       pipeDate: 'YYYY/dd/MM',
     },
     { name: 'Psicólogo', data: 'usuario', property: 'nombreUsuario' },
-    { name: 'Factor', data: 'factorIntervenir', property: 'nombre' },
+    { name: 'Factor', data: 'factorIntervenirNombre' },
   ];
   public optionsUsers = [
     {
@@ -85,6 +86,11 @@ export class InterventionControlPlansPsychosocialEvaluationComponent
   ];
   public optionsNi = [{}];
 
+  public columnsInfoPlan = [
+    { name: 'Nombre', data: 'nombre' },
+    { name: 'Descripción', data: 'descripcion' },
+    { name: 'Factor', data: 'factorIntervenirNombre' },
+  ];
   public rowSelected: any;
   public title: string = '';
   tab: number = 0;
@@ -139,6 +145,9 @@ export class InterventionControlPlansPsychosocialEvaluationComponent
 
   selectedRowUsers(event: any) {
     this.rowSelected = event;
+    this.listInfoPlan = this.dataTableUsers.filter(
+      (data: any) => data.id == event.id
+    );
     this.loadingService.ChangeStatusLoading(true);
     this.genericService
       .GetAll(
@@ -150,6 +159,4 @@ export class InterventionControlPlansPsychosocialEvaluationComponent
         setTimeout(() => this.loadingService.ChangeStatusLoading(false), 1100);
       });
   }
-
-  
 }
