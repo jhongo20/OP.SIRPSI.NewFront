@@ -16,53 +16,28 @@ export class GenericService {
   ) {}
 
   public GetAll(origin: string, data?: any): Observable<any> {
-    this.accountService
-      .RenewToken(
-        this.accountService.userData.id,
-        this.accountService.userData.roleId
-      )
-      .subscribe();
+    this.RenewToken();
     return this.http.get<any>(
       environment.urlApi + origin + (data != null ? data : ''),
       { context: skipApiKey() }
     );
   }
   public GetById(origin: string, id: any): Observable<Response> {
-    this.accountService
-      .RenewToken(
-        this.accountService.userData.id,
-        this.accountService.userData.roleId
-      )
-      .subscribe();
+    this.RenewToken();
     return this.http.get<Response>(environment.urlApi + origin + '/' + id, {
       context: skipApiKey(),
     });
   }
   public Post(origin: string, data?: any): Observable<any> {
-    this.accountService
-      .RenewToken(
-        this.accountService.userData.id,
-        this.accountService.userData.roleId
-      )
-      .subscribe();
+    this.RenewToken();
     return this.http.post<any>(environment.urlApi + origin, data);
   }
   public Put(origin: string, data?: any): Observable<any> {
-    this.accountService
-      .RenewToken(
-        this.accountService.userData.id,
-        this.accountService.userData.roleId
-      )
-      .subscribe();
+    this.RenewToken();
     return this.http.put<any>(environment.urlApi + origin, data);
   }
   public Delete(origin: string, id: any): Observable<any> {
-    this.accountService
-      .RenewToken(
-        this.accountService.userData.id,
-        this.accountService.userData.roleId
-      )
-      .subscribe();
+    this.RenewToken();
     return this.http.delete<any>(environment.urlApi + origin, {
       body: { Id: id },
     });
@@ -72,15 +47,20 @@ export class GenericService {
     id: string,
     estado: string
   ): Observable<any> {
-    this.accountService
-      .RenewToken(
-        this.accountService.userData.id,
-        this.accountService.userData.roleId
-      )
-      .subscribe();
+    this.RenewToken();
     return this.http.put<any>(environment.urlApi + origin, {
       Id: id,
       IdEstado: estado,
     });
+  }
+
+  private RenewToken() {
+    if (this.accountService.userData != null)
+      this.accountService
+        .RenewToken(
+          this.accountService.userData.id,
+          this.accountService.userData.roleId
+        )
+        .subscribe();
   }
 }

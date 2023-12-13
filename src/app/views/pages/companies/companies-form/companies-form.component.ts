@@ -216,85 +216,86 @@ export class CompaniesFormComponent implements OnInit {
       .GetAll('ministerio/ConsultarMinisterio')
       .subscribe((data: any) => {
         this.listMinisterios = data;
-        this.form.controls['IdMinisterio'].setValue(this.listMinisterios[0].id);
-        this.genericService
-          .GetAll('tiposempresa/ConsultarTipoEmpresa')
-          .subscribe((data: any) => {
-            this.listClasificacion = data;
-            this.genericService
-              .GetAll('tipodocumento/ConsultarTipoDocumento')
-              .subscribe((data: any) => {
-                this.listDocsUser = data;
-                this.genericService
-                  .GetAll('tiposempresa/ConsultarTipoEmpresa?type=1')
-                  .subscribe((data: any) => {
-                    this.listTipoEmpresa = data;
-                    this.genericService
-                      .GetAll('estados/ConsultarEstados')
-                      .subscribe((data: any) => {
-                        this.estadosList = data;
-                        this.genericService
-                          .GetAll('empresas/ConsultarEmpresas')
-                          .subscribe((data: any) => {
-                            this.listEmpresas = data;
-                            this.genericService
-                              .GetAll('pais/ConsultarPaises')
-                              .subscribe((data: any) => {
-                                this.listPaises = data;
-                                this.genericService
-                                  .GetAll('roles/ConsultarRoles')
-                                  .subscribe((data: any) => {
-                                    this.listRoles = data;
-                                    this.genericService
-                                      .GetAll(
-                                        'regimenesTributario/ConsultarRegimenesTributario'
-                                      )
-                                      .subscribe((data: any) => {
-                                        this.listRegimenes = data;
-                                        this.genericService
-                                          .GetAll(
-                                            'tiposPersonas/ConsultarTiposPersona'
-                                          )
-                                          .subscribe((data: any) => {
-                                            this.listTiposPersona = data;
-                                            this.genericService
-                                              .GetAll(
-                                                'actividadEconomica/ConsultarActividadEconomica'
-                                              )
-                                              .subscribe((data: any) => {
-                                                this.listActividadEconomica =
-                                                  data;
-                                                this.genericService
-                                                  .GetAll(
-                                                    'usuario/ConsultarUsuarios'
-                                                  )
-                                                  .subscribe((data: any) => {
-                                                    this.listUsuario = data;
-                                                    this.listUsuario.push({
-                                                      id: '0',
-                                                      nombreUsuario:
-                                                        'Registrar',
-                                                      apellidosUsuario: '',
-                                                    });
-                                                    setTimeout(
-                                                      () =>
-                                                        this.loadingService.ChangeStatusLoading(
-                                                          false
-                                                        ),
-                                                      500
-                                                    );
-                                                  });
-                                              });
-                                          });
-                                      });
-                                  });
-                              });
-                          });
-                      });
-                  });
-              });
-          });
+        // this.form.controls['IdMinisterio'].setValue(this.listMinisterios[0].id);
+        // this.genericService
+        //   .GetAll('tiposempresa/ConsultarTipoEmpresa')
+        //   .subscribe((data: any) => {
+        //     this.listClasificacion = data;
+        //     this.genericService
+        //       .GetAll('tipodocumento/ConsultarTipoDocumento')
+        //       .subscribe((data: any) => {
+        //         this.listDocsUser = data;
+        //         this.genericService
+        //           .GetAll('tiposempresa/ConsultarTipoEmpresa?type=1')
+        //           .subscribe((data: any) => {
+        //             this.listTipoEmpresa = data;
+        //             this.genericService
+        //               .GetAll('estados/ConsultarEstados')
+        //               .subscribe((data: any) => {
+        //                 this.estadosList = data;
+        //                 this.genericService
+        //                   .GetAll('empresas/ConsultarEmpresas')
+        //                   .subscribe((data: any) => {
+        //                     this.listEmpresas = data;
+        //                     this.genericService
+        //                       .GetAll('pais/ConsultarPaises')
+        //                       .subscribe((data: any) => {
+        //                         this.listPaises = data;
+        //                         this.genericService
+        //                           .GetAll('roles/ConsultarRoles')
+        //                           .subscribe((data: any) => {
+        //                             this.listRoles = data;
+        //                             this.genericService
+        //                               .GetAll(
+        //                                 'regimenesTributario/ConsultarRegimenesTributario'
+        //                               )
+        //                               .subscribe((data: any) => {
+        //                                 this.listRegimenes = data;
+        //                                 this.genericService
+        //                                   .GetAll(
+        //                                     'tiposPersonas/ConsultarTiposPersona'
+        //                                   )
+        //                                   .subscribe((data: any) => {
+        //                                     this.listTiposPersona = data;
+        //                                     this.genericService
+        //                                       .GetAll(
+        //                                         'actividadEconomica/ConsultarActividadEconomica'
+        //                                       )
+        //                                       .subscribe((data: any) => {
+        //                                         this.listActividadEconomica =
+        //                                           data;
+        //                                         this.genericService
+        //                                           .GetAll(
+        //                                             'usuario/ConsultarUsuarios'
+        //                                           )
+        //                                           .subscribe((data: any) => {
+        //                                             this.listUsuario = data;
+        //                                             this.listUsuario.push({
+        //                                               id: '0',
+        //                                               nombreUsuario:
+        //                                                 'Registrar',
+        //                                               apellidosUsuario: '',
+        //                                             });
+        //                                             setTimeout(
+        //                                               () =>
+        //                                                 this.loadingService.ChangeStatusLoading(
+        //                                                   false
+        //                                                 ),
+        //                                               500
+        //                                             );
+        //                                           });
+        //                                       });
+        //                                   });
+        //                               });
+        //                           });
+        //                       });
+        //                   });
+        //               });
+        //           });
+        //       });
+        //   });
       });
+    this.loadingService.ChangeStatusLoading(false);
   }
   cancelarForm() {
     Swal.fire({
