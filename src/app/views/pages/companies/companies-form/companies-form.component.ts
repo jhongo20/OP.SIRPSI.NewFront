@@ -308,4 +308,25 @@ export class CompaniesFormComponent implements OnInit {
       if (result.isConfirmed) this.cancelar.emit(true);
     });
   }
+
+  sendNotifications(
+    code: string,
+    numberPhone: string,
+    password: string,
+    email: string
+  ) {
+    var body = {
+      CodeActivation: code,
+      Receiver: email,
+      Password: password,
+    };
+    this.genericService
+      .Post('mensajes/EnviarNotificacionMensajeCorreo', body)
+      .subscribe();
+
+    body.Receiver = numberPhone;
+    this.genericService
+      .Post('mensajes/EnviarNotificacionMensajeWhatsApp', body)
+      .subscribe();
+  }
 }
