@@ -5,18 +5,18 @@
       <div class="mb-3">
         <label class="form-label">Seleccionar rol:</label>
         <ng-select
-          id="Role"
-          #Role
-          formControlName="Role"
+          id="RoleId"
+          #RoleId
+          formControlName="RoleId"
           [items]="roleList"
-          bindLabel="nameRole"
-          bindValue="roleId"
-          [(ngModel)]="this.form.value.Role"
+          bindLabel="name"
+          bindValue="id"
+          [(ngModel)]="this.form.value.RoleId"
           (change)="onSelected($event)"
           required
         >
         </ng-select>
-        <!-- <p class="mt-2 text-muted">Id: <span class="fw-bolder">{{this.form.value.Role}}</span></p> -->
+        <!-- <p class="mt-2 text-muted">Id: <span class="fw-bolder">{{this.form.value.RoleId}}</span></p> -->
       </div>
       <div>
         <button
@@ -32,7 +32,7 @@
       <mat-divider
         style="margin: 20px 0px; float: left; width: 100%"
       ></mat-divider>
-      <h3><a (click)="Cancel()" class="item-blue">Cancelar</a></h3>
+      <!-- <h3><a (click)="Cancel()" class="item-blue">Cancelar</a></h3> -->
     </form>
   </div>
 </div>

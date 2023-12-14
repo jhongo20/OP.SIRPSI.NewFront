@@ -11,6 +11,7 @@ import { getService } from 'src/app/shared/services/get.services';
 import { LoadingService } from 'src/app/shared/services/loading.service';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
+import { AssignNewRoleUserComponent } from '../assign-new-role-user/assign-new-role-user.component';
 
 @Component({
   selector: 'app-users-form',
@@ -49,6 +50,7 @@ export class UsersFormComponent implements OnInit {
     private router: Router,
     private servicio: getService
   ) {}
+
   ngOnInit(): void {
     this.type =
       this.router.url == '/users/register-new-administrator'
@@ -99,6 +101,7 @@ export class UsersFormComponent implements OnInit {
     });
     this.onGetDepartment(environment.urlApiColombia + 'Department');
   }
+
   onSave() {
     this.form.value.IdTypeDocument = this.formValidate.value.IdTypeDocument;
     this.form.value.Document = this.formValidate.value.Document;
@@ -126,19 +129,32 @@ export class UsersFormComponent implements OnInit {
       },
       error: (error) => {
         this.loadingService.ChangeStatusLoading(false);
-        Swal.fire({
-          icon: 'warning',
-          title:
-            'Ha ocurrido un error! ' + error.error.message ==
-            'Registro de usuario ¡fallido!  Failed : PasswordRequiresNonAlphanumeric,PasswordRequiresLower,PasswordRequiresUpper'
-              ? 'Registro de usuario ¡fallido!  Error: La contraseña no cumple los criterios de seguridad.'
-              : error.error.message,
-          showConfirmButton: false,
-          timer: 2800,
-        });
+        if (error.error.assign == 1)
+          Swal.fire({
+            icon: 'warning',
+            title: error.error.message,
+            html: error.error.otherdata,
+            confirmButtonText: 'Si',
+            cancelButtonText: 'No',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.onAssignNewRole(false, '1', error.error.id);
+            }
+          });
+        else
+          Swal.fire({
+            icon: 'warning',
+            title:
+              'Ha ocurrido un error! ' + error.error.message ==
+              'Registro de usuario ¡fallido!  Failed : PasswordRequiresNonAlphanumeric,PasswordRequiresLower,PasswordRequiresUpper'
+                ? 'Registro de usuario ¡fallido!  Error: La contraseña no cumple los criterios de seguridad.'
+                : error.error.message,
+            showConfirmButton: false,
+          });
       },
     });
   }
+
   getListas() {
     this.loadingService.ChangeStatusLoading(true);
     this.genericService.GetAll('sexo/ConsultarSexo').subscribe((data: any) => {
@@ -182,6 +198,7 @@ export class UsersFormComponent implements OnInit {
         });
     });
   }
+
   sendNotifications(
     code: string,
     numberPhone: string,
@@ -202,6 +219,7 @@ export class UsersFormComponent implements OnInit {
       .Post('mensajes/EnviarNotificacionMensajeWhatsApp', body)
       .subscribe();
   }
+
   getUser() {
     this.loadingService.ChangeStatusLoading(true);
     this.genericService
@@ -242,6 +260,7 @@ export class UsersFormComponent implements OnInit {
         },
       });
   }
+
   cancelarForm() {
     Swal.fire({
       title: '¿Estas seguro?',
@@ -257,12 +276,14 @@ export class UsersFormComponent implements OnInit {
       }
     });
   }
+
   openSnackBar(message: string) {
     this.snackBar.open(message, 'x', {
       horizontalPosition: 'start',
       verticalPosition: 'bottom',
     });
   }
+
   LlenarForm(type: number) {
     if (type == 0)
       this.form.controls['IdTypeDocument'].setValue(
@@ -271,6 +292,7 @@ export class UsersFormComponent implements OnInit {
     if (type == 1)
       this.form.controls['Document'].setValue(this.formValidate.value.Document);
   }
+
   onGetDepartment(url: string) {
     this.servicio.obtenerDatos(url).subscribe((data) => {
       this.listDepartament = data.sort((x: any, y: any) =>
@@ -278,6 +300,7 @@ export class UsersFormComponent implements OnInit {
       );
     });
   }
+
   onGetCity(url: any) {
     this.listCity = [];
     this.form.value.PlaceBirthCity = '';
@@ -292,5 +315,16 @@ export class UsersFormComponent implements OnInit {
           x.name.localeCompare(y.name)
         );
       });
+  }
+
+  onAssignNewRole(internal: any, role: string, user: any) {
+    const dialogRef = this.dialog.open(AssignNewRoleUserComponent, {
+      data: {
+        id: 0,
+        internal: internal,
+        user: user,
+      },
+    });
+    dialogRef.afterClosed().subscribe();
   }
 }

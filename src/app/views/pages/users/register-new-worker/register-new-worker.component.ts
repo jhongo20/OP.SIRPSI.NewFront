@@ -8,6 +8,7 @@ import { LoadingService } from 'src/app/shared/services/loading.service';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import * as XLSX from 'xlsx';
+import { AssignNewRoleUserComponent } from '../assign-new-role-user/assign-new-role-user.component';
 
 @Component({
   selector: 'app-register-new-worker',
@@ -48,8 +49,9 @@ export class RegisterNewWorkerComponent implements OnInit {
     private genericService: GenericService,
     private loadingService: LoadingService,
     public accountService: AccountService,
-    private snackBar: MatSnackBar,
+    private snackBar: MatSnackBar
   ) {}
+
   ngOnInit(): void {
     this.title = 'Registro de trabajadores';
     this.getListas();
@@ -85,6 +87,7 @@ export class RegisterNewWorkerComponent implements OnInit {
       )
       .subscribe((data) => (this.listCentrosCosto = data));
   }
+
   onSave() {
     this.form.value.HaveDisability =
       this.form.value.HaveDisability == '0' ? false : true;
@@ -118,19 +121,32 @@ export class RegisterNewWorkerComponent implements OnInit {
       },
       error: (error) => {
         this.loadingService.ChangeStatusLoading(false);
-        Swal.fire({
-          icon: 'warning',
-          title:
-            'Ha ocurrido un error! ' + error.error.message ==
-            'Registro de usuario ¡fallido!  Failed : PasswordRequiresNonAlphanumeric,PasswordRequiresLower,PasswordRequiresUpper'
-              ? 'Registro de usuario ¡fallido!  Error: La contraseña no cumple los criterios de seguridad.'
-              : error.error.message,
-          showConfirmButton: false,
-          timer: 2800,
-        });
+        if (error.error.assign == 1)
+          Swal.fire({
+            icon: 'warning',
+            title: error.error.message,
+            html: error.error.otherdata,
+            confirmButtonText: 'Si',
+            cancelButtonText: 'No',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.onAssignNewRole(false, '1', error.error.id);
+            }
+          });
+        else
+          Swal.fire({
+            icon: 'warning',
+            title:
+              'Ha ocurrido un error! ' + error.error.message ==
+              'Registro de usuario ¡fallido!  Failed : PasswordRequiresNonAlphanumeric,PasswordRequiresLower,PasswordRequiresUpper'
+                ? 'Registro de usuario ¡fallido!  Error: La contraseña no cumple los criterios de seguridad.'
+                : error.error.message,
+            showConfirmButton: false,
+          });
       },
     });
   }
+
   getListas() {
     this.loadingService.ChangeStatusLoading(true);
     this.genericService
@@ -181,6 +197,7 @@ export class RegisterNewWorkerComponent implements OnInit {
           });
       });
   }
+
   sendNotifications(
     code: string,
     numberPhone: string,
@@ -201,6 +218,7 @@ export class RegisterNewWorkerComponent implements OnInit {
       .Post('mensajes/EnviarNotificacionMensajeWhatsApp', body)
       .subscribe();
   }
+
   cancelarForm() {
     Swal.fire({
       title: '¿Estas seguro?',
@@ -216,6 +234,7 @@ export class RegisterNewWorkerComponent implements OnInit {
       }
     });
   }
+
   openSnackBar(message: string) {
     this.snackBar.open(message, 'x', {
       horizontalPosition: 'start',
@@ -254,5 +273,16 @@ export class RegisterNewWorkerComponent implements OnInit {
   convertToJson() {
     // Puedes realizar acciones adicionales aquí antes de mostrar los datos JSON.
     console.log(this.jsonData);
+  }
+
+  onAssignNewRole(internal: any, role: string, user: any) {
+    const dialogRef = this.dialog.open(AssignNewRoleUserComponent, {
+      data: {
+        id: 0,
+        internal: internal,
+        user: user,
+      },
+    });
+    dialogRef.afterClosed().subscribe();
   }
 }

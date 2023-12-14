@@ -91,7 +91,8 @@
     <a href="" class="settings-sidebar-toggler" (click)="toggleSettingsSidebar($event)">
       <i class="icon feather icon-settings"></i>
     </a>
-    <h6 class="text-muted mb-2">Sidebar:</h6>
+    <app-select-role-menu [role]="this.accountService.userData.roleId"></app-select-role-menu>
+    <!-- <h6 class="text-muted mb-2">Sidebar:</h6>
     <div class="mb-3 pb-3 border-bottom">
       <div class="form-check form-check-inline">
         <label class="form-check-label">
@@ -119,6 +120,6 @@
       <a class="theme-item" href="https://www.nobleui.com/angular/template/demo2/">
         <img src="assets/images/screenshots/dark.jpg" alt="dark theme">
       </a>
-    </div>
+    </div> -->
   </div>
 </nav>

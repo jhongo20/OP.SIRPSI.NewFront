@@ -169,7 +169,7 @@ export class RegisterNewUsersComponent implements OnInit {
             cancelButtonText: 'No',
           }).then((result) => {
             if (result.isConfirmed) {
-              this.onAssignNewRole(1, '1', 1);
+              this.onAssignNewRole(false, '1', error.error.id);
             }
           });
         else
@@ -375,10 +375,12 @@ export class RegisterNewUsersComponent implements OnInit {
     }
   }
 
-  onAssignNewRole(user: any, role: string, listRoles: any) {
+  onAssignNewRole(internal: any, role: string, user: any) {
     const dialogRef = this.dialog.open(AssignNewRoleUserComponent, {
       data: {
         id: 0,
+        internal: internal,
+        user: user,
       },
     });
     dialogRef.afterClosed().subscribe();
