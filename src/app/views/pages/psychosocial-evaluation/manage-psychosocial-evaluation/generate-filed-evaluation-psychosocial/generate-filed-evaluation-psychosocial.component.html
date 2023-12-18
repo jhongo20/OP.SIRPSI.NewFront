@@ -12,7 +12,7 @@
       Generar radicaco!
     </button>
   </div>
-  <div class="row">
+  <div class="row" *ngIf="this.view == true">
     <div class="col-md-6" *ngIf="this.linked != null">
       <app-list-status-users-evaluation
         *ngFor="let link of linked; let i = index"

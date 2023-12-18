@@ -20,6 +20,7 @@ export class GenerateFiledEvaluationPsychosocialComponent implements OnInit {
   listUsersSelected: any = [];
   viewTable = false;
   workCenterSelected = '';
+  view: boolean = false;
   public filter: string = '';
   public table: string =
     'evaluacionPsicosocial/ConsultaRadicadoFinalEvaluacion';
@@ -51,7 +52,12 @@ export class GenerateFiledEvaluationPsychosocialComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadingService.ChangeStatusLoading(true);
-    this.onGetData();
+    this.onGetData().then(() => {
+      setTimeout(() => {
+        this.loadingService.ChangeStatusLoading(false);
+        this.view = true;
+      }, 2000);
+    });
   }
 
   openSnackBar(message: string) {
@@ -63,22 +69,17 @@ export class GenerateFiledEvaluationPsychosocialComponent implements OnInit {
 
   selectedRow(event: any, type: number) {}
 
-  onGetData() {
+  async onGetData() {
     this.genericService
       .GetAll(
         'evaluacionPsicosocial/ConsultaGenerarRadicadoFinal?companyId=' +
           this.accountService.userData.empresa.id
       )
       .subscribe((data: any) => {
-        console.log(1234, data);
-        console.log(1234, data.unlinked[0].usersCount);
-        console.log(1234, data.linkedSummoning[0].usersCount);
-        console.log(1234, data.linked[1].usersCount);
-
         this.linked = data != null ? data.linked : null;
         this.unlinked = data != null ? data.unlinked : null;
         this.linkedSummoning = data != null ? data.linkedSummoning : null;
-        setTimeout(() => this.loadingService.ChangeStatusLoading(false), 1000);
+        return true;
       });
   }
 
