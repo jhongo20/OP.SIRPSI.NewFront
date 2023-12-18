@@ -105,14 +105,13 @@ export class AssignNewRoleUserComponent implements OnInit {
       this.accountService.userData.roleId == environment.administradorEmpRole
     )
       this.genericService
-        .GetAll(`roles/ConsultarRoles?istInternal=${this.data.internal}`)
+        .GetAll(
+          `roles/ConsultarRoles?istInternal=${false}&role=${
+            this.accountService.userData.roleId
+          }`
+        )
         .subscribe((data: any) => {
-          this.roleList = data.filter((data: any) => {
-            this.accountService.userData.roleId ==
-            environment.administradorEmpRole
-              ? data
-              : data.id != environment.administradorEmpRole;
-          });
+          this.roleList = data;
           setTimeout(() => this.loadingService.ChangeStatusLoading(false), 600);
         });
     else
