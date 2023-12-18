@@ -34,7 +34,7 @@ export class DownloadWorkerComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.defaultNavActiveId = this.data.info.forma == 'Grupo forma A' ? 1 : 2;
+    this.defaultNavActiveId = this.data.info.forma == 'Grupo Forma A' ? 1 : 2;
     this.user = this.data.info.usuario;
     this.userRegister = this.data.info.usuarioRegistra;
   }
