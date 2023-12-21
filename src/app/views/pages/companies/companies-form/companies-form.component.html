@@ -99,7 +99,7 @@
         ></label>
         <input
           class="form-control"
-          type="text"
+          type="number"
           #Documento
           placeholder="Nit o documento empresa"
           formControlName="Documento"
@@ -120,7 +120,7 @@
         ></label>
         <input
           class="form-control"
-          type="text"
+          type="number"
           #DigitoVerificacion
           placeholder="Dígito de verificación"
           formControlName="DigitoVerificacion"
@@ -263,14 +263,23 @@
         <!-- <p class="mt-2 text-muted">Id: <span class="fw-bolder">{{this.form.value.TipoDocumento}}</span></p> -->
       </div>
       <div class="col-md-5 mb-2">
-        <label class="form-label" style="width: 100%;">
-          ¿Es esta empresa una Organización No Gubernamental (ONG)? <i class="mdi mdi-information"
-                #tooltip="matTooltip" matTooltip="¿Es esta empresa una Organización No Gubernamental (ONG)?"></i></label>
+        <label class="form-label" style="width: 100%">
+          ¿Es esta empresa una Organización No Gubernamental (ONG)?
+          <i
+            class="mdi mdi-information"
+            #tooltip="matTooltip"
+            matTooltip="¿Es esta empresa una Organización No Gubernamental (ONG)?"
+          ></i
+        ></label>
         <mat-radio-group #EsGubernamental formControlName="EsGubernamental">
-            <mat-radio-button value="1" style="margin-left: 16px;">Si</mat-radio-button>
-            <mat-radio-button value="0" style="margin-left: 16px;">No</mat-radio-button>
+          <mat-radio-button value="1" style="margin-left: 16px"
+            >Si</mat-radio-button
+          >
+          <mat-radio-button value="0" style="margin-left: 16px"
+            >No</mat-radio-button
+          >
         </mat-radio-group>
-    </div>
+      </div>
       <!-- <div class="col-md-4 mb-2">
         <label class="form-label">Descripción</label>
         <textarea class="form-control" type="text" #Descripcion placeholder="Descripción" formControlName="Descripcion"
@@ -389,7 +398,7 @@
         ></label>
         <input
           class="form-control"
-          type="text"
+          type="number"
           #NumeroDocumento
           placeholder="Número de documento"
           formControlName="NumeroDocumento"
@@ -722,7 +731,7 @@
         ></label>
         <input
           class="form-control"
-          type="text"
+          type="number"
           #Document
           placeholder="Número de documento"
           formControlName="Document"

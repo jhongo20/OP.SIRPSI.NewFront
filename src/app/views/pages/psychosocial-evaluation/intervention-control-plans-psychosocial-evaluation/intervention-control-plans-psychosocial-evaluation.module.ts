@@ -22,6 +22,7 @@ import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import { InterventionControlPlansPsychosocialEvaluationComponent } from './intervention-control-plans-psychosocial-evaluation.component';
 import { InterventionControlPlansPsychosocialEvaluationFormComponent } from './intervention-control-plans-psychosocial-evaluation-form/intervention-control-plans-psychosocial-evaluation-form.component';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     MatTooltipModule,
     FeatherIconModule,
     MatTabsModule,
+    NzCollapseModule,
     NgxMaskModule.forRoot({ validation: true }),
   ],
 })

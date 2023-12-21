@@ -23,9 +23,32 @@ import { CompanyInformationFirstModule } from '../companies/update-company-data/
 import { NgxMaskModule } from 'ngx-mask';
 import { HistoryRemoveReinstateComponent } from './history-remove-reinstate/history-remove-reinstate.component';
 import { ConsultationPsychosocialEvaluationValidityComponent } from './consultation-psychosocial-evaluation-validity/consultation-psychosocial-evaluation-validity.component';
+import { LevelRiskIntraworkTotalCompanyComponent } from './evaluation-reports/level-risk-intrawork-total-company/level-risk-intrawork-total-company.component';
+import {
+  NgbAccordionModule,
+  NgbDatepickerModule,
+  NgbDropdownModule,
+  NgbModule,
+} from '@ng-bootstrap/ng-bootstrap';
+import { NgApexchartsModule } from 'ng-apexcharts';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { ConsolidatedResultFactorsRiskComponent } from './evaluation-reports/consolidated-result-factors-risk/consolidated-result-factors-risk.component';
+import { ConsolidatedResultFactorsRiskFormBComponent } from './evaluation-reports/consolidated-result-factors-risk-form-b/consolidated-result-factors-risk-form-b.component';
+import { ConsolidatedResultStressComponent } from './evaluation-reports/consolidated-result-stress/consolidated-result-stress.component';
+import { ConsolidatedResultExtraWorkFactorsComponent } from './evaluation-reports/consolidated-result-extra-work-factors/consolidated-result-extra-work-factors.component';
 
 @NgModule({
-  declarations: [WorkerManagementConsultationComponent, HistoryRemoveReinstateComponent, ConsultationPsychosocialEvaluationValidityComponent],
+  declarations: [
+    WorkerManagementConsultationComponent,
+    HistoryRemoveReinstateComponent,
+    ConsultationPsychosocialEvaluationValidityComponent,
+    LevelRiskIntraworkTotalCompanyComponent,
+    ConsolidatedResultFactorsRiskComponent,
+    ConsolidatedResultFactorsRiskFormBComponent,
+    ConsolidatedResultStressComponent,
+    ConsolidatedResultExtraWorkFactorsComponent,
+  ],
   imports: [
     CommonModule,
     QueryReportsRoutingModule,
@@ -48,6 +71,13 @@ import { ConsultationPsychosocialEvaluationValidityComponent } from './consultat
     FeatherIconModule,
     CompanyInformationFirstModule,
     MatOptionModule,
+    NgbDropdownModule,
+    NgbDatepickerModule,
+    NgApexchartsModule,
+    NzToolTipModule,
+    NgbAccordionModule,
+    NgbModule,
+    NzFormModule,
     NgxMaskModule.forRoot({ validation: true }),
   ],
 })

@@ -81,6 +81,7 @@ export class UpdateWorkerDataComponent implements OnInit {
       this.form.value.HaveDisability == '0' ? false : true;
     this.form.value.ReadingWritingSkills =
       this.form.value.ReadingWritingSkills == '0' ? false : true;
+    this.form.value.Document = this.form.value.Document.toString();
     this.loadingService.ChangeStatusLoading(true);
     this.genericService
       .Put('usuario/ActualizarUsuario', this.form.value)

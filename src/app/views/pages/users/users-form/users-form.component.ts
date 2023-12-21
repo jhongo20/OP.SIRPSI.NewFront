@@ -107,8 +107,8 @@ export class UsersFormComponent implements OnInit {
     this.form.value.Document = this.formValidate.value.Document;
     this.form.value.OccupationalLicense =
       this.type == RolesEnum.Psicologo ? this.formLicencia.value : null;
+    this.form.value.Document = this.form.value.Document.toString();
     this.loadingService.ChangeStatusLoading(true);
-    console.log(this.form.value);
     this.genericService.Post('user/RegisterUser', this.form.value).subscribe({
       next: (data) => {
         this.sendNotifications(

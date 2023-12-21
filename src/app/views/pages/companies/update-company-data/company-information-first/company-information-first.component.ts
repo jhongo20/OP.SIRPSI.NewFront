@@ -107,6 +107,15 @@ export class CompanyInformationFirstComponent implements OnInit {
     });
   }
   onSave() {
+    this.form.value.Documento = this.form.value.Documento.toString();
+    this.form.value.DigitoVerificacion =
+      this.form.value.DigitoVerificacion.toString();
+
+    this.formRepresentative.value.NumeroDocumento =
+      this.formRepresentative.value.NumeroDocumento.toString();
+
+    this.formUser.value.Document = this.formUser.value.Document.toString();
+
     var body = {
       Empresa: this.form.value,
       CentroTrabajo: this.formWorkCenter.value,

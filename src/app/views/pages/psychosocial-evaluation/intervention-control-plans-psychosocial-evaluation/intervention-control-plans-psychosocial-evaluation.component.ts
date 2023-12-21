@@ -78,11 +78,10 @@ export class InterventionControlPlansPsychosocialEvaluationComponent
   public dataTableNi: any = null;
 
   public columnsNi = [
-    { name: 'Documento', data: 'usuario', property: 'cedula' },
-    { name: 'Correo', data: 'usuario', property: 'correo' },
-    { name: 'Teléfono', data: 'usuario', property: 'telefono' },
-    { name: 'Nombre', data: 'usuario', property: 'nombreUsuario' },
-    { name: 'Apellidos', data: 'usuario', property: 'apellidosUsuario' },
+    { name: 'Nombre', data: 'nombre' },
+    { name: 'Apellido', data: 'apellido' },
+    { name: 'Cargo', data: 'cargo' },
+    { name: 'Dependencia', data: 'dependencia' },
   ];
   public optionsNi = [{}];
 

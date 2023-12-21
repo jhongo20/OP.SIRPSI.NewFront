@@ -22,6 +22,10 @@ export const environment = {
     asignarPsicologo: 4,
   },
   reportes: {
+    //TIPO 1
+    respuestasEvaluacionesPsicosociales: '0319A608-CA6B-4EDC-808B-0AC0179A1662',
+    nivelRiesgoIntralaboralTotalEmpresa: 'AE677F26-BF00-4302-8D45-6E10EB7109E8',
+    // TIPO 2
     historialRetirosReintegrosTrabajadores:
       'd9bda3f2-bf2a-4269-9d4f-eed5f44f42f2',
     historialRetirosReintegros: 'z3bda3f2-bf2a-4269-9d4f-eed5f44f42f2',

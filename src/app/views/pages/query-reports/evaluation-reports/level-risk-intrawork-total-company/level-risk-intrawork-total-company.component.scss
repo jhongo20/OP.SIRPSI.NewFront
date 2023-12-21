@@ -11,6 +11,9 @@
   width: 100%;
   padding: 8px 0 31px 0;
 }
+.hr {
+  margin: 14px 0px !important;
+}
 .form-label {
   > i {
     display: inline-block;
@@ -29,4 +32,14 @@
       color: #1663c9;
     }
   }
+}
+
+.data-psychologist {
+  font-size: medium;
+  font-weight: 500;
+  margin-bottom: 0.5em;
+}
+
+.text-psychologist {
+  margin: 0.2em 0;
 }

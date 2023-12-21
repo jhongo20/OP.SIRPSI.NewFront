@@ -11,12 +11,14 @@ import { LoadingService } from 'src/app/shared/services/loading.service';
     './results-intra-work-factors-questionnaire-form-b.component.scss',
   ],
 })
-export class ResultsIntraWorkFactorsQuestionnaireFormBComponent implements OnInit
+export class ResultsIntraWorkFactorsQuestionnaireFormBComponent
+  implements OnInit
 {
   @Input('user') user: any;
   @Input('userRegister') userRegister: any;
   @Input('evaluacion') evaluacion: any;
   public cuestionarioList: any;
+  public totalQuest: number = 0;
 
   constructor(
     private genericService: GenericService,
@@ -35,7 +37,12 @@ export class ResultsIntraWorkFactorsQuestionnaireFormBComponent implements OnIni
       )
       .subscribe((data: any) => {
         this.cuestionarioList = data.contadorPorDominio;
-        console.log(this.cuestionarioList);
+        this.totalQuest =
+          (this.cuestionarioList
+            .map((item: any) => item.sumaRespuestas)
+            .reduce((prev: number, curr: number) => prev + curr, 0) /
+            492) *
+          100;
         setTimeout(() => this.loadingService.ChangeStatusLoading(false), 600);
       });
   }

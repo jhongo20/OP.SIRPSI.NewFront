@@ -35,7 +35,7 @@
     <div class="col-md-3">
         <label class="form-label">Número de documento <i class="mdi mdi-information" #tooltip="matTooltip"
                 matTooltip="Ingrese el número de documento"></i></label>
-        <input class="form-control" type="text" #Document placeholder="Número de documento" formControlName="Document" />
+        <input class="form-control" type="number" #Document placeholder="Número de documento" formControlName="Document" />
         <p class="text-danger mt-1" *ngIf="form.controls.Document.errors?.required">Este
             campo es obligatorio
         </p>

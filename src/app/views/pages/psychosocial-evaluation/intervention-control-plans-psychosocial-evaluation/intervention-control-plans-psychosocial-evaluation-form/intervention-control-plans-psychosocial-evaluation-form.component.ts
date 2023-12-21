@@ -28,10 +28,12 @@ export class InterventionControlPlansPsychosocialEvaluationFormComponent
   public user: any;
   public userRegister: any;
   public form: FormGroup;
+  public formUser: FormGroup;
 
   listFactors: any = [];
   listUsuario: any = [];
-
+  ResponsablesAdd: any = [];
+  countResponsables: number = 0;
   constructor(
     public formBuilder: FormBuilder,
     public dialog: MatDialog,
@@ -57,7 +59,13 @@ export class InterventionControlPlansPsychosocialEvaluationFormComponent
       FechaInicio: ['', Validators.required],
       FechaFinalizacion: ['', Validators.required],
       Observaciones: ['', Validators.required],
-      Responsables: [[], Validators.required],
+      Responsables: [[]],
+    });
+    this.formUser = this.formBuilder.group({
+      Nombre: ['', Validators.required],
+      Apellido: ['', Validators.required],
+      Cargo: ['', Validators.required],
+      Dependencia: ['', Validators.required],
     });
   }
 
@@ -103,7 +111,7 @@ export class InterventionControlPlansPsychosocialEvaluationFormComponent
   }
 
   onSave() {
-    console.log(this.form.value);
+    this.form.value.Responsables = this.ResponsablesAdd;
     Swal.fire({
       title: '¿Estas seguro?',
       text: '¿Estás seguro?',
@@ -140,5 +148,25 @@ export class InterventionControlPlansPsychosocialEvaluationFormComponent
           });
       }
     });
+  }
+
+  addResponsible() {
+    if (this.countResponsables < 2) {
+      this.ResponsablesAdd.push(this.formUser.value);
+      console.log(this.ResponsablesAdd);
+      this.countResponsables++;
+      Swal.fire({
+        icon: 'info',
+        title: 'Importante',
+        text: 'Se ha agregado un nuevo responsable.',
+      });
+      this.formUser.reset();
+    } else {
+      Swal.fire({
+        icon: 'info',
+        title: 'Importante',
+        text: 'El maximo de responsables por actividad es de dos.',
+      });
+    }
   }
 }

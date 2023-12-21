@@ -137,6 +137,7 @@ export class RegisterNewUsersComponent implements OnInit {
         '_' +
         this.form.value.Document;
     }
+    this.form.value.Document = this.form.value.Document.toString();
     this.loadingService.ChangeStatusLoading(true);
     this.genericService.Post('user/RegisterUser', this.form.value).subscribe({
       next: (data) => {

@@ -167,6 +167,15 @@ export class CompaniesFormComponent implements OnInit {
     this.showDigit = item == undefined ? false : item.tieneDigito;
   }
   onSave() {
+    this.form.value.Documento = this.form.value.Documento.toString();
+    this.form.value.DigitoVerificacion =
+      this.form.value.DigitoVerificacion.toString();
+
+    this.formRepresentative.value.NumeroDocumento =
+      this.formRepresentative.value.NumeroDocumento.toString();
+
+    this.formUser.value.Document = this.formUser.value.Document.toString();
+
     this.form.controls['EsGubernamental'].setValue(
       this.form.value.EsGubernamental == 1 ? true : false
     );

@@ -76,6 +76,7 @@ export class UpdatePsychologistDataComponent implements OnInit {
     this.getListas();
   }
   GetInto() {
+    this.form.value.Document = this.form.value.Document.toString();
     this.loadingService.ChangeStatusLoading(true);
     this.genericService
       .Put('usuario/ActualizarUsuario', this.form.value)
@@ -195,7 +196,7 @@ export class UpdatePsychologistDataComponent implements OnInit {
     const dialogRef = this.dialog.open(OccupationalLicenseComponent, {
       data: {
         type: 1,
-        item: this.dataUser
+        item: this.dataUser,
       },
     });
     dialogRef.afterClosed().subscribe();

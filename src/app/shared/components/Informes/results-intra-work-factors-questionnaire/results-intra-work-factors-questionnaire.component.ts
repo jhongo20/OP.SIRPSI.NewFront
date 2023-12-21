@@ -15,7 +15,7 @@ export class ResultsIntraWorkFactorsQuestionnaireComponent implements OnInit {
   @Input('userRegister') userRegister: any;
   @Input('evaluacion') evaluacion: any;
   public cuestionarioList: any;
-
+  public totalQuest: number = 0;
   constructor(
     private genericService: GenericService,
     private loadingService: LoadingService,
@@ -33,7 +33,12 @@ export class ResultsIntraWorkFactorsQuestionnaireComponent implements OnInit {
       )
       .subscribe((data: any) => {
         this.cuestionarioList = data.contadorPorDominio;
-        console.log(this.cuestionarioList);
+        this.totalQuest =
+          (this.cuestionarioList
+            .map((item: any) => item.sumaRespuestas)
+            .reduce((prev: number, curr: number) => prev + curr, 0) /
+            492) *
+          100;
         setTimeout(() => this.loadingService.ChangeStatusLoading(false), 600);
       });
   }

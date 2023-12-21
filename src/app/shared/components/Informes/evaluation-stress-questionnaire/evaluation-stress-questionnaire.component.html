@@ -130,7 +130,9 @@
           {{ dimension.nombreDimension }}
         </td>
         <td class="subtitl tableData" style="text-align: center">
-          {{ (dimension.sumaRespuestas / dimension.valorA1Dimension).toFixed(2) }}
+          {{
+            (dimension.sumaRespuestas / dimension.valorA1Dimension).toFixed(2)
+          }}
         </td>
         <td class="subtitl tableData" style="text-align: center">
           {{ dimension.sumaRespuestas }}
@@ -139,6 +141,19 @@
       <tr>
         <td class="subtitle tableTitle" style="text-align: center" colspan="4">
           {{ dominio.nombreDominio }}
+        </td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr>
+        <td class="subtitle tableTitle" style="text-align: center" colspan="2">
+          TOTAL GENERAL SÍNTOMAS DE ESTRÉS
+        </td>
+        <td class="subtitl tableData" style="text-align: center" colspan="1">
+          {{ this.totalQuest.toFixed(2) }}
+        </td>
+        <td class="subtitl tableData" style="text-align: center" colspan="1">
+          clase de riesgo
         </td>
       </tr>
     </tbody>

@@ -14,6 +14,7 @@ export class FactorsRiskExtraWorkQuestionnaireComponent implements OnInit {
   @Input('evaluacion') evaluacion: any;
   @Input('clasificacion') clasificacion: number;
   public cuestionarioList: any;
+  public totalQuest: number = 0;
 
   constructor(
     private genericService: GenericService,
@@ -32,7 +33,12 @@ export class FactorsRiskExtraWorkQuestionnaireComponent implements OnInit {
       )
       .subscribe((data: any) => {
         this.cuestionarioList = data.contadorPorDominio;
-        console.log(this.cuestionarioList);
+        this.totalQuest =
+          (this.cuestionarioList
+            .map((item: any) => item.sumaRespuestas)
+            .reduce((prev: number, curr: number) => prev + curr, 0) /
+            124) *
+          100;
         setTimeout(() => this.loadingService.ChangeStatusLoading(false), 600);
       });
   }
