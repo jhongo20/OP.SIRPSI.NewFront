@@ -1,5 +1,5 @@
 import { Component, Inject, Input, OnInit, Optional } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   MAT_DIALOG_DATA,
   MatDialog,
@@ -17,11 +17,13 @@ import { AccountService } from 'src/app/shared/services/account.service';
   styleUrls: ['./level-risk-intrawork-total-company.component.scss'],
 })
 export class LevelRiskIntraworkTotalCompanyComponent implements OnInit {
+  public form: FormGroup;
   public option: string;
   defaultNavActiveId = 1;
   public user: any;
   public userRegister: any;
-
+  listEvaluaciones: any = [];
+  evaluation: any = undefined;
   constructor(
     public formBuilder: FormBuilder,
     public dialog: MatDialog,
@@ -32,8 +34,10 @@ export class LevelRiskIntraworkTotalCompanyComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.user = this.data.info.usuario;
-    // this.userRegister = this.data.info.usuarioRegistra;
+    this.form = this.formBuilder.group({
+      Evaluacion: ['', Validators.required],
+    });
+    this.getLists();
   }
 
   cancelarForm() {
@@ -56,5 +60,19 @@ export class LevelRiskIntraworkTotalCompanyComponent implements OnInit {
       horizontalPosition: 'start',
       verticalPosition: 'bottom',
     });
+  }
+
+  getLists() {
+    this.genericService
+      .GetAll(`evaluacionPsicosocial/ConsultaRadicadoFinalEvaluacion`)
+      .subscribe((data: any) => {
+        this.listEvaluaciones = data;
+        setTimeout(() => this.loadingService.ChangeStatusLoading(false), 600);
+      });
+  }
+
+  selectEvaluation(event: any) {
+    console.log(event);
+    this.evaluation = event != undefined ? event.id : undefined;
   }
 }

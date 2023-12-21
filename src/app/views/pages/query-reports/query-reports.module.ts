@@ -37,6 +37,7 @@ import { ConsolidatedResultFactorsRiskComponent } from './evaluation-reports/con
 import { ConsolidatedResultFactorsRiskFormBComponent } from './evaluation-reports/consolidated-result-factors-risk-form-b/consolidated-result-factors-risk-form-b.component';
 import { ConsolidatedResultStressComponent } from './evaluation-reports/consolidated-result-stress/consolidated-result-stress.component';
 import { ConsolidatedResultExtraWorkFactorsComponent } from './evaluation-reports/consolidated-result-extra-work-factors/consolidated-result-extra-work-factors.component';
+import { AnswersEvaluationsPsychosocialComponent } from './evaluation-reports/answers-evaluations-psychosocial/answers-evaluations-psychosocial.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { ConsolidatedResultExtraWorkFactorsComponent } from './evaluation-report
     ConsolidatedResultFactorsRiskFormBComponent,
     ConsolidatedResultStressComponent,
     ConsolidatedResultExtraWorkFactorsComponent,
+    AnswersEvaluationsPsychosocialComponent,
   ],
   imports: [
     CommonModule,

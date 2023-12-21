@@ -2,55 +2,73 @@
   <label class="title" style="margin-top: 1.5em"
     >Informe nivel de riesgo Intralaboral rotal de la empresa</label
   >
-
-  <div class="d-flex justify-content">
-    <div>
-      <!-- <div class="data-psychologist">Datos del Psicólogo Especialista SST</div>
-      <div class="text-psychologist">
-        Nombre Completo: {{ this.accountService.userData.user.names }}
-        {{ this.accountService.userData.user.surnames }}
+  <div class="container-fluid">
+    <form #f="ngForm" [formGroup]="this.form" class="row">
+      <div class="col-md-6 mb-4">
+        <label class="form-label"
+          >Evaluación psicosocial
+          <i
+            class="mdi mdi-information"
+            #tooltip="matTooltip"
+            matTooltip="Seleccione una evaluación"
+          ></i
+        ></label>
+        <ng-select
+          [items]="listEvaluaciones"
+          bindLabel="titulo"
+          bindValue="id"
+          required
+          id="Evaluacion"
+          #Evaluacion
+          formControlName="Evaluacion"
+          (change)="selectEvaluation($event)"
+        >
+        </ng-select>
       </div>
-      <div class="text-psychologist">
-        Correo: {{ this.accountService.userData.user.email }}
-      </div>
-      <div class="text-psychologist" style="margin-bottom: 1em">
-        Número de documento: {{ this.accountService.userData.user.email }}
-      </div>
-    </div> -->
+    </form>
   </div>
-
-  <div class="example">
-    <ul
-      ngbNav
-      #defaultNav="ngbNav"
-      [(activeId)]="defaultNavActiveId"
-      class="nav-tabs"
-    >
-      <li [ngbNavItem]="1">
-        <a ngbNavLink>Resultado consolidado Factores de Riesgo - Forma A</a>
-        <ng-template ngbNavContent>
-          <app-consolidated-result-factors-risk [evaluacion]="12"></app-consolidated-result-factors-risk>
-        </ng-template>
-      </li>
-      <li [ngbNavItem]="2">
-        <a ngbNavLink>Resultado consolidado Factores de Riesgo - Forma B</a>
-        <ng-template ngbNavContent>
-          <app-consolidated-result-factors-risk-form-b [evaluacion]="12"></app-consolidated-result-factors-risk-form-b>
-        </ng-template>
-      </li>
-      <li [ngbNavItem]="3">
-        <a ngbNavLink>Resultado consolidado Estrés</a>
-        <ng-template ngbNavContent>
-          <app-consolidated-result-stress [evaluacion]="12"></app-consolidated-result-stress>
-        </ng-template>
-      </li>
-      <li [ngbNavItem]="4">
-        <a ngbNavLink>Resultado consolidado Factores Extralaborales</a>
-        <ng-template ngbNavContent>
-          <app-consolidated-result-extra-work-factors [evaluacion]="12"></app-consolidated-result-extra-work-factors>
-        </ng-template>
-      </li>
-    </ul>
-    <div [ngbNavOutlet]="defaultNav" class="border border-top-0 p-3"></div>
+  <div class="d-flex justify-content" *ngIf="this.evaluation != undefined">
+    <div class="example">
+      <ul
+        ngbNav
+        #defaultNav="ngbNav"
+        [(activeId)]="defaultNavActiveId"
+        class="nav-tabs"
+      >
+        <li [ngbNavItem]="1">
+          <a ngbNavLink>Resultado consolidado Factores de Riesgo - Forma A</a>
+          <ng-template ngbNavContent>
+            <app-consolidated-result-factors-risk
+              [evaluacion]="this.evaluation"
+            ></app-consolidated-result-factors-risk>
+          </ng-template>
+        </li>
+        <li [ngbNavItem]="2">
+          <a ngbNavLink>Resultado consolidado Factores de Riesgo - Forma B</a>
+          <ng-template ngbNavContent>
+            <app-consolidated-result-factors-risk-form-b
+              [evaluacion]="this.evaluation"
+            ></app-consolidated-result-factors-risk-form-b>
+          </ng-template>
+        </li>
+        <li [ngbNavItem]="3">
+          <a ngbNavLink>Resultado consolidado Estrés</a>
+          <ng-template ngbNavContent>
+            <app-consolidated-result-stress
+              [evaluacion]="this.evaluation"
+            ></app-consolidated-result-stress>
+          </ng-template>
+        </li>
+        <li [ngbNavItem]="4">
+          <a ngbNavLink>Resultado consolidado Factores Extralaborales</a>
+          <ng-template ngbNavContent>
+            <app-consolidated-result-extra-work-factors
+              [evaluacion]="this.evaluation"
+            ></app-consolidated-result-extra-work-factors>
+          </ng-template>
+        </li>
+      </ul>
+      <div [ngbNavOutlet]="defaultNav" class="border border-top-0 p-3"></div>
+    </div>
   </div>
 </div>

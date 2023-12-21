@@ -26,7 +26,7 @@ export class ConsolidatedResultFactorsRiskComponent implements OnInit {
   getListas() {
     this.genericService
       .GetAll(
-        `reportes/ConsultarResultadoEvaluacion?IdEvaluacion=${'d9a67073-e8ce-4c8a-b7b8-9db91b60d098'}&formaId=A1`
+        `reportes/ConsultarResultadoEvaluacion?IdEvaluacion=${this.evaluacion}&formaId=A1`
       )
       .subscribe((data: any) => {
         this.cuestionarioList = data.contadorPorDominio;
