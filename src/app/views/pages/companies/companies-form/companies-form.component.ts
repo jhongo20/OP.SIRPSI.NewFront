@@ -149,6 +149,7 @@ export class CompaniesFormComponent implements OnInit {
         );
       });
   }
+
   onGetTypeDocument(url: any) {
     this.listDocs = [];
     this.form.value.TipoDocumento = '';
@@ -163,13 +164,18 @@ export class CompaniesFormComponent implements OnInit {
         this.listDocs = data;
       });
   }
+
   onGetDigit(item: any) {
     this.showDigit = item == undefined ? false : item.tieneDigito;
   }
+
   onSave() {
-    this.form.value.Documento = this.form.value.Documento.toString();
-    this.form.value.DigitoVerificacion =
-      this.form.value.DigitoVerificacion.toString();
+    this.form.controls['Documento'].setValue(
+      this.form.value.Documento.toString()
+    );
+    this.form.controls['DigitoVerificacion'].setValue(
+      this.form.value.DigitoVerificacion.toString()
+    );
 
     this.formRepresentative.value.NumeroDocumento =
       this.formRepresentative.value.NumeroDocumento.toString();
@@ -179,12 +185,14 @@ export class CompaniesFormComponent implements OnInit {
     this.form.controls['EsGubernamental'].setValue(
       this.form.value.EsGubernamental == 1 ? true : false
     );
+
     var body = {
       Empresa: this.form.value,
       CentroTrabajo: this.formWorkCenter.value,
       Usuario: this.formUser.value,
       RepresentanteEmpresa: this.formRepresentative.value,
     };
+
     Swal.fire({
       title: '¿Estas seguro?',
       icon: 'info',
@@ -213,12 +221,14 @@ export class CompaniesFormComponent implements OnInit {
       }
     });
   }
+
   openSnackBar(message: string) {
     this.snackBar.open(message, 'x', {
       horizontalPosition: 'start',
       verticalPosition: 'bottom',
     });
   }
+
   getListas() {
     this.loadingService.ChangeStatusLoading(true);
     this.genericService
@@ -305,6 +315,7 @@ export class CompaniesFormComponent implements OnInit {
           });
       });
   }
+
   cancelarForm() {
     Swal.fire({
       title: '¿Estas seguro?',
