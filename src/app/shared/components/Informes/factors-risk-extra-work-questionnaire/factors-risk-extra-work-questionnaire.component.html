@@ -131,15 +131,10 @@
           {{ dimension.nombreDimension }}
         </td>
         <td class="subtitl tableData" style="text-align: center">
-          {{
-            (
-              (dimension.sumaRespuestas / dimension.valorA1Dimension) *
-              100
-            ).toFixed(2)
-          }}
+          {{ dimension.resultadoTransformado.toFixed(2) }}
         </td>
         <td class="subtitl tableData" style="text-align: center">
-          {{ dimension.sumaRespuestas }}
+          {{ dimension.nivelRiesgo }}
         </td>
       </tr>
       <tr>
@@ -157,7 +152,7 @@
           {{ this.totalQuest.toFixed(2) }}
         </td>
         <td class="subtitl tableData" style="text-align: center" colspan="1">
-          clase de riesgo
+          Sin definir nivel de riesgo
         </td>
       </tr>
     </tbody>

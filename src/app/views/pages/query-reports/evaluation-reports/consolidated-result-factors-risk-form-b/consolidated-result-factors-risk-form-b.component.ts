@@ -34,7 +34,7 @@ export class ConsolidatedResultFactorsRiskFormBComponent implements OnInit {
           (this.cuestionarioList
             .map((item: any) => item.sumaRespuestas)
             .reduce((prev: number, curr: number) => prev + curr, 0) /
-            492) *
+            388) *
           100;
         setTimeout(() => this.loadingService.ChangeStatusLoading(false), 600);
       });
