@@ -26,16 +26,11 @@ export class ConsolidatedResultStressComponent implements OnInit {
   getListas() {
     this.genericService
       .GetAll(
-        `reportes/ConsultarResultadoEvaluacion?IdEvaluacion=${this.evaluacion}&formaId=A4`
+        `reportes/ConsultarResultadoEvaluacion?IdEvaluacion=${this.evaluacion}&formaId=A4&division=492`
       )
       .subscribe((data: any) => {
         this.cuestionarioList = data.contadorPorDominio;
-        this.totalQuest =
-          (this.cuestionarioList
-            .map((item: any) => item.sumaRespuestas)
-            .reduce((prev: number, curr: number) => prev + curr, 0) /
-            492) *
-          100;
+        this.totalQuest = data.resultadoTransformado;
         setTimeout(() => this.loadingService.ChangeStatusLoading(false), 600);
       });
   }

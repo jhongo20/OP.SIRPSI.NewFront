@@ -10,4 +10,5 @@ export enum ReportsEvaluationEnum {
   Seleccione = 0,
   RespuestasEvaluacionesPsicosociales = 1,
   NivelRiesgoIntralaboralTotalEmpresa = 2,
+  DatosCobertura = 3,
 }

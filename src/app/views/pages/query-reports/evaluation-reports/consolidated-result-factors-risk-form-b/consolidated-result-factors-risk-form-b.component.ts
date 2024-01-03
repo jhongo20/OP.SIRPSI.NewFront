@@ -26,16 +26,11 @@ export class ConsolidatedResultFactorsRiskFormBComponent implements OnInit {
   getListas() {
     this.genericService
       .GetAll(
-        `reportes/ConsultarResultadoEvaluacion?IdEvaluacion=${this.evaluacion}&formaId=A2`
+        `reportes/ConsultarResultadoEvaluacion?IdEvaluacion=${this.evaluacion}&formaId=A2&division=388`
       )
       .subscribe((data: any) => {
         this.cuestionarioList = data.contadorPorDominio;
-        this.totalQuest =
-          (this.cuestionarioList
-            .map((item: any) => item.sumaRespuestas)
-            .reduce((prev: number, curr: number) => prev + curr, 0) /
-            388) *
-          100;
+        this.totalQuest = data.resultadoTransformado;
         setTimeout(() => this.loadingService.ChangeStatusLoading(false), 600);
       });
   }

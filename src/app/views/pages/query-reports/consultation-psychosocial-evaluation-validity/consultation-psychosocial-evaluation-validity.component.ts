@@ -55,6 +55,10 @@ export class ConsultationPsychosocialEvaluationValidityComponent
           ReportsEvaluationEnum.NivelRiesgoIntralaboralTotalEmpresa;
         break;
       }
+      case environment.reportes.datosCobertura: {
+        this.viewReport = ReportsEvaluationEnum.DatosCobertura;
+        break;
+      }
       default: {
         this.viewReport = ReportsEvaluationEnum.Seleccione;
         break;
