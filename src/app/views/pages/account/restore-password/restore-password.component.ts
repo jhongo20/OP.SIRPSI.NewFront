@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { AccountService } from 'src/app/shared/services/account.service';
 import { LoadingService } from 'src/app/shared/services/loading.service';
 
@@ -15,9 +16,9 @@ export class RestorePasswordComponent implements OnInit {
   constructor(
     public formBuilder: FormBuilder,
     public accountService: AccountService,
-    private snackBar: MatSnackBar,
+    private message: NzMessageService,
     private loadingService: LoadingService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadingService.ChangeStatusLoading(true);
@@ -36,21 +37,15 @@ export class RestorePasswordComponent implements OnInit {
     this.loadingService.ChangeStatusLoading(true);
     this.accountService.SendChangedPasswword(this.form.value).subscribe(
       (result: any) => {
-        this.openSnackBar(result.message);
+        this.message.success(result.message, { nzDuration: 4000 });
         setTimeout(() => this.loadingService.ChangeStatusLoading(false), 800);
       },
       (error) => {
         console.error(error.error);
         console.error(error);
-        this.openSnackBar(error.error.message);
+        this.message.error(error.error.message, { nzDuration: 4000 });
         setTimeout(() => this.loadingService.ChangeStatusLoading(false), 800);
       }
     );
-  }
-  openSnackBar(message: string) {
-    this.snackBar.open(message, 'x', {
-      horizontalPosition: 'start',
-      verticalPosition: 'bottom',
-    });
   }
 }

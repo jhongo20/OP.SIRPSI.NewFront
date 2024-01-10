@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { AccountService } from 'src/app/shared/services/account.service';
 import { GenericService } from 'src/app/shared/services/generic.service';
 import { LoadingService } from 'src/app/shared/services/loading.service';
@@ -28,8 +29,8 @@ export class ComplementaryCompanyDataComponent implements OnInit {
     private loadingService: LoadingService,
     public dialog: MatDialog,
     public formBuilder: FormBuilder,
-    private snackBar: MatSnackBar
-  ) {}
+    private message: NzMessageService,
+  ) { }
 
   ngOnInit(): void {
     this.getListas();
@@ -70,18 +71,11 @@ export class ComplementaryCompanyDataComponent implements OnInit {
             },
             error: (error) => {
               console.error(error);
-              this.openSnackBar(error.error.message);
+              this.message.error(error.error.message, { nzDuration: 4000 });
               this.loadingService.ChangeStatusLoading(false);
             },
           });
       }
-    });
-  }
-
-  openSnackBar(message: string) {
-    this.snackBar.open(message, 'x', {
-      horizontalPosition: 'start',
-      verticalPosition: 'bottom',
     });
   }
 

@@ -28,6 +28,8 @@ import { SummonWorkersComponent } from './summon-workers-psychosocial-evaluation
 import { DownloadWorkerModule } from 'src/app/shared/components/download-worker/download-worker.module';
 import { ListStatusUsersEvaluationComponent } from './generate-filed-evaluation-psychosocial/list-status-users-evaluation/list-status-users-evaluation.component';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzMessageModule } from 'ng-zorro-antd/message';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 
 @NgModule({
   declarations: [
@@ -45,9 +47,11 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
     GenericTableModule,
     NgSelectModule,
     MatInputModule,
+    NzMessageModule,
     NzButtonModule,
     NgbAccordionModule,
     FormsModule,
+    NzDatePickerModule,
     ReactiveFormsModule,
     MatSelectModule,
     MatButtonModule,
@@ -65,4 +69,4 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
     NgxMaskModule.forRoot({ validation: true }),
   ],
 })
-export class ManagePsychosocialEvaluationModule {}
+export class ManagePsychosocialEvaluationModule { }

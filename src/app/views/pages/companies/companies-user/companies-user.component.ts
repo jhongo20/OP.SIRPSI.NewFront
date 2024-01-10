@@ -10,6 +10,7 @@ import { CompaniesFormComponent } from '../companies-form/companies-form.compone
 import { UsersFormComponent } from '../../users/users-form/users-form.component';
 import { AssignWorkCentersFormComponent } from '../../work-centers/assign-work-centers-form/assign-work-centers-form.component';
 import { DataTable } from 'simple-datatables';
+import { AssignUserCompanieComponent } from '../assign-user-companie/assign-user-companie.component';
 
 @Component({
   selector: 'app-companies-user',
@@ -83,7 +84,7 @@ export class CompaniesUserComponent implements OnInit {
     public accountService: AccountService,
     private loadingService: LoadingService,
     public dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     setTimeout(() => {
@@ -126,7 +127,7 @@ export class CompaniesUserComponent implements OnInit {
         cancelButtonText: 'Cancelar',
       }).then((result) => {
         if (result.isConfirmed) {
-          const dialogRef = this.dialog.open(UsersFormComponent, {
+          const dialogRef = this.dialog.open(AssignUserCompanieComponent, {
             data: {
               id: 0,
               type: type,
@@ -142,15 +143,15 @@ export class CompaniesUserComponent implements OnInit {
                 table == 0
                   ? 'Asignar administrador'
                   : table == 1
-                  ? 'Asignar psicologo'
-                  : 'Asignar trabajador',
+                    ? 'Asignar psicologo'
+                    : 'Asignar trabajador',
             },
           });
           dialogRef.afterClosed().subscribe();
         }
       });
     } else {
-      const dialogRef = this.dialog.open(UsersFormComponent, {
+      const dialogRef = this.dialog.open(AssignUserCompanieComponent, {
         data: {
           id: 0,
           type: type,
@@ -172,7 +173,7 @@ export class CompaniesUserComponent implements OnInit {
     this.genericService
       .GetAll(
         'centrotrabajo/ConsultarCentroDeTrabajo?PageNumber=1&PageSize=100000&companie=' +
-          item.idConsecutivo
+        item.idConsecutivo
       )
       .subscribe((data: any) => {
         this.dataTable = data;

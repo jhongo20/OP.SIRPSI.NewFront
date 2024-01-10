@@ -3,6 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { AccountService } from 'src/app/shared/services/account.service';
 import { GenericService } from 'src/app/shared/services/generic.service';
 import { LoadingService } from 'src/app/shared/services/loading.service';
@@ -46,9 +47,9 @@ export class GenerateFiledEvaluationPsychosocialComponent implements OnInit {
     private loadingService: LoadingService,
     private accountService: AccountService,
     private activatedRoute: ActivatedRoute,
-    private snackBar: MatSnackBar,
+    private message: NzMessageService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadingService.ChangeStatusLoading(true);
@@ -60,20 +61,13 @@ export class GenerateFiledEvaluationPsychosocialComponent implements OnInit {
     });
   }
 
-  openSnackBar(message: string) {
-    this.snackBar.open(message, 'x', {
-      horizontalPosition: 'start',
-      verticalPosition: 'bottom',
-    });
-  }
-
-  selectedRow(event: any, type: number) {}
+  selectedRow(event: any, type: number) { }
 
   async onGetData() {
     this.genericService
       .GetAll(
         'evaluacionPsicosocial/ConsultaGenerarRadicadoFinal?companyId=' +
-          this.accountService.userData.empresa.id
+        this.accountService.userData.empresa.id
       )
       .subscribe((data: any) => {
         this.linked = data != null ? data.linked : null;
@@ -103,13 +97,10 @@ export class GenerateFiledEvaluationPsychosocialComponent implements OnInit {
   }
 
   onSave() {
-    var radicado = `EPE_${this.accountService.userData.empresa.idConsecutivo}_${
-      this.accountService.userData.empresa.documento
-    }_${
-      this.accountService.userData.user.document
-    }_CC_${new Date().getFullYear()}${
-      new Date().getMonth() + 1
-    }${new Date().getDate()}`;
+    var radicado = `EPE_${this.accountService.userData.empresa.idConsecutivo}_${this.accountService.userData.empresa.documento
+      }_${this.accountService.userData.user.document
+      }_CC_${new Date().getFullYear()}${new Date().getMonth() + 1
+      }${new Date().getDate()}`;
 
     var body: any = {
       idEmpresa: this.accountService.userData.empresa.id,
@@ -131,7 +122,7 @@ export class GenerateFiledEvaluationPsychosocialComponent implements OnInit {
         },
         error: (error) => {
           console.error(error.error.message);
-          this.openSnackBar(error.error.message);
+          this.message.error(error.error.message, { nzDuration: 4000 });
           setTimeout(() => this.loadingService.ChangeStatusLoading(false), 600);
         },
       });

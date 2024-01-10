@@ -1,4 +1,4 @@
-import { Component, OnInit, Optional, Inject } from '@angular/core';
+import { Component, OnInit, Optional, Inject, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   MAT_DIALOG_DATA,
@@ -7,6 +7,8 @@ import {
 } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { AccountService } from 'src/app/shared/services/account.service';
 import { GenericService } from 'src/app/shared/services/generic.service';
 import { LoadingService } from 'src/app/shared/services/loading.service';
@@ -22,6 +24,11 @@ export class SummonWorkerComponent implements OnInit {
   public formInitial: FormGroup;
   listWorkCenterUser: any;
 
+  startValue: Date = new Date();
+  startValueValidate: Date = new Date();
+  endValue: Date;
+  @ViewChild('endDatePicker') endDatePicker!: NzDatePickerComponent;
+
   constructor(
     public formBuilder: FormBuilder,
     public dialog: MatDialog,
@@ -29,11 +36,11 @@ export class SummonWorkerComponent implements OnInit {
     private loadingService: LoadingService,
     private accountService: AccountService,
     private activatedRoute: ActivatedRoute,
-    private snackBar: MatSnackBar,
+    private message: NzMessageService,
     private router: Router,
     @Optional() public dialogRef: MatDialogRef<SummonWorkerComponent>,
     @Optional() @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadingService.ChangeStatusLoading(true);
@@ -75,7 +82,9 @@ export class SummonWorkerComponent implements OnInit {
             },
             error: (error) => {
               console.error(error.error.message);
-              this.openSnackBar(error.error.message);
+              this.message.success(error.error.message, {
+                nzDuration: 4000
+              });
               setTimeout(
                 () => this.loadingService.ChangeStatusLoading(false),
                 600
@@ -101,10 +110,14 @@ export class SummonWorkerComponent implements OnInit {
     });
   }
 
-  openSnackBar(message: string) {
-    this.snackBar.open(message, 'x', {
-      horizontalPosition: 'start',
-      verticalPosition: 'bottom',
-    });
+  disabledEndDate = (endValue: Date): boolean => {
+    if (!endValue || !this.startValueValidate) {
+      return false;
+    }
+    return endValue.getTime() <= this.startValueValidate.getTime();
+  };
+
+  handleStartOpenChange(open: any): void {
+    console.log('handleStartOpenChange', open);
   }
 }

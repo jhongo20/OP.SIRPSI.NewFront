@@ -24,6 +24,7 @@ import { FaqsComponent } from './faqs/faqs.component';
 import { FaqsFormComponent } from './faqs-form/faqs-form.component';
 import { QuillModule } from 'ngx-quill';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzMessageModule } from 'ng-zorro-antd/message';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     GenericTableModule,
     NgSelectModule,
     MatInputModule,
+    NzMessageModule,
     NgbAccordionModule,
     FormsModule,
     ReactiveFormsModule,
@@ -57,4 +59,4 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     NgxMaskModule.forRoot({ validation: true }),
   ],
 })
-export class TutorialsTrainingModule {}
+export class TutorialsTrainingModule { }

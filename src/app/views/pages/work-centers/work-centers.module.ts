@@ -20,6 +20,7 @@ import { FileUploadModule } from 'src/app/shared/components/file-upload/file-upl
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxMaskModule } from 'ngx-mask';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { NzMessageModule } from 'ng-zorro-antd/message';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatInputModule,
     MatSelectModule,
     MatButtonModule,
+    NzMessageModule,
     MatCheckboxModule,
     MatPaginatorModule,
     MatNativeDateModule,
@@ -49,4 +51,4 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     NgxMaskModule.forRoot({ validation: true }),
   ],
 })
-export class WorkCentersModule {}
+export class WorkCentersModule { }

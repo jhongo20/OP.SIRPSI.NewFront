@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 import { CompaniesFormComponent } from '../../companies-form/companies-form.component';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-company-information-second',
@@ -54,8 +55,8 @@ export class CompanyInformationSecondComponent implements OnInit {
     private loadingService: LoadingService,
     public dialog: MatDialog,
     public formBuilder: FormBuilder,
-    private snackBar: MatSnackBar
-  ) {}
+    private message: NzMessageService,
+  ) { }
 
   ngOnInit(): void {
     this.filter = '&companie=' + this.company.idConsecutivo;
@@ -68,12 +69,14 @@ export class CompanyInformationSecondComponent implements OnInit {
     });
     this.loadDataCompany(this.company);
   }
+
   OpenFormDialog(event: any) {
     const dialogRef = this.dialog.open(AssignWorkCentersFormComponent, {
       data: { id: event },
     });
     dialogRef.afterClosed().subscribe();
   }
+
   onAssignAdmin(
     item: any,
     table: number = 0,
@@ -96,12 +99,13 @@ export class CompanyInformationSecondComponent implements OnInit {
           table == 0
             ? 'Asignar administrador'
             : table == 1
-            ? 'Asignar psicologo'
-            : 'Asignar trabajador',
+              ? 'Asignar psicologo'
+              : 'Asignar trabajador',
       },
     });
     dialogRef.afterClosed().subscribe();
   }
+
   openFormDialogUser() {
     Swal.fire({
       title: 'Información importante',
@@ -130,6 +134,7 @@ export class CompanyInformationSecondComponent implements OnInit {
       }
     });
   }
+
   onSave() {
     console.log(this.form.value);
     Swal.fire({
@@ -158,19 +163,14 @@ export class CompanyInformationSecondComponent implements OnInit {
             },
             error: (error) => {
               console.error(error);
-              this.openSnackBar(error.error.message);
+              this.message.error(error.error.message, { nzDuration: 4000 });
               this.loadingService.ChangeStatusLoading(false);
             },
           });
       }
     });
   }
-  openSnackBar(message: string) {
-    this.snackBar.open(message, 'x', {
-      horizontalPosition: 'start',
-      verticalPosition: 'bottom',
-    });
-  }
+
   getListas() {
     this.loadingService.ChangeStatusLoading(true);
     this.listClaseRiesgo = [
@@ -187,6 +187,7 @@ export class CompanyInformationSecondComponent implements OnInit {
         setTimeout(() => this.loadingService.ChangeStatusLoading(false), 1100);
       });
   }
+
   loadDataCompany(event: any) {
     if (event != null && event != undefined) {
       this.form.controls['NumeroTrabajadores'].setValue(

@@ -21,7 +21,8 @@
     <div class="col-md-4 mb-2">
         <label class="form-label">Correo electrónico <i class="mdi mdi-information" #tooltip="matTooltip"
                 matTooltip="Ingrese su correo electrónico"></i></label>
-        <input class="form-control" type="text" #Email placeholder="Correo electrónico" formControlName="Email" required />
+        <input class="form-control" type="text" #Email placeholder="Correo electrónico" formControlName="Email"
+            required />
         <p class="text-danger mt-1" *ngIf="form.controls.Email.errors?.email">Email no valido</p>
         <p class="text-danger mt-1" *ngIf="form.controls.Email.errors?.required">Este
             campo es obligatorio
@@ -30,7 +31,7 @@
     <div class="col-md-4 mb-2">
         <label class="form-label">Celular <i class="mdi mdi-information" #tooltip="matTooltip"
                 matTooltip="Ingrese su celular de contacto" required></i></label>
-        <input class="form-control mb-4 mb-md-0"  mask="(000) 000 00 00" [showMaskTyped]="true" #Celular
+        <input class="form-control mb-4 mb-md-0" mask="(000) 000 00 00" [showMaskTyped]="true" #Celular
             placeholder="Celular" formControlName="Celular" required />
         <p class="text-danger" *ngIf="form.controls.Celular.errors?.required">Este
             campo es obligatorio
@@ -39,14 +40,15 @@
     <div class="col-md-4 mb-2">
         <label class="form-label">Teléfono fijo <i class="mdi mdi-information" #tooltip="matTooltip"
                 matTooltip="Ingrese su teléfono fijo"></i></label>
-        <input class="form-control mb-4 mb-md-0"  mask="(000) 000 00 00" [showMaskTyped]="true" #Telefono
+        <input class="form-control mb-4 mb-md-0" mask="(000) 000 00 00" [showMaskTyped]="true" #Telefono
             placeholder="Telefono" formControlName="Telefono" />
     </div>
     <div class="col-md-4 mb-2">
         <label class="form-label">Departamento <i class="mdi mdi-information" #tooltip="matTooltip"
                 matTooltip="Ingrese Departamento"></i></label>
         <ng-select id="IdDepartamento" #IdDepartamento formControlName="IdDepartamento" [items]="listDepartament"
-            bindLabel="name" bindValue="id" [(ngModel)]="form.value.IdDepartamento" (change)="onGetCity(form.value)" required>
+            bindLabel="name" bindValue="id" [(ngModel)]="form.value.IdDepartamento" (change)="onGetCity(form.value)"
+            required>
         </ng-select>
         <p class="text-danger" *ngIf="form.controls.IdDepartamento.errors?.required">Este
             campo es obligatorio

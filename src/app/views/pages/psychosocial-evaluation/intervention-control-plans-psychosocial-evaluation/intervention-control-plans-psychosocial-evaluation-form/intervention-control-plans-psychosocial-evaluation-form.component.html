@@ -1,291 +1,150 @@
 <div>
-  <label class="title" style="margin-top: 1.5em"
-    >Registrar actividad plan de intervención y control</label
-  >
+  <label class="title" style="margin-top: 1.5em">Registrar actividad plan de intervención y control</label>
 
   <div class="d-flex justify-content">
     <div>
-      <div class="data-psychologist">Datos del Psicólogo Especialista SST</div>
       <div class="text-psychologist">
-        Empresa: {{ this.accountService.userData.empresa.nombre }} -
-        {{ this.accountService.userData.empresa.documento }}
+        <b>Nombre o razón social: </b> {{ this.accountService.userData.empresa.nombre }}
       </div>
       <div class="text-psychologist">
-        Nombre Completo: {{ this.accountService.userData.user.names }}
-        {{ this.accountService.userData.user.surnames }}
+        <b>Nit o documento: </b> {{ this.accountService.userData.empresa.documento }}
       </div>
       <div class="text-psychologist">
-        Correo: {{ this.accountService.userData.user.email }}
+        <b>Fecha: </b> fecha
       </div>
-      <div class="text-psychologist" style="margin-bottom: 1em">
-        Número de documento: {{ this.accountService.userData.user.document }}
+      <hr class="hr" />
+      <div class="text-psychologist">
+        <b>Nombre Completo: </b> {{ this.accountService.userData.user.names }} {{
+        this.accountService.userData.user.surnames }}
+      </div>
+      <div class="text-psychologist">
+        <b>Número de documento: </b> {{ this.accountService.userData.user.document }}
+      </div>
+      <div class="text-psychologist">
+        <b>Correo electrónico: </b> {{ this.accountService.userData.user.email }}
+      </div>
+      <div class="text-psychologist">
+        <b>Número de licencia ocupacional: </b> {{ this.accountService.userData.userActive.licenciaOcupacional.numero }}
+      </div>
+      <div class="text-psychologist">
+        <b>Teléfono: </b> {{ this.accountService.userData.userActive.telefono }}
       </div>
     </div>
   </div>
   <hr class="hr" />
   <div>
     <nz-collapse [nzBordered]="false">
-      <nz-collapse-panel
-        [nzHeader]="'Información de la actividad para el plan de intervención'"
-        [nzActive]="true"
-      >
+      <nz-collapse-panel [nzHeader]="'Información de la actividad para el plan de intervención'" [nzActive]="true">
         <form class="row" #f="ngForm" [formGroup]="this.form">
           <div class="col-md-6 mb-2">
-            <label class="form-label"
-              >Categoría
-              <i
-                class="mdi mdi-information"
-                #tooltip="matTooltip"
-                matTooltip="Seleccione una categoría"
-              ></i
-            ></label>
-            <ng-select
-              id="IdFactorIntervenir"
-              #IdFactorIntervenir
-              formControlName="IdFactorIntervenir"
-              [items]="listFactors"
-              bindLabel="nombre"
-              bindValue="id"
-              [(ngModel)]="this.form.value.IdFactorIntervenir"
-              required
-            >
+            <label class="form-label">Categoría
+              <i class="mdi mdi-information" #tooltip="matTooltip" matTooltip="Seleccione una categoría"></i></label>
+            <ng-select id="IdFactorIntervenir" #IdFactorIntervenir formControlName="IdFactorIntervenir"
+              [items]="listFactors" bindLabel="nombre" bindValue="id" [(ngModel)]="this.form.value.IdFactorIntervenir"
+              required>
             </ng-select>
-            <p
-              class="text-danger"
-              *ngIf="form.controls.IdFactorIntervenir.errors?.required"
-            >
+            <p class="text-danger" *ngIf="form.controls.IdFactorIntervenir.errors?.required">
               Este campo es obligatorio
             </p>
           </div>
           <div class="col-md-6 mb-2">
-            <label class="form-label"
-              >Nombre de la actividad
-              <i
-                class="mdi mdi-information"
-                #tooltip="matTooltip"
-                matTooltip="Ingrese el nombre de la actividad"
-              ></i
-            ></label>
-            <input
-              class="form-control"
-              type="text"
-              #Nombre
-              placeholder="Nombre de la actividad"
-              formControlName="Nombre"
-              required
-            />
-            <p
-              class="text-danger"
-              *ngIf="form.controls.Nombre.errors?.required"
-            >
+            <label class="form-label">Nombre de la actividad
+              <i class="mdi mdi-information" #tooltip="matTooltip"
+                matTooltip="Ingrese el nombre de la actividad"></i></label>
+            <input class="form-control" type="text" #Nombre placeholder="Nombre de la actividad"
+              formControlName="Nombre" required />
+            <p class="text-danger" *ngIf="form.controls.Nombre.errors?.required">
               Este campo es obligatorio
             </p>
           </div>
           <div class="col-md-12 mb-2">
-            <label class="form-label"
-              >Descripción de la actividad
-              <i
-                class="mdi mdi-information"
-                #tooltip="matTooltip"
-                matTooltip="Ingrese la descripción de la actividad"
-              ></i
-            ></label>
-            <textarea
-              class="form-control"
-              type="text"
-              #Descripcion
-              placeholder="Descripción de la actividad"
-              formControlName="Descripcion"
-              required
-              rows="3"
-            ></textarea>
-            <p
-              class="text-danger"
-              *ngIf="form.controls.Descripcion.errors?.required"
-            >
+            <label class="form-label">Descripción de la actividad
+              <i class="mdi mdi-information" #tooltip="matTooltip"
+                matTooltip="Ingrese la descripción de la actividad"></i></label>
+            <textarea class="form-control" type="text" #Descripcion placeholder="Descripción de la actividad"
+              formControlName="Descripcion" required rows="3"></textarea>
+            <p class="text-danger" *ngIf="form.controls.Descripcion.errors?.required">
               Este campo es obligatorio
             </p>
           </div>
           <div class="col-md-6 mb-2">
-            <label class="form-label"
-              >Fecha de inicio actividad
-              <i
-                class="mdi mdi-information"
-                #tooltip="matTooltip"
-                matTooltip="Ingrese la fecha de inicio actividad"
-              ></i
-            ></label>
-            <input
-              class="form-control"
-              type="date"
-              #FechaInicio
-              placeholder="Fecha de inicio actividad"
-              formControlName="FechaInicio"
-              required
-            />
-            <p
-              class="text-danger"
-              *ngIf="form.controls.FechaInicio.errors?.required"
-            >
+            <label class="form-label">Fecha de inicio actividad
+              <i class="mdi mdi-information" #tooltip="matTooltip"
+                matTooltip="Ingrese la fecha de inicio actividad"></i></label>
+            <nz-date-picker [nzDisabledDate]="disabledStartDate" nzFormat="yyyy-MM-dd" [(ngModel)]="startValue"
+              nzPlaceHolder="Fecha de inicio" (nzOnOpenChange)="handleStartOpenChange($event)" #FechaInicio
+              formControlName="FechaInicio" required nzDisabled></nz-date-picker>
+            <p class="text-danger" *ngIf="form.controls.FechaInicio.errors?.required">
               Este campo es obligatorio
             </p>
           </div>
           <div class="col-md-6 mb-2">
-            <label class="form-label"
-              >Fecha de finalización actividad
-              <i
-                class="mdi mdi-information"
-                #tooltip="matTooltip"
-                matTooltip="Ingrese la fecha de finalización actividad"
-              ></i
-            ></label>
-            <input
-              class="form-control"
-              type="date"
-              #FechaFinalizacion
-              placeholder="Fecha de finalización actividad"
-              formControlName="FechaFinalizacion"
-              required
-            />
-            <p
-              class="text-danger"
-              *ngIf="form.controls.FechaFinalizacion.errors?.required"
-            >
+            <label class="form-label">Fecha de finalización actividad
+              <i class="mdi mdi-information" #tooltip="matTooltip"
+                matTooltip="Ingrese la fecha de finalización actividad"></i></label>
+            <nz-date-picker #endDatePicker [nzDisabledDate]="disabledEndDate" nzFormat="yyyy-MM-dd"
+              [(ngModel)]="endValue" nzPlaceHolder="Fecha de finalización"
+              (nzOnOpenChange)="handleEndOpenChange($event)" #FechaFinalizacion formControlName="FechaFinalizacion"
+              required></nz-date-picker>
+            <p class="text-danger" *ngIf="form.controls.FechaFinalizacion.errors?.required">
               Este campo es obligatorio
             </p>
           </div>
           <div class="col-md-6 mb-2">
-            <label class="form-label"
-              >Observaciones
-              <i
-                class="mdi mdi-information"
-                #tooltip="matTooltip"
-                matTooltip="Ingrese sus observaciones"
-              ></i
-            ></label>
-            <input
-              class="form-control"
-              type="text"
-              #Observaciones
-              placeholder="Observaciones"
-              formControlName="Observaciones"
-              required
-            />
-            <p
-              class="text-danger"
-              *ngIf="form.controls.Observaciones.errors?.required"
-            >
+            <label class="form-label">Observaciones
+              <i class="mdi mdi-information" #tooltip="matTooltip" matTooltip="Ingrese sus observaciones"></i></label>
+            <input class="form-control" type="text" #Observaciones placeholder="Observaciones"
+              formControlName="Observaciones" required />
+            <p class="text-danger" *ngIf="form.controls.Observaciones.errors?.required">
               Este campo es obligatorio
             </p>
           </div>
         </form>
         <hr class="hr" />
       </nz-collapse-panel>
-      <nz-collapse-panel [nzHeader]="'Responsables'" [nzActive]="true">
+      <nz-collapse-panel [nzHeader]="'Responsables'">
         <form class="row" #f="ngForm" [formGroup]="this.formUser">
           <div class="col-md-6 mb-2">
-            <label class="form-label"
-              >Nombre
-              <i
-                class="mdi mdi-information"
-                #tooltip="matTooltip"
-                matTooltip="Ingrese el nombre del responsable"
-              ></i
-            ></label>
-            <input
-              class="form-control"
-              type="text"
-              #Nombre
-              placeholder="Nombre completo"
-              formControlName="Nombre"
-              required
-            />
-            <p
-              class="text-danger"
-              *ngIf="formUser.controls.Nombre.errors?.required"
-            >
+            <label class="form-label">Nombre
+              <i class="mdi mdi-information" #tooltip="matTooltip"
+                matTooltip="Ingrese el nombre del responsable"></i></label>
+            <input class="form-control" type="text" #Nombre placeholder="Nombre completo" formControlName="Nombre"
+              required />
+            <p class="text-danger" *ngIf="formUser.controls.Nombre.errors?.required">
               Este campo es obligatorio
             </p>
           </div>
           <div class="col-md-6 mb-2">
-            <label class="form-label"
-              >Apellido
-              <i
-                class="mdi mdi-information"
-                #tooltip="matTooltip"
-                matTooltip="Ingrese el apellido del responsable"
-              ></i
-            ></label>
-            <input
-              class="form-control"
-              type="text"
-              #Apellido
-              placeholder="Apellidos"
-              formControlName="Apellido"
-              required
-            />
-            <p
-              class="text-danger"
-              *ngIf="formUser.controls.Apellido.errors?.required"
-            >
+            <label class="form-label">Apellido
+              <i class="mdi mdi-information" #tooltip="matTooltip"
+                matTooltip="Ingrese el apellido del responsable"></i></label>
+            <input class="form-control" type="text" #Apellido placeholder="Apellidos" formControlName="Apellido"
+              required />
+            <p class="text-danger" *ngIf="formUser.controls.Apellido.errors?.required">
               Este campo es obligatorio
             </p>
           </div>
           <div class="col-md-6 mb-2">
-            <label class="form-label"
-              >Cargo
-              <i
-                class="mdi mdi-information"
-                #tooltip="matTooltip"
-                matTooltip="Ingrese el cargo"
-              ></i
-            ></label>
-            <input
-              class="form-control"
-              type="text"
-              #Cargo
-              placeholder="Cargo"
-              formControlName="Cargo"
-              required
-            />
-            <p
-              class="text-danger"
-              *ngIf="formUser.controls.Cargo.errors?.required"
-            >
+            <label class="form-label">Cargo
+              <i class="mdi mdi-information" #tooltip="matTooltip" matTooltip="Ingrese el cargo"></i></label>
+            <input class="form-control" type="text" #Cargo placeholder="Cargo" formControlName="Cargo" required />
+            <p class="text-danger" *ngIf="formUser.controls.Cargo.errors?.required">
               Este campo es obligatorio
             </p>
           </div>
           <div class="col-md-6 mb-2">
-            <label class="form-label"
-              >Dependencia
-              <i
-                class="mdi mdi-information"
-                #tooltip="matTooltip"
-                matTooltip="Ingrese el nombre del responsable"
-              ></i
-            ></label>
-            <input
-              class="form-control"
-              type="text"
-              #Dependencia
-              placeholder="Nombre de la actividad"
-              formControlName="Dependencia"
-              required
-            />
-            <p
-              class="text-danger"
-              *ngIf="formUser.controls.Dependencia.errors?.required"
-            >
+            <label class="form-label">Dependencia
+              <i class="mdi mdi-information" #tooltip="matTooltip"
+                matTooltip="Ingrese el nombre del responsable"></i></label>
+            <input class="form-control" type="text" #Dependencia placeholder="Nombre de la actividad"
+              formControlName="Dependencia" required />
+            <p class="text-danger" *ngIf="formUser.controls.Dependencia.errors?.required">
               Este campo es obligatorio
             </p>
           </div>
         </form>
-        <button
-          type="submit"
-          class="btn btn-primary me-2"
-          (click)="addResponsible()"
-          [disabled]="this.formUser.invalid"
-        >
+        <button type="submit" class="btn btn-primary me-2" (click)="addResponsibleMessage()"
+          [disabled]="this.formUser.invalid">
           Agregar responsable
         </button>
         <hr class="hr" />
@@ -295,12 +154,8 @@
   </div>
 
   <div style="padding: 20px 0 25px 0">
-    <button
-      type="submit"
-      class="btn btn-primary me-2"
-      (click)="onSave()"
-      [disabled]="this.form.invalid || this.countResponsables < 1"
-    >
+    <button type="submit" class="btn btn-primary me-2" (click)="onSave()"
+      [disabled]="this.form.invalid || this.countResponsables < 1">
       Registrar
     </button>
     <button class="btn btn-secondary" mat-dialog-close>Cancelar</button>

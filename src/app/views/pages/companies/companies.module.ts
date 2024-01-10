@@ -30,6 +30,8 @@ import { RemoveUserComponent } from './link-unlink-users/remove-user/remove-user
 import { ReinstateUserComponent } from './link-unlink-users/reinstate-user/reinstate-user.component';
 import { CompanyInformationFirstModule } from './update-company-data/company-information-first/company-information-first.module';
 import { CompaniesFormModule } from './companies-form/companies-form.module';
+import { NzMessageModule } from 'ng-zorro-antd/message';
+import { AssignUserCompanieComponent } from './assign-user-companie/assign-user-companie.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,7 @@ import { CompaniesFormModule } from './companies-form/companies-form.module';
     UnlinkUsersComponent,
     RemoveUserComponent,
     ReinstateUserComponent,
+    AssignUserCompanieComponent,
   ],
   imports: [
     CommonModule,
@@ -68,7 +71,8 @@ import { CompaniesFormModule } from './companies-form/companies-form.module';
     UpdateCompanyDataModule,
     NgxMaskModule.forRoot({ validation: true }),
     MatTabsModule,
+    NzMessageModule,
   ],
   exports: [CompaniesFormComponent],
 })
-export class CompaniesModule {}
+export class CompaniesModule { }

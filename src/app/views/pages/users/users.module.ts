@@ -40,6 +40,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { ComplementaryCompanyDataModule } from '../companies/update-company-data/complementary-company-data/complementary-company-data.module';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { AssignNewRoleUserComponent } from './assign-new-role-user/assign-new-role-user.component';
+import { NzMessageModule } from 'ng-zorro-antd/message';
 
 @NgModule({
   declarations: [
@@ -88,7 +89,8 @@ import { AssignNewRoleUserComponent } from './assign-new-role-user/assign-new-ro
     NzMenuModule,
     NzIconModule,
     ComplementaryCompanyDataModule,
+    NzMessageModule,
     NzCollapseModule,
   ],
 })
-export class UsersModule {}
+export class UsersModule { }

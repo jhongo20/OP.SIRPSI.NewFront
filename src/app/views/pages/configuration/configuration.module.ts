@@ -24,6 +24,7 @@ import { RoutesFormComponent } from './routes/routes-form/routes-form.component'
 import { QuillModule } from 'ngx-quill';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzMessageModule } from 'ng-zorro-antd/message';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     CommonModule,
     ConfigurationRoutingModule,
     MatTabsModule,
+    NzMessageModule,
     GenericTableModule,
     HttpClientModule,
     MatInputModule,
@@ -56,4 +58,4 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     QuillModule.forRoot(), // ngx-quill
   ],
 })
-export class ConfigurationModule {}
+export class ConfigurationModule { }

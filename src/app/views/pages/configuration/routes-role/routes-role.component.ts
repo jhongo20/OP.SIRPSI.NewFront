@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { AccountService } from 'src/app/shared/services/account.service';
 import { GenericService } from 'src/app/shared/services/generic.service';
 import { LoadingService } from 'src/app/shared/services/loading.service';
@@ -23,8 +24,8 @@ export class RoutesRoleComponent {
     private accountService: AccountService,
     private loadingService: LoadingService,
     public dialog: MatDialog,
-    private snackBar: MatSnackBar
-  ) {}
+    private message: NzMessageService,
+  ) { }
 
   ngOnInit(): void {
     this.LoadLists();
@@ -49,28 +50,19 @@ export class RoutesRoleComponent {
       this.genericService
         .Post(
           'modulosUserRole/' +
-            (event == false ? 'RegistrarModulosRole' : 'EliminarModulosRole'),
+          (event == false ? 'RegistrarModulosRole' : 'EliminarModulosRole'),
           body
         )
         .subscribe((data: any) => {
           setTimeout(() => {
             this.LoadLists();
             this.loading = false;
-          }, 1200);
-          this.openSnackBar(
-            event == false
-              ? 'Se ha asignado correctamente'
-              : 'Se ha desasignado correctamente'
-          );
+          }, 800);
+          this.message.success((event == false
+            ? 'Se ha asignado correctamente'
+            : 'Se ha desasignado correctamente'), { nzDuration: 4000 });
         });
     }
-  }
-
-  openSnackBar(message: string) {
-    this.snackBar.open(message, 'x', {
-      horizontalPosition: 'start',
-      verticalPosition: 'bottom',
-    });
   }
 
   AssignPermissions(item: any) {
@@ -90,12 +82,10 @@ export class RoutesRoleComponent {
           setTimeout(() => {
             this.LoadLists();
             this.loading = false;
-          }, 1200);
-          this.openSnackBar(
-            check == false
-              ? 'Se ha asignado correctamente'
-              : 'Se ha desasignado correctamente'
-          );
+          }, 800);
+          this.message.success((check == false
+            ? 'Se ha asignado correctamente'
+            : 'Se ha desasignado correctamente'), { nzDuration: 4000 });
         });
     }
   }

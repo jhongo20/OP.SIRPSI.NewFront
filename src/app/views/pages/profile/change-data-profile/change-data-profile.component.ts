@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import { ChangeEmailProfileComponent } from '../change-email-profile/change-email-profile.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ChangePasswordProfileComponent } from '../change-password-profile/change-password-profile.component';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-change-data-profile',
@@ -31,13 +32,13 @@ export class ChangeDataProfileComponent implements OnInit {
   constructor(
     public formBuilder: FormBuilder,
     public accountService: AccountService,
-    private snackBar: MatSnackBar,
+    private message: NzMessageService,
     private loadingService: LoadingService,
     public router: Router,
     private activatedRoute: ActivatedRoute,
     private genericService: GenericService,
     public dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.title =
@@ -65,11 +66,12 @@ export class ChangeDataProfileComponent implements OnInit {
     this.getListas();
     this.loadData();
   }
+
   GetInto() {
     this.loadingService.ChangeStatusLoading(true);
     this.accountService.ChangePassword(this.form.value).subscribe(
       (result: any) => {
-        this.openSnackBar(result.message);
+        this.message.success(result.message, { nzDuration: 4000 });
         Swal.fire({
           icon: 'success',
           title: result.message,
@@ -80,17 +82,12 @@ export class ChangeDataProfileComponent implements OnInit {
       },
       (error) => {
         console.error(error);
-        this.openSnackBar(error.error.message);
+        this.message.error(error.error.message, { nzDuration: 4000 });
         setTimeout(() => this.loadingService.ChangeStatusLoading(false), 800);
       }
     );
   }
-  openSnackBar(message: string) {
-    this.snackBar.open(message, 'x', {
-      horizontalPosition: 'start',
-      verticalPosition: 'bottom',
-    });
-  }
+
   getListas() {
     this.loadingService.ChangeStatusLoading(true);
     this.genericService
@@ -129,6 +126,7 @@ export class ChangeDataProfileComponent implements OnInit {
           });
       });
   }
+
   loadData() {
     this.loadingService.ChangeStatusLoading(true);
     this.genericService
@@ -148,10 +146,11 @@ export class ChangeDataProfileComponent implements OnInit {
         setTimeout(() => this.loadingService.ChangeStatusLoading(false), 600);
       });
   }
+
   openChangeEmailForm() {
     if (
       this.formEmail.value.OldEmail ==
-        this.accountService.userData.user.email &&
+      this.accountService.userData.user.email &&
       this.formEmail.value.Nit == this.accountService.userData.empresa.documento
     ) {
       const dialogRef = this.dialog.open(ChangeEmailProfileComponent, {
@@ -160,11 +159,11 @@ export class ChangeDataProfileComponent implements OnInit {
         },
       });
       dialogRef.afterClosed().subscribe();
-    } else
-      this.openSnackBar(
-        'Por favor ingrese los datos correctamente para actualizar su correo.'
-      );
+    }
+    else
+      this.message.warning('Por favor ingrese los datos correctamente para actualizar su correo.', { nzDuration: 4000 });
   }
+
   openFormChangePassword() {
     const dialogRef = this.dialog.open(ChangePasswordProfileComponent, {
       data: {
@@ -173,6 +172,7 @@ export class ChangeDataProfileComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe();
   }
+
   cancelarForm() {
     Swal.fire({
       title: '¿Estas seguro?',

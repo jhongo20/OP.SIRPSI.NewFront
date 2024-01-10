@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { AccountService } from 'src/app/shared/services/account.service';
 import { LoadingService } from 'src/app/shared/services/loading.service';
 import Swal from 'sweetalert2';
@@ -18,11 +19,11 @@ export class ResetPasswordComponent implements OnInit {
   constructor(
     public formBuilder: FormBuilder,
     public accountService: AccountService,
-    private snackBar: MatSnackBar,
+    private message: NzMessageService,
     private loadingService: LoadingService,
     public router: Router,
     private activatedRoute: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadingService.ChangeStatusLoading(true);
@@ -39,11 +40,14 @@ export class ResetPasswordComponent implements OnInit {
     setTimeout(() => this.loadingService.ChangeStatusLoading(false), 800);
     this.GetPararmsRoute();
   }
+
   GetInto() {
     this.loadingService.ChangeStatusLoading(true);
     this.accountService.RecoverPassword(this.form.value).subscribe(
       (result: any) => {
-        this.openSnackBar(result.message);
+        this.message.success(result.message, {
+          nzDuration: 4000
+        });
         Swal.fire({
           icon: 'success',
           title: result.message,
@@ -54,17 +58,14 @@ export class ResetPasswordComponent implements OnInit {
       },
       (error) => {
         console.error(error);
-        this.openSnackBar(error.error.message);
+        this.message.error(error.error.message, {
+          nzDuration: 4000
+        });
         setTimeout(() => this.loadingService.ChangeStatusLoading(false), 800);
       }
     );
   }
-  openSnackBar(message: string) {
-    this.snackBar.open(message, 'x', {
-      horizontalPosition: 'start',
-      verticalPosition: 'bottom',
-    });
-  }
+
   GetPararmsRoute() {
     this.activatedRoute.queryParams.subscribe((params: any) => {
       this.form.controls['UserId'].setValue(params.userId);

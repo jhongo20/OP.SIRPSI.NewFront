@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import { OccupationalLicenseComponent } from './occupational-license/occupational-license.component';
 import { getService } from 'src/app/shared/services/get.services';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-update-psychologist-data',
@@ -35,14 +36,14 @@ export class UpdatePsychologistDataComponent implements OnInit {
   constructor(
     public formBuilder: FormBuilder,
     public accountService: AccountService,
-    private snackBar: MatSnackBar,
+    private message: NzMessageService,
     private loadingService: LoadingService,
     public router: Router,
     private activatedRoute: ActivatedRoute,
     private genericService: GenericService,
     public dialog: MatDialog,
     private servicio: getService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -75,6 +76,7 @@ export class UpdatePsychologistDataComponent implements OnInit {
     this.onGetDepartment(environment.urlApiColombia + 'Department');
     this.getListas();
   }
+
   GetInto() {
     this.form.value.Document = this.form.value.Document.toString();
     this.loadingService.ChangeStatusLoading(true);
@@ -82,7 +84,7 @@ export class UpdatePsychologistDataComponent implements OnInit {
       .Put('usuario/ActualizarUsuario', this.form.value)
       .subscribe(
         (result: any) => {
-          this.openSnackBar(result.message);
+          this.message.success(result.message, { nzDuration: 4000 });
           Swal.fire({
             icon: 'success',
             title: result.message,
@@ -92,17 +94,12 @@ export class UpdatePsychologistDataComponent implements OnInit {
         },
         (error) => {
           console.error(error);
-          this.openSnackBar(error.error.message);
+          this.message.error(error.error.message, { nzDuration: 4000 });
           setTimeout(() => this.loadingService.ChangeStatusLoading(false), 800);
         }
       );
   }
-  openSnackBar(message: string) {
-    this.snackBar.open(message, 'x', {
-      horizontalPosition: 'start',
-      verticalPosition: 'bottom',
-    });
-  }
+
   getListas() {
     this.loadingService.ChangeStatusLoading(true);
     this.genericService.GetAll('sexo/ConsultarSexo').subscribe((data: any) => {
@@ -130,7 +127,7 @@ export class UpdatePsychologistDataComponent implements OnInit {
                           this.genericService
                             .GetAll(
                               'usuario/consultarUsuariosEmpresa?role=' +
-                                environment.psicologoRole
+                              environment.psicologoRole
                             )
                             .subscribe((data: any) => {
                               this.listUsuario = data;
@@ -149,6 +146,7 @@ export class UpdatePsychologistDataComponent implements OnInit {
         });
     });
   }
+
   loadData(data: any) {
     this.loadingService.ChangeStatusLoading(true);
     this.form.controls['Id'].setValue(data.id);
@@ -175,10 +173,11 @@ export class UpdatePsychologistDataComponent implements OnInit {
     this.form.controls['Address'].setValue(data.address);
     setTimeout(() => this.loadingService.ChangeStatusLoading(false), 600);
   }
+
   openChangeEmailForm() {
     if (
       this.formEmail.value.OldEmail ==
-        this.accountService.userData.user.email &&
+      this.accountService.userData.user.email &&
       this.formEmail.value.Nit == this.accountService.userData.empresa.documento
     ) {
       // const dialogRef = this.dialog.open(ChangeEmailProfileComponent, {
@@ -187,10 +186,9 @@ export class UpdatePsychologistDataComponent implements OnInit {
       //   },
       // });
       // dialogRef.afterClosed().subscribe();
-    } else
-      this.openSnackBar(
-        'Por favor ingrese los datos correctamente para actualizar su correo.'
-      );
+    }
+    else
+      this.message.warning('Por favor ingrese los datos correctamente para actualizar su correo.', { nzDuration: 4000 });
   }
   openOccupationalLicense() {
     const dialogRef = this.dialog.open(OccupationalLicenseComponent, {
@@ -239,7 +237,7 @@ export class UpdatePsychologistDataComponent implements OnInit {
     this.servicio
       .obtenerDatos(
         environment.urlApiColombia +
-          `Department/${url.PlaceBirthDepartment}/cities`
+        `Department/${url.PlaceBirthDepartment}/cities`
       )
       .subscribe((data) => {
         this.listCity = data.sort((x: any, y: any) =>

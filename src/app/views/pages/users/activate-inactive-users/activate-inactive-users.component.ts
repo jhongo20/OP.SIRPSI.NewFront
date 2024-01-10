@@ -19,7 +19,7 @@ export class ActivateInactiveUsersComponent implements OnInit {
   public table: string = 'usuario/ConsultarUsuariosEmpresa';
   public columns = [
     { name: 'Tipo documento', data: 'tipoDocumento', property: 'nombre' },
-    { name: 'Cédula', data: 'cedula' },
+    { name: 'No. Documento', data: 'cedula' },
     { name: 'Correo', data: 'correo' },
     { name: 'Teléfono', data: 'telefono' },
     { name: 'Empresa', data: 'empresa', property: 'nombre' },

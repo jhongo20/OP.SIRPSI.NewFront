@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { AccountService } from 'src/app/shared/services/account.service';
 import { GenericService } from 'src/app/shared/services/generic.service';
 import { LoadingService } from 'src/app/shared/services/loading.service';
@@ -24,14 +25,14 @@ export class AssignNewRoleUserComponent implements OnInit {
   constructor(
     public formBuilder: FormBuilder,
     public accountService: AccountService,
-    private snackBar: MatSnackBar,
+    private message: NzMessageService,
     private loadingService: LoadingService,
     private roleService: SelectRoleService,
     public router: Router,
     private genericService: GenericService,
     @Optional() public dialogRef: MatDialogRef<AssignNewRoleUserComponent>,
     @Optional() @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadingService.ChangeStatusLoading(true);
@@ -76,7 +77,9 @@ export class AssignNewRoleUserComponent implements OnInit {
             },
             error: (error) => {
               console.error(error.error.message);
-              this.openSnackBar(error.error.message);
+              this.message.error(error.error.message, {
+                nzDuration: 4000
+              });
               setTimeout(
                 () => this.loadingService.ChangeStatusLoading(false),
                 600
@@ -92,13 +95,6 @@ export class AssignNewRoleUserComponent implements OnInit {
     // this.router.navigate(['/account/login']);
   }
 
-  openSnackBar(message: string) {
-    this.snackBar.open(message, 'x', {
-      horizontalPosition: 'start',
-      verticalPosition: 'bottom',
-    });
-  }
-
   getListas() {
     if (
       this.accountService.userData.roleId == environment.psicologoRole ||
@@ -106,8 +102,7 @@ export class AssignNewRoleUserComponent implements OnInit {
     )
       this.genericService
         .GetAll(
-          `roles/ConsultarRoles?istInternal=${false}&role=${
-            this.accountService.userData.roleId
+          `roles/ConsultarRoles?istInternal=${false}&role=${this.accountService.userData.roleId
           }`
         )
         .subscribe((data: any) => {

@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import { WorkCenterService } from 'src/app/shared/services/work-center.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { RegisterNewUsersComponent } from '../users/register-new-users/register-new-users.component';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-work-centers',
@@ -65,8 +66,8 @@ export class WorkCentersComponent implements OnInit {
     private loadingService: LoadingService,
     public dialog: MatDialog,
     private workCenterService: WorkCenterService,
-    public snackBar: MatSnackBar
-  ) {}
+    private message: NzMessageService,
+  ) { }
 
   ngOnInit(): void {
     setTimeout(() => this.loadingService.ChangeStatusLoading(false), 500);
@@ -159,7 +160,7 @@ export class WorkCentersComponent implements OnInit {
           .DeleteUserWorkCenter(user.id, workCenter.id)
           .subscribe(
             (data) => {
-              this.openSnackBar(data.message);
+              this.message.success(data.message, { nzDuration: 4000 });
               setTimeout(
                 () => this.loadingService.ChangeStatusLoading(false),
                 600
@@ -168,7 +169,7 @@ export class WorkCentersComponent implements OnInit {
             },
             (error) => {
               console.error(error);
-              this.openSnackBar(error.error.message);
+              this.message.error(error.error.message, { nzDuration: 4000 });
               setTimeout(
                 () => this.loadingService.ChangeStatusLoading(false),
                 1000
@@ -176,12 +177,6 @@ export class WorkCentersComponent implements OnInit {
             }
           );
       }
-    });
-  }
-  openSnackBar(message: string) {
-    this.snackBar.open(message, 'x', {
-      horizontalPosition: 'start',
-      verticalPosition: 'bottom',
     });
   }
 }

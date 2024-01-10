@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, Optional } from '@angular/core';
+import { Component, Inject, OnInit, Optional, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   MAT_DIALOG_DATA,
@@ -6,6 +6,8 @@ import {
   MatDialogRef,
 } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { AccountService } from 'src/app/shared/services/account.service';
 import { GenericService } from 'src/app/shared/services/generic.service';
 import { LoadingService } from 'src/app/shared/services/loading.service';
@@ -21,8 +23,7 @@ import Swal from 'sweetalert2';
   ],
 })
 export class InterventionControlPlansPsychosocialEvaluationFormComponent
-  implements OnInit
-{
+  implements OnInit {
   public option: string;
   defaultNavActiveId = 1;
   public user: any;
@@ -34,19 +35,25 @@ export class InterventionControlPlansPsychosocialEvaluationFormComponent
   listUsuario: any = [];
   ResponsablesAdd: any = [];
   countResponsables: number = 0;
+
+  startValue: Date = new Date();
+  endValue: Date;
+  @ViewChild('endDatePicker') endDatePicker!: NzDatePickerComponent;
+
   constructor(
     public formBuilder: FormBuilder,
     public dialog: MatDialog,
     private genericService: GenericService,
     private loadingService: LoadingService,
     public accountService: AccountService,
-    private snackBar: MatSnackBar,
+    private message: NzMessageService,
     @Optional()
     public dialogRef: MatDialogRef<InterventionControlPlansPsychosocialEvaluationFormComponent>,
     @Optional() @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+  ) { }
 
   ngOnInit(): void {
+    console.log(this.accountService.userData.userActive);
     this.getListas();
     this.form = this.formBuilder.group({
       Id: 'asd',
@@ -67,6 +74,10 @@ export class InterventionControlPlansPsychosocialEvaluationFormComponent
       Cargo: ['', Validators.required],
       Dependencia: ['', Validators.required],
     });
+
+    this.message.error("PRUEBA", {
+      nzDuration: 3000
+    });
   }
 
   cancelarForm() {
@@ -81,13 +92,6 @@ export class InterventionControlPlansPsychosocialEvaluationFormComponent
       if (result.isConfirmed) {
         // this.formInitial.reset();
       }
-    });
-  }
-
-  openSnackBar(message: string) {
-    this.snackBar.open(message, 'x', {
-      horizontalPosition: 'start',
-      verticalPosition: 'bottom',
     });
   }
 
@@ -139,7 +143,10 @@ export class InterventionControlPlansPsychosocialEvaluationFormComponent
             },
             error: (error) => {
               console.error(error.error.message);
-              this.openSnackBar(error.error.message);
+              this.message.error(error.error.message, {
+                nzDuration: 4000
+              });
+
               setTimeout(
                 () => this.loadingService.ChangeStatusLoading(false),
                 600
@@ -168,5 +175,45 @@ export class InterventionControlPlansPsychosocialEvaluationFormComponent
         text: 'El maximo de responsables por actividad es de dos.',
       });
     }
+  }
+
+  disabledStartDate = (startValue: Date): boolean => {
+    if (!startValue || !this.endValue) {
+      return false;
+    }
+    return startValue.getTime() > this.endValue.getTime();
+  };
+
+  disabledEndDate = (endValue: Date): boolean => {
+    if (!endValue || !this.startValue) {
+      return false;
+    }
+    return endValue.getTime() <= this.startValue.getTime();
+  };
+
+  handleStartOpenChange(open: boolean): void {
+    if (!open) {
+      this.endDatePicker.open();
+    }
+    console.log('handleStartOpenChange', open);
+  }
+
+  handleEndOpenChange(open: boolean): void {
+    console.log('handleEndOpenChange', open);
+  }
+
+  addResponsibleMessage() {
+    Swal.fire({
+      // title: '¿Estas seguro?',
+      text: 'Por cada actividad se debe ingresar un mínimo de un responsable y un máximo de dos responsables por cada actividad.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Aceptar',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.addResponsible();
+      }
+    });
   }
 }

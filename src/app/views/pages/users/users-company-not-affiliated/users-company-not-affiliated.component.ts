@@ -20,7 +20,7 @@ export class UsersCompanyNotAffiliatedComponent implements OnInit {
   public table: string = 'usuario/ConsultarUsuariosEmpresaSinCentro';
   public columns = [
     { name: 'Tipo documento', data: 'tipoDocumento', property: 'nombre' },
-    { name: 'Cédula', data: 'cedula' },
+    { name: 'No. Documento', data: 'cedula' },
     { name: 'Correo', data: 'correo' },
     { name: 'Teléfono', data: 'telefono' },
     { name: 'Empresa', data: 'empresa', property: 'nombre' },

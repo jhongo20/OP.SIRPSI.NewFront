@@ -6,6 +6,7 @@ import {
   MatDialogRef,
 } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { AccountService } from 'src/app/shared/services/account.service';
 import { GenericService } from 'src/app/shared/services/generic.service';
 import { LoadingService } from 'src/app/shared/services/loading.service';
@@ -26,8 +27,9 @@ export class RegisterEvaluationComponent implements OnInit {
     private genericService: GenericService,
     private loadingService: LoadingService,
     private accountService: AccountService,
-    private snackBar: MatSnackBar // public dialogRef: MatDialogRef<RegisterEvaluationComponent>, // @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+    private message: NzMessageService,
+  ) { }
+
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       Nombre: ['', Validators.required],
@@ -36,6 +38,7 @@ export class RegisterEvaluationComponent implements OnInit {
       FechaFin: ['', Validators.required],
     });
   }
+
   onSave() {
     console.log(this.form.value);
     Swal.fire({
@@ -61,19 +64,14 @@ export class RegisterEvaluationComponent implements OnInit {
             },
             error: (error) => {
               console.error(error);
-              this.openSnackBar(error.error.message);
+              this.message.error(error.error.message, { nzDuration: 4000 });
               this.loadingService.ChangeStatusLoading(false);
             },
           });
       }
     });
   }
-  openSnackBar(message: string) {
-    this.snackBar.open(message, 'x', {
-      horizontalPosition: 'start',
-      verticalPosition: 'bottom',
-    });
-  }
+
   cancelarForm() {
     Swal.fire({
       title: '¿Estas seguro?',

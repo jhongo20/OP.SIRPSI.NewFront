@@ -13,6 +13,7 @@ import {
   MatDialogRef,
 } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { AccountService } from 'src/app/shared/services/account.service';
 import { GenericService } from 'src/app/shared/services/generic.service';
 import { getService } from 'src/app/shared/services/get.services';
@@ -57,11 +58,11 @@ export class CompaniesFormComponent implements OnInit {
     private genericService: GenericService,
     private loadingService: LoadingService,
     private accountService: AccountService,
-    private snackBar: MatSnackBar,
+    private message: NzMessageService,
     public dialogRef: MatDialogRef<CompaniesFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private servicio: getService
-  ) {}
+  ) { }
   ngOnInit(): void {
     this.getListas();
     this.form = this.formBuilder.group({
@@ -158,7 +159,7 @@ export class CompaniesFormComponent implements OnInit {
     this.genericService
       .GetAll(
         'tipodocumento/ConsultarTipoDocumento?idTipoPersona=' +
-          url.IdTipoPersona
+        url.IdTipoPersona
       )
       .subscribe((data: any) => {
         this.listDocs = data;
@@ -209,23 +210,18 @@ export class CompaniesFormComponent implements OnInit {
               icon: 'success',
               title: 'Empresa registrada exitosamente.',
               showConfirmButton: false,
-              timer: 1500,
+              timer: 2000,
             }).then(() => window.location.reload());
           },
           error: (error) => {
             console.error(error);
-            this.openSnackBar(error.error.message);
+            this.message.error(error.error.message, {
+              nzDuration: 4000
+            });
             this.loadingService.ChangeStatusLoading(false);
           },
         });
       }
-    });
-  }
-
-  openSnackBar(message: string) {
-    this.snackBar.open(message, 'x', {
-      horizontalPosition: 'start',
-      verticalPosition: 'bottom',
     });
   }
 

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { AccountService } from 'src/app/shared/services/account.service';
 import { GenericService } from 'src/app/shared/services/generic.service';
 import { LoadingService } from 'src/app/shared/services/loading.service';
@@ -31,7 +32,7 @@ export class ReinstateUserComponent implements OnInit {
   public table: string = 'usuario/ConsultarUsuariosEmpresa';
   public columns = [
     { name: 'Tipo documento', data: 'tipoDocumento', property: 'nombre' },
-    { name: 'Cédula', data: 'cedula' },
+    { name: 'No. Documento', data: 'cedula' },
     { name: 'Correo', data: 'correo' },
     { name: 'Teléfono', data: 'telefono' },
     { name: 'Empresa', data: 'empresa', property: 'nombre' },
@@ -59,9 +60,9 @@ export class ReinstateUserComponent implements OnInit {
     private genericService: GenericService,
     private loadingService: LoadingService,
     private accountService: AccountService,
-    private snackBar: MatSnackBar,
+    private message: NzMessageService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getListas();
@@ -69,18 +70,20 @@ export class ReinstateUserComponent implements OnInit {
       WorkCenter: ['', Validators.required],
     });
   }
+
   getListas() {
     this.loadingService.ChangeStatusLoading(true);
     this.genericService
       .GetAll(
         'centrotrabajo/ConsultarCentroDeTrabajo?companie=' +
-          this.accountService.userData.empresa.idConsecutivo
+        this.accountService.userData.empresa.idConsecutivo
       )
       .subscribe((data: any) => {
         this.listWorkCenterUser = data;
         setTimeout(() => this.loadingService.ChangeStatusLoading(false), 600);
       });
   }
+
   cancelarForm() {
     Swal.fire({
       title: '¿Estas seguro?',
@@ -95,15 +98,11 @@ export class ReinstateUserComponent implements OnInit {
       }
     });
   }
-  openSnackBar(message: string) {
-    this.snackBar.open(message, 'x', {
-      horizontalPosition: 'start',
-      verticalPosition: 'bottom',
-    });
-  }
+
   selectedWorkCenter(event: any) {
     this.filter = '&workCenter=' + event.id;
   }
+
   selectedRow(event: any) {
     if (this.countListUsers == 0) {
       this.listUsersSelected.push(event);
@@ -124,6 +123,7 @@ export class ReinstateUserComponent implements OnInit {
     }
     console.log(this.listUsersSelected, this.countListUsers);
   }
+
   unlinkWorker() {
     Swal.fire({
       title: '¿Estas seguro?',
@@ -173,7 +173,7 @@ export class ReinstateUserComponent implements OnInit {
               },
               error: (error) => {
                 console.error(error.error.message);
-                this.openSnackBar(error.error.message);
+                this.message.error(error.error.message, { nzDuration: 4000 });
                 setTimeout(
                   () => this.loadingService.ChangeStatusLoading(false),
                   600

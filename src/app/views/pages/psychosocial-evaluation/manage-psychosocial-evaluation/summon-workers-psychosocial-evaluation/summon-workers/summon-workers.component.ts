@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { AccountService } from 'src/app/shared/services/account.service';
 import { GenericService } from 'src/app/shared/services/generic.service';
 import { LoadingService } from 'src/app/shared/services/loading.service';
@@ -26,7 +28,7 @@ export class SummonWorkersComponent implements OnInit {
   public table: string = '';
   public columns = [
     { name: 'Tipo documento', data: 'tipoDocumento', property: 'nombre' },
-    { name: 'Cédula', data: 'cedula' },
+    { name: 'No. Documento', data: 'cedula' },
     // { name: 'Correo', data: 'correo' },
     // { name: 'Teléfono', data: 'telefono' },
     // { name: 'Empresa', data: 'empresa', property: 'nombre' },
@@ -49,6 +51,12 @@ export class SummonWorkersComponent implements OnInit {
   ];
   public title: string = '';
   tab: number = 0;
+
+  startValue: Date = new Date();
+  startValueValidate: Date = new Date();
+  endValue: Date;
+  @ViewChild('endDatePicker') endDatePicker!: NzDatePickerComponent;
+
   constructor(
     public formBuilder: FormBuilder,
     public dialog: MatDialog,
@@ -56,9 +64,10 @@ export class SummonWorkersComponent implements OnInit {
     private loadingService: LoadingService,
     private accountService: AccountService,
     private activatedRoute: ActivatedRoute,
-    private snackBar: MatSnackBar,
+    private message: NzMessageService,
     private router: Router
-  ) {}
+  ) { }
+
   ngOnInit(): void {
     this.loadingService.ChangeStatusLoading(true);
     this.getListas();
@@ -68,6 +77,7 @@ export class SummonWorkersComponent implements OnInit {
       FechaInicio: ['', Validators.required],
     });
   }
+
   onSave() {
     Swal.fire({
       title: '¿Estas seguro?',
@@ -90,6 +100,7 @@ export class SummonWorkersComponent implements OnInit {
       }
     });
   }
+
   summonWorkers(body: any, i: any) {
     this.genericService
       .Post('evaluacionPsicosocial/RegistrarEvaluacion', body)
@@ -110,11 +121,12 @@ export class SummonWorkersComponent implements OnInit {
         },
         error: (error) => {
           console.error(error.error.message);
-          this.openSnackBar(error.error.message);
+          this.message.error(error.error.message, { nzDuration: 4000 });
           setTimeout(() => this.loadingService.ChangeStatusLoading(false), 600);
         },
       });
   }
+
   cancelarForm() {
     Swal.fire({
       title: '¿Estas seguro?',
@@ -128,12 +140,7 @@ export class SummonWorkersComponent implements OnInit {
       }
     });
   }
-  openSnackBar(message: string) {
-    this.snackBar.open(message, 'x', {
-      horizontalPosition: 'start',
-      verticalPosition: 'bottom',
-    });
-  }
+
   selectedTab(type: number) {
     console.log(type);
     this.tab = type;
@@ -144,16 +151,18 @@ export class SummonWorkersComponent implements OnInit {
     this.genericService
       .GetAll(
         'userWorkPlace/ConsultarCentroDeTrabajoUsuario?user=' +
-          this.accountService.userData.id
+        this.accountService.userData.id
       )
       .subscribe((data: any) => {
         this.listWorkCenterUser = data;
         setTimeout(() => this.loadingService.ChangeStatusLoading(false), 600);
       });
   }
+
   selectedWorkCenter(event: any) {
     // this.loadingService.ChangeStatusLoading(true);
   }
+
   selectedRow(event: any) {
     if (this.countListUsers == 0) {
       this.listUsersSelected.push(event);
@@ -174,6 +183,7 @@ export class SummonWorkersComponent implements OnInit {
     }
     console.log(this.listUsersSelected, this.countListUsers);
   }
+
   searchWorkers() {
     this.loadingService.ChangeStatusLoading(true);
     this.viewTable = false;
@@ -186,5 +196,16 @@ export class SummonWorkersComponent implements OnInit {
       this.filter = '&workCenter=' + this.workCenterSelected + '&type=1';
       this.viewTable = true;
     }, 1400);
+  }
+
+  disabledEndDate = (endValue: Date): boolean => {
+    if (!endValue || !this.startValueValidate) {
+      return false;
+    }
+    return endValue.getTime() <= this.startValueValidate.getTime();
+  };
+
+  handleStartOpenChange(open: any): void {
+    console.log('handleStartOpenChange', open);
   }
 }

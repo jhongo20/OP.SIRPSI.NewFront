@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { AccountService } from 'src/app/shared/services/account.service';
 import { GenericService } from 'src/app/shared/services/generic.service';
 import { getService } from 'src/app/shared/services/get.services';
@@ -45,9 +46,10 @@ export class CompanyInformationFirstComponent implements OnInit {
     private genericService: GenericService,
     private loadingService: LoadingService,
     private accountService: AccountService,
-    private snackBar: MatSnackBar,
+    private message: NzMessageService,
     private servicio: getService
-  ) {}
+  ) { }
+
   ngOnInit(): void {
     this.getListas();
     this.form = this.formBuilder.group({
@@ -70,7 +72,7 @@ export class CompanyInformationFirstComponent implements OnInit {
     this.formWorkCenter = this.formBuilder.group({
       Id: ['', Validators.required],
       Nombre: ['', Validators.required],
-      Descripcion: '',
+      Descripcion: ['', Validators.required],
       Principal: true,
       IdEstado: ['', Validators.required],
       IdUsuario: '',
@@ -106,6 +108,7 @@ export class CompanyInformationFirstComponent implements OnInit {
       IdEstado: environment.inactivoEstado,
     });
   }
+
   onSave() {
     this.form.value.Documento = this.form.value.Documento.toString();
     this.form.value.DigitoVerificacion =
@@ -144,19 +147,14 @@ export class CompanyInformationFirstComponent implements OnInit {
           },
           error: (error) => {
             console.error(error);
-            this.openSnackBar(error.error.message);
+            this.message.error(error.error.message, { nzDuration: 4000 });
             this.loadingService.ChangeStatusLoading(false);
           },
         });
       }
     });
   }
-  openSnackBar(message: string) {
-    this.snackBar.open(message, 'x', {
-      horizontalPosition: 'start',
-      verticalPosition: 'bottom',
-    });
-  }
+
   onGetDepartment(url: string) {
     this.servicio.obtenerDatos(url).subscribe((data) => {
       this.listDepartament = data.sort((x: any, y: any) =>
@@ -164,13 +162,14 @@ export class CompanyInformationFirstComponent implements OnInit {
       );
     });
   }
+
   getListas() {
     this.loadingService.ChangeStatusLoading(true);
     this.onGetDepartment(environment.urlApiColombia + 'Department');
     this.genericService
       .GetAll(
         'empresas/ConsultarEmpresasUsuario?user=' +
-          this.accountService.userData.id
+        this.accountService.userData.id
       )
       .subscribe((data: any) => {
         this.listCompaniesUser = data;
@@ -250,6 +249,7 @@ export class CompanyInformationFirstComponent implements OnInit {
           });
       });
   }
+
   loadDataCompany(event: any) {
     // this.loadingService.ChangeStatusLoading(false);
     if (event != null && event != undefined) {
@@ -355,6 +355,7 @@ export class CompanyInformationFirstComponent implements OnInit {
     }
     setTimeout(() => this.loadingService.ChangeStatusLoading(false), 1500);
   }
+
   onGetCity(url: any) {
     this.listCity = [];
     this.formWorkCenter.value.IdMunicipio = '';
@@ -369,6 +370,7 @@ export class CompanyInformationFirstComponent implements OnInit {
         );
       });
   }
+
   onGetTypeDocument(url: any) {
     this.listDocs = [];
     this.form.value.TipoDocumento = '';
@@ -377,16 +379,18 @@ export class CompanyInformationFirstComponent implements OnInit {
     this.genericService
       .GetAll(
         'tipodocumento/ConsultarTipoDocumento?idTipoPersona=' +
-          url.IdTipoPersona
+        url.IdTipoPersona
       )
       .subscribe((data: any) => {
         this.listDocs = data;
       });
   }
+
   onGetDigit(item: any) {
     console.log(item);
     this.showDigit = item == undefined ? false : item.tieneDigito;
   }
+
   cancelarForm() {
     Swal.fire({
       title: '¿Estas seguro?',

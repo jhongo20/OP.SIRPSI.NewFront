@@ -9,6 +9,7 @@ import { DataTable } from 'simple-datatables';
 import * as XLSX from 'xlsx';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-generic-table',
@@ -42,9 +43,9 @@ export class GenericTableComponent implements OnInit {
   constructor(
     private genericService: GenericService,
     public dialog: MatDialog,
-    private snackBar: MatSnackBar,
-    private loadingService: LoadingService
-  ) {}
+    private loadingService: LoadingService,
+    private message: NzMessageService,
+  ) { }
 
   ngOnInit(): void {
     this.loadingService.ChangeStatusLoading(true);
@@ -65,10 +66,10 @@ export class GenericTableComponent implements OnInit {
     this.genericService
       .GetAll(
         this.table +
-          '?PageNumber=' +
-          (this.pageNumber + 1) +
-          '&PageSize=' +
-          this.pageSize,
+        '?PageNumber=' +
+        (this.pageNumber + 1) +
+        '&PageSize=' +
+        this.pageSize,
         this.filter
       )
       .subscribe(
@@ -92,11 +93,13 @@ export class GenericTableComponent implements OnInit {
             // console.log(this.DataTable);
             this.AjustarEventosTable(this.DataTable);
             this.loadingService.ChangeStatusLoading(false);
-          }, 1200);
+          }, 900);
         },
         (error) => {
           console.error(error);
-          this.openSnackBar(error.error.message);
+          this.message.error(error.error.message, {
+            nzDuration: 4000
+          });
           setTimeout(() => this.loadingService.ChangeStatusLoading(false), 600);
         }
       );
@@ -137,10 +140,12 @@ export class GenericTableComponent implements OnInit {
         this.loadingService.ChangeStatusLoading(true);
         this.genericService.Delete(this.delete, id).subscribe(
           (data) => {
-            this.openSnackBar(data.message);
+            this.message.success(data.message, {
+              nzDuration: 4000
+            });
             setTimeout(
               () => this.loadingService.ChangeStatusLoading(false),
-              1500
+              900
             );
             // if (this.dataTable == undefined) this.Get();
             // else window.location.reload();
@@ -149,10 +154,12 @@ export class GenericTableComponent implements OnInit {
           (error) => {
             console.error(error);
             Swal.fire('Error', error.error.message, 'error');
-            this.openSnackBar(error.error.message);
+            this.message.error(error.error.message, {
+              nzDuration: 4000
+            });
             setTimeout(
               () => this.loadingService.ChangeStatusLoading(false),
-              1500
+              900
             );
           }
         );
@@ -176,15 +183,7 @@ export class GenericTableComponent implements OnInit {
     // if (estado == 0 || validationSelect == false)
     this.selected.emit(item);
     // else
-    //   this.openSnackBar("El registro con la id: " + id + " esta deshabilitado.");
     setTimeout(() => this.loadingService.ChangeStatusLoading(false), 600);
-  }
-
-  openSnackBar(message: string) {
-    this.snackBar.open(message, 'x', {
-      horizontalPosition: 'start',
-      verticalPosition: 'bottom',
-    });
   }
 
   ChangeStaTus(item: any) {
@@ -203,14 +202,18 @@ export class GenericTableComponent implements OnInit {
             (data) => {
               this.loadingService.ChangeStatusLoading(false);
               window.location.reload();
-              this.openSnackBar(data.message);
+              this.message.success(data.message, {
+                nzDuration: 4000
+              });
             },
             (error) => {
               console.error(error);
-              this.openSnackBar(error.error.message);
+              this.message.error(error.error.message, {
+                nzDuration: 4000
+              });
               setTimeout(
                 () => this.loadingService.ChangeStatusLoading(false),
-                1500
+                1000
               );
             }
           );

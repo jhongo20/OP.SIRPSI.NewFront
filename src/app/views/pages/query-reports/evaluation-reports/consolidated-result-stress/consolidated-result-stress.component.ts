@@ -26,7 +26,7 @@ export class ConsolidatedResultStressComponent implements OnInit {
   getListas() {
     this.genericService
       .GetAll(
-        `reportes/ConsultarResultadoEvaluacion?IdEvaluacion=${this.evaluacion}&formaId=A4&division=492`
+        `reportes/ConsultarResultadoEvaluacion?IdEvaluacion=${this.evaluacion}&formaId=A4&division=164`
       )
       .subscribe((data: any) => {
         this.cuestionarioList = data.contadorPorDominio;

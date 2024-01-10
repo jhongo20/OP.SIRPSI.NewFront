@@ -23,6 +23,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { CompanyInformationFirstModule } from './company-information-first/company-information-first.module';
 import { ComplementaryCompanyDataComponent } from './complementary-company-data/complementary-company-data.component';
 import { ComplementaryCompanyDataModule } from './complementary-company-data/complementary-company-data.module';
+import { NzMessageModule } from 'ng-zorro-antd/message';
 
 @NgModule({
   declarations: [UpdateCompanyDataComponent, CompanyInformationSecondComponent],
@@ -38,6 +39,7 @@ import { ComplementaryCompanyDataModule } from './complementary-company-data/com
     MatSelectModule,
     MatButtonModule,
     FileUploadModule,
+    NzMessageModule,
     FormsModule,
     ReactiveFormsModule,
     MatDialogModule,
@@ -54,4 +56,4 @@ import { ComplementaryCompanyDataModule } from './complementary-company-data/com
     NgxMaskModule.forRoot({ validation: true }),
   ],
 })
-export class UpdateCompanyDataModule {}
+export class UpdateCompanyDataModule { }

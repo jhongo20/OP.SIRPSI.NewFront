@@ -23,6 +23,7 @@ import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzMessageModule } from 'ng-zorro-antd/message';
 
 @NgModule({
   declarations: [CompanyInformationFirstComponent],
@@ -44,6 +45,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
     MatNativeDateModule,
     MatTabsModule,
     MatTooltipModule,
+    NzMessageModule,
     FeatherIconModule,
     MatIconModule,
     MatOptionModule,

@@ -23,6 +23,8 @@ import { InterventionControlPlansPsychosocialEvaluationComponent } from './inter
 import { InterventionControlPlansPsychosocialEvaluationFormComponent } from './intervention-control-plans-psychosocial-evaluation-form/intervention-control-plans-psychosocial-evaluation-form.component';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { NzMessageModule } from 'ng-zorro-antd/message';
 
 @NgModule({
   declarations: [
@@ -53,6 +55,8 @@ import { NzCollapseModule } from 'ng-zorro-antd/collapse';
     FeatherIconModule,
     MatTabsModule,
     NzCollapseModule,
+    NzDatePickerModule,
+    NzMessageModule,
     NgxMaskModule.forRoot({ validation: true }),
   ],
 })

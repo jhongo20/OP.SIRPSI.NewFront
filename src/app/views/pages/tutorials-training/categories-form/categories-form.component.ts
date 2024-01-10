@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { AccountService } from 'src/app/shared/services/account.service';
 import { GenericService } from 'src/app/shared/services/generic.service';
 import { LoadingService } from 'src/app/shared/services/loading.service';
@@ -23,8 +24,8 @@ export class CategoriesFormComponent implements OnInit {
     private genericService: GenericService,
     private loadingService: LoadingService,
     private accountService: AccountService,
-    private snackBar: MatSnackBar
-  ) {}
+    private message: NzMessageService
+  ) { }
   ngOnInit(): void {
     this.getListas();
     this.form = this.formBuilder.group({
@@ -58,19 +59,14 @@ export class CategoriesFormComponent implements OnInit {
             },
             error: (error) => {
               console.error(error);
-              this.openSnackBar(error.error.message);
+              this.message.error(error.error.message, { nzDuration: 4000 });
               this.loadingService.ChangeStatusLoading(false);
             },
           });
       }
     });
   }
-  openSnackBar(message: string) {
-    this.snackBar.open(message, 'x', {
-      horizontalPosition: 'start',
-      verticalPosition: 'bottom',
-    });
-  }
+
   getListas() {
     this.loadingService.ChangeStatusLoading(true);
     this.listTypes = [
@@ -84,6 +80,7 @@ export class CategoriesFormComponent implements OnInit {
         setTimeout(() => this.loadingService.ChangeStatusLoading(false), 600);
       });
   }
+
   cancelarForm() {
     Swal.fire({
       title: '¿Estas seguro?',

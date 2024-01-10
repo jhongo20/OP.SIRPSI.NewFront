@@ -25,6 +25,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { ChangeDataProfileComponent } from './change-data-profile/change-data-profile.component';
 import { NgxMaskModule } from 'ngx-mask';
 import { ChangeEmailProfileComponent } from './change-email-profile/change-email-profile.component';
+import { NzMessageModule } from 'ng-zorro-antd/message';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { ChangeEmailProfileComponent } from './change-email-profile/change-email
     MatButtonModule,
     MatSnackBarModule,
     MatIconModule,
+    NzMessageModule,
     MatDialogModule,
     MatDividerModule,
     MatPseudoCheckboxModule,
@@ -57,4 +59,4 @@ import { ChangeEmailProfileComponent } from './change-email-profile/change-email
     NgxMaskModule.forRoot({ validation: true }),
   ],
 })
-export class ProfileModule {}
+export class ProfileModule { }

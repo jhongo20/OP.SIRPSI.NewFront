@@ -30,6 +30,8 @@ import { es_ES } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
 import { SummonWorkerComponent } from './shared/components/summon-worker/summon-worker.component';
+import { NzMessageModule } from 'ng-zorro-antd/message';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 
 registerLocaleData(es);
 
@@ -60,6 +62,8 @@ registerLocaleData(es);
     MatPseudoCheckboxModule,
     MatCheckboxModule,
     MatTooltipModule,
+    NzMessageModule,
+    NzDatePickerModule,
     // AccountModule,
   ],
   providers: [
@@ -85,4 +89,4 @@ registerLocaleData(es);
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class AppModule {}
+export class AppModule { }

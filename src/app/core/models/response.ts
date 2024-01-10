@@ -15,6 +15,7 @@ export interface AuthenticationResponse {
   roleName: string;
   id: string;
   user: UserLogin;
+  userActive: any;
   empresaId: string;
   empresa: any;
   rutasAsignadas: any;

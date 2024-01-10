@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { AccountService } from 'src/app/shared/services/account.service';
 import { GenericService } from 'src/app/shared/services/generic.service';
 import { getService } from 'src/app/shared/services/get.services';
@@ -25,7 +26,7 @@ export class OccupationalLicenseComponent implements OnInit {
   constructor(
     public formBuilder: FormBuilder,
     public accountService: AccountService,
-    private snackBar: MatSnackBar,
+    private message: NzMessageService,
     private loadingService: LoadingService,
     public router: Router,
     private activatedRoute: ActivatedRoute,
@@ -33,7 +34,7 @@ export class OccupationalLicenseComponent implements OnInit {
     private genericService: GenericService,
     @Optional() public dialogRef: MatDialogRef<OccupationalLicenseComponent>,
     @Optional() @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.colSize = this.data != null ? 'col-md-12 mb-2' : 'col-md-3';
@@ -51,6 +52,7 @@ export class OccupationalLicenseComponent implements OnInit {
     this.onLoadData(this.data.item.licenciaOcupacional);
     setTimeout(() => this.loadingService.ChangeStatusLoading(false), 800);
   }
+
   GetInto() {
     this.loadingService.ChangeStatusLoading(true);
     this.genericService
@@ -60,7 +62,7 @@ export class OccupationalLicenseComponent implements OnInit {
       )
       .subscribe(
         (result: any) => {
-          this.openSnackBar(result.message);
+          this.message.success(result.message, { nzDuration: 4000 });
           Swal.fire({
             icon: 'success',
             title: result.message,
@@ -70,11 +72,12 @@ export class OccupationalLicenseComponent implements OnInit {
         },
         (error) => {
           console.error(error);
-          this.openSnackBar(error.error.message);
+          this.message.error(error.error.message, { nzDuration: 4000 });
           setTimeout(() => this.loadingService.ChangeStatusLoading(false), 800);
         }
       );
   }
+
   cancelarForm() {
     Swal.fire({
       title: '¿Estas seguro?',
@@ -90,12 +93,7 @@ export class OccupationalLicenseComponent implements OnInit {
       }
     });
   }
-  openSnackBar(message: string) {
-    this.snackBar.open(message, 'x', {
-      horizontalPosition: 'start',
-      verticalPosition: 'bottom',
-    });
-  }
+
   onGetDepartment(url: string) {
     this.servicio.obtenerDatos(url).subscribe((data) => {
       this.listDepartament = data.sort((x: any, y: any) =>
@@ -103,6 +101,7 @@ export class OccupationalLicenseComponent implements OnInit {
       );
     });
   }
+
   onGetCity(url: any) {
     this.listCity = [];
     this.form.value.PlaceBirthCity = '';
@@ -117,6 +116,7 @@ export class OccupationalLicenseComponent implements OnInit {
         );
       });
   }
+
   onLoadData(data: any) {
     if (data != null) {
       this.form.controls['Id'].setValue(data.id);

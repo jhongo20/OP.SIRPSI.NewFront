@@ -25,6 +25,7 @@ import { LoadingModule } from 'src/app/shared/components/loading/loading.module'
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxMaskModule } from 'ngx-mask';
 import { NgxCaptchaModule } from 'ngx-captcha';
+import { NzMessageModule } from 'ng-zorro-antd/message';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { NgxCaptchaModule } from 'ngx-captcha';
     MatTooltipModule,
     NgSelectModule,
     NgxCaptchaModule,
+    NzMessageModule,
     NgxMaskModule.forRoot({ validation: true }),
   ],
 })
-export class AccountModule {}
+export class AccountModule { }

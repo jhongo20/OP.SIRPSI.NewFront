@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { AccountService } from 'src/app/shared/services/account.service';
 import { GenericService } from 'src/app/shared/services/generic.service';
 import { LoadingService } from 'src/app/shared/services/loading.service';
@@ -26,20 +27,11 @@ export class FaqsFormComponent implements OnInit {
       container: [
         ['bold', 'italic', 'underline', 'strike'], // toggled buttons
         ['code-block'],
-        //  [{ 'header': 1 }, { 'header': 2 }],               // custom button values
         [{ list: 'ordered' }, { list: 'bullet' }],
         [{ script: 'sub' }, { script: 'super' }], // superscript/subscript
         [{ indent: '-1' }, { indent: '+1' }], // outdent/indent
-        //  [{ 'direction': 'rtl' }],                         // text direction
-
-        //  [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
         [{ header: [1, 2, 3, 4, 5, 6, false] }],
-
         [{ align: [] }],
-
-        //  ['clean'],                                         // remove formatting button
-
-        //  ['link'],
         ['link', 'image', 'video'],
       ],
     },
@@ -47,13 +39,13 @@ export class FaqsFormComponent implements OnInit {
   constructor(
     public formBuilder: FormBuilder,
     public accountService: AccountService,
-    private snackBar: MatSnackBar,
+    private message: NzMessageService,
     private loadingService: LoadingService,
     public router: Router,
     private activatedRoute: ActivatedRoute,
     private genericService: GenericService,
     public dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -92,7 +84,7 @@ export class FaqsFormComponent implements OnInit {
             },
             error: (error) => {
               console.error(error);
-              this.openSnackBar(error.error.message);
+              this.message.error(error.error.message, { nzDuration: 4000 });
               this.loadingService.ChangeStatusLoading(false);
             },
           });
@@ -125,18 +117,11 @@ export class FaqsFormComponent implements OnInit {
             },
             error: (error) => {
               console.error(error);
-              this.openSnackBar(error.error.message);
+              this.message.error(error.error.message, { nzDuration: 4000 });
               this.loadingService.ChangeStatusLoading(false);
             },
           });
       }
-    });
-  }
-
-  openSnackBar(message: string) {
-    this.snackBar.open(message, 'x', {
-      horizontalPosition: 'start',
-      verticalPosition: 'bottom',
     });
   }
 

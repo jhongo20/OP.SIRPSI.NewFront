@@ -1,48 +1,29 @@
-<label class="title"
-  >Volver a convocar trabajador a evaluación psicosocial</label
->
+<label class="title">Volver a convocar trabajador a evaluación psicosocial</label>
 <hr class="hr" />
 <div class="container-fluid">
   <br />
   <form #f="ngForm" [formGroup]="this.formInitial">
     <div class="row">
       <div class="col-md-12 mb-2">
-        <label class="form-label"
-          >Fecha de inicio
-          <i
-            class="mdi mdi-information"
-            #tooltip="matTooltip"
-            matTooltip="Ingrese una fecha de inicio de la evaluación"
-          ></i
-        ></label>
-        <input
-          class="form-control"
-          placeholder="yyyy-mm-dd"
-          #FechaInicio
-          type="date"
-          formControlName="FechaInicio"
-        />
-        <p
-          class="text-danger mt-1"
-          *ngIf="formInitial.controls.FechaInicio.errors?.required"
-        >
+        <label class="form-label">Fecha de inicio
+          <i class="mdi mdi-information" #tooltip="matTooltip"
+            matTooltip="Ingrese una fecha de inicio de la evaluación"></i></label>
+        <nz-date-picker [nzDisabledDate]="disabledEndDate" nzFormat="yyyy-MM-dd" [(ngModel)]="startValue"
+          nzPlaceHolder="Fecha de inicio" (nzOnOpenChange)="handleStartOpenChange($event)" #FechaInicio
+          formControlName="FechaInicio" required></nz-date-picker>
+        <p class="text-danger mt-1" *ngIf="formInitial.controls.FechaInicio.errors?.required">
           Este campo es obligatorio
         </p>
       </div>
     </div>
   </form>
   <div style="padding: 20px 0 25px 0">
-    <button
-      (click)="onSave()"
-      type="submit"
-      class="btn btn-primary me-2"
-      [disabled]="this.formInitial.invalid"
-      style="margin-right: 8px"
-    >
+    <button (click)="onSave()" type="submit" class="btn btn-primary me-2" [disabled]="this.formInitial.invalid"
+      style="margin-right: 8px">
       Convocar a evaluación
     </button>
     <button class="btn btn-secondary" type="submit" style="margin-right: 8px;"
-            (click)="cancelarForm();">Cancelar</button>
+      (click)="cancelarForm();">Cancelar</button>
   </div>
 </div>
 <hr class="hr" />

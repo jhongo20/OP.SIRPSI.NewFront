@@ -13,6 +13,7 @@ import Swal from 'sweetalert2';
 import { RegisterEvaluationComponent } from '../summon-workers-psychosocial-evaluation/register-evaluation/register-evaluation.component';
 import { RolesComponent } from '../../../configuration/roles/roles.component';
 import { DownloadWorkerComponent } from 'src/app/shared/components/download-worker/download-worker.component';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-advances-psychosocial-evaluation',
@@ -62,9 +63,10 @@ export class AdvancesPsychosocialEvaluationComponent implements OnInit {
     private loadingService: LoadingService,
     private accountService: AccountService,
     private activatedRoute: ActivatedRoute,
-    private snackBar: MatSnackBar,
+    private message: NzMessageService,
     private router: Router
-  ) {}
+  ) { }
+
   ngOnInit(): void {
     this.loadingService.ChangeStatusLoading(true);
     this.getListas();
@@ -74,6 +76,7 @@ export class AdvancesPsychosocialEvaluationComponent implements OnInit {
       FechaInicio: ['', Validators.required],
     });
   }
+
   onSave() {
     Swal.fire({
       title: '¿Estas seguro?',
@@ -96,6 +99,7 @@ export class AdvancesPsychosocialEvaluationComponent implements OnInit {
       }
     });
   }
+
   summonWorkers(body: any, i: any) {
     this.genericService
       .Post('evaluacionPsicosocial/RegistrarEvaluacion', body)
@@ -116,11 +120,12 @@ export class AdvancesPsychosocialEvaluationComponent implements OnInit {
         },
         error: (error) => {
           console.error(error.error.message);
-          this.openSnackBar(error.error.message);
+          this.message.error(error.error.message, { nzDuration: 4000 });
           setTimeout(() => this.loadingService.ChangeStatusLoading(false), 600);
         },
       });
   }
+
   cancelarForm() {
     Swal.fire({
       title: '¿Estas seguro?',
@@ -134,12 +139,7 @@ export class AdvancesPsychosocialEvaluationComponent implements OnInit {
       }
     });
   }
-  openSnackBar(message: string) {
-    this.snackBar.open(message, 'x', {
-      horizontalPosition: 'start',
-      verticalPosition: 'bottom',
-    });
-  }
+
   selectedTab(type: number) {
     console.log(type);
     this.tab = type;
@@ -150,16 +150,18 @@ export class AdvancesPsychosocialEvaluationComponent implements OnInit {
     this.genericService
       .GetAll(
         'userWorkPlace/ConsultarCentroDeTrabajoUsuario?user=' +
-          this.accountService.userData.id
+        this.accountService.userData.id
       )
       .subscribe((data: any) => {
         this.listWorkCenterUser = data;
         setTimeout(() => this.loadingService.ChangeStatusLoading(false), 600);
       });
   }
+
   selectedWorkCenter(event: any) {
     // this.loadingService.ChangeStatusLoading(true);
   }
+
   selectedRow(event: any, type: number) {
     var dialogRef: any;
     if (event.porcentaje != 100 && type == 3) {
@@ -195,6 +197,7 @@ export class AdvancesPsychosocialEvaluationComponent implements OnInit {
       });
     dialogRef.afterClosed().subscribe();
   }
+
   searchWorkers() {
     this.loadingService.ChangeStatusLoading(true);
     this.viewTable = false;

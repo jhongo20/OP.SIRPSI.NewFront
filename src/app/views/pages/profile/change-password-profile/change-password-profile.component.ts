@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { AccountService } from 'src/app/shared/services/account.service';
 import { LoadingService } from 'src/app/shared/services/loading.service';
 import Swal from 'sweetalert2';
@@ -21,13 +22,13 @@ export class ChangePasswordProfileComponent implements OnInit {
   constructor(
     public formBuilder: FormBuilder,
     public accountService: AccountService,
-    private snackBar: MatSnackBar,
+    private message: NzMessageService,
     private loadingService: LoadingService,
     public router: Router,
     private activatedRoute: ActivatedRoute,
     @Optional() public dialogRef: MatDialogRef<ChangePasswordProfileComponent>,
     @Optional() @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.colSize = this.data != null ? 'col-md-12 mb-2' : 'col-md-3';
@@ -38,11 +39,12 @@ export class ChangePasswordProfileComponent implements OnInit {
     });
     setTimeout(() => this.loadingService.ChangeStatusLoading(false), 800);
   }
+  
   GetInto() {
     this.loadingService.ChangeStatusLoading(true);
     this.accountService.ChangePassword(this.form.value).subscribe(
       (result: any) => {
-        this.openSnackBar(result.message);
+        this.message.error(result.message, { nzDuration: 4000 });
         Swal.fire({
           icon: 'success',
           title: result.message,
@@ -53,7 +55,7 @@ export class ChangePasswordProfileComponent implements OnInit {
       },
       (error) => {
         console.error(error);
-        this.openSnackBar(error.error.message);
+        this.message.error(error.error.message, { nzDuration: 4000 });
         if (
           error.error.message ==
           'Ha ocurrido un error con el cambio de contraseña: Password Incorrecta.'
@@ -72,6 +74,7 @@ export class ChangePasswordProfileComponent implements OnInit {
       }
     );
   }
+
   cancelarForm() {
     Swal.fire({
       title: '¿Estas seguro?',
@@ -85,12 +88,6 @@ export class ChangePasswordProfileComponent implements OnInit {
         if (this.data.type != 1) this.form.reset();
         else this.dialogRef.close();
       }
-    });
-  }
-  openSnackBar(message: string) {
-    this.snackBar.open(message, 'x', {
-      horizontalPosition: 'start',
-      verticalPosition: 'bottom',
     });
   }
 }

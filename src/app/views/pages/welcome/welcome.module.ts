@@ -21,6 +21,7 @@ import { FeatherIconModule } from 'src/app/core/feather-icon/feather-icon.module
 import { NgxMaskModule } from 'ngx-mask';
 import { TutorialsTrainingComponent } from './tutorials-training/tutorials-training.component';
 import { FaqsComponent } from './faqs/faqs.component';
+import { NzMessageModule } from 'ng-zorro-antd/message';
 
 @NgModule({
   declarations: [WelcomeComponent, TutorialsTrainingComponent],
@@ -44,8 +45,9 @@ import { FaqsComponent } from './faqs/faqs.component';
     MatOptionModule,
     MatTooltipModule,
     FeatherIconModule,
+    NzMessageModule,
     NgxMaskModule.forRoot({ validation: true }),
   ],
   providers: [HttpClientModule],
 })
-export class WelcomeModule {}
+export class WelcomeModule { }

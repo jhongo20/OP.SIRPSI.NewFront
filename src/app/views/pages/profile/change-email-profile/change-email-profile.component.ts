@@ -2,6 +2,7 @@ import { Component, OnInit, Inject, Optional } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { AccountService } from 'src/app/shared/services/account.service';
 import { GenericService } from 'src/app/shared/services/generic.service';
 import { LoadingService } from 'src/app/shared/services/loading.service';
@@ -17,12 +18,12 @@ export class ChangeEmailProfileComponent implements OnInit {
   constructor(
     public formBuilder: FormBuilder,
     public accountService: AccountService,
-    private snackBar: MatSnackBar,
+    private message: NzMessageService,
     private loadingService: LoadingService,
     private genericService: GenericService,
     @Optional() public dialogRef: MatDialogRef<ChangeEmailProfileComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.formEmail = this.formBuilder.group({
@@ -31,11 +32,12 @@ export class ChangeEmailProfileComponent implements OnInit {
       ConfirmEmail: ['', Validators.required],
     });
   }
+
   GetInto() {
     this.loadingService.ChangeStatusLoading(true);
     this.accountService.ChangeEmail(this.formEmail.value).subscribe(
       (result: any) => {
-        this.openSnackBar(result.message);
+        this.message.success(result.message, { nzDuration: 4000 });
         Swal.fire({
           icon: 'success',
           title: result.message,
@@ -50,17 +52,12 @@ export class ChangeEmailProfileComponent implements OnInit {
       },
       (error) => {
         console.error(error);
-        this.openSnackBar(error.error.message);
+        this.message.error(error.error.message, { nzDuration: 4000 });
         setTimeout(() => this.loadingService.ChangeStatusLoading(false), 800);
       }
     );
   }
-  openSnackBar(message: string) {
-    this.snackBar.open(message, 'x', {
-      horizontalPosition: 'start',
-      verticalPosition: 'bottom',
-    });
-  }
+
   cancelarForm() {
     Swal.fire({
       title: '¿Estas seguro?',
