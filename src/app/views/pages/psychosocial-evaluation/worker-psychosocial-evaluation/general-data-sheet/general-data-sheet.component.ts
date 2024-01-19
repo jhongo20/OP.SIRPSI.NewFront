@@ -19,6 +19,7 @@ export class GeneralDataSheetComponent implements OnInit {
   userForm: FormGroup;
   listDepartament: any;
   listCity: any;
+  listCityRes: any;
   listCities: any;
   constructor(
     private _fb: FormBuilder,
@@ -51,7 +52,7 @@ export class GeneralDataSheetComponent implements OnInit {
       estado_civil: ['', [Validators.required]],
       nivel_educativo: ['', [Validators.required]],
       ocupacion: ['', [Validators.required]],
-      lugar_reidencia: [''],
+      lugar_reidencia: ['dsad'],
       estrado: ['', [Validators.required]],
       tipo_vivienda: ['', [Validators.required]],
       dependientes: ['', [Validators.required]],
@@ -75,12 +76,16 @@ export class GeneralDataSheetComponent implements OnInit {
     this.userForm.controls['lugar_residencia'].setValue(
       this.userForm.value.lugar_residencia.toString()
     );
+    this.userForm.controls['lugar_trabajo'].setValue(
+      this.userForm.value.lugar_trabajo.toString()
+    );
     this.userForm.controls['dependientes'].setValue(
       this.userForm.value.dependientes.toString()
     );
     this.userForm.controls['horasTrabajadasDiarias'].setValue(
       this.userForm.value.horasTrabajadasDiarias.toString()
     );
+    console.log(this.userForm.value)
     this.createQuiz(this.userForm.value);
   }
 
@@ -89,7 +94,7 @@ export class GeneralDataSheetComponent implements OnInit {
       next: (data) => {
         this.propagar.emit();
       },
-      error: () => {},
+      error: () => { },
     });
   }
 
@@ -108,6 +113,18 @@ export class GeneralDataSheetComponent implements OnInit {
       .obtenerDatos(environment.urlApiColombia + `Department/${url.id}/cities`)
       .subscribe((data) => {
         this.listCity = data.sort((x: any, y: any) =>
+          x.name.localeCompare(y.name)
+        );
+      });
+  }
+
+  onGetCityRes(url: any) {
+    this.listCity = [];
+    this.userForm.value.lugar_trabajo = '';
+    this.servicio
+      .obtenerDatos(environment.urlApiColombia + `Department/${url.id}/cities`)
+      .subscribe((data) => {
+        this.listCityRes = data.sort((x: any, y: any) =>
           x.name.localeCompare(y.name)
         );
       });

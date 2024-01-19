@@ -31,6 +31,10 @@ import { NonWorkFactorsQuestionnaireComponent } from './non-work-factors-questio
 import { StressQuestionnaireComponent } from './stress-questionnaire/stress-questionnaire.component';
 import { GeneralDataSheetComponent } from './general-data-sheet/general-data-sheet.component';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 
 @NgModule({
   declarations: [
@@ -64,7 +68,11 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
     FeatherIconModule,
     MatTabsModule,
     NgbModule,
+    NzInputNumberModule,
+    NzFormModule,
+    NzInputModule,
+    NzSelectModule,
     NgxMaskModule.forRoot({ validation: true }),
   ],
 })
-export class WorkerPsychosocialEvaluationModule {}
+export class WorkerPsychosocialEvaluationModule { }

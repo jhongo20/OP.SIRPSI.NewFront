@@ -39,7 +39,7 @@ export class UpdateWorkerDataComponent implements OnInit {
     private loadingService: LoadingService,
     private accountService: AccountService,
     private snackBar: MatSnackBar
-  ) {}
+  ) { }
   ngOnInit(): void {
     this.title = 'Actualizar datos del Trabajador';
     this.getListas();
@@ -70,10 +70,7 @@ export class UpdateWorkerDataComponent implements OnInit {
       ReadingWritingSkills: '0',
     });
     this.genericService
-      .GetAll(
-        'centrotrabajo/ConsultarCentroDeTrabajo?companie=' +
-          this.accountService.userData.empresa.idConsecutivo
-      )
+      .GetAll('userWorkPlace/ConsultarCentroDeTrabajoUsuario?user=' + this.accountService.userData.id)
       .subscribe((data) => (this.listCentrosCosto = data));
   }
   onSave() {
@@ -120,10 +117,7 @@ export class UpdateWorkerDataComponent implements OnInit {
       .subscribe((data: any) => {
         this.listDiscapacidades = data;
         this.genericService
-          .GetAll(
-            'centrotrabajo/ConsultarCentroDeTrabajo?companie=' +
-              this.accountService.userData.empresa.idConsecutivo
-          )
+          .GetAll('userWorkPlace/ConsultarCentroDeTrabajoUsuario?user=' + this.accountService.userData.id)
           .subscribe((data: any) => {
             this.listWorkCenterUser = data;
             this.genericService

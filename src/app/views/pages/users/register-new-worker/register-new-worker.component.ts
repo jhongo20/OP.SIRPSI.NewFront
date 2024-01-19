@@ -50,7 +50,7 @@ export class RegisterNewWorkerComponent implements OnInit {
     private loadingService: LoadingService,
     public accountService: AccountService,
     private snackBar: MatSnackBar
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.title = 'Registro de trabajadores';
@@ -81,10 +81,7 @@ export class RegisterNewWorkerComponent implements OnInit {
       Usuario: ['', Validators.required],
     });
     this.genericService
-      .GetAll(
-        'centrotrabajo/ConsultarCentroDeTrabajo?companie=' +
-          this.accountService.userData.empresa.idConsecutivo
-      )
+      .GetAll('userWorkPlace/ConsultarCentroDeTrabajoUsuario?user=' + this.accountService.userData.id)
       .subscribe((data) => (this.listCentrosCosto = data));
   }
 
@@ -140,7 +137,7 @@ export class RegisterNewWorkerComponent implements OnInit {
             icon: 'warning',
             title:
               'Ha ocurrido un error! ' + error.error.message ==
-              'Registro de usuario ¡fallido!  Failed : PasswordRequiresNonAlphanumeric,PasswordRequiresLower,PasswordRequiresUpper'
+                'Registro de usuario ¡fallido!  Failed : PasswordRequiresNonAlphanumeric,PasswordRequiresLower,PasswordRequiresUpper'
                 ? 'Registro de usuario ¡fallido!  Error: La contraseña no cumple los criterios de seguridad.'
                 : error.error.message,
             showConfirmButton: false,

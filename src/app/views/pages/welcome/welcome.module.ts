@@ -22,9 +22,10 @@ import { NgxMaskModule } from 'ngx-mask';
 import { TutorialsTrainingComponent } from './tutorials-training/tutorials-training.component';
 import { FaqsComponent } from './faqs/faqs.component';
 import { NzMessageModule } from 'ng-zorro-antd/message';
+import { ConsentEvaluationComponent } from './consent-evaluation/consent-evaluation.component';
 
 @NgModule({
-  declarations: [WelcomeComponent, TutorialsTrainingComponent],
+  declarations: [WelcomeComponent, TutorialsTrainingComponent, ConsentEvaluationComponent],
   imports: [
     CommonModule,
     HttpClientModule,

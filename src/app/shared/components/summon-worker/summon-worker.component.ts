@@ -24,8 +24,9 @@ export class SummonWorkerComponent implements OnInit {
   public formInitial: FormGroup;
   listWorkCenterUser: any;
 
-  startValue: Date = new Date();
-  startValueValidate: Date = new Date();
+  hoy: any = new Date();
+  startValue: Date = new Date();;
+  startValueValidate: Date = new Date(this.hoy - (24 * 60 * 60 * 1000));;
   endValue: Date;
   @ViewChild('endDatePicker') endDatePicker!: NzDatePickerComponent;
 
@@ -52,6 +53,7 @@ export class SummonWorkerComponent implements OnInit {
   }
 
   onSave() {
+    this.formInitial.controls['FechaInicio'].setValue(this.formInitial.value.FechaInicio.toLocaleDateString("fr-CA"));
     Swal.fire({
       title: '¿Estas seguro?',
       text: '¿Está seguro de convocar al usuario seleccionado?',

@@ -29,7 +29,7 @@ export class PsychosocialQuestionnaireComponent implements OnInit {
   docPsicologo: string = '';
   emailPsicologo: string = '';
   radicado: string = '';
-
+  documentoUsuario = this.data != null ? this.data.item.usuario.cedula : this.accountService.userData.user.document;
   horas: string = '02';
   minutos: string = '00';
   segundos: string = '00';
@@ -58,7 +58,7 @@ export class PsychosocialQuestionnaireComponent implements OnInit {
     @Optional()
     public dialogRef: MatDialogRef<PsychosocialQuestionnaireComponent>,
     @Optional() @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.cleanData();
@@ -90,7 +90,7 @@ export class PsychosocialQuestionnaireComponent implements OnInit {
 
   modalAlertConfirmation() {
     var messageInfo =
-      '<p class="texto-mensaje"> Estimado/a Usuario/a, este módulo le permite realizar la evaluación psicosocial con la asesoría del Psicólogo Especialista SST de la empresa. Toda la información que proporcione será confidencial y solo estará disponible para el Psicólogo Especialista SST designado por la empresa. Si necesita el informe individual con el resultado de la evaluación, deberá solicitarlo al Psicólogo Especialista SST respectivo. Antes de comenzar la evaluación, es importante que lea y comprenda el consentimiento informado disponible en el siguiente enlace <a href="#">Información de consentimiento</a>.</p>';
+      '<p class="texto-mensaje"> Estimado/a Usuario/a, este módulo le permite realizar la evaluación psicosocial con la asesoría del Psicólogo Especialista SST de la empresa. Toda la información que proporcione será confidencial y solo estará disponible para el Psicólogo Especialista SST designado por la empresa. Si necesita el informe individual con el resultado de la evaluación, deberá solicitarlo al Psicólogo Especialista SST respectivo. Antes de comenzar la evaluación, es importante que lea y comprenda el consentimiento informado disponible en el siguiente enlace <a href="/welcome/conset-evaluation" target="_blank">Información de consentimiento</a>.</p>';
     Swal.fire({
       icon: 'info',
       title: 'Estimado(a) usuario(a)',
@@ -284,11 +284,9 @@ export class PsychosocialQuestionnaireComponent implements OnInit {
 
   completeQuiz4() {
     // this.updateCompletedQuestionnaires(4);
-    this.radicado = `${this.documentoEmpresa}${
-      this.docPsicologo
-    }${new Date().getFullYear()}${
-      new Date().getMonth() + 1
-    }${new Date().getDate()}${this.consecutivoEmpresa}`;
+    this.radicado = `${this.documentoEmpresa}${this.documentoUsuario
+      }${new Date().getFullYear()}${new Date().getMonth() + 1
+      }${new Date().getDate()}${this.consecutivoEmpresa}`;
     this.saveRadicado();
   }
 

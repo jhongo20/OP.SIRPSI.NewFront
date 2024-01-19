@@ -5,253 +5,362 @@
 </div>
 
 <div>
-    <form [formGroup]="userForm" style="padding: 1em;">
-
-        <h3> 1. Nombre completo:</h3>
-        <div class="mb-3">
-            <input type="text" class="form-control" formControlName="nombre_completo" placeholder="Nombre Completo">
+    <form nz-form [nzLayout]="'vertical'" [formGroup]="userForm" style="padding: 1em;">
+        <div nz-row [nzGutter]="24">
+            <div nz-col [nzSpan]="12">
+                <nz-form-item>
+                    <nz-form-label>1. Nombre completo</nz-form-label>
+                    <nz-form-control nzErrorTip="¡Por favor, introduzca su nombre completo!">
+                        <input formControlName="nombre_completo" nz-input placeholder="Nombre completo" nzAllowClear
+                            required />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="12">
+                <nz-form-item>
+                    <nz-form-label>2. Sexo</nz-form-label>
+                    <nz-form-control nzErrorTip="¡Por favor, seleccione el sexo!">
+                        <nz-select formControlName="sexo" nzPlaceHolder="Seleccionar" nzAllowClear required>
+                            <nz-option nzValue="Mujer" nzLabel="Mujer"></nz-option>
+                            <nz-option nzValue="Hombre" nzLabel="Hombre"></nz-option>
+                            <nz-option nzValue="Intersexual" nzLabel="Intersexual"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="12">
+                <nz-form-item>
+                    <nz-form-label>3. Genero</nz-form-label>
+                    <nz-form-control nzErrorTip="¡Por favor, seleccione su genero!">
+                        <nz-select formControlName="genero" nzPlaceHolder="Seleccionar" nzAllowClear required>
+                            <nz-option nzValue="Femenino" nzLabel="Femenino"></nz-option>
+                            <nz-option nzValue="Masculino" nzLabel="Masculino"></nz-option>
+                            <nz-option nzValue="Otro" nzLabel="Otro"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="12" *ngIf="userForm.value.genero == 'Otro'">
+                <nz-form-item>
+                    <nz-form-label>¿A cual genero?</nz-form-label>
+                    <nz-form-control nzErrorTip="¡Por favor, introduzca su genero!">
+                        <input formControlName="otro_genero" nz-input placeholder="Genero" required />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="12">
+                <nz-form-item>
+                    <nz-form-label>4. Pertenencia étnico cultural</nz-form-label>
+                    <nz-form-control nzErrorTip="¡Por favor, seleccione su etnia!">
+                        <nz-select formControlName="etnia" nzPlaceHolder="Seleccionar" nzAllowClear required>
+                            <nz-option nzValue="Mestizo/a" nzLabel="Mestizo/a"></nz-option>
+                            <nz-option nzValue="Indigena" nzLabel="Indigena"></nz-option>
+                            <nz-option nzValue="Negro/a, mulato/a, afrodescendiente, afrocolombiano/a"
+                                nzLabel="Negro/a, mulato/a, afrodescendiente, afrocolombiano/a"></nz-option>
+                            <nz-option nzValue="Palenquero/a" nzLabel="Palenquero/a"></nz-option>
+                            <nz-option nzValue="Raizal del archipiélago" nzLabel="Raizal del archipiélago"></nz-option>
+                            <nz-option nzValue="Gitano/a (Rom)" nzLabel="Gitano/a (Rom)"></nz-option>
+                            <nz-option nzValue="Campesino" nzLabel="Campesino"></nz-option>
+                            <nz-option nzValue="Sin pertenencia étnica" nzLabel="Sin pertenencia étnica"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="12" *ngIf="userForm.value.etnia == 'Indigena'">
+                <nz-form-item>
+                    <nz-form-label>¿A cual pueblo indigena pertenece?</nz-form-label>
+                    <nz-form-control nzErrorTip="¡Por favor, introduzca el pueblo indigena!">
+                        <input formControlName="cual_indigena" nz-input placeholder="Pueblo indigena" required />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="12">
+                <nz-form-item>
+                    <nz-form-label>5. ¿Presenta algún tipo de discapacidad?</nz-form-label>
+                    <nz-form-control nzErrorTip="¡Por favor, seleccione si tiene alguna discapacidad!">
+                        <nz-select formControlName="discapacidad" nzPlaceHolder="Seleccionar" nzAllowClear required>
+                            <nz-option nzValue="Si" nzLabel="Si"></nz-option>
+                            <nz-option nzValue="No" nzLabel="No"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="12" *ngIf="userForm.value.discapacidad == 'Si'">
+                <nz-form-item>
+                    <nz-form-label>¿Cuál discapacidad?</nz-form-label>
+                    <nz-form-control nzErrorTip="¡Por favor, seleccione si tiene alguna discapacidad!">
+                        <nz-select formControlName="cual_discapacidad" nzPlaceHolder="Seleccionar" nzAllowClear
+                            required>
+                            <nz-option nzValue="Discapacidad fisíca" nzLabel="Discapacidad fisíca"></nz-option>
+                            <nz-option nzValue="Discapacidad intelectual"
+                                nzLabel="Discapacidad intelectual"></nz-option>
+                            <nz-option nzValue="Discapacidad psicosocial"
+                                nzLabel="Discapacidad psicosocial"></nz-option>
+                            <nz-option nzValue="Discapacidad multiple" nzLabel="Discapacidad multiple"></nz-option>
+                            <nz-option nzValue="Discapacidad auditiva" nzLabel="Discapacidad auditiva"></nz-option>
+                            <nz-option nzValue="Discapacidad visual" nzLabel="Discapacidad visual"></nz-option>
+                            <nz-option nzValue="Sordoceguera" nzLabel="Sordoceguera"></nz-option>
+                            <nz-option nzValue="Otra" nzLabel="Otra"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="12">
+                <nz-form-item>
+                    <nz-form-label>6. Fecha de nacimiento</nz-form-label>
+                    <nz-form-control nzErrorTip="¡Por favor, ingrese su fecha de nacimiento!">
+                        <input type="date" formControlName="anio_nacimiento" nz-input placeholder="Fecha de nacimiento"
+                            nzAllowClear required />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
         </div>
-        <h3> 2. Sexo:</h3>
-        <div class="mb-3">
-            <select class="form-select" formControlName="sexo" >
-                <option value="" selected disabled>Seleccionar</option>
-                <option value="Mujer">Mujer</option>
-                <option value="Hombre">Hombre</option>
-                <option value="Intersexual">Intersexual</option>
-            </select>
+        <hr class="hr" />
+        <div class="row">
+            <nz-form-label>7. Lugar de residencia actual</nz-form-label>
+            <div class="col-md-4 mb-3">
+                <label for="exampleFormControlSelect1" class="form-label">Departamento</label>
+                <ng-select [items]="listDepartament" bindLabel="name" bindValue="id" (change)="onGetCity($event)"
+                    required>
+                </ng-select>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="exampleFormControlSelect1" class="form-label">Municipio</label>
+                <ng-select id="lugar_residencia" #lugar_residencia formControlName="lugar_residencia" [items]="listCity"
+                    bindLabel="name" bindValue="id" [(ngModel)]="userForm.value.lugar_residencia" required>
+                </ng-select>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="exampleFormControlSelect1" class="form-label">Zona</label>
+                <select class="form-select" formControlName="zona">
+                    <option selected disabled value="">Seleccionar</option>
+                    <option value="Urbana">Urbana</option>
+                    <option value="Rural">Rural</option>
+                </select>
+            </div>
+            <!-- <div class="mb-3" *ngIf="userForm.get('zona')?.value == 'Rural'">
+                <label for="exampleFormControlSelect1" class="form-label">¿Cual es el corregimiento?</label>
+                <input type="text" class="form-control" formControlName="cual_rural"
+                    placeholder="¿Cual es el corregimiento?">
+            </div> -->
         </div>
-        <h3> 3. Género:</h3>
-        <div class="mb-3">
-            <select class="form-select" formControlName="genero">
-                <option selected value="" disabled>Seleccionar</option>
-                <option value="Femenino">Femenino</option>
-                <option value="Masculino">Masculino</option>
-                <option value="Otro">Otro</option>
-            </select>
+        <hr class="hr" />
+        <div nz-row [nzGutter]="24">
+            <div nz-col [nzSpan]="12">
+                <nz-form-item>
+                    <nz-form-label>8. Estado civil</nz-form-label>
+                    <nz-form-control nzErrorTip="¡Por favor, seleccione su estado civil!">
+                        <nz-select formControlName="estado_civil" nzPlaceHolder="Seleccionar" nzAllowClear required>
+                            <nz-option nzValue="Soltero (a)" nzLabel="Soltero (a)"></nz-option>
+                            <nz-option nzValue="Casado (a)" nzLabel="Casado (a)"></nz-option>
+                            <nz-option nzValue="Unión libre" nzLabel="Unión libre"></nz-option>
+                            <nz-option nzValue="Separado (a)" nzLabel="Separado (a)"></nz-option>
+                            <nz-option nzValue="Divorciado (a)" nzLabel="Divorciado (a)"></nz-option>
+                            <nz-option nzValue="Viudo (a)" nzLabel="Viudo (a)"></nz-option>
+                            <nz-option nzValue="Sacerdote / Monja" nzLabel="Sacerdote / Monja"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="12">
+                <nz-form-item>
+                    <nz-form-label>9. Último nivel de estudios que alcanzó</nz-form-label>
+                    <nz-form-control nzErrorTip="¡Por favor, seleccione su nivel de estudio!">
+                        <nz-select formControlName="nivel_educativo" nzPlaceHolder="Seleccionar" nzAllowClear required>
+                            <nz-option nzValue="Ninguno" nzLabel="Ninguno"></nz-option>
+                            <nz-option nzValue="Primaria incompleta" nzLabel="Primaria incompleta"></nz-option>
+                            <nz-option nzValue="Bachillerato incommpleto"
+                                nzLabel="Bachillerato incommpleto"></nz-option>
+                            <nz-option nzValue="Bachillerato commpleto" nzLabel="Bachillerato commpleto"></nz-option>
+                            <nz-option nzValue="Técnico / tecnológico incompleto"
+                                nzLabel="Técnico / tecnológico incompleto"></nz-option>
+                            <nz-option nzValue="Técnico / tecnológico completo"
+                                nzLabel="Técnico / tecnológico completo"></nz-option>
+                            <nz-option nzValue="Profesional incompleto" nzLabel="Profesional incompleto"></nz-option>
+                            <nz-option nzValue="Profesional completo" nzLabel="Profesional completo"></nz-option>
+                            <nz-option nzValue="Carrera militar / policía"
+                                nzLabel="Carrera militar / policía"></nz-option>
+                            <nz-option nzValue="Post-grado incompleto" nzLabel="Post-grado incompleto"></nz-option>
+                            <nz-option nzValue="Post-grado completo" nzLabel="Post-grado completo"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="12">
+                <nz-form-item>
+                    <nz-form-label>10. ¿Cual es su ocupación o profesión?</nz-form-label>
+                    <nz-form-control nzErrorTip="¡Por favor, introduzca su ocupación o profesión!">
+                        <input formControlName="ocupacion" nz-input placeholder="Ocupación o profesión" nzAllowClear
+                            required />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="12">
+                <nz-form-item>
+                    <nz-form-label>11. Estrato de los servicios públicos de su vivienda</nz-form-label>
+                    <nz-form-control nzErrorTip="¡Por favor, seleccione un estrado de servicios públicos!">
+                        <nz-select formControlName="estrado" nzPlaceHolder="Seleccionar" nzAllowClear required>
+                            <nz-option nzValue="1" nzLabel="1"></nz-option>
+                            <nz-option nzValue="2" nzLabel="2"></nz-option>
+                            <nz-option nzValue="3" nzLabel="3"></nz-option>
+                            <nz-option nzValue="4" nzLabel="4"></nz-option>
+                            <nz-option nzValue="5" nzLabel="5"></nz-option>
+                            <nz-option nzValue="6" nzLabel="6"></nz-option>
+                            <nz-option nzValue="Finca" nzLabel="Finca"></nz-option>
+                            <nz-option nzValue="No sé" nzLabel="No sé"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="12">
+                <nz-form-item>
+                    <nz-form-label>12. Tipo de vivienda</nz-form-label>
+                    <nz-form-control nzErrorTip="¡Por favor, seleccione un tipo de vivienda!">
+                        <nz-select formControlName="tipo_vivienda" nzPlaceHolder="Seleccionar" nzAllowClear required>
+                            <nz-option nzValue="Propia" nzLabel="Propia"></nz-option>
+                            <nz-option nzValue="En arriendo" nzLabel="En arriendo"></nz-option>
+                            <nz-option nzValue="Familiar" nzLabel="Familiar"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="12">
+                <nz-form-item>
+                    <nz-form-label>13. Número de personas que dependen económicamente de usted (aunque vivan en otro
+                        lugar)</nz-form-label>
+                    <nz-form-control nzErrorTip="¡Por favor, introduzca el número de personas!">
+                        <nz-input-number nz-input nzAllowClear formControlName="dependientes" [nzMin]="0" [nzMax]="99"
+                            [nzStep]="1" required></nz-input-number>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
         </div>
-        <div class="mb-3" *ngIf="userForm.value.genero == 'Otro'">  
-            <label for="exampleFormControlSelect1" class="form-label">¿Cual?</label>
-            <input type="text" class="form-control" placeholder="Genero" formControlName="otro_genero">
+        <hr class="hr" />
+        <div class="row">
+            <nz-form-label>14. Lugar donde trabaja actualmente</nz-form-label>
+            <div class="col-md-6 mb-3">
+                <label for="exampleFormControlSelect1" class="form-label">Departamento</label>
+                <ng-select [items]="listDepartament" bindLabel="name" bindValue="id" (change)="onGetCityRes($event)"
+                    required>
+                </ng-select>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="exampleFormControlSelect1" class="form-label">Municipio</label>
+                <ng-select id="lugar_trabajo" #lugar_trabajo formControlName="lugar_trabajo" [items]="listCityRes"
+                    bindLabel="name" bindValue="id" [(ngModel)]="userForm.value.lugar_trabajo" required>
+                </ng-select>
+            </div>
         </div>
-
-        <h3> 4. Pertenencia étnico cultural:</h3>
-        <div class="mb-3">
-            <select class="form-select" formControlName="etnia">
-                <option selected value="" disabled>Seleccionar</option>
-                <option value="Mestizo/a">Mestizo/a</option>
-                <option value="Indigena">Indigena</option>
-            </select>
-        </div>
-        <div class="mb-3" *ngIf="userForm.value.etnia == 'Indigena'">
-            <label for="exampleFormControlSelect1" class="form-label">¿A cual pueblo indigena pertenece?</label>
-            <select class="form-select" formControlName="cual_indigena">
-                <option selected disabled value="">Seleccionar</option>
-                <option value="Negro/a, mulato/a, afrodescendiente, afrocolombiano/a">Negro/a, mulato/a, afrodescendiente, afrocolombiano/a</option>
-                <option value="Palenquero/a">Palenquero/a</option>
-                <option value="Raizal del archipiélgo">Raizal del archipiélgo</option>
-                <option value="Gitano/ a (Rom)">Gitano/ a (Rom)</option>
-                <option value="Campesino">Campesino</option>
-                <option value="Sin pertenencia étnica">Sin pertenencia étnica</option>
-            </select>
-        </div>
-        <h3> 5. ¿Presenta algún tipo de discapacidad?:</h3>
-        <div class="mb-3">
-            <select class="form-select" formControlName="discapacidad">
-                <option selected disabled value="">Seleccionar</option>
-                <option value="Si">Si</option>
-                <option value="No">No</option>
-            </select>
-        </div>
-        <div class="mb-3" *ngIf="userForm.get('discapacidad')?.value == 'Si'">
-            <label for="exampleFormControlSelect1" class="form-label">Indicar ¿Cuál?</label>
-            <select class="form-select" formControlName="cual_discapacidad">
-                <option selected  value="" disabled>Seleccionar</option>
-                <option value="Discapacidad fisíca">Discapacidad fisíca</option>
-                <option value="Discapacidad intelectual">Discapacidad intelectual</option>
-                <option value="Discapacidad psicosocial">Discapacidad psicosocial</option>
-                <option value="Discapacidad multiple">Discapacidad multiple</option>
-                <option value="Discapacidad auditiva">Discapacidad auditiva</option>
-                <option value="Discapacidad visual">Discapacidad visual</option>
-                <option value="Sordoceguera">Sordoceguera</option>
-                <option value="Otra">Otra</option>
-            </select>
-        </div>
-        <h3> 6. Fecha de nacimiento:</h3>
-        <div class="mb-3">
-            <input type="date" class="form-control" placeholder="Año de nacimiento" formControlName="anio_nacimiento">
-        </div>
-        <h3> 7. Lugar de residencia actual</h3>
-        <div class="mb-3">
-            <label for="exampleFormControlSelect1" class="form-label">Departamento</label>
-            <ng-select [items]="listDepartament"
-                bindLabel="name" bindValue="id" (change)="onGetCity($event)" required>
-            </ng-select>
-        </div>
-        <div class="mb-3">
-            <label for="exampleFormControlSelect1" class="form-label">Municipio</label>
-            <ng-select id="lugar_residencia" #lugar_residencia formControlName="lugar_residencia" [items]="listCity" bindLabel="name"
-                bindValue="id" [(ngModel)]="userForm.value.lugar_residencia" required>
-            </ng-select>
-        </div>        
-        <div class="mb-3">
-            <label for="exampleFormControlSelect1" class="form-label">Zona</label>
-            <select class="form-select" formControlName="zona">
-                <option selected disabled value="">Seleccionar</option>
-                <option value="Urbana">Urbana</option>
-                <option value="Rural">Rural</option>
-            </select>
-        </div>
-        <div class="mb-3" *ngIf="userForm.get('zona')?.value == 'Rural'">
-            <label for="exampleFormControlSelect1" class="form-label">¿Cual es el corregimiento?</label>
-            <input type="text" class="form-control" formControlName="cual_rural" placeholder="¿Cual es el corregimiento?">
-        </div>
-        <h3> 8. Estado civil</h3>
-        <div class="mb-3">
-            <label for="exampleFormControlSelect1" class="form-label">Estado civil</label>
-            <select class="form-select" formControlName="estado_civil">
-                <option selected disabled value="">Seleccionar</option>
-                <option value="Soltero (a)">Soltero (a)</option>
-                <option value="Casado (a)">Casado (a)</option>
-                <option value="Unión libre">Unión libre</option>
-                <option value="Separado (a)">Separado (a)</option>
-                <option value="Divorciado (a)">Divorciado (a)</option>
-                <option value="Viudo (a)">Viudo (a)</option>
-                <option value="Sacerdote / Monja">Sacerdote / Monja</option>
-            </select>
-        </div>
-        <h3> 9. Último nivel de estudios que alcanzó</h3>
-        <div class="mb-3">
-            <select class="form-select" formControlName="nivel_educativo">
-                <option selected disabled value="">Seleccionar</option>
-                <option value="Ninguno">Ninguno</option>
-                <option value="Primaria incompleta">Primaria incompleta</option>
-                <option value="Bachillerato incommpleto">Bachillerato incommpleto</option>
-                <option value="Bachillerato commpleto">Bachillerato commpleto</option>
-                <option value="Técnico / tecnológico incompleto">Técnico / tecnológico incompleto</option>
-                <option value="Técnico / tecnológico completo">Técnico / tecnológico completo</option>
-                <option value="Profesional incompleto">Profesional incompleto</option>
-                <option value="Profesional completo">Profesional completo</option>
-                <option value="Carrera militar / policía">Carrera militar / policía</option>
-                <option value="Post-grado incompleto">Post-grado incompleto</option>
-                <option value="Post-grado completo">Post-grado completo</option>
-            </select>
-        </div>
-        <h3> 10. ¿Cual es su ocupación o profesión?</h3>
-        <div class="mb-3">
-            <input type="text" class="form-control" formControlName="ocupacion" placeholder="Profesión">
-        </div>
-        <h3> 11. Lugar de residencia actual:</h3>
-        <div class="mb-3">
-            <label for="exampleFormControlSelect1" class="form-label">Ciudad</label>
-            <select class="form-select" formControlName="lugar_reidencia">
-                <option selected disabled value="">Seleccionar</option>
-                <option [value]="ciu.id" *ngFor="let ciu of listCities">{{ciu.name}}</option>
-            </select>
-        </div>
-        <h3> 12. Estrato de los servicios públicos de su vivienda:</h3>
-        <div class="mb-3">
-            <select class="form-select" formControlName="estrado">
-                <option selected disabled value="">Seleccionar</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="Finca">Finca</option>
-                <option value="No sé">No sé</option>
-            </select>
-        </div>
-
-        <h3> 13. Tipo de vivienda:</h3>
-        <div class="mb-3">
-            <select class="form-select" formControlName="tipo_vivienda">
-                <option selected disabled value="">Seleccionar</option>
-                <option value="Propia">Propia</option>
-                <option value="En arriendo">En arriendo</option>
-                <option value="Familiar">Familiar</option>
-            </select>
-        </div>
-
-        <h3> 14. Número de personas que dependen económicamente de usted (aunque vivan en otro lugar):</h3>
-        <div class="mb-3">
-            <input type="number" class="form-control" formControlName="dependientes" placeholder="Personas">
-        </div>
-
-        <h3> 15. Lugar donde trabaja actualmente:</h3>
-        <div class="mb-3">
-            <label for="exampleFormControlSelect1" class="form-label">Ciudad</label>
-            <select class="form-select" formControlName="lugar_trabajo">
-                <option selected disabled value="">Seleccionar</option>
-                <option [value]="ciu.id" *ngFor="let ciu of listCities">{{ciu.name}}</option>
-            </select>
-        </div>
-
-        <h3> 16. ¿Hace cuántos años que trabaja en esta empresa?:</h3>
-        <div class="mb-3">
-            <select class="form-select" formControlName="tiempo_laborado">
-                <option selected disabled value="" >Seleccionar</option>
-                <option value="Menos de un año">Menos de un año</option>
-                <option value="Mas de un año">Mas de un año</option>
-            </select>
-        </div>
-
-        <h3> 17. ¿Cuál es el nombre del cargo que ocupa en la empresa?:</h3>
-        <div class="mb-3">
-            <input type="text" class="form-control" placeholder="Cargo" formControlName="cargo_empresa">
-        </div>
-
-        <h3> 18. Seleccione el tipo de cargo que más se parece al que usted desempeña y señalelo en el cuadro correspondiente de la derecha. Si tiene dudas pida apoyo al Psicologo Especialista SST asignado por la empresa:</h3>
-        <div class="mb-3">
-            <select class="form-select" formControlName="seleccion_cargo">
-                <option selected disabled value="">Seleccionar</option>
-                <option value="Jefatura - tiene personal a cargo">Jefatura - tiene personal a cargo</option>
-                <option value="Auixiliar, asistente administrativo, asistente técnico">Auixiliar, asistente administrativo, asistente técnico</option>
-                <option value="Operario, operador, ayudante, servicios generales">Operario, operador, ayudante, servicios generales</option>
-            </select>
-        </div>
-
-        <h3> 19. ¿Hace cuantos años que desempeña el cargo u oficio actual en esta empresa?:</h3>
-        <div class="mb-3">
-            <select class="form-select" formControlName="tiempoLavorado_Cargo">
-                <option selected disabled value="">Seleccionar</option>
-                <option value="Menos">Menos de un año</option>
-                <option value="Mas">Si lleva más de un año</option>
-            </select>
-        </div>
-        <h3> 20. Escriba el nombre del departamento, área o sección de la empresa en el que trabaja:</h3>
-        <div class="mb-3">
-            <input type="text" class="form-control" formControlName="departamentoTrabajo" placeholder="Nombre del departamento, área o sección">
-        </div>
-        
-        <h3> 21. Seleccione el tipo de contrato que tiene actualmente:</h3>
-        <div class="mb-3">
-            <select class="form-select" formControlName="tipoContrato">
-                <option selected disabled value="">Seleccionar</option>
-                <option value="Temporal de menos de 1 año">Temporal de menos de 1 año</option>
-                <option value="Temporal de 1 año o más">Temporal de 1 año o más</option>
-                <option value="Término indefinido">Término indefinido</option>
-                <option value="Cooperado (cooperativa)">Cooperado (cooperativa)</option>
-                <option value="Pretación de servicios">Pretación de servicios</option>
-                <option value="No sé">No sé</option>
-            </select>
-        </div>
-        <h3> 22. Indique cuántas horas diarias de trabajo están establecidas habitualmente por la empresa para su cargo:</h3>
-        <div class="mb-3">
-            <input type="number" class="form-control" formControlName="horasTrabajadasDiarias" placeholder="Horas de trabajo al dia">
-        </div>
-
-        <h3> 23. Seleccione y marque el tipo de salario que recibe:</h3>
-        <div class="mb-3">
-            <select class="form-select" formControlName="tipoSalario">
-                <option selected disabled value="">Seleccionar</option>
-                <option value="Fijo (diario, semanal, quincenal o mensual)">Fijo (diario, semanal, quincenal o mensual)</option>
-                <option value="Una parte fija y otra variable">Una parte fija y otra variable</option>
-                <option value="Toda variable (a destajo, por producción, por comisión)">Toda variable (a destajo, por producción, por comisión)</option>
-            </select>
+        <hr class="hr" />
+        <div nz-row [nzGutter]="24">
+            <div nz-col [nzSpan]="12">
+                <nz-form-item>
+                    <nz-form-label>15. ¿Hace cuántos años que trabaja en esta empresa?</nz-form-label>
+                    <nz-form-control nzErrorTip="¡Por favor, seleccione una opción!">
+                        <nz-select formControlName="tiempo_laborado" nzPlaceHolder="Seleccionar" nzAllowClear required>
+                            <nz-option nzValue="Menos de un año" nzLabel="Menos de un año"></nz-option>
+                            <nz-option nzValue="Mas de un año" nzLabel="Mas de un año"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="12">
+                <nz-form-item>
+                    <nz-form-label>16. ¿Cuál es el nombre del cargo que ocupa en la empresa?</nz-form-label>
+                    <nz-form-control nzErrorTip="¡Por favor, introduzca el cargo que ocupa!">
+                        <input formControlName="cargo_empresa" nz-input placeholder="Cargo que ocupa en la empresa"
+                            nzAllowClear required />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="12">
+                <nz-form-item>
+                    <nz-form-label>17. Seleccione el tipo de cargo que más se parece al que usted desempeña y señalelo
+                        en el cuadro
+                        correspondiente de la derecha. Si tiene dudas pida apoyo al Psicologo Especialista SST asignado
+                        por la
+                        empresa</nz-form-label>
+                    <nz-form-control nzErrorTip="¡Por favor, seleccione una opción!">
+                        <nz-select formControlName="seleccion_cargo" nzPlaceHolder="Seleccionar" nzAllowClear required>
+                            <nz-option nzValue="Jefatura - tiene personal a cargo"
+                                nzLabel="Jefatura - tiene personal a cargo"></nz-option>
+                            <nz-option nzValue="Profesional, analista, técnico, tecnólogo"
+                                nzLabel="Profesional, analista, técnico, tecnólogo"></nz-option>
+                            <nz-option nzValue="Auxiliar, asistente administrativo, asistente técnico"
+                                nzLabel="Auxiliar, asistente administrativo, asistente técnico"></nz-option>
+                            <nz-option nzValue="Operario, operador, ayudante, servicios generales"
+                                nzLabel="Operario, operador, ayudante, servicios generales"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="12">
+                <nz-form-item>
+                    <nz-form-label>18. ¿Hace cuantos años que desempeña el cargo u oficio actual en esta
+                        empresa?</nz-form-label>
+                    <nz-form-control nzErrorTip="¡Por favor, seleccione una opción!">
+                        <nz-select formControlName="tiempoLavorado_Cargo" nzPlaceHolder="Seleccionar" nzAllowClear required>
+                            <nz-option nzValue="Menos de un año" nzLabel="Menos de un año"></nz-option>
+                            <nz-option nzValue="Si lleva más de un año" nzLabel="Si lleva más de un año"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="12">
+                <nz-form-item>
+                    <nz-form-label>19. Escriba el nombre del departamento, área o sección de la empresa en el que
+                        trabaja</nz-form-label>
+                    <nz-form-control nzErrorTip="¡Por favor, introduzca el nombre del departamento!">
+                        <input formControlName="departamentoTrabajo" nz-input
+                            placeholder="Nombre del departamento, área o sección" nzAllowClear required />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="12">
+                <nz-form-item>
+                    <nz-form-label>20. Seleccione el tipo de contrato que tiene actualmente</nz-form-label>
+                    <nz-form-control nzErrorTip="¡Por favor, seleccione el tipo de contrato!">
+                        <nz-select formControlName="tipoContrato" nzPlaceHolder="Seleccionar" nzAllowClear required>
+                            <nz-option nzValue="Temporal de menos de 1 año"
+                                nzLabel="Temporal de menos de 1 año"></nz-option>
+                            <nz-option nzValue="Temporal de 1 año o más" nzLabel="Temporal de 1 año o más"></nz-option>
+                            <nz-option nzValue="Término indefinido" nzLabel="Término indefinido"></nz-option>
+                            <nz-option nzValue="Cooperado (cooperativa)" nzLabel="Cooperado (cooperativa)"></nz-option>
+                            <nz-option nzValue="Pretación de servicios" nzLabel="Pretación de servicios"></nz-option>
+                            <nz-option nzValue="No sé" nzLabel="No sé"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="12">
+                <nz-form-item>
+                    <nz-form-label>21. Indique cuántas horas diarias de trabajo están establecidas habitualmente por la
+                        empresa para su cargo</nz-form-label>
+                    <nz-form-control nzErrorTip="¡Por favor, introduzca el número de horas!">
+                        <nz-input-number nz-input nzAllowClear formControlName="horasTrabajadasDiarias" [nzMin]="0"
+                            [nzMax]="24" [nzStep]="1" required></nz-input-number>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="12">
+                <nz-form-item>
+                    <nz-form-label>22. Seleccione y marque el tipo de salario que recibe</nz-form-label>
+                    <nz-form-control nzErrorTip="¡Por favor, seleccione una opción!">
+                        <nz-select formControlName="tipoSalario" nzPlaceHolder="Seleccionar" nzAllowClear required>
+                            <nz-option nzValue="Fijo (diario, semanal, quincenal o mensual)"
+                                nzLabel="Fijo (diario, semanal, quincenal o mensual)"></nz-option>
+                            <nz-option nzValue="Una parte fija y otra variable"
+                                nzLabel="Una parte fija y otra variable"></nz-option>
+                            <nz-option nzValue="Toda variable (a destajo, por producción, por comisión)"
+                                nzLabel="Toda variable (a destajo, por producción, por comisión)"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
         </div>
     </form>
     <div class="d-flex justify-content-end">
-        <button type="submit" class="btn btn-primary me-2" [disabled]="!userForm.valid" (click)="clickSave()">Finalizar Cuestionario</button>
+        <button type="submit" class="btn btn-primary me-2" [disabled]="!userForm.valid" (click)="clickSave()">Finalizar
+            Cuestionario</button>
     </div>
 </div>

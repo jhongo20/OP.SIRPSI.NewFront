@@ -74,10 +74,6 @@ export class InterventionControlPlansPsychosocialEvaluationFormComponent
       Cargo: ['', Validators.required],
       Dependencia: ['', Validators.required],
     });
-
-    this.message.error("PRUEBA", {
-      nzDuration: 3000
-    });
   }
 
   cancelarForm() {
@@ -115,6 +111,8 @@ export class InterventionControlPlansPsychosocialEvaluationFormComponent
   }
 
   onSave() {
+    this.form.controls['FechaInicio'].setValue(this.form.value.FechaInicio.toLocaleDateString("fr-CA"));
+    this.form.controls['FechaFinalizacion'].setValue(this.form.value.FechaFinalizacion.toLocaleDateString("fr-CA"));
     this.form.value.Responsables = this.ResponsablesAdd;
     Swal.fire({
       title: '¿Estas seguro?',
