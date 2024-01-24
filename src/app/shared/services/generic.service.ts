@@ -59,7 +59,8 @@ export class GenericService {
       this.accountService
         .RenewToken(
           this.accountService.userData.id,
-          this.accountService.userData.roleId
+          this.accountService.userData.roleId,
+          this.accountService.userData.empresaId
         )
         .subscribe();
   }

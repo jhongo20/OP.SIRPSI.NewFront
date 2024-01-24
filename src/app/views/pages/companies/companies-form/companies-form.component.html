@@ -320,7 +320,7 @@
         <label class="form-label">Número de documento
           <i class="mdi mdi-information" #tooltip="matTooltip" matTooltip="Ingrese su número de documento"></i></label>
         <input class="form-control" type="number" #Document placeholder="Número de documento" formControlName="Document"
-          required />
+          required [disabled]="this.existAdmin" />
         <p class="text-danger mt-1" *ngIf="formUser.controls.Document.errors?.required">
           Este campo es obligatorio
         </p>
@@ -328,7 +328,8 @@
       <div class="col-md-4 mb-2">
         <label class="form-label">Nombre completo
           <i class="mdi mdi-information" #tooltip="matTooltip" matTooltip="Ingrese su nombre completo"></i></label>
-        <input class="form-control" type="text" #Names placeholder="Nombre completo" formControlName="Names" required />
+        <input class="form-control" type="text" #Names placeholder="Nombre completo" formControlName="Names" required
+          [disabled]="this.existAdmin" />
         <p class="text-danger mt-1" *ngIf="formUser.controls.Names.errors?.required">
           Este campo es obligatorio
         </p>
@@ -336,54 +337,33 @@
       <div class="col-md-4 mb-2">
         <label class="form-label">Apellidos
           <i class="mdi mdi-information" #tooltip="matTooltip" matTooltip="Ingrese su apellido"></i></label>
-        <input class="form-control" type="text" #Surnames placeholder="Apellidos" formControlName="Surnames" required />
+        <input class="form-control" type="text" #Surnames placeholder="Apellidos" formControlName="Surnames" required
+          [disabled]="this.existAdmin" />
         <p class="text-danger mt-1" *ngIf="formUser.controls.Surnames.errors?.required">
           Este campo es obligatorio
         </p>
       </div>
-      <div class="col-md-4 mb-2">
+      <div class="col-md-4 mb-2" *ngIf="!this.existAdmin">
         <label class="form-label">Contraseña
           <i class="mdi mdi-information" #tooltip="matTooltip" matTooltip="Ingrese su contraseña"></i></label>
-        <input class="form-control" [type]="hideUser ? 'password' : 'text'" #Password placeholder="Contraseña"
-          formControlName="Password" required style="
-            width: calc(100% - 40px);
-            float: left;
-            border-radius: 0.25rem 0 0 0.25rem;
-          " />
-        <button mat-icon-button matSuffix (click)="hideUser = !hideUser" [attr.aria-label]="'Hide password'" style="
-            float: left;
-            width: 40px;
-            background: #e9ecef;
-            border-radius: none;
-            border-radius: 0px 5px 5px 0px;
-            line-height: 38px;
-            height: auto;
-          " [attr.aria-pressed]="hideUser">
+        <input class="form-control inputView" [type]="hideUser ? 'password' : 'text'" #Password placeholder="Contraseña"
+          formControlName="Password" required [disabled]="this.existAdmin" />
+        <button mat-icon-button matSuffix (click)="hideUser = !hideUser" [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]=" hideUser" class="buttonView">
           <mat-icon>{{ hideUser ? "visibility_off" : "visibility" }}</mat-icon>
         </button>
         <p class="text-danger mt-1" *ngIf="formUser.controls.Password.errors?.required" style="float: left">
           Este campo es obligatorio
         </p>
       </div>
-      <div class="col-md-4 mb-2">
+      <div class="col-md-4 mb-2" *ngIf="!this.existAdmin">
         <label class="form-label">Verificar contraseña
           <i class="mdi mdi-information" #tooltip="matTooltip"
             matTooltip="Ingrese la misma contraseña ingresada anteriormente"></i></label>
-        <input class="form-control" [type]="hideUser ? 'password' : 'text'" #VerifyPassword
-          placeholder="Verificar contraseña" formControlName="VerifyPassword" required style="
-            width: calc(100% - 40px);
-            float: left;
-            border-radius: 0.25rem 0 0 0.25rem;
-          " />
-        <button mat-icon-button matSuffix (click)="hideUser = !hideUser" [attr.aria-label]="'Hide password'" style="
-            float: left;
-            width: 40px;
-            background: #e9ecef;
-            border-radius: none;
-            border-radius: 0px 5px 5px 0px;
-            line-height: 38px;
-            height: auto;
-          " [attr.aria-pressed]="hideUser">
+        <input class="form-control inputView" [type]="hideUser ? 'password' : 'text'" #VerifyPassword
+          placeholder="Verificar contraseña" formControlName="VerifyPassword" required />
+        <button mat-icon-button matSuffix (click)="hideUser = !hideUser" [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hideUser" class="buttonView">
           <mat-icon>{{ hideUser ? "visibility_off" : "visibility" }}</mat-icon>
         </button>
         <p class="text-danger mt-1" *ngIf="formUser.controls.VerifyPassword.errors?.required"
@@ -462,10 +442,10 @@
 <div style="padding: 20px 0 25px 0">
   <button type="submit" class="btn btn-primary me-2" (click)="onSave()" [disabled]="
       this.form.invalid ||
-      this.formUser.invalid ||
+      (this.formUser.invalid && !this.existAdmin) ||
       this.formWorkCenter.invalid ||
       this.formRepresentative.invalid ||
-      this.formUser.value.Password != this.formUser.value.VerifyPassword
+      (this.formUser.value.Password != this.formUser.value.VerifyPassword && !this.existAdmin)
     ">
     Registrar
   </button>

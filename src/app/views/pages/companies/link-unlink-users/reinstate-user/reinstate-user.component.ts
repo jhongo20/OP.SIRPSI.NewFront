@@ -36,7 +36,7 @@ export class ReinstateUserComponent implements OnInit {
     { name: 'Correo', data: 'correo' },
     { name: 'Teléfono', data: 'telefono' },
     { name: 'Empresa', data: 'empresa', property: 'nombre' },
-    { name: 'Rol', data: 'role', property: 'name' },
+    // { name: 'Rol', data: 'role', property: 'name' },
     { name: 'Nombre', data: 'nombreUsuario' },
     { name: 'Apellidos', data: 'apellidosUsuario' },
     { name: 'Estado', data: 'estado', property: 'nombre' },

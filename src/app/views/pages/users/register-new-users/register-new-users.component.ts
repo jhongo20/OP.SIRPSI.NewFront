@@ -13,6 +13,7 @@ import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { AssignNewRoleUserComponent } from '../assign-new-role-user/assign-new-role-user.component';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-register-new-users',
@@ -21,8 +22,8 @@ import { AssignNewRoleUserComponent } from '../assign-new-role-user/assign-new-r
 })
 export class RegisterNewUsersComponent implements OnInit {
   public form: FormGroup;
-  public formEmpresa: FormGroup;
   public formValidate: FormGroup;
+  public formRoleCompany: FormGroup;
   public formLicencia: FormGroup;
   public option: string;
   public viewStatus: boolean = true;
@@ -40,6 +41,8 @@ export class RegisterNewUsersComponent implements OnInit {
   listCity: any;
   listCityLicence: any;
   hide = true;
+  existUser: boolean = false;
+
   constructor(
     public formBuilder: FormBuilder,
     public dialog: MatDialog,
@@ -50,22 +53,24 @@ export class RegisterNewUsersComponent implements OnInit {
     private snackBar: MatSnackBar,
     private router: Router,
     private servicio: getService,
-    private modal: NzModalService
-  ) {}
+    private modal: NzModalService,
+    private message: NzMessageService,
+  ) { }
+
   ngOnInit(): void {
     this.onValidateCompanie();
     this.type =
       this.router.url == '/users/register-new-administrator'
         ? RolesEnum.AdminEmp
         : this.router.url == '/users/register-new-psychologist'
-        ? RolesEnum.Psicologo
-        : RolesEnum.Trabajador;
+          ? RolesEnum.Psicologo
+          : RolesEnum.Trabajador;
     this.title =
       this.type == RolesEnum.AdminEmp
         ? 'Registrar nuevo Administrador SIRPSI de la Empresa'
         : this.type == RolesEnum.Psicologo
-        ? 'Registrar nuevo Psicólogo Especialista SST'
-        : 'Ficha de Datos Generales';
+          ? 'Registrar nuevo Psicólogo Especialista SST'
+          : 'Ficha de Datos Generales';
     this.getListas();
     this.formValidate = this.formBuilder.group({
       IdTypeDocument: ['', Validators.required],
@@ -73,6 +78,7 @@ export class RegisterNewUsersComponent implements OnInit {
       ExpeditionDate: '',
     });
     this.form = this.formBuilder.group({
+      Id: [''],
       IdTypeDocument: ['', Validators.required],
       Document: ['', Validators.required],
       // ExpeditionDate: ['', Validators.required],
@@ -84,8 +90,8 @@ export class RegisterNewUsersComponent implements OnInit {
         this.type == RolesEnum.AdminEmp
           ? environment.administradorEmpRole
           : this.type == RolesEnum.Psicologo
-          ? environment.psicologoRole
-          : environment.trabajadorRole,
+            ? environment.psicologoRole
+            : environment.trabajadorRole,
       Password:
         this.type == RolesEnum.AdminEmp ? ['', Validators.required] : '',
       PhoneNumber: '',
@@ -107,9 +113,6 @@ export class RegisterNewUsersComponent implements OnInit {
       // HaveDisability: false,
       // ReadingWritingSkills: false,
     });
-    this.formEmpresa = this.formBuilder.group({
-      Usuario: ['', Validators.required],
-    });
     this.formLicencia = this.formBuilder.group({
       UsuarioId: '1',
       Numero: this.type == RolesEnum.Psicologo ? ['', Validators.required] : '',
@@ -123,19 +126,24 @@ export class RegisterNewUsersComponent implements OnInit {
       IdMunicipio:
         this.type == RolesEnum.Psicologo ? ['', Validators.required] : '',
     });
+    this.formRoleCompany = this.formBuilder.group({
+      UserId: ['', Validators.required],
+      RoleId: this.type == RolesEnum.AdminEmp
+        ? environment.administradorEmpRole
+        : this.type == RolesEnum.Psicologo
+          ? environment.psicologoRole
+          : environment.trabajadorRole,
+      IdEstado: [environment.activoEstado, Validators.required],
+    })
     this.onGetDepartment(environment.urlApiColombia + 'Department');
   }
+
   onSave() {
     this.form.value.IdTypeDocument = this.formValidate.value.IdTypeDocument;
     this.form.value.Document = this.formValidate.value.Document;
-    this.form.value.OccupationalLicense =
-      this.type == RolesEnum.Psicologo ? this.formLicencia.value : null;
+    this.form.value.OccupationalLicense = this.type == RolesEnum.Psicologo ? this.formLicencia.value : null;
     if (this.type != RolesEnum.AdminEmp) {
-      this.form.value.Password =
-        'Ept_' +
-        this.accountService.userData.empresa.documento +
-        '_' +
-        this.form.value.Document;
+      this.form.value.Password = 'Ept_' + this.accountService.userData.empresa.documento + '_' + this.form.value.Document;
     }
     this.form.value.Document = this.form.value.Document.toString();
     this.loadingService.ChangeStatusLoading(true);
@@ -161,7 +169,7 @@ export class RegisterNewUsersComponent implements OnInit {
       },
       error: (error) => {
         this.loadingService.ChangeStatusLoading(false);
-        if (error.error.assign == 1)
+        if (error.error.assign > 0)
           Swal.fire({
             icon: 'warning',
             title: error.error.message,
@@ -170,7 +178,8 @@ export class RegisterNewUsersComponent implements OnInit {
             cancelButtonText: 'No',
           }).then((result) => {
             if (result.isConfirmed) {
-              this.onAssignNewRole(false, '1', error.error.id);
+              if (error.error.assign == 1) this.onAssignNewRole(false, '1', error.error.id);
+              else if (error.error.assign == 2) this.onAssignUserCompany(false, '1', error.error.data);
             }
           });
         else
@@ -178,11 +187,36 @@ export class RegisterNewUsersComponent implements OnInit {
             icon: 'warning',
             title:
               'Ha ocurrido un error! ' + error.error.message ==
-              'Registro de usuario ¡fallido!  Failed : PasswordRequiresNonAlphanumeric,PasswordRequiresLower,PasswordRequiresUpper'
+                'Registro de usuario ¡fallido!  Failed : PasswordRequiresNonAlphanumeric,PasswordRequiresLower,PasswordRequiresUpper'
                 ? 'Registro de usuario ¡fallido!  Error: La contraseña no cumple los criterios de seguridad.'
                 : error.error.message,
             showConfirmButton: false,
           });
+      },
+    });
+  }
+
+  onSaveTwo() {
+    this.loadingService.ChangeStatusLoading(true);
+    this.genericService.Post('rolesusuario/RegistrarRolesUsuario', this.formRoleCompany.value).subscribe({
+      next: (data) => {
+        setTimeout(() => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Usuario Registrado, exitosamente.',
+            showConfirmButton: false,
+            timer: 2800,
+          }).then(() => {
+            window.location.reload();
+          });
+          this.loadingService.ChangeStatusLoading(false);
+        }, 1200);
+      },
+      error: (error) => {
+        this.loadingService.ChangeStatusLoading(false);
+        this.message.error(error.error.message, {
+          nzDuration: 4000
+        });
       },
     });
   }
@@ -257,11 +291,11 @@ export class RegisterNewUsersComponent implements OnInit {
     this.genericService
       .GetAll(
         'usuario/ConsultarUsuarioDatos?TypeDocumentId=' +
-          this.formValidate.value.IdTypeDocument +
-          '&Document=' +
-          this.formValidate.value.Document +
-          '&ExpeditionDate=' +
-          this.formValidate.value.ExpeditionDate
+        this.formValidate.value.IdTypeDocument +
+        '&Document=' +
+        this.formValidate.value.Document +
+        '&ExpeditionDate=' +
+        this.formValidate.value.ExpeditionDate
       )
       .subscribe({
         next: (data) => {
@@ -283,7 +317,7 @@ export class RegisterNewUsersComponent implements OnInit {
             icon: 'warning',
             title:
               'Ha ocurrido un error! ' + error.error.message ==
-              'Registro de usuario ¡fallido!  Failed : PasswordRequiresNonAlphanumeric,PasswordRequiresLower,PasswordRequiresUpper'
+                'Registro de usuario ¡fallido!  Failed : PasswordRequiresNonAlphanumeric,PasswordRequiresLower,PasswordRequiresUpper'
                 ? 'Registro de usuario ¡fallido!  Error: La contraseña no cumple los criterios de seguridad.'
                 : error.error.message,
             showConfirmButton: false,
@@ -340,7 +374,7 @@ export class RegisterNewUsersComponent implements OnInit {
     this.servicio
       .obtenerDatos(
         environment.urlApiColombia +
-          `Department/${url.PlaceBirthDepartment}/cities`
+        `Department/${url.PlaceBirthDepartment}/cities`
       )
       .subscribe((data) => {
         this.listCity = data.sort((x: any, y: any) =>
@@ -385,5 +419,40 @@ export class RegisterNewUsersComponent implements OnInit {
       },
     });
     dialogRef.afterClosed().subscribe();
+  }
+
+  onAssignUserCompany(internal: any, role: string, user: any) {
+    this.loadData(user);
+    this.existUser = true;
+    this.form.disable();
+    this.formValidate.disable();
+  }
+
+  loadData(data: any) {
+    this.loadingService.ChangeStatusLoading(true);
+    this.formRoleCompany.controls['UserId'].setValue(data.id);
+    this.form.controls['Id'].setValue(data.id);
+    this.form.controls['IdTypeDocument'].setValue(data.idTipoDocumento);
+    this.form.controls['Document'].setValue(data.cedula);
+    // this.form.controls['IdCountry'].setValue(data.idPais);
+    this.form.controls['IdCompany'].setValue(data.idEmpresa);
+    this.form.controls['Names'].setValue(data.nombreUsuario);
+    this.form.controls['Surnames'].setValue(data.apellidosUsuario);
+    this.form.controls['IdRol'].setValue(data.idRol);
+    this.form.controls['PhoneNumber'].setValue(data.telefono);
+    this.form.controls['Email'].setValue(data.correo);
+    this.form.controls['IdEstado'].setValue(data.idEstado);
+
+    this.form.controls['IdSex'].setValue(data.idSex);
+    this.form.controls['Birthdate'].setValue(
+      data.birthdate != null ? data.birthdate.split('T')[0] : ''
+    );
+    this.form.controls['PlaceBirthDepartment'].setValue(
+      data.placeBirthDepartment
+    );
+    this.onGetCity({ PlaceBirthDepartment: data.placeBirthDepartment });
+    this.form.controls['PlaceBirthCity'].setValue(data.placeBirthCity);
+    this.form.controls['Address'].setValue(data.address);
+    setTimeout(() => this.loadingService.ChangeStatusLoading(false), 600);
   }
 }

@@ -26,7 +26,7 @@ export class SelectRoleComponent implements OnInit {
     private roleService: SelectRoleService,
     public router: Router,
     private genericService: GenericService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadingService.ChangeStatusLoading(true);
@@ -44,7 +44,7 @@ export class SelectRoleComponent implements OnInit {
 
   GetInto() {
     this.accountService
-      .RenewToken(this.accountService.userData.id, this.item.roleId)
+      .RenewToken(this.accountService.userData.id, this.item.roleId, this.accountService.userData.empresaId)
       .subscribe(() => {
         this.roleService.SelectRoleUser(true);
         this.accountService.ValidateSesion();
@@ -71,7 +71,7 @@ export class SelectRoleComponent implements OnInit {
   getListas() {
     this.genericService
       .GetAll(
-        `rolesusuario/ConsultarRolesUsuario?idUser=${this.accountService.userData.id}`
+        `rolesusuario/ConsultarRolesUsuario?idUser=${this.accountService.userData.id}&idCompany=${this.accountService.userData.empresaId}`
       )
       .subscribe((data: any) => {
         this.roleList = data;

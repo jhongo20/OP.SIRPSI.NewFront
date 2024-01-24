@@ -190,12 +190,10 @@ export class AccountService {
 
   public RenewToken(
     user: string,
-    role: string
+    role: string,
+    company: string
   ): Observable<AuthenticationResponse> {
-    return this.http
-      .get<AuthenticationResponse>(
-        environment.urlApi + `User/RenewToken?idUser=${user}&idRole=${role}`
-      )
+    return this.http.get<AuthenticationResponse>(environment.urlApi + `User/RenewToken?idUser=${user}&idRole=${role}&idCompany=${company}`)
       .pipe(
         map((res) => {
           if (res) {

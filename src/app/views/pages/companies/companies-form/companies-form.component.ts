@@ -52,6 +52,8 @@ export class CompaniesFormComponent implements OnInit {
   listActividadEconomica: any;
   hideUser = true;
   showDigit: boolean = false;
+  existAdmin: boolean = false;
+
   constructor(
     public formBuilder: FormBuilder,
     public dialog: MatDialog,
@@ -63,6 +65,7 @@ export class CompaniesFormComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private servicio: getService
   ) { }
+
   ngOnInit(): void {
     this.getListas();
     this.form = this.formBuilder.group({
@@ -171,21 +174,11 @@ export class CompaniesFormComponent implements OnInit {
   }
 
   onSave() {
-    this.form.controls['Documento'].setValue(
-      this.form.value.Documento.toString()
-    );
-    this.form.controls['DigitoVerificacion'].setValue(
-      this.form.value.DigitoVerificacion.toString()
-    );
-
-    this.formRepresentative.value.NumeroDocumento =
-      this.formRepresentative.value.NumeroDocumento.toString();
-
+    this.form.controls['Documento'].setValue(this.form.value.Documento.toString());
+    this.form.controls['DigitoVerificacion'].setValue(this.form.value.DigitoVerificacion.toString());
+    this.formRepresentative.value.NumeroDocumento = this.formRepresentative.value.NumeroDocumento.toString();
     this.formUser.value.Document = this.formUser.value.Document.toString();
-
-    this.form.controls['EsGubernamental'].setValue(
-      this.form.value.EsGubernamental == 1 ? true : false
-    );
+    this.form.controls['EsGubernamental'].setValue(this.form.value.EsGubernamental == 1 ? true : false);
 
     var body = {
       Empresa: this.form.value,
@@ -203,24 +196,8 @@ export class CompaniesFormComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.loadingService.ChangeStatusLoading(true);
-        this.genericService.Post('empresas/RegistrarEmpresa', body).subscribe({
-          next: (data) => {
-            this.loadingService.ChangeStatusLoading(false);
-            Swal.fire({
-              icon: 'success',
-              title: 'Empresa registrada exitosamente.',
-              showConfirmButton: false,
-              timer: 2000,
-            }).then(() => window.location.reload());
-          },
-          error: (error) => {
-            console.error(error);
-            this.message.error(error.error.message, {
-              nzDuration: 4000
-            });
-            this.loadingService.ChangeStatusLoading(false);
-          },
-        });
+        if (!this.existAdmin) this.saveOne(body);
+        else this.saveTwo(body);
       }
     });
   }
@@ -344,5 +321,69 @@ export class CompaniesFormComponent implements OnInit {
     this.genericService
       .Post('mensajes/EnviarNotificacionMensajeWhatsApp', body)
       .subscribe();
+  }
+
+  loadData(data: any) {
+    this.formUser.disable();
+    this.formUser.controls["Email"].setValue(data.correo);
+    this.formUser.controls["Names"].setValue(data.nombreUsuario);
+    this.formUser.controls["Surnames"].setValue(data.apellidosUsuario);
+    this.formUser.controls["PhoneNumber"].setValue(data.telefono);
+    this.existAdmin = true;
+  }
+
+  saveOne(body: any) {
+    this.genericService.Post('empresas/RegistrarEmpresa', body).subscribe({
+      next: (data) => {
+        this.loadingService.ChangeStatusLoading(false);
+        Swal.fire({
+          icon: 'success',
+          title: 'Empresa registrada exitosamente.',
+          showConfirmButton: false,
+          timer: 2000,
+        }).then(() => window.location.reload());
+      },
+      error: (error) => {
+        console.error(error);
+        this.message.error(error.error.message, {
+          nzDuration: 4000
+        });
+        if (error.error.assign == 1)
+          Swal.fire({
+            icon: 'warning',
+            title: error.error.message,
+            html: error.error.otherdata,
+            showCancelButton: true,
+            confirmButtonText: 'Si',
+            cancelButtonText: 'No',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.loadData(error.error.data);
+            }
+          });
+        this.loadingService.ChangeStatusLoading(false);
+      },
+    });
+  }
+
+  saveTwo(body: any) {
+    this.genericService.Post('empresas/RegistrarEmpresaDos', body).subscribe({
+      next: (data) => {
+        this.loadingService.ChangeStatusLoading(false);
+        Swal.fire({
+          icon: 'success',
+          title: 'Empresa registrada exitosamente.',
+          showConfirmButton: false,
+          timer: 2000,
+        }).then(() => window.location.reload());
+      },
+      error: (error) => {
+        console.error(error);
+        this.message.error(error.error.message, {
+          nzDuration: 4000
+        });
+        this.loadingService.ChangeStatusLoading(false);
+      },
+    });
   }
 }

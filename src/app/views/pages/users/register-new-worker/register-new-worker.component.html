@@ -192,7 +192,9 @@
             </form>
             <div style="padding: 20px 0 25px 0;">
                 <button (click)="onSave()" type="submit" class="btn btn-primary me-2" [disabled]="this.form.invalid"
-                    style="margin-right: 8px;">Registrar</button>
+                    style="margin-right: 8px;" *ngIf="!this.existUser">Registrar</button>
+                <button (click)="onSaveTwo()" type="submit" class="btn btn-primary me-2" [disabled]="this.form.invalid"
+                    style="margin-right: 8px;" *ngIf="this.existUser">Registrar</button>
                 <button class="btn btn-secondary" type="submit" style="margin-right: 8px;"
                     (click)="cancelarForm();">Cancelar</button>
             </div>

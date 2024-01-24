@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import * as XLSX from 'xlsx';
 import { AssignNewRoleUserComponent } from '../assign-new-role-user/assign-new-role-user.component';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-register-new-worker',
@@ -17,7 +18,7 @@ import { AssignNewRoleUserComponent } from '../assign-new-role-user/assign-new-r
 })
 export class RegisterNewWorkerComponent implements OnInit {
   public form: FormGroup;
-  public formEmpresa: FormGroup;
+  public formRoleCompany: FormGroup;
   public formValidate: FormGroup;
   public option: string;
   public listCentrosCosto: any;
@@ -43,19 +44,23 @@ export class RegisterNewWorkerComponent implements OnInit {
   id: number | undefined;
   listRoles: any;
   public hide = true;
+  existUser: boolean = false;
+
   constructor(
     public formBuilder: FormBuilder,
     public dialog: MatDialog,
     private genericService: GenericService,
     private loadingService: LoadingService,
     public accountService: AccountService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private message: NzMessageService,
   ) { }
 
   ngOnInit(): void {
     this.title = 'Registro de trabajadores';
     this.getListas();
     this.form = this.formBuilder.group({
+      Id: [''],
       clasificacion: ['', Validators.required],
       IdTypeDocument: ['', Validators.required],
       Document: ['', Validators.required],
@@ -77,8 +82,10 @@ export class RegisterNewWorkerComponent implements OnInit {
       Disability: '',
       ReadingWritingSkills: '0',
     });
-    this.formEmpresa = this.formBuilder.group({
-      Usuario: ['', Validators.required],
+    this.formRoleCompany = this.formBuilder.group({
+      UserId: ['', Validators.required],
+      RoleId: [environment.trabajadorRole, Validators.required],
+      IdEstado: [environment.activoEstado, Validators.required],
     });
     this.genericService
       .GetAll('userWorkPlace/ConsultarCentroDeTrabajoUsuario?user=' + this.accountService.userData.id)
@@ -86,16 +93,9 @@ export class RegisterNewWorkerComponent implements OnInit {
   }
 
   onSave() {
-    this.form.value.HaveDisability =
-      this.form.value.HaveDisability == '0' ? false : true;
-    this.form.value.ReadingWritingSkills =
-      this.form.value.ReadingWritingSkills == '0' ? false : true;
-    this.form.value.Password =
-      'Ept_' +
-      this.accountService.userData.empresa.documento +
-      '_' +
-      this.form.value.Document;
-
+    this.form.value.HaveDisability = this.form.value.HaveDisability == '0' ? false : true;
+    this.form.value.ReadingWritingSkills = this.form.value.ReadingWritingSkills == '0' ? false : true;
+    this.form.value.Password = 'Ept_' + this.accountService.userData.empresa.documento + '_' + this.form.value.Document;
     this.form.value.Document = this.form.value.Document.toString();
     this.loadingService.ChangeStatusLoading(true);
     this.genericService.Post('user/RegisterUser', this.form.value).subscribe({
@@ -120,7 +120,7 @@ export class RegisterNewWorkerComponent implements OnInit {
       },
       error: (error) => {
         this.loadingService.ChangeStatusLoading(false);
-        if (error.error.assign == 1)
+        if (error.error.assign > 0)
           Swal.fire({
             icon: 'warning',
             title: error.error.message,
@@ -129,7 +129,8 @@ export class RegisterNewWorkerComponent implements OnInit {
             cancelButtonText: 'No',
           }).then((result) => {
             if (result.isConfirmed) {
-              this.onAssignNewRole(false, '1', error.error.id);
+              if (error.error.assign == 1) this.onAssignNewRole(false, '1', error.error.id);
+              else if (error.error.assign == 2) this.onAssignUserCompany(false, '1', error.error.data);
             }
           });
         else
@@ -142,6 +143,31 @@ export class RegisterNewWorkerComponent implements OnInit {
                 : error.error.message,
             showConfirmButton: false,
           });
+      },
+    });
+  }
+
+  onSaveTwo() {
+    this.loadingService.ChangeStatusLoading(true);
+    this.genericService.Post('rolesusuario/RegistrarRolesUsuario', this.formRoleCompany.value).subscribe({
+      next: (data) => {
+        setTimeout(() => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Usuario Registrado, exitosamente.',
+            showConfirmButton: false,
+            timer: 2800,
+          }).then(() => {
+            window.location.reload();
+          });
+          this.loadingService.ChangeStatusLoading(false);
+        }, 1200);
+      },
+      error: (error) => {
+        this.loadingService.ChangeStatusLoading(false);
+        this.message.error(error.error.message, {
+          nzDuration: 4000
+        });
       },
     });
   }
@@ -197,25 +223,15 @@ export class RegisterNewWorkerComponent implements OnInit {
       });
   }
 
-  sendNotifications(
-    code: string,
-    numberPhone: string,
-    password: string,
-    email: string
-  ) {
+  sendNotifications(code: string, numberPhone: string, password: string, email: string) {
     var body = {
       CodeActivation: code,
       Receiver: email,
       Password: password,
     };
-    this.genericService
-      .Post('mensajes/EnviarNotificacionMensajeCorreo', body)
-      .subscribe();
-
+    this.genericService.Post('mensajes/EnviarNotificacionMensajeCorreo', body).subscribe();
     body.Receiver = numberPhone;
-    this.genericService
-      .Post('mensajes/EnviarNotificacionMensajeWhatsApp', body)
-      .subscribe();
+    this.genericService.Post('mensajes/EnviarNotificacionMensajeWhatsApp', body).subscribe();
   }
 
   cancelarForm() {
@@ -283,5 +299,35 @@ export class RegisterNewWorkerComponent implements OnInit {
       },
     });
     dialogRef.afterClosed().subscribe();
+  }
+
+  onAssignUserCompany(internal: any, role: string, user: any) {
+    this.loadData(user);
+    this.existUser = true;
+    this.form.disable();
+    this.formValidate.disable();
+  }
+
+  loadData(data: any) {
+    this.loadingService.ChangeStatusLoading(true);
+    this.formRoleCompany.controls['UserId'].setValue(data.id);
+    this.form.controls['Id'].setValue(data.id);
+    this.form.controls['IdTypeDocument'].setValue(data.idTipoDocumento);
+    this.form.controls['Document'].setValue(data.cedula);
+    // this.form.controls['IdCountry'].setValue(data.idPais);
+    this.form.controls['IdCompany'].setValue(data.idEmpresa);
+    this.form.controls['Names'].setValue(data.nombreUsuario);
+    this.form.controls['Surnames'].setValue(data.apellidosUsuario);
+    this.form.controls['IdRol'].setValue(data.idRol);
+    this.form.controls['PhoneNumber'].setValue(data.telefono);
+    this.form.controls['PhoneNumberAux'].setValue(data.telefonoAux);
+    this.form.controls['Email'].setValue(data.correo);
+    this.form.controls['EmailAux'].setValue(data.correoAux);
+    this.form.controls['IdEstado'].setValue(data.idEstado);
+    this.form.controls['HaveDisability'].setValue(data.tieneDiscapacidad == true ? '1' : '0');
+    this.form.controls['ReadingWritingSkills'].setValue(data.habilidadesLectoEscritura == true ? '1' : '0');
+    this.form.controls['IdOccupationProfession'].setValue(data.idOcupacionProfesion);
+    // this.form.controls['IdWorkCenter'].setValue(data.workPlaces[0].workPlaceId);
+    setTimeout(() => this.loadingService.ChangeStatusLoading(false), 600);
   }
 }
