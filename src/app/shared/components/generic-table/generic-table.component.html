@@ -12,11 +12,7 @@
                 <th style="color: white" *ngFor="let column of columns">
                   {{ column.name }}
                 </th>
-                <th style="color: white" *ngIf="
-                    this.columns.length > 0 &&
-                    this.options.length > 0 &&
-                    this.columns != null
-                  ">
+                <th style="color: white" *ngIf="this.options != null">
                   Opciones
                 </th>
               </tr>
@@ -67,11 +63,7 @@
                       [nzTwotoneColor]="'#c41a1a'"></span>
                   </div>
                 </td>
-                <td *ngIf="
-                    this.columns.length > 0 &&
-                    this.options.length > 0 &&
-                    this.columns != null
-                  " style="display: flex" select="6">
+                <td *ngIf="this.options != null" style="display: flex" select="6">
                   <button *ngIf="this.options[0].delete" (click)="this.DeletePeople(da.id)" type="button"
                     class="btn-delete btn btn-danger" style="margin: 0px 6px 0px 6px" [nzTooltipTitle]="'Eliminar'"
                     nzTooltipPlacement="right" nz-tooltip>

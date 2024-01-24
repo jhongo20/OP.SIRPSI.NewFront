@@ -75,6 +75,8 @@ export class GenericTableComponent implements OnInit {
       .subscribe(
         (data: any) => {
           this.data = data;
+          console.log(this.data);
+
           this.pageSize = data.pageSize;
           this.totalItems = data.totalItems;
           setTimeout(() => {
