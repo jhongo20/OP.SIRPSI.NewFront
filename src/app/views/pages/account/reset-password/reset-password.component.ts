@@ -53,7 +53,7 @@ export class ResetPasswordComponent implements OnInit {
           title: result.message,
           showConfirmButton: false,
           timer: 2000,
-        }).then(() => this.router.navigate(['/account/select-role']));
+        }).then(() => this.router.navigate(['/welcome']));
         setTimeout(() => this.loadingService.ChangeStatusLoading(false), 800);
       },
       (error) => {

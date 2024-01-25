@@ -287,7 +287,29 @@ export class RegisterNewWorkerComponent implements OnInit {
 
   convertToJson() {
     // Puedes realizar acciones adicionales aquí antes de mostrar los datos JSON.
-    console.log(this.jsonData);
+    console.log(JSON.stringify(this.jsonData));
+    this.loadingService.ChangeStatusLoading(true);
+    this.genericService.Post('user/RegistrarUsuario', this.jsonData).subscribe({
+      next: (data) => {
+        setTimeout(() => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Se han cargado los usuarios que estaban correctos!',
+            showConfirmButton: false,
+            timer: 2800,
+          }).then(() => {
+            window.location.reload();
+          });
+          this.loadingService.ChangeStatusLoading(false);
+        }, 1200);
+      },
+      error: (error) => {
+        this.loadingService.ChangeStatusLoading(false);
+        this.message.error(error.error.message, {
+          nzDuration: 4000
+        });
+      },
+    });
   }
 
   onAssignNewRole(internal: any, role: string, user: any) {
