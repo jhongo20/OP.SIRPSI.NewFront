@@ -302,25 +302,15 @@ export class CompaniesFormComponent implements OnInit {
     });
   }
 
-  sendNotifications(
-    code: string,
-    numberPhone: string,
-    password: string,
-    email: string
-  ) {
+  sendNotifications(code: string, numberPhone: string, password: string, email: string) {
     var body = {
       CodeActivation: code,
       Receiver: email,
       Password: password,
     };
-    this.genericService
-      .Post('mensajes/EnviarNotificacionMensajeCorreo', body)
-      .subscribe();
-
+    this.genericService.Post('mensajes/EnviarNotificacionMensajeCorreo', body).subscribe();
     body.Receiver = numberPhone;
-    this.genericService
-      .Post('mensajes/EnviarNotificacionMensajeWhatsApp', body)
-      .subscribe();
+    this.genericService.Post('mensajes/EnviarNotificacionMensajeWhatsApp', body).subscribe();
   }
 
   loadData(data: any) {
@@ -335,6 +325,13 @@ export class CompaniesFormComponent implements OnInit {
   saveOne(body: any) {
     this.genericService.Post('empresas/RegistrarEmpresa', body).subscribe({
       next: (data) => {
+        console.log(data.data);
+        this.sendNotifications(
+          data.data.codeActivation,
+          data.data.phoneNumber,
+          this.formUser.value.Password,
+          this.formUser.value.Email
+        );
         this.loadingService.ChangeStatusLoading(false);
         Swal.fire({
           icon: 'success',
